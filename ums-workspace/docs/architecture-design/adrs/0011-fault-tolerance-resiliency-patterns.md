@@ -1,0 +1,23 @@
+# ADR 0011: Fault Tolerance and Resiliency Patterns (Circuit Breakers & Retries)
+
+## Status
+Proposed
+
+## Date
+2026-05-08
+
+## Context
+In a mission-critical logistics and customs environment, the UMS and downstream systems must communicate with volatile external third-party APIs (e.g., SUNAT transmission services, external OCR APIs). Synchronous network failures, high latency, or timeouts in these external dependencies can cascade, causing our internal NestJS threads to hang and potentially crashing the entire service. 
+
+We need a standardized fault-tolerance mechanism to gracefully handle external system outages without degrading the core user experience or losing transactional consistency.
+
+## Decision
+We will implement strict Resiliency Patterns for all outbound HTTP communications:
+
+1. **Circuit Breaker Pattern**: We will utilize a Circuit Breaker library (such as `opossum`) wrapped within custom NestJS providers. If an external service fails continuously, the circuit will "open," failing fast and preventing resource exhaustion. It will periodically test the service (half-open) until it recovers.
+2. **Exponential Backoff & Retries**: For transient network errors, HTTP clients (e.g., Axios Interceptors) will be configured to automatically retry the request with exponential backoff before failing completely.
+3. **Fallback Mechanisms**: In the event of an open circuit, the system must provide a fallback mechanism (e.g., enqueueing the payload in a Dead Letter Queue or local database for delayed asynchronous transmission).
+
+## Consequences
+* **Pros**: Prevents cascading failures, ensures 24/7 internal operability even when third-party services are down, and guarantees no data loss for critical transmissions.
+* **Cons**: Adds complexity to the outbound API adapters and requires careful tuning of timeout and retry thresholds to avoid overwhelming recovering services.

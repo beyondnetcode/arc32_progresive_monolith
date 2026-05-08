@@ -38,6 +38,14 @@ Detailed logs of the foundational engineering decisions:
 8. [ADR 0008: Progressive Multi-Module Evolution with API Gateway and BFF Patterns](./docs/architecture-design/adrs/0008-progressive-multimodule-evolution-gateway-bff.md)
 9. [ADR 0009: Strict Dependency Pinning and Automated Vulnerability Management](./docs/architecture-design/adrs/0009-strict-dependency-pinning-vulnerability-management.md)
 10. [ADR 0010: Multi-Tenancy Architecture Strategy for SaaS Evolution](./docs/architecture-design/adrs/0010-multi-tenancy-architecture-strategy.md)
+11. [ADR 0011: Fault Tolerance & Resiliency Patterns](./docs/architecture-design/adrs/0011-fault-tolerance-resiliency-patterns.md)
+12. [ADR 0012: Advanced Authorization (RBAC/ABAC)](./docs/architecture-design/adrs/0012-advanced-authorization-rbac-abac.md)
+13. [ADR 0013: Cloud Infrastructure Topology & DR](./docs/architecture-design/adrs/0013-cloud-infrastructure-topology-dr.md)
+14. [ADR 0014: Distributed Caching Strategy](./docs/architecture-design/adrs/0014-distributed-caching-strategy-redis.md)
+15. [ADR 0015: Event-Driven Architecture (EDA)](./docs/architecture-design/adrs/0015-event-driven-architecture-intra-domain.md)
+16. [ADR 0016: Immutable Business Audit Trail](./docs/architecture-design/adrs/0016-immutable-business-audit-trail.md)
+17. [ADR 0017: Feature Flagging Strategy](./docs/architecture-design/adrs/0017-feature-flagging-strategy.md)
+18. [ADR 0018: Testing Pyramid & Automated Quality Gates](./docs/architecture-design/adrs/0018-testing-pyramid-quality-gates.md)
 
 ### 🏷️ Versioning & Audit Trail
 - [BMAD Automated Versioning Strategy](./docs/architecture-design/versioning_and_audit_strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
