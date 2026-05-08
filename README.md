@@ -4,6 +4,10 @@ Welcome to the **User Management System (UMS)**, a highly resilient, enterprise-
 
 The UMS is built leveraging the **BMAD Method**, enforcing strict **Clean Architecture (Hexagonal)** principles, $0-cost observability (AOP), and rigorous CI/CD quality gates. 
 
+> [!NOTE]
+> **Progressive Design Disclaimer**: This repository serves as a reference base for 100% Node.js-based systems. While currently implemented as a single modular monolithic solution (UMS), the frontend architecture is built to preserve its structure as a unified entry portal. In the future, it will scale to integrate other corporate backends (such as TMS, WMS, etc.), which will be developed as independent, isolated services with their own databases. Communication will be routed through a central API Gateway, using the Backend For Frontend (BFF) pattern to optimize payloads for web and mobile clients (see [ADR 0008](./ums-workspace/docs/architecture-design/adrs/0008-progressive-multimodule-evolution-gateway-bff.md)).
+
+
 ## 🛠️ Technology Stack
 - **Backend**: NestJS (v10), TypeORM, PostgreSQL 16.
 - **Frontend**: React (v18), Vite, Zustand, TanStack React Query.
@@ -31,6 +35,7 @@ Detailed logs of the foundational engineering decisions:
 ### 📈 Technical Debt & Backlog (Proposed Architecture)
 6. [ADR 0006: Future Microservices Transition with Dapr Sidecars](./ums-workspace/docs/architecture-design/adrs/0006-future-microservices-transition-dapr.md)
 7. [ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry](./ums-workspace/docs/architecture-design/adrs/0007-observability-telemetry-loki-opentelemetry.md)
+8. [ADR 0008: Progressive Multi-Module Evolution with API Gateway and BFF Patterns](./ums-workspace/docs/architecture-design/adrs/0008-progressive-multimodule-evolution-gateway-bff.md)
 
 ### 🏷️ Versioning & Audit Trail
 - [BMAD Automated Versioning Strategy](./ums-workspace/docs/architecture-design/versioning_and_audit_strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
