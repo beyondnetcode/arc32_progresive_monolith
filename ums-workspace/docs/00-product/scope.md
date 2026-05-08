@@ -1,0 +1,33 @@
+# 🔬 Product Scope & Boundaries - User Management System (UMS)
+
+## 1. In-Scope Capabilities
+The User Management System (UMS) manages the following key functional capabilities:
+
+### A. Organization & Multi-Tenancy Governance
+- Definition of **Organizations (Tenants)** and their hierarchical structures.
+- Strict database isolation using **PostgreSQL Row-Level Security (RLS)**.
+- Delegated administration: allows tenant admins to manage their own local users and assignments.
+
+### B. Granular Authorization & Profile Engine
+- Management of **Client Systems** registering to UMS.
+- Real-time compilation of the hierarchical **Permission Graph** for users.
+- Management of **Policy Templates** that attach reusable authorization blocks to multiple profiles.
+- Strict **Explicit-Deny Precedence** rule processing at the core authorization engine.
+
+### C. Dynamic UI Layout Injection
+- Dynamic metadata schemas for **Menus, Options, and Actions** mapped to system roles.
+- APIs exposing customized navigation structures to clients based on active permissions.
+
+### D. Immutable Business Auditing
+- Automatic tracking of all critical data mutations (creation, modification, deletion of users/roles) using database subscribers.
+- Secure, isolated, and immutable audit logs.
+
+---
+
+## 2. Out-of-Scope Capabilities
+To prevent scope creep and keep the UMS highly specialized, the following domains are strictly **Out-of-Scope**:
+
+- **Sovereign User Store / Password Hashing**: UMS does not store password hashes or perform local credentials verification. This is delegated 100% to Zitadel.
+- **Billing and Subscription Management**: Credit card processing, tenant invoicing, and subscription tier limits are managed by a separate Billing microservice.
+- **Direct Mail/SMS Gateways**: Delivery of notifications or verification messages is delegated to Twilio/SendGrid adapters; UMS only triggers the events.
+- **Transactional Domain Operations**: Core operations of downstream applications (such as TMS freight planning or WMS warehouse stock) are completely isolated from UMS.

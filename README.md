@@ -19,43 +19,43 @@ The UMS is built leveraging the **BMAD Method**, enforcing strict **Clean Archit
 This repository contains extensive technical documentation following the **bMAD Method** and industry standards (C4 Model and Markdown Architectural Decision Records - MADR). Use the following curated guides to navigate the codebase:
 
 ### 📖 1. Standards & Mandates (Core)
-*   👉 **[Global Engineering Standards & BMAD Manifesto](./ums-workspace/docs/artifacts/engineering_standards.md)**: **MANDATORY reading**. Establishes the non-negotiable coding standards, SOLID, Clean Code, OWASP compliance, and optional DDD guidelines.
+*   👉 **[Global Engineering Standards & BMAD Manifesto](./ums-workspace/docs/04-artifacts/engineering_standards.md)**: **MANDATORY reading**. Establishes the non-negotiable coding standards, SOLID, Clean Code, OWASP compliance, and optional DDD guidelines.
 
 ### 🏗️ 2. Architectural Design
-*   👉 **[ULPMS Functional Specifications & Use Cases](./ums-workspace/docs/functional/)**: Details the complete functional scope, glossary, ER diagrams, and permission matrices of the User Life-Cycle & Permissions Management System (ULPMS).
-*   👉 **[C4 Architecture Spec & Technical Inventory](./ums-workspace/docs/architecture-design/architecture_spec.md)**: Details the Level 1 (System Context), Level 2 (Container), and Level 3 (Component) diagrams of the UMS, along with the physical technology inventory.
-*   👉 **[Gap Analysis & Optimization Roadmap](./ums-workspace/docs/artifacts/gap_analysis_and_optimization_plan.md)**: Analyzes the platform's architectural maturity against 16 Enterprise Quality Criteria and tracks active ADR implementations.
+*   👉 **[ULPMS Functional Specifications & Use Cases](./ums-workspace/docs/)**: Details the complete functional scope, glossary, ER diagrams, and permission matrices of the User Life-Cycle & Permissions Management System (ULPMS).
+*   👉 **[C4 Architecture Spec & Technical Inventory](./ums-workspace/docs/02-architecture/architecture_spec.md)**: Details the Level 1 (System Context), Level 2 (Container), and Level 3 (Component) diagrams of the UMS, along with the physical technology inventory.
+*   👉 **[Gap Analysis & Optimization Roadmap](./ums-workspace/docs/04-artifacts/gap_analysis_and_optimization_plan.md)**: Analyzes the platform's architectural maturity against 16 Enterprise Quality Criteria and tracks active ADR implementations.
 
 ### 📜 3. Architectural Decision Records (ADRs)
 Foundational engineering decisions grouped by architectural focus:
 
 #### 🟢 General & Core Monorepo
-*   [ADR 0001: Monorepo Orchestration with Nx and npm Workspaces](./ums-workspace/docs/architecture-design/adrs/0001-monorepo-orchestration-nx.md)
-*   [ADR 0002: Clean Architecture and Hexagonal Boundaries on NestJS](./ums-workspace/docs/architecture-design/adrs/0002-clean-architecture-nestjs.md)
-*   [ADR 0003: Strict TypeScript Standards and SonarJS Static Analysis](./ums-workspace/docs/architecture-design/adrs/0003-strict-typescript-standards.md)
-*   [ADR 0005: Zero-Cost Security and CI Pipeline with CodeQL](./ums-workspace/docs/architecture-design/adrs/0005-ci-cd-quality-codeql.md)
-*   [ADR 0009: Strict Dependency Pinning and Automated Vulnerability Management](./ums-workspace/docs/architecture-design/adrs/0009-strict-dependency-pinning-vulnerability-management.md)
+*   [ADR 0001: Monorepo Orchestration with Nx and npm Workspaces](./ums-workspace/docs/03-adrs/0001-monorepo-orchestration-nx.md)
+*   [ADR 0002: Clean Architecture and Hexagonal Boundaries on NestJS](./ums-workspace/docs/03-adrs/0002-clean-architecture-nestjs.md)
+*   [ADR 0003: Strict TypeScript Standards and SonarJS Static Analysis](./ums-workspace/docs/03-adrs/0003-strict-typescript-standards.md)
+*   [ADR 0005: Zero-Cost Security and CI Pipeline with CodeQL](./ums-workspace/docs/03-adrs/0005-ci-cd-quality-codeql.md)
+*   [ADR 0009: Strict Dependency Pinning and Automated Vulnerability Management](./ums-workspace/docs/03-adrs/0009-strict-dependency-pinning-vulnerability-management.md)
 
 #### 🔵 Frontend & Client Integration
-*   [ADR 0004: Frontend State Management and React Query Offline Architecture](./ums-workspace/docs/architecture-design/adrs/0004-frontend-offline-resilience.md)
-*   [ADR 0008: Progressive Multi-Module Evolution with API Gateway and BFF Patterns](./ums-workspace/docs/architecture-design/adrs/0008-progressive-multimodule-evolution-gateway-bff.md)
+*   [ADR 0004: Frontend State Management and React Query Offline Architecture](./ums-workspace/docs/03-adrs/0004-frontend-offline-resilience.md)
+*   [ADR 0008: Progressive Multi-Module Evolution with API Gateway and BFF Patterns](./ums-workspace/docs/03-adrs/0008-progressive-multimodule-evolution-gateway-bff.md)
 
 #### 🟠 SaaS, Scalability & Resilience
-*   [ADR 0006: Future Microservices Transition with Dapr Sidecars](./ums-workspace/docs/architecture-design/adrs/0006-future-microservices-transition-dapr.md)
-*   [ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry](./ums-workspace/docs/architecture-design/adrs/0007-observability-telemetry-loki-opentelemetry.md)
-*   [ADR 0010: Multi-Tenancy Architecture Strategy for SaaS Evolution](./ums-workspace/docs/architecture-design/adrs/0010-multi-tenancy-architecture-strategy.md)
-*   [ADR 0011: Fault Tolerance & Resiliency Patterns (Circuit Breakers)](./ums-workspace/docs/architecture-design/adrs/0011-fault-tolerance-resiliency-patterns.md)
-*   [ADR 0012: Advanced Authorization (RBAC/ABAC)](./ums-workspace/docs/architecture-design/adrs/0012-advanced-authorization-rbac-abac.md)
-*   [ADR 0013: Cloud Infrastructure Topology & DR](./ums-workspace/docs/architecture-design/adrs/0013-cloud-infrastructure-topology-dr.md)
-*   [ADR 0014: Distributed Caching Strategy (Redis)](./ums-workspace/docs/architecture-design/adrs/0014-distributed-caching-strategy-redis.md)
-*   [ADR 0015: Event-Driven Architecture (EDA)](./ums-workspace/docs/architecture-design/adrs/0015-event-driven-architecture-intra-domain.md)
-*   [ADR 0016: Immutable Business Audit Trail (CDC)](./ums-workspace/docs/architecture-design/adrs/0016-immutable-business-audit-trail.md)
-*   [ADR 0017: Feature Flagging Strategy](./ums-workspace/docs/architecture-design/adrs/0017-feature-flagging-strategy.md)
-*   [ADR 0018: Testing Pyramid & Automated Quality Gates](./ums-workspace/docs/architecture-design/adrs/0018-testing-pyramid-quality-gates.md)
-*   [ADR 0019: Tactical Design Patterns for Domain Integrity (Result Pattern)](./ums-workspace/docs/architecture-design/adrs/0019-tactical-design-patterns-future-proofing.md)
+*   [ADR 0006: Future Microservices Transition with Dapr Sidecars](./ums-workspace/docs/03-adrs/0006-future-microservices-transition-dapr.md)
+*   [ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry](./ums-workspace/docs/03-adrs/0007-observability-telemetry-loki-opentelemetry.md)
+*   [ADR 0010: Multi-Tenancy Architecture Strategy for SaaS Evolution](./ums-workspace/docs/03-adrs/0010-multi-tenancy-architecture-strategy.md)
+*   [ADR 0011: Fault Tolerance & Resiliency Patterns (Circuit Breakers)](./ums-workspace/docs/03-adrs/0011-fault-tolerance-resiliency-patterns.md)
+*   [ADR 0012: Advanced Authorization (RBAC/ABAC)](./ums-workspace/docs/03-adrs/0012-advanced-authorization-rbac-abac.md)
+*   [ADR 0013: Cloud Infrastructure Topology & DR](./ums-workspace/docs/03-adrs/0013-cloud-infrastructure-topology-dr.md)
+*   [ADR 0014: Distributed Caching Strategy (Redis)](./ums-workspace/docs/03-adrs/0014-distributed-caching-strategy-redis.md)
+*   [ADR 0015: Event-Driven Architecture (EDA)](./ums-workspace/docs/03-adrs/0015-event-driven-architecture-intra-domain.md)
+*   [ADR 0016: Immutable Business Audit Trail (CDC)](./ums-workspace/docs/03-adrs/0016-immutable-business-audit-trail.md)
+*   [ADR 0017: Feature Flagging Strategy](./ums-workspace/docs/03-adrs/0017-feature-flagging-strategy.md)
+*   [ADR 0018: Testing Pyramid & Automated Quality Gates](./ums-workspace/docs/03-adrs/0018-testing-pyramid-quality-gates.md)
+*   [ADR 0019: Tactical Design Patterns for Domain Integrity (Result Pattern)](./ums-workspace/docs/03-adrs/0019-tactical-design-patterns-future-proofing.md)
 
 ### 🏷️ 4. Versioning & Release Cycles
-*   [BMAD Automated Versioning Strategy](./ums-workspace/docs/artifacts/versioning_and_audit_strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
+*   [BMAD Automated Versioning Strategy](./ums-workspace/docs/05-roadmap/versioning_and_audit_strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
 *   **[View the Official CHANGELOG](./ums-workspace/CHANGELOG.md)** - The pristine audit log of all merged features and fixes across the monorepo. fixes across the monorepo.
 
 ---
