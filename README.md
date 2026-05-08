@@ -32,6 +32,10 @@ Detailed logs of the foundational engineering decisions:
 6. [ADR 0006: Future Microservices Transition with Dapr Sidecars](./ums-workspace/docs/architecture-design/adrs/0006-future-microservices-transition-dapr.md)
 7. [ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry](./ums-workspace/docs/architecture-design/adrs/0007-observability-telemetry-loki-opentelemetry.md)
 
+### 🏷️ Versioning & Audit Trail
+- [BMAD Automated Versioning Strategy](./ums-workspace/docs/architecture-design/versioning_and_audit_strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
+- **[View the Official CHANGELOG](./ums-workspace/CHANGELOG.md)** - The pristine audit log of all merged features and fixes across the monorepo.
+
 ---
 
 ## 🚀 Quick Start
