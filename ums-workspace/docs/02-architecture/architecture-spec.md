@@ -40,10 +40,10 @@ Defines the boundary of the User Management System (UMS) interacting with corpor
 
 ```mermaid
 graph TD
-    User["👥 Multi-Tenant Users<br/>(Tenant A, B, C Staff)"]
-    UMS["🏢 UMS & SaaS Gateway<br/>(API Gateway & BFF)"]
-    ExternalAuth["🔒 External Identity Service<br/>(OAuth / Tenant IdP)"]
-    Downstream["📦 Downstream SaaS Services<br/>(TMS, WMS, etc.)"]
+    User["Multi-Tenant Users (Tenant Staff)"]
+    UMS["UMS and SaaS Gateway (API Gateway and BFF)"]
+    ExternalAuth["External Identity Service (OAuth / Tenant IdP)"]
+    Downstream["Downstream SaaS Services (TMS, WMS, etc.)"]
 
     User -->|Logs in / Accesses Portal| UMS
     UMS -->|Verifies credentials per Tenant| ExternalAuth
@@ -57,19 +57,19 @@ Maps the physical subsystems (React Frontend, NestJS API, PostgreSQL Database) t
 
 ```mermaid
 graph TD
-    subgraph Clients["🌐 Client Applications"]
-        ReactApp["⚛️ Frontend React Web App<br/>(Lazy-loaded Multi-Module Portal)"]
-        MobileApp["📱 Future Mobile App<br/>(iOS/Android)"]
+    subgraph Clients["Client Applications"]
+        ReactApp["Frontend React Web App (Lazy-loaded Portal)"]
+        MobileApp["Future Mobile App (iOS/Android)"]
     end
 
-    subgraph Gateways["🛡️ BFF Gateways"]
-        WebBFF["🕸️ Web BFF Gateway<br/>(Express/NestJS)"]
-        MobileBFF["📲 Mobile BFF Gateway<br/>(Payload Optimizer)"]
+    subgraph Gateways["BFF Gateways"]
+        WebBFF["Web BFF Gateway (Express/NestJS)"]
+        MobileBFF["Mobile BFF Gateway (Payload Optimizer)"]
     end
 
-    subgraph Server["🖥️ Application Services (Tenant Isolated)"]
-        NestAPI["🦁 RESTful NestJS Service<br/>(UMS Core / TMS / WMS)"]
-        PostgresDB["🐘 PostgreSQL 16 Database<br/>(Shared Schema + Row-Level Security RLS)"]
+    subgraph Server["Application Services (Tenant Isolated)"]
+        NestAPI["RESTful NestJS Service (UMS Core / TMS / WMS)"]
+        PostgresDB["PostgreSQL 16 Database (Shared Schema + RLS)"]
     end
 
     ReactApp -->|1. HTTPS / JWT + Tenant Header| WebBFF
@@ -86,24 +86,24 @@ An interactive zoom into the **NestJS API** structure, demonstrating the flow of
 
 ```mermaid
 graph TD
-    subgraph HTTP["🌐 External Adapters Layer (HTTP)"]
-        Controller["UserController<br/>(HTTP Controller with Helmet and Throttler)"]
+    subgraph HTTP["External Adapters Layer (HTTP)"]
+        Controller["UserController (HTTP Controller)"]
     end
 
-    subgraph Application["⚙️ Use Cases Layer (Application)"]
-        UseCase["RegisterUserUseCase<br/>(Business Use Case)"]
-        DTO["RegisterUserDto<br/>(Attribute Validation)"]
+    subgraph Application["Use Cases Layer (Application)"]
+        UseCase["RegisterUserUseCase (Business Use Case)"]
+        DTO["RegisterUserDto (Validation)"]
     end
 
-    subgraph Core["💎 Domain Core Layer (Core)"]
-        UserEntity["User Entity<br/>(Pure Business Entity)"]
-        IUserRepo["IUserRepository<br/>(Persistence Port)"]
-        IPassHasher["IPasswordHasher<br/>(Hashing Port)"]
+    subgraph Core["Domain Core Layer (Core)"]
+        UserEntity["User Entity (Pure Business Entity)"]
+        IUserRepo["IUserRepository (Persistence Port)"]
+        IPassHasher["IPasswordHasher (Hashing Port)"]
     end
 
-    subgraph Infrastructure["💾 Persistence Adapters Layer"]
-        TypeOrmRepo["TypeOrmUserRepository<br/>(Persistence Adapter)"]
-        BcryptHasher["BcryptPasswordHasher<br/>(Hashing Adapter)"]
+    subgraph Infrastructure["Persistence Adapters Layer"]
+        TypeOrmRepo["TypeOrmUserRepository (Persistence Adapter)"]
+        BcryptHasher["BcryptPasswordHasher (Hashing Adapter)"]
     end
 
     Controller -->|Invokes| UseCase
