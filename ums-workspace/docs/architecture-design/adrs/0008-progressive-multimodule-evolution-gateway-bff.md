@@ -11,42 +11,57 @@ Currently, the UMS (User Management System) repository serves as an enterprise-g
 
 However, UMS is intended to scale into a unified gateway. In the future, the frontend application architecture must be preserved, but it will serve as the single entry point for multiple corporate modules and systems (such as Transport Management System - TMS, Warehouse Management System - WMS, etc.). These upcoming systems will be exposed as independent, decoupled services—each governed by its own business context and database. 
 
-To prevent tight coupling between the client and multiple backends, and to accommodate potential mobile clients in the future, we need a robust, progressive architecture that guides this evolution while adhering to the **Backend For Frontend (BFF)** and **API Gateway** patterns.
+To prevent tight coupling between the clients and multiple backends, and to accommodate diverse clients (such as Web Portals, Mobile Applications, or Third-Party B2B integrations), we need a robust, progressive architecture that guides this evolution while strictly adhering to the **Backend For Frontend (BFF)** and **API Gateway** patterns. 
+
+Without a BFF layer, different clients (e.g., mobile apps with limited bandwidth vs. rich web dashboards) would be forced to consume the same generic backend endpoints, leading to over-fetching, high network latency, and rigid client-side state management.
 
 ## Decision
-We decided to adopt a **Progressive Multi-Module and Distributed Gateway Architecture** for future phases:
+We decided to adopt a **Progressive Multi-Module and Distributed Backend For Frontend (BFF) Gateway Architecture** for future phases:
 
 1. **Frontend Preservation**: The React architecture (Zustand + TanStack Query) will remain unified as the central user portal, progressively lazy-loading modules (TMS, WMS, UMS) to optimize bundle size and performance.
-2. **Exposed Independent Services**: Any new system (e.g., TMS, WMS) will be developed as a separate backend service with its own isolated database (Database-per-Service pattern), adhering to bounded contexts.
-3. **Core API Gateway**: Introduce a central **API Gateway** as the single point of entry for the Web Portal. The Gateway will handle cross-cutting concerns like global authentication routing, rate limiting, and request aggregation, forwarding requests to the appropriate service (UMS, TMS, WMS).
-4. **Backend For Frontend (BFF) Pattern**: If a Mobile Application is introduced, a separate, dedicated Mobile BFF Gateway will be established. This ensures that the web portal and the mobile app each have optimized data payloads, network protocols (e.g., gRPC for BFF-to-Service, HTTP/JSON for Client-to-BFF), and tailored rate limits.
+2. **Exposed Independent Services**: Any new system (e.g., TMS, WMS) will be developed as a separate, decoupled backend service with its own isolated database (Database-per-Service pattern), adhering to bounded contexts.
+3. **Backend For Frontend (BFF) Pattern**: Instead of exposing downstream services directly to the public web or using a single monolithic gateway, we will implement dedicated **BFF Gateways** tailored for each specific client type:
+   * **Web BFF Gateway**: Optimized specifically for the React Web Portal. It aggregates calls to UMS, TMS, and WMS, formats large data payloads suitable for high-speed desktop browsers, and handles cookie-based secure sessions.
+   * **Mobile BFF Gateway**: Optimized specifically for Mobile Applications (iOS/Android). It compresses payloads, combines multiple downstream HTTP requests into single roundtrips to reduce mobile network latency, translates protocols (e.g., HTTP/JSON to gRPC downstream), and caches mobile-specific resources.
+   * **B2B API Gateway**: A separate ingress gateway for external clients or third-party integrations, enforcing strict rate-limiting, API keys, and contract-based schemas.
+4. **Downstream Isolation**: Public clients never communicate directly with downstream services (UMS, TMS, WMS). All client traffic is routed through their respective BFFs, which act as the security boundary, session manager, and API composer.
+
+### 🏛️ Progressive System Architecture Diagram
 
 ```
-                  +-------------------+
-                  |   Web Browser     |
-                  +---------+---------+
-                            | HTTP / HTTPS
-                            v
-                  +---------+---------+
-                  |  Web API Gateway  |
-                  +----+----+----+----+
-                       |    |    |
-         +-------------+    |    +-------------+
-         |                  |                  |
-         v                  v                  v
-+--------+--------+  +------+------+  +--------+--------+
-|   UMS Service   |  | TMS Service |  |   WMS Service   |
-| (PostgreSQL DB) |  | (Isolated)  |  | (Isolated DB)   |
-+-----------------+  +-------------+  +-----------------+
++------------------+     +--------------------+     +-------------------+
+|  React Web App   |     | Mobile Client App  |     |  External B2B IP  |
+|  (Desktop Web)   |     |   (iOS/Android)    |     |   (Third-Party)   |
++--------+---------+     +---------+----------+     +---------+---------+
+         |                         |                          |
+         | HTTP / HTTPS            | HTTP2 / JSON             | HTTPS / API Key
+         v                         v                          v
++--------+---------+     +---------+----------+     +---------+---------+
+|  Web BFF Gateway |     | Mobile BFF Gateway |     |  B2B API Gateway  |
+|  (Express/Nest)  |     |   (Payload Comp.)  |     |  (Rate Limiter)   |
++--------+---------+     +---------+----------+     +---------+---------+
+         |                         |                          |
+         +-------------+-----------+--------------------------+
+                       |
+                       | Internal gRPC / High-Speed TCP
+                       v
+         +-------------+-------------+-------------+
+         |                           |             |
+         v                           v             v
++--------+--------+           +------+------+  +--------+--------+
+|   UMS Service   |           | TMS Service |  |   WMS Service   |
+| (PostgreSQL DB) |           | (Isolated)  |  | (Isolated DB)   |
++-----------------+           +-------------+  +-----------------+
 ```
 
 ## Consequences
 
 ### Positive (Pros)
-* **High Scalability & Independence**: Different teams can work, deploy, and scale UMS, TMS, and WMS independently without affecting the core monorepo.
-* **Optimized Client Experience (BFF)**: The React Web app and potential Mobile clients will fetch optimized payloads suited for their respective devices through custom gateways, avoiding over-fetching.
-* **Security & Centralization**: The Web API Gateway acts as a single security shield (handling CORS, SSL termination, and global JWT verification).
+* **Tailored Client Performance (BFF)**: Mobile apps suffer zero latency or over-fetching issues, as the Mobile BFF only returns the minimal payload required for mobile screens.
+* **Independent Scalability**: The Web BFF and Mobile BFF can be scaled, updated, and deployed independently according to the traffic patterns of each platform (e.g., higher scaling of Mobile BFF during peak mobile usage).
+* **Decoupled Contracts**: Downstream services (UMS, TMS, WMS) can change their internal APIs without breaking the public client apps, as the BFF layers act as an anti-corruption layer mapping the contracts.
+* **Security & Centralization**: BFFs manage specific security protocols per client (e.g., HTTPOnly secure cookies for Web vs. OAuth2 Bearer Tokens/Keychain for Mobile).
 
 ### Negative (Cons)
-* **Infrastructure Complexity**: Introduces additional network hops and requires managing multiple hosting instances, Docker environments, or Kubernetes clusters.
-* **Data Consistency**: Cross-service operations will require eventual consistency patterns (e.g., Saga or Outbox) instead of simple ACID TypeORM transactions.
+* **Gateway Proliferation**: Managing multiple BFF codebases (Web BFF, Mobile BFF) increases development overhead.
+* **Deployment Orchestration**: Requires robust CI/CD pipelines to manage deployment of multiple gateways alongside downstream microservices (easily handled via Nx monorepo configurations).
