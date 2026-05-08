@@ -1,4 +1,4 @@
-﻿# ADR 0006: Future Microservices Transition with Dapr Sidecars
+# ADR 0006: Future Microservices Transition with Dapr Sidecars
 
 ## Status
 Proposed (Backlog / Technical Debt)
@@ -18,7 +18,7 @@ We propose to adopt **Dapr (Distributed Application Runtime)** as our microservi
 ## Consequences
 
 ### Positive (Pros)
-* **High Extensibility**: Adding or replacing databases, queues, or secrets stores requires zero code changesâ€”only updating a declarative YAML component in Dapr.
+* **High Extensibility**: Adding or replacing databases, queues, or secrets stores requires zero code changes - only updating a declarative YAML component in Dapr.
 * **Polyglot Architecture**: Microservices can be written in any language (Go, Python, NestJS) while sharing the same sidecar capabilities.
 * **Resiliency**: Native support for retry policies, circuit breakers, and state locks.
 
