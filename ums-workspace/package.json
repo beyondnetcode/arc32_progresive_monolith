@@ -16,12 +16,12 @@
     "test": "npm run test --workspaces --if-present"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.5.3",
-    "@commitlint/config-conventional": "^20.5.3",
-    "@nx/js": "^22.7.1",
-    "eslint-plugin-sonarjs": "^4.0.3",
+    "@commitlint/cli": "20.5.3",
+    "@commitlint/config-conventional": "20.5.3",
+    "@nx/js": "22.7.1",
+    "eslint-plugin-sonarjs": "4.0.3",
     "nx": "22.7.1",
-    "typescript": "^5.4.5"
+    "typescript": "5.4.5"
   },
   "dependencies": {
     "@vitejs/plugin-react": "4.3.3"

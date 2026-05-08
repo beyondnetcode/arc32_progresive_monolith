@@ -36,6 +36,7 @@ Detailed logs of the foundational engineering decisions:
 6. [ADR 0006: Future Microservices Transition with Dapr Sidecars](./docs/architecture-design/adrs/0006-future-microservices-transition-dapr.md)
 7. [ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry](./docs/architecture-design/adrs/0007-observability-telemetry-loki-opentelemetry.md)
 8. [ADR 0008: Progressive Multi-Module Evolution with API Gateway and BFF Patterns](./docs/architecture-design/adrs/0008-progressive-multimodule-evolution-gateway-bff.md)
+9. [ADR 0009: Strict Dependency Pinning and Automated Vulnerability Management](./docs/architecture-design/adrs/0009-strict-dependency-pinning-vulnerability-management.md)
 
 ### 🏷️ Versioning & Audit Trail
 - [BMAD Automated Versioning Strategy](./docs/architecture-design/versioning_and_audit_strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
