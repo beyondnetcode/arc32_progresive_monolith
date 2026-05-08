@@ -32,3 +32,11 @@ Standardizing access under UMS provides three massive business benefits:
 - **Zero Ticket Onboarding**: Clients self-manage their administrative scopes through delegable profiles.
 - **Compliance Ready**: Immutable business audit logs (CDC/Subscribers) track all critical permission mutations, making the system instantly ready for SOC 2 and ISO 27001 certifications.
 - **Enterprise-Grade Security**: Passwordless cryptography completely eliminates brute-force vectors and credentials theft.
+
+---
+
+## 4. Reference Operational Model
+To illustrate the real-world operational execution of UMS, our specifications utilize the **SCM Transportation Analyst** scenario as the primary reference model. This role represents high-concurrency B2B access to the *SCM Route Planner* under the context of specific tenants (e.g., *Logistics Corp*) and localized branches (e.g., *Callao Terminal, Peru*). 
+
+The detailed architectural specs, sequence diagrams, and dynamic API contracts for this reference model are fully detailed in **[enterprise_iam_ums_specification.md](../../../brain/71335e4d-6260-47f1-b3d0-312cd05611ad/enterprise_iam_ums_specification.md)**.
+

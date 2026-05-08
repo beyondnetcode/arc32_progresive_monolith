@@ -179,6 +179,11 @@ This matrix maps foundational technical decisions to their targeted Quality Attr
 | **Event-Driven Decoupling** | [ADR 0015](../03-adrs/0015-event-driven-architecture-intra-domain.md) | Decoupling, Scalability, Extensibilidad | Monolith modules communicate asynchronously using an internal event bus hidden behind `IEventBusPort`. | Unit tests verifying asynchronous execution paths and payload formats. |
 | **Immutable Auditing** | [ADR 0016](../03-adrs/0016-immutable-business-audit-trail.md) | Traceability, Compliance, Security | Automatically tracks business-critical mutations (Old Value -> New Value) using database subscribers. | TypeORM Lifecycle Hook interceptors with strictly isolated tables. |
 | **Tactical Domain Integrity** | [ADR 0019](../03-adrs/0019-tactical-design-patterns-future-proofing.md) | Decoupling, Clarity, Dapr Readiness | Uses Result Pattern, Null Objects, and Decorators to protect the Core from throwing HTTP/external framework errors. | Mandatory return types and custom ESLint boundaries rules. |
+| **Identity Provider Abstraction** | [ADR 0020](../03-adrs/0020-identity-provider-abstraction-strategy.md) | Decoupling, Vendor Neutrality, Extensibilidad | Abstracts external directories (Zitadel, Okta, SAML) via the Strategy Pattern wrapped under a Hexagonal Port. | Jest unit tests verifying agnostic credential routing. |
+| **High-Performance Compilation** | [ADR 0021](../03-adrs/0021-high-performance-auth-and-graph-compilation.md) | Performance, Ultra-Low Latency, Scalability | Resolves dynamic hierarchical permission graphs under 5ms using Redis read-aside caching. | Locust load tests and SRE telemetry tracing. |
+| **Contextual Authentication** | [ADR 0022](../03-adrs/0022-contextual-auth-and-pluggable-projections.md) | Multi-Tenancy, Customization, Extensibilidad | Supports localized corporate branch context resolution and projects compiled graphs into multiple output formats. | Integration tests verifying branch-specific (sedes) dynamic menu structures. |
+| **Centralized Auth Kernel** | [ADR 0023](../03-adrs/0023-centralized-ums-vs-decentralized-access.md) | Security, SoC, Governance | Establishes the UMS as a centralized authorization core shared across all enterprise applications. | Strict ESLint boundary checks and centralized access ledger audits. |
+
 
 ---
 
@@ -200,3 +205,17 @@ To guarantee the healthy evolution of the monorepo towards distributed models an
 *   **[ADR 0017: Feature Flagging Strategy](../03-adrs/0017-feature-flagging-strategy.md)**: Integrates runtime feature toggles for progressive, zero-downtime feature delivery.
 *   **[ADR 0018: Testing Pyramid & Automated Quality Gates](../03-adrs/0018-testing-pyramid-quality-gates.md)**: Enforces strict testing standards and CI/CD quality gates (>70% coverage).
 *   **[ADR 0019: Tactical Design Patterns for Domain Integrity](../03-adrs/0019-tactical-design-patterns-future-proofing.md)**: Mandates the Result Pattern, Null Objects, and Decorators to ensure 100% domain isolation and zero-impact evolution towards Dapr microservices.
+
+---
+
+## 🏛️ 6. Centralized Authorization Engine Architecture (PEP/PDP/PAP/PIP)
+
+To support secure, context-aware, and highly scalable access control across all corporate applications, the system adopts a centralized **User Management System (UMS)** serving as a shared "authorization kernel". This architecture decouples identity validation from dynamic permission resolution by implementing standard **XACML Architectural Reference Model** layers:
+
+1.  **Policy Enforcement Point (PEP)**: Intercepts incoming client requests at the API Gateway or individual SCM/NestJS Guards, enforcing access rules by reading the returned authorization graph.
+2.  **Policy Decision Point (PDP)**: The core UMS Engine. It compiles and resolves fine-grained permissions into a cached, hierarchical graph under 5ms using Redis.
+3.  **Policy Administration Point (PAP)**: The UMS administrative portal where security teams manage baseline templates, tenant profiles, and explicit permission rules.
+4.  **Policy Information Point (PIP)**: Relational PostgreSQL registries supplying active tenant, branch (sedes), and user attributes during graph evaluation.
+
+By utilizing the **Strategy Pattern** for dynamic output projections, the UMS can format the compiled graph into a variety of target structures on-the-fly (including frontend-optimized JSON, cryptographically signed JWT scopes, or Claims-based lists), ensuring high adaptability and complete zero-lock-in longevity. For a complete analysis of the SCM Transportation Analyst reference model and API contracts, consult **[enterprise_iam_ums_specification.md](../../../brain/71335e4d-6260-47f1-b3d0-312cd05611ad/enterprise_iam_ums_specification.md)**.
+
