@@ -1,134 +1,134 @@
-# 🏛️ Documento de Diseño y Arquitectura de Software (UMS)
+# 🏛️ Software Architecture Design Document (UMS)
 
-Este documento detalla la especificación formal del diseño del sistema para el monorepo **`ums-workspace`**. Adopta el estándar de modelado de software **C4 Model** (Nivel 1: Contexto de Sistema, Nivel 2: Contenedores, Nivel 3: Componentes) y presenta el inventario técnico unificado y auditado del proyecto.
+This document details the formal system design specification for the **`ums-workspace`** monorepo. It adopts the **C4 Model** software modeling standard (Level 1: System Context, Level 2: Containers, Level 3: Components) and presents the unified and audited technical inventory of the project.
 
 ---
 
-## 🗺️ 1. Modelo C4 (C4 Model)
+## 🗺️ 1. C4 Model
 
-El diseño arquitectónico de UMS se modela en tres niveles progresivos de abstracción para alinear la visión del negocio con la implementación física en código.
+The architectural design of UMS is modeled at three progressive levels of abstraction to align business vision with physical code implementation.
 
-### Nivel 1: Contexto de Sistema (System Context Diagram)
-Define la frontera del sistema de gestión de usuarios (UMS) interactuando con los usuarios corporativos y los servicios externos de UMS.
+### Level 1: System Context Diagram
+Defines the boundary of the User Management System (UMS) interacting with corporate users and external identity services.
 
 ```mermaid
 graph TD
-    User["👥 Usuario UMS<br/>(Personal Corporativo / Operadores)"]
-    UMS["🏢 Sistema de Gestión de Usuarios (UMS)<br/>(ums-workspace)"]
-    ExternalAuth["🔒 Servicio de Identidad UMS<br/>(OAuth / LDAP Externo)"]
+    User["👥 UMS User<br/>(Corporate Staff / Operators)"]
+    UMS["🏢 User Management System (UMS)<br/>(ums-workspace)"]
+    ExternalAuth["🔒 UMS Identity Service<br/>(OAuth / External LDAP)"]
 
-    User -->|Inicia sesión / Administra usuarios| UMS
-    UMS -->|Verifica credenciales federadas| ExternalAuth
+    User -->|Logs in / Manages users| UMS
+    UMS -->|Verifies federated credentials| ExternalAuth
 ```
 
 ---
 
-### Nivel 2: Diagrama de Contenedores (Container Diagram)
-Mapea los subsistemas físicos (Frontend React, API NestJS, Base de Datos PostgreSQL) que componen el monorepo y cómo se comunican mediante protocolos seguros.
+### Level 2: Container Diagram
+Maps the physical subsystems (React Frontend, NestJS API, PostgreSQL Database) that make up the monorepo and how they communicate using secure protocols.
 
 ```mermaid
 graph TD
-    subgraph Browser["🌐 Navegador del Cliente"]
+    subgraph Browser["🌐 Client Browser"]
         ReactApp["⚛️ Frontend React Web App<br/>(Zustand + React Query + Lucide)"]
     end
 
-    subgraph Server["🖥️ Servidor de Aplicación (Host Local/Nube)"]
-        NestAPI["🦁 API RESTful NestJS<br/>(Clean Architecture / TypeORM)"]
-        PostgresDB["🐘 Base de Datos PostgreSQL 16<br/>(TypeORM Persistence)"]
+    subgraph Server["🖥️ Application Server (Local Host/Cloud)"]
+        NestAPI["🦁 RESTful NestJS API<br/>(Clean Architecture / TypeORM)"]
+        PostgresDB["🐘 PostgreSQL 16 Database<br/>(TypeORM Persistence)"]
     end
 
-    ReactApp -->|1. Consultas HTTPS / TLS segura| NestAPI
-    NestAPI -->|2. Conexión TCP / TypeORM Driver| PostgresDB
+    ReactApp -->|1. HTTPS Queries / Secure TLS| NestAPI
+    NestAPI -->|2. TCP Connection / TypeORM Driver| PostgresDB
 ```
 
 ---
 
-### Nivel 3: Diagrama de Componentes de la API (Component Diagram)
-Zoom interactivo a la estructura de la **API NestJS**, demostrando el flujo de control hacia el interior (*Inversion of Control*) de la Arquitectura Hexagonal.
+### Level 3: API Component Diagram
+An interactive zoom into the **NestJS API** structure, demonstrating the flow of control towards the core (*Inversion of Control*) of the Hexagonal Architecture.
 
 ```mermaid
 graph TD
-    subgraph HTTP["🌐 Capa de Adaptadores Externos (HTTP)"]
-        Controller["UserController<br/>(HTTP Controller con Helmet y Throttler)"]
+    subgraph HTTP["🌐 External Adapters Layer (HTTP)"]
+        Controller["UserController<br/>(HTTP Controller with Helmet and Throttler)"]
     end
 
-    subgraph Application["⚙️ Capa de Casos de Uso (Application)"]
-        UseCase["RegisterUserUseCase<br/>(Caso de Uso de Negocio)"]
-        DTO["RegisterUserDto<br/>(Validación de Atributos)"]
+    subgraph Application["⚙️ Use Cases Layer (Application)"]
+        UseCase["RegisterUserUseCase<br/>(Business Use Case)"]
+        DTO["RegisterUserDto<br/>(Attribute Validation)"]
     end
 
-    subgraph Core["💎 Capa del Núcleo de Dominio (Core)"]
-        UserEntity["User Entity<br/>(Entidad Pura de Negocio)"]
-        IUserRepo["IUserRepository<br/>(Puerto de Persistencia)"]
-        IPassHasher["IPasswordHasher<br/>(Puerto de Hashing)"]
+    subgraph Core["💎 Domain Core Layer (Core)"]
+        UserEntity["User Entity<br/>(Pure Business Entity)"]
+        IUserRepo["IUserRepository<br/>(Persistence Port)"]
+        IPassHasher["IPasswordHasher<br/>(Hashing Port)"]
     end
 
-    subgraph Infrastructure["💾 Capa de Adaptadores de Persistencia"]
-        TypeOrmRepo["TypeOrmUserRepository<br/>(Adaptador de Persistencia)"]
-        BcryptHasher["BcryptPasswordHasher<br/>(Adaptador de Hashing)"]
+    subgraph Infrastructure["💾 Persistence Adapters Layer"]
+        TypeOrmRepo["TypeOrmUserRepository<br/>(Persistence Adapter)"]
+        BcryptHasher["BcryptPasswordHasher<br/>(Hashing Adapter)"]
     end
 
-    Controller -->|Invoca| UseCase
-    UseCase -->|Valida entrada con| DTO
-    UseCase -->|Instancia y crea| UserEntity
-    UseCase -.->|Depende de| IUserRepo
-    UseCase -.->|Depende de| IPassHasher
+    Controller -->|Invokes| UseCase
+    UseCase -->|Validates input with| DTO
+    UseCase -->|Instantiates and creates| UserEntity
+    UseCase -.->|Depends on| IUserRepo
+    UseCase -.->|Depends on| IPassHasher
 
-    TypeOrmRepo -.->|Implementa| IUserRepo
-    BcryptHasher -.->|Implementa| IPassHasher
+    TypeOrmRepo -.->|Implements| IUserRepo
+    BcryptHasher -.->|Implements| IPassHasher
 ```
 
 ---
 
-## 📊 2. Inventario Técnico de Dependencias (Sovereign Tech Inventory)
+## 📊 2. Dependency Technical Inventory (Sovereign Tech Inventory)
 
-Este inventario detalla todas las herramientas, librerías, plugins y componentes por espacio de trabajo con su respectiva versión instalada, su recomendación de ciclo de vida tecnológica (*Staff Recommendation*) y su documentación oficial de referencia.
+This inventory details all tools, libraries, plugins, and components per workspace with their respective installed version, technical lifecycle recommendation (*Staff Recommendation*), and official reference URL.
 
-### 🦁 A. Backend (Capa API NestJS)
+### 🦁 A. Backend (NestJS API Layer)
 
-| Dependencia / Librería | Versión Instalada | Recomendación Técnica | URL de Referencia |
+| Dependency / Library | Installed Version | Technical Recommendation | Reference URL |
 | :--- | :--- | :--- | :--- |
-| `@nestjs/core` | `^10.0.0` | **Mantener (Estable)** - Núcleo robusto para inyección de dependencias. | [NestJS Docs](https://docs.nestjs.com/) |
-| `@nestjs/throttler` | `^6.5.0` | **Mantener (Estable)** - Prevención de ataques de fuerza bruta y DDoS local. | [NestJS Rate Limiting](https://docs.nestjs.com/security/rate-limiting) |
-| `@nestjs/typeorm` | `^11.0.1` | **Mantener (Estable)** - Integración nativa de persistencia con soporte de transacciones. | [NestJS TypeORM](https://docs.nestjs.com/techniques/database) |
-| `typeorm` | `^0.3.28` | **Mantener (Estable)** - ORM maduro con soporte excelente de migraciones y Type Safety. | [TypeORM Official](https://typeorm.io/) |
-| `bcrypt` | `^6.0.0` | **Mantener (Estable)** - Algoritmo criptográfico robusto para almacenamiento de contraseñas. | [Bcrypt GitHub](https://github.com/kelektiv/node.bcrypt.js) |
-| `helmet` | `^8.1.0` | **Mantener (Crítico)** - Inyección automática de cabeceras HTTP de seguridad (CORS, XSS). | [Helmet Docs](https://helmetjs.github.com/) |
-| `pg` | `^8.20.0` | **Mantener (Estable)** - Driver de conexión nativa de alto rendimiento para PostgreSQL. | [Node Postgres](https://node-postgres.com/) |
-| `class-validator` | `^0.15.1` | **Mantener (Estable)** - Validación declarativa de DTOs en tiempo de ejecución. | [Class Validator](https://github.com/typestack/class-validator) |
+| `@nestjs/core` | `^10.0.0` | **Keep (Stable)** - Robust core for dependency injection. | [NestJS Docs](https://docs.nestjs.com/) |
+| `@nestjs/throttler` | `^6.5.0` | **Keep (Stable)** - Prevention of brute force and local DDoS attacks. | [NestJS Rate Limiting](https://docs.nestjs.com/security/rate-limiting) |
+| `@nestjs/typeorm` | `^11.0.1` | **Keep (Stable)** - Native persistence integration with transaction support. | [NestJS TypeORM](https://docs.nestjs.com/techniques/database) |
+| `typeorm` | `^0.3.28` | **Keep (Stable)** - Mature ORM with excellent migration support and Type Safety. | [TypeORM Official](https://typeorm.io/) |
+| `bcrypt` | `^6.0.0` | **Keep (Stable)** - Robust cryptographic algorithm for password storage. | [Bcrypt GitHub](https://github.com/kelektiv/node.bcrypt.js) |
+| `helmet` | `^8.1.0` | **Keep (Critical)** - Automatic injection of secure HTTP headers (CORS, XSS). | [Helmet Docs](https://helmetjs.github.com/) |
+| `pg` | `^8.20.0` | **Keep (Stable)** - High-performance native connection driver for PostgreSQL. | [Node Postgres](https://node-postgres.com/) |
+| `class-validator` | `^0.15.1` | **Keep (Stable)** - Declarative validation of DTOs at runtime. | [Class Validator](https://github.com/typestack/class-validator) |
 
 ---
 
 ### ⚛️ B. Frontend (React Web Client)
 
-| Dependencia / Librería | Versión Instalada | Recomendación Técnica | URL de Referencia |
+| Dependency / Library | Installed Version | Technical Recommendation | Reference URL |
 | :--- | :--- | :--- | :--- |
-| `react` | `^18.3.1` | **Mantener (Estable)** - Versión ultra-estable compatible con ecosistemas maduros. | [React Documentation](https://react.dev/) |
-| `vite` | `^5.4.10` | **Mantener (Estable)** - Bundler de altísima velocidad compatible con Node 18. | [Vite JS](https://vitejs.dev/) |
-| `@tanstack/react-query`| `^5.100.9` | **Mantener (Crítico)** - Sincronización asíncrona de estado de servidor y caché inteligente. | [TanStack Query Docs](https://tanstack.com/query/latest) |
-| `zustand` | `^5.0.13` | **Mantener (Estable)** - Gestor de estado global super ligero alternativo a Redux. | [Zustand GitHub](https://github.com/pmndrs/zustand) |
-| `tailwindcss` | `^3.4.19` | **Mantener (Estable)** - Motor CSS utilitario de alto rendimiento y customización. | [Tailwind CSS](https://tailwindcss.com/) |
-| `axios` | `^1.16.0` | **Mantener (Estable)** - Cliente HTTP robusto con soporte de interceptores globales. | [Axios Docs](https://axios-http.com/) |
-| `lucide-react` | `^1.14.0` | **Mantener (Estable)** - Colección moderna de iconos en formato SVG reactivos. | [Lucide Icons](https://lucide.dev/) |
+| `react` | `^18.3.1` | **Keep (Stable)** - Ultra-stable version compatible with mature ecosystems. | [React Documentation](https://react.dev/) |
+| `vite` | `^5.4.10` | **Keep (Stable)** - Ultra-fast bundler compatible with Node 18. | [Vite JS](https://vitejs.dev/) |
+| `@tanstack/react-query`| `^5.100.9` | **Keep (Critical)** - Asynchronous server state synchronization and smart caching. | [TanStack Query Docs](https://tanstack.com/query/latest) |
+| `zustand` | `^5.0.13` | **Keep (Stable)** - Lightweight global state manager alternative to Redux. | [Zustand GitHub](https://github.com/pmndrs/zustand) |
+| `tailwindcss` | `^3.4.19` | **Keep (Stable)** - High-performance utility-first CSS engine. | [Tailwind CSS](https://tailwindcss.com/) |
+| `axios` | `^1.16.0` | **Keep (Stable)** - Robust HTTP client with global interceptor support. | [Axios Docs](https://axios-http.com/) |
+| `lucide-react` | `^1.14.0` | **Keep (Stable)** - Modern collection of reactive SVG icons. | [Lucide Icons](https://lucide.dev/) |
 
 ---
 
-### 🛠️ C. Calidad y Gobernanza Global (Monorepo Raíz)
+### 🛠️ C. Quality and Global Governance (Root Monorepo)
 
-| Dependencia / Librería | Versión Instalada | Recomendación Técnica | URL de Referencia |
+| Dependency / Library | Installed Version | Technical Recommendation | Reference URL |
 | :--- | :--- | :--- | :--- |
-| `nx` | `^20.3.0` | **Mantener (Crítico)** - Task runner de alto rendimiento con soporte de caching. | [Nx Dev Docs](https://nx.dev/) |
-| `eslint-plugin-boundaries`| `^5.0.0` | **Mantener (Estable)** - Gobernanza estricta para límites Hexagonales. | [eslint-plugin-boundaries](https://github.com/javierguzman/eslint-plugin-boundaries) |
-| `eslint-plugin-sonarjs` | `^3.0.0` | **Mantener (Estable)** - Análisis estático Sonar a costo $0 para proyectos locales. | [SonarJS ESLint](https://github.com/SonarSource/eslint-plugin-sonarjs) |
-| `husky` | `^9.0.0` | **Mantener (Estable)** - Intercepción y automatización de Git Hooks. | [Husky Docs](https://typicode.github.io/husky/) |
-| `lint-staged` | `^15.0.0` | **Mantener (Estable)** - Ejecución optimizada de linters solo en Git Staged files. | [lint-staged GitHub](https://github.com/lint-staged/lint-staged) |
+| `nx` | `^20.3.0` | **Keep (Critical)** - High-performance task runner with caching support. | [Nx Dev Docs](https://nx.dev/) |
+| `eslint-plugin-boundaries`| `^5.0.0` | **Keep (Stable)** - Strict governance for Hexagonal boundaries. | [eslint-plugin-boundaries](https://github.com/javierguzman/eslint-plugin-boundaries) |
+| `eslint-plugin-sonarjs` | `^3.0.0` | **Keep (Stable)** - Zero-cost Sonar static analysis for local projects. | [SonarJS ESLint](https://github.com/SonarSource/eslint-plugin-sonarjs) |
+| `husky` | `^9.0.0` | **Keep (Stable)** - Interception and automation of Git Hooks. | [Husky Docs](https://typicode.github.io/husky/) |
+| `lint-staged` | `^15.0.0` | **Keep (Stable)** - Optimized execution of linters only on Git Staged files. | [lint-staged GitHub](https://github.com/lint-staged/lint-staged) |
 
 ---
 
-## 📈 3. Gestión de Deuda Técnica y Roadmap de Arquitectura (Backlog)
+## 📈 3. Technical Debt Management & Architectural Roadmap (Backlog)
 
-Para garantizar la evolución saludable del monorepo hacia modelos distribuidos y telemetría de producción, se establecen los siguientes elementos en el backlog de arquitectura:
+To guarantee the healthy evolution of the monorepo towards distributed models and production telemetry, the following items are established in the architecture backlog:
 
-*   **[ADR 0006: Future Microservices Transition with Dapr](file:///d:/Users/aarroyo/personal/sources/ums/ums-workspace/docs/architecture-design/adrs/0006-future-microservices-transition-dapr.md)**: Establece los criterios y gatilladores técnicos (*triggers*) que determinarán cuándo dividir el monolito modular en microservicios independientes gobernados por sidecars de Dapr.
-*   **[ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry](file:///d:/Users/aarroyo/personal/sources/ums/ums-workspace/docs/architecture-design/adrs/0007-observability-telemetry-loki-opentelemetry.md)**: Detalla la arquitectura de telemetría e instrumentación asíncrona mediante OpenTelemetry y recolección ligera en Grafana Loki.
-*   **[ADR 0008: Progressive Multi-Module Evolution with API Gateway and BFF](file:///d:/Users/aarroyo/personal/sources/ums/ums-workspace/docs/architecture-design/adrs/0008-progressive-multimodule-evolution-gateway-bff.md)**: Establece el diseño progresivo para transformar esta solución base 100% Node.js en un portal multi-módulo capaz de integrar otros sistemas independientes (TMS, WMS, etc.) expuestos como servicios con bases de datos aisladas, consumidos a través de un API Gateway central y optimizados mediante el patrón Backend For Frontend (BFF) si se implementa una aplicación móvil.
+*   **[ADR 0006: Future Microservices Transition with Dapr](file:///d:/Users/aarroyo/personal/sources/ums/ums-workspace/docs/architecture-design/adrs/0006-future-microservices-transition-dapr.md)**: Establishes the technical criteria and triggers that will determine when to split the modular monolith into independent microservices governed by Dapr sidecars.
+*   **[ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry](file:///d:/Users/aarroyo/personal/sources/ums/ums-workspace/docs/architecture-design/adrs/0007-observability-telemetry-loki-opentelemetry.md)**: Details the asynchronous telemetry and instrumentation architecture using OpenTelemetry and lightweight collection in Grafana Loki.
+*   **[ADR 0008: Progressive Multi-Module Evolution with API Gateway and BFF](file:///d:/Users/aarroyo/personal/sources/ums/ums-workspace/docs/architecture-design/adrs/0008-progressive-multimodule-evolution-gateway-bff.md)**: Establishes the progressive design to transform this 100% Node.js reference solution into a multi-module portal capable of integrating independent systems (TMS, WMS, etc.) exposed as services with isolated databases, consumed via a central API Gateway and optimized through Backend For Frontend (BFF) gateways for Web and Mobile clients.

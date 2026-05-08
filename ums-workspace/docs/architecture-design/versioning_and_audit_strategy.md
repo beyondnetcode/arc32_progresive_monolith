@@ -1,34 +1,34 @@
-# 🏷️ Estrategia de Versionamiento y Auditoría Continua (BMAD)
+# 🏷️ Automated Versioning & Continuous Audit Strategy (BMAD)
 
-Para mantener una bitácora de auditoría estricta, rastreable y sincronizada con GitHub, el Método BMAD no depende de la redacción manual de documentos. En su lugar, utilizamos el ecosistema que ya hemos construido (**Conventional Commits**) combinado con la potencia nativa de nuestro orquestador: **Nx Release**.
+To maintain a strict, traceable audit log synchronized with GitHub, the BMAD Method does not rely on manual document drafting. Instead, we leverage the ecosystem we have already built (**Conventional Commits**) combined with the native power of our orchestrator: **Nx Release**.
 
-## 1. El Pilar: Conventional Commits
-Dado que ya implementamos `commitlint`, el repositorio conoce exactamente qué tipo de cambio ocurrió.
-- `fix(auth): ...` -> Genera un parche automático (ej. `v1.0.0` a `v1.0.1`).
-- `feat(api): ...` -> Genera una versión menor automática (ej. `v1.0.1` a `v1.1.0`).
-- Si un commit incluye `BREAKING CHANGE` -> Genera una versión mayor (ej. `v1.1.0` a `v2.0.0`).
+## 1. The Pillar: Conventional Commits
+Since we have already implemented `commitlint`, the repository knows exactly what type of change occurred.
+- `fix(auth): ...` -> Generates an automatic patch release (e.g., `v1.0.0` to `v1.0.1`).
+- `feat(api): ...` -> Generates an automatic minor release (e.g., `v1.0.1` to `v1.1.0`).
+- If a commit includes `BREAKING CHANGE` -> Generates an automatic major release (e.g., `v1.1.0` to `v2.0.0`).
 
-## 2. Automatización con `nx release`
-Nx incluye una suite de versionamiento nativa para monorepos que ejecutará el siguiente ciclo de auditoría con un solo comando (`npx nx release`):
+## 2. Automation with `nx release`
+Nx includes a native versioning suite for monorepos that executes the following audit cycle with a single command (`npx nx release`):
 
-1. **Versionamiento Automático**: Nx analizará todos los commits desde el último despliegue y calculará la nueva versión SemVer (Semantic Versioning) para la API y la Web.
-2. **Generación de `CHANGELOG.md`**: Nx creará (o actualizará) un archivo físico `CHANGELOG.md` en la raíz del proyecto. Este archivo será tu **Documento Oficial de Auditoría**, detallando:
-   - Nuevas funcionalidades añadidas.
-   - Bugs resueltos.
-   - Enlaces hipertextuales directos a los hashes de los commits en GitHub para trazabilidad absoluta.
-3. **Etiquetado Git (Tagging)**: Creará un tag en Git (ej. `v1.1.0`) apuntando exactamente al estado del código en ese momento.
-4. **Sincronización con GitHub Releases**: Si se configura con GitHub Actions, este `CHANGELOG` se publicará automáticamente en la pestaña "Releases" de tu repositorio en la nube.
-
----
-
-## 3. Beneficios para UMS
-* **Cero Esfuerzo Manual**: Nunca más tendrás que escribir un documento de "Notas de Versión" o "Release Notes".
-* **Auditoría Forense**: Si falla la versión `v1.2.0` en producción, el `CHANGELOG.md` te dirá exactamente qué commits introdujeron el error y quién los hizo.
-* **Transparencia Total**: Los ejecutivos o QA pueden ver en GitHub Releases un documento amigable y legible por humanos que explica qué contiene cada despliegue.
+1. **Automatic Versioning**: Nx analyzes all commits since the last deployment and calculates the new SemVer (Semantic Versioning) for the API and Web applications.
+2. **`CHANGELOG.md` Generation**: Nx creates (or updates) a physical `CHANGELOG.md` file in the project's root. This file serves as your **Official Audit Document**, detailing:
+   - Newly added features.
+   - Resolved bug fixes.
+   - Hypertext links pointing directly to the commit hashes on GitHub for absolute traceability.
+3. **Git Tagging**: Creates a tag in Git (e.g., `v1.1.0`) pointing exactly to the state of the codebase at that specific moment.
+4. **GitHub Releases Synchronization**: When configured with GitHub Actions, this `CHANGELOG` is automatically published under the "Releases" tab of your cloud repository.
 
 ---
 
-## 4. Plan de Acción (Siguiente Paso)
-Para activar esto, solo necesitamos:
-1. Modificar tu archivo `nx.json` para habilitar el bloque de configuración `"release"`.
-2. Probar generar nuestra primera versión `v1.0.0` y nuestro primer `CHANGELOG.md` fundacional.
+## 3. Benefits for UMS
+* **Zero Manual Effort**: No more manual drafting of release notes.
+* **Forensic Auditing**: If a version like `v1.2.0` fails in production, `CHANGELOG.md` tells you exactly which commits introduced the error and who made them.
+* **Total Transparency**: Executives or QA can see a user-friendly, human-readable document in GitHub Releases explaining what each deployment contains.
+
+---
+
+## 4. Action Plan (Next Steps)
+To activate this, we only need to:
+1. Modify your `nx.json` file to enable the `"release"` configuration block.
+2. Test generating our first `v1.0.0` version and our first foundational `CHANGELOG.md`.
