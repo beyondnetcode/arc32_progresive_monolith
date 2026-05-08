@@ -11,7 +11,7 @@ The current architecture (ADRs 0001 to 0010) already perfectly satisfies the fol
 *   **Resiliencia (5)**: Achieved via Strict Hexagonal Boundaries (ADR 0002) and SonarQube/ESLint Governance (ADR 0003).
 *   **Modularidad (8)**: Achieved via Nx Monorepo, strict dependency rules, and ESLint boundaries (ADR 0001).
 *   **Observabilidad (9)**: Addressed proactively in the backlog via OpenTelemetry and Loki (ADR 0007).
-*   **Gobernanza Técnica (14)**: Perfectly executed via the ongoing BMAD Method ADR registry and automated CHANGELOGs.
+*   **Gobernanza Técnica (14)**: Perfectly executed via the ongoing BMAD Method ADR registry, automated CHANGELOGs, and the new **[Global Engineering Standards Manifesto](../engineering_standards.md)** enforcing SOLID, DRY, KISS, Secure by Design (OWASP), and optional DDD.
 *   **Portabilidad (15 & 16)**: Implicitly achieved via existing Docker containerization.
 
 ---
