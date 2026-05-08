@@ -19,12 +19,12 @@ The UMS is built leveraging the **BMAD Method**, enforcing strict **Clean Archit
 This repository contains extensive technical documentation following the **bMAD Method** and industry standards (C4 Model and Markdown Architectural Decision Records - MADR). Use the following curated guides to navigate the codebase:
 
 ### 📖 1. Standards & Mandates (Core)
-*   👉 **[Global Engineering Standards & BMAD Manifesto](./ums-workspace/docs/04-artifacts/engineering_standards.md)**: **MANDATORY reading**. Establishes the non-negotiable coding standards, SOLID, Clean Code, OWASP compliance, and optional DDD guidelines.
+*   👉 **[Global Engineering Standards & BMAD Manifesto](./ums-workspace/docs/04-artifacts/engineering-standards.md)**: **MANDATORY reading**. Establishes the non-negotiable coding standards, SOLID, Clean Code, OWASP compliance, and optional DDD guidelines.
 
 ### 🏗️ 2. Architectural Design
 *   👉 **[ULPMS Functional Specifications & Use Cases](./ums-workspace/docs/)**: Details the complete functional scope, glossary, ER diagrams, and permission matrices of the User Life-Cycle & Permissions Management System (ULPMS).
-*   👉 **[C4 Architecture Spec & Technical Inventory](./ums-workspace/docs/02-architecture/architecture_spec.md)**: Details the Level 1 (System Context), Level 2 (Container), and Level 3 (Component) diagrams of the UMS, along with the physical technology inventory.
-*   👉 **[Gap Analysis & Optimization Roadmap](./ums-workspace/docs/04-artifacts/gap_analysis_and_optimization_plan.md)**: Analyzes the platform's architectural maturity against 16 Enterprise Quality Criteria and tracks active ADR implementations.
+*   👉 **[C4 Architecture Spec & Technical Inventory](./ums-workspace/docs/02-architecture/architecture-spec.md)**: Details the Level 1 (System Context), Level 2 (Container), and Level 3 (Component) diagrams of the UMS, along with the physical technology inventory.
+*   👉 **[Gap Analysis & Optimization Roadmap](./ums-workspace/docs/04-artifacts/gap-analysis-and-optimization-plan.md)**: Analyzes the platform's architectural maturity against 16 Enterprise Quality Criteria and tracks active ADR implementations.
 
 ### 📜 3. Architectural Decision Records (ADRs)
 Foundational engineering decisions grouped by architectural focus:
@@ -55,7 +55,7 @@ Foundational engineering decisions grouped by architectural focus:
 *   [ADR 0019: Tactical Design Patterns for Domain Integrity (Result Pattern)](./ums-workspace/docs/03-adrs/0019-tactical-design-patterns-future-proofing.md)
 
 ### 🏷️ 4. Versioning & Release Cycles
-*   [BMAD Automated Versioning Strategy](./ums-workspace/docs/05-roadmap/versioning_and_audit_strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
+*   [BMAD Automated Versioning Strategy](./ums-workspace/docs/05-roadmap/versioning-and-audit-strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
 *   **[View the Official CHANGELOG](./ums-workspace/CHANGELOG.md)** - The pristine audit log of all merged features and fixes across the monorepo. fixes across the monorepo.
 
 ---
