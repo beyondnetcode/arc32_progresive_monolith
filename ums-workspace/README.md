@@ -20,6 +20,28 @@ The UMS is built leveraging the **BMAD Method**, enforcing strict **Clean Archit
 
 This repository contains extensive technical documentation following the **bMAD Method** and industry standards (C4 Model and Markdown Architectural Decision Records - MADR). Use the following curated guides to navigate the codebase:
 
+### 🏛️ Estructura y Taxononomía bMAD (Navegación Rápida)
+Puedes navegar directamente a cada fase de la documentación oficial haciendo clic en las carpetas a continuación:
+
+```directory
+/docs/
+├── 🗺️ [Master Index & Guides](./docs/index.md) - Índice unificado de navegación
+│
+├── 🎯 [00-product/](./docs/00-product/) - Visión, objetivos y contexto de negocio
+│
+├── 📋 [01-requirements/](./docs/01-requirements/) - Casos de uso funcionales, ERD y glosario
+│
+├── 🏗️ [02-architecture/](./docs/02-architecture/) - Especificación técnica y modelo C4
+│
+├── 📜 [03-adrs/](./docs/03-adrs/) - Bitácora de decisiones arquitectónicas (19 ADRs)
+│
+├── 🛠️ [04-artifacts/](./docs/04-artifacts/) - Estándares de ingeniería, QA y observabilidad
+│
+└── 📈 [05-roadmap/](./docs/05-roadmap/) - Estrategias de releases y versionamiento semántico
+```
+
+---
+
 ### 📖 1. Standards & Mandates (Core)
 *   👉 **[Global Engineering Standards & BMAD Manifesto](./docs/04-artifacts/engineering-standards.md)**: **MANDATORY reading**. Establishes the non-negotiable coding standards, SOLID, Clean Code, OWASP compliance, and optional DDD guidelines.
 
