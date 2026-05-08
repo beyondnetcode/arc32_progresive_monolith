@@ -32,5 +32,15 @@ Select an artifact to review its complete enterprise functional specification:
 
 ---
 
+## 🚚 Domain & Product Specifications (SCM / UMS)
+
+The following core business domain and strategic functional specifications are mapped here under bMAD:
+
+*   👉 **[Product Vision & Functional Scope Plan](./product_scope_and_functional_plan.md)**: Strategic product roadmap, user personas, and backlog capabilities.
+*   👉 **[SCM Bounded Context Map](./bounded_context_map.md)**: Subdomain categorization, context relationships, and microservices evolutionary paths.
+*   👉 **[SCM Event Domain Model](./event_domain_model.md)**: Detailed choreography of business events, payloads, and idempotency constraints.
+
+---
+
 ## 🖼️ Conceptual Diagram
 *   Review the original high-resolution **[Conceptual UML Diagram](./UMS.conceptual.jpg)** which serves as the visual reference for this technical-functional design.
