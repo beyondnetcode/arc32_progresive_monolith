@@ -22,7 +22,7 @@ graph TD
 ```
 
 UMS separates **Authentication** from **Authorization**:
-1.  **Authentication (Identity)**: Delegated entirely to Zitadel. Zitadel validates "who" the user is using secure, federated single sign-on or WebAuthn.
+1.  **Authentication (Identity)**: Treated as an abstract, pluggable service layer. UMS validates "who" the user is using secure, federated Single Sign-On (SSO), SAML, OIDC, WebAuthn (Passkeys), or an internal credentials database, dynamically routing to external Identity Providers (such as Zitadel, AWS Cognito, Microsoft Entra ID, Okta, or Keycloak) on a per-tenant basis without impacting business logic.
 2.  **Authorization (Permissions)**: Controlled centrally by UMS. UMS stores the definitions of client systems, menus, permission graphs, roles, and profiles, injecting authorization tokens and dynamic menus into downstream applications on demand.
 
 ---

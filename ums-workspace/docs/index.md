@@ -36,7 +36,7 @@ Contains the system's architectural specification based on the C4 Model standard
 
 ### 📜 [Phase 03 - Architectural Decision Records (ADRs)](./03-adrs/)
 The chronological and immutable ledger of critical design decisions in MADR format.
-*   📄 **[ADR Ledger](./03-adrs/)**: Access the complete index of the 19 active architectural decisions (ranging from Nx Monorepo, Clean Architecture, RLS, to Dapr and OpenTelemetry).
+*   📄 **[ADR Ledger](./03-adrs/)**: Access the complete index of the 20 active architectural decisions (ranging from Nx Monorepo, Clean Architecture, RLS, to Identity Provider Abstraction).
 
 ---
 
