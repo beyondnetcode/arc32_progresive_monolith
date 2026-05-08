@@ -46,6 +46,10 @@ Technical guidelines, clean code rules, security standards, and technical qualit
 *   📄 **[Contract Testing Plan](./04-artifacts/contract-testing-plan.md)**: Safe microservices integration using Pact JS.
 *   📄 **[Distributed Observability Strategy](./04-artifacts/observability-strategy.md)**: Unified telemetry using OpenTelemetry and Grafana Loki.
 *   📄 **[Gap Analysis & Technical Debt](./04-artifacts/gap-analysis-and-optimization-plan.md)**: Architectural maturity assessment and technical mitigation plan.
+*   📄 **[Enterprise IAM Spec](./04-artifacts/enterprise-iam-ums-specification.md)**: Dynamic authorization graph contracts and specifications.
+*   📄 **[High-Concurrency Auth Spec](./04-artifacts/high-concurrency-auth-specification.md)**: Performance caching and token rotation schemas.
+*   📄 **[UMS Web Console Product Spec](./04-artifacts/ums-web-console-product-scope.md)**: Administrative PAP control panel and SRE monitors.
+
 
 ---
 

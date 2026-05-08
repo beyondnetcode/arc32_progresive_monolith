@@ -22,7 +22,13 @@ The User Management System (UMS) manages the following key functional capabiliti
 - Automatic tracking of all critical data mutations (creation, modification, deletion of users/roles) using database subscribers.
 - Secure, isolated, and immutable audit logs.
 
+### E. Administrative UMS Web Portal (Policy Administration Point - PAP)
+- **Central Control Panel**: Dynamic maintenance (CRUDs) of Organizations (Tenants), Systems, Menus, Submenus, Options, Profiles, and Roles.
+- **Active Session & Telemetry Monitors**: Real-time auditing of authentication attempts, cache hit ratios, and Redis-cache evictions.
+- **Visual Graph Resolver**: Interactive visualization of the compiled authorization graph for specific user/tenant contexts (e.g., debugging Transportation Analyst permissions).
+
 ---
+
 
 ## 2. Out-of-Scope Capabilities
 To prevent scope creep and keep the UMS highly specialized, the following domains are strictly **Out-of-Scope**:

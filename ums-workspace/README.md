@@ -33,7 +33,7 @@ Click on the phases or files to navigate quickly and directly through the knowle
 *   📜 **[Phase 03 - Architectural Decision Records (ADRs)](./docs/03-adrs/)**:
     *   [23 ADRs History](./docs/03-adrs/)
 *   🛠️ **[Phase 04 - Engineering Standards and Artifacts](./docs/04-artifacts/)**:
-    *   [Global Standards](./docs/04-artifacts/engineering-standards.md) | [Gap Analysis](./docs/04-artifacts/gap-analysis-and-optimization-plan.md) | [QA Quality Plan](./docs/04-artifacts/contract-testing-plan.md) | [Observability Strategy](./docs/04-artifacts/observability-strategy.md)
+    *   [Global Standards](./docs/04-artifacts/engineering-standards.md) | [Gap Analysis](./docs/04-artifacts/gap-analysis-and-optimization-plan.md) | [QA Quality Plan](./docs/04-artifacts/contract-testing-plan.md) | [Observability](./docs/04-artifacts/observability-strategy.md) | [IAM Spec](./docs/04-artifacts/enterprise-iam-ums-specification.md) | [High-Concurrency](./docs/04-artifacts/high-concurrency-auth-specification.md) | [Console Spec](./docs/04-artifacts/ums-web-console-product-scope.md)
 *   📈 **[Phase 05 - Release Roadmap](./docs/05-roadmap/)**:
     *   [Semantic Versioning](./docs/05-roadmap/versioning-and-audit-strategy.md)
 
