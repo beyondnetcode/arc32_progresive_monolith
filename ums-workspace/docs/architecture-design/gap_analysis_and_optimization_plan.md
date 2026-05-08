@@ -77,6 +77,7 @@ Use this checklist to track the documentation and implementation of the proposed
 | **ADR 0016** | Immutable Business Audit Trail | ✅ Drafted | ⏳ Pending |
 | **ADR 0017** | Feature Flagging Strategy | ✅ Drafted | ⏳ Pending |
 | **ADR 0018** | Testing Pyramid & Quality Gates | ✅ Drafted | ⏳ Pending |
+| **ADR 0019** | Tactical Design Patterns (Result, Null Object) | ✅ Drafted | ⏳ Pending |
 
 ---
 *Note: All ADR documents have been initially generated and added to the architecture backlog. Review each one and request its technical implementation into the monorepo.*

@@ -46,6 +46,7 @@ Detailed logs of the foundational engineering decisions:
 16. [ADR 0016: Immutable Business Audit Trail](./docs/architecture-design/adrs/0016-immutable-business-audit-trail.md)
 17. [ADR 0017: Feature Flagging Strategy](./docs/architecture-design/adrs/0017-feature-flagging-strategy.md)
 18. [ADR 0018: Testing Pyramid & Automated Quality Gates](./docs/architecture-design/adrs/0018-testing-pyramid-quality-gates.md)
+19. [ADR 0019: Tactical Design Patterns for Domain Integrity](./docs/architecture-design/adrs/0019-tactical-design-patterns-future-proofing.md)
 
 ### 🏷️ Versioning & Audit Trail
 - [BMAD Automated Versioning Strategy](./docs/architecture-design/versioning_and_audit_strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
