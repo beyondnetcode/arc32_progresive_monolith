@@ -1,4 +1,4 @@
-# ADR 0001: Monorepo Orchestration with Nx and npm Workspaces
+﻿# ADR 0001: Monorepo Orchestration with Nx and npm Workspaces
 
 ## Status
 Accepted
@@ -7,7 +7,7 @@ Accepted
 2026-05-08
 
 ## Context
-As the UNIMAR monorepo grows, running sequential builds, lints, and tests across different applications (`apps/api` and `apps/web`) becomes a significant bottleneck for developers and CI/CD pipelines. We initially set up plain npm Workspaces, which handles hoisting and symlinking of packages perfectly but lacks smart task execution, parallelism, and caching capabilities.
+As the UMS monorepo grows, running sequential builds, lints, and tests across different applications (`apps/api` and `apps/web`) becomes a significant bottleneck for developers and CI/CD pipelines. We initially set up plain npm Workspaces, which handles hoisting and symlinking of packages perfectly but lacks smart task execution, parallelism, and caching capabilities.
 
 Additionally, our development team is constrained to **Node v18.20.6**, which prevents the use of modern engines like `rolldown` or newer `@nx/vite` automatic plugins that depend on Node 20+ utilities (such as `styleText` in `node:util`).
 

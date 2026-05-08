@@ -1,4 +1,4 @@
-import { Test, TestingModule } from '@nestjs/testing';
+﻿import { Test, TestingModule } from '@nestjs/testing';
 import { ConflictException } from '@nestjs/common';
 import { RegisterUserUseCase } from './register-user.use-case';
 import { User } from '../../core/entities/user.entity';
@@ -53,7 +53,7 @@ describe('RegisterUserUseCase (Clean Architecture Unit Test)', () => {
   it('should successfully register a user when email and username are unique', async () => {
     const dto: RegisterUserDto = {
       username: 'test_user',
-      email: 'test@unimar.com',
+      email: 'test@ums.com',
       password: 'SecurePassword123!',
     };
 
@@ -79,14 +79,14 @@ describe('RegisterUserUseCase (Clean Architecture Unit Test)', () => {
   it('should throw ConflictException if email already exists', async () => {
     const dto: RegisterUserDto = {
       username: 'test_user',
-      email: 'existing@unimar.com',
+      email: 'existing@ums.com',
       password: 'SecurePassword123!',
     };
 
     const existingUser = User.create(
       'uuid-123',
       'another_username',
-      'existing@unimar.com',
+      'existing@ums.com',
       'hash',
       'user',
     );
@@ -100,7 +100,7 @@ describe('RegisterUserUseCase (Clean Architecture Unit Test)', () => {
   it('should throw ConflictException if username already exists', async () => {
     const dto: RegisterUserDto = {
       username: 'existing_username',
-      email: 'test@unimar.com',
+      email: 'test@ums.com',
       password: 'SecurePassword123!',
     };
 
@@ -108,7 +108,7 @@ describe('RegisterUserUseCase (Clean Architecture Unit Test)', () => {
     const existingUser = User.create(
       'uuid-123',
       'existing_username',
-      'another@unimar.com',
+      'another@ums.com',
       'hash',
       'user',
     );

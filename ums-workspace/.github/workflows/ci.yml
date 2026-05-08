@@ -1,4 +1,4 @@
-name: UNIMAR Monorepo CI
+﻿name: UMS Monorepo CI
 
 on:
   pull_request:

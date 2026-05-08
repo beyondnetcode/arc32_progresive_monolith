@@ -1,4 +1,4 @@
-# ADR 0003: Strict TypeScript Standards and SonarJS Static Analysis
+﻿# ADR 0003: Strict TypeScript Standards and SonarJS Static Analysis
 
 ## Status
 Accepted
@@ -7,7 +7,7 @@ Accepted
 2026-05-08
 
 ## Context
-Code quality, security (OWASP Top 10), and type safety are critical pillars for UNIMAR. Permitting the `any` type leads to runtime exceptions, makes code reviews difficult, and degrades our compiler's safety nets. Additionally, we need a way to detect cognitive complexity, bugs, and security hotspots early, without incurring external license costs (such as SonarCloud's paid tier for private repositories).
+Code quality, security (OWASP Top 10), and type safety are critical pillars for UMS. Permitting the `any` type leads to runtime exceptions, makes code reviews difficult, and degrades our compiler's safety nets. Additionally, we need a way to detect cognitive complexity, bugs, and security hotspots early, without incurring external license costs (such as SonarCloud's paid tier for private repositories).
 
 ## Decision
 We decided to enforce strict TypeScript and static analysis rules:

@@ -1,4 +1,4 @@
-# ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry
+﻿# ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry
 
 ## Status
 Proposed (Backlog / Technical Debt)
@@ -7,7 +7,7 @@ Proposed (Backlog / Technical Debt)
 2026-05-08
 
 ## Context
-As the UNIMAR applications move to production, we need an advanced observability system to monitor performance, log errors, and trace database executions in real-time. Traditional enterprise stacks like Elastic (ELK) consume massive RAM and CPU, which violates our zero-cost and lightweight architecture goals.
+As the UMS applications move to production, we need an advanced observability system to monitor performance, log errors, and trace database executions in real-time. Traditional enterprise stacks like Elastic (ELK) consume massive RAM and CPU, which violates our zero-cost and lightweight architecture goals.
 
 ## Proposed Decision
 We propose to adopt the **Grafana LGTM Stack (Loki + Grafana + Tempo)** combined with **OpenTelemetry (OTel)**:

@@ -1,4 +1,4 @@
-# ADR 0004: Frontend State Management and React Query Offline Architecture
+﻿# ADR 0004: Frontend State Management and React Query Offline Architecture
 
 ## Status
 Accepted
@@ -7,7 +7,7 @@ Accepted
 2026-05-08
 
 ## Context
-The UNIMAR React web client needs to operate reliably, even when the backend API or PostgreSQL database are offline or during network disruptions. Traditional state management patterns often couple UI views tightly with live network endpoints, causing the dashboard to freeze or crash when the backend is unreachable.
+The UMS React web client needs to operate reliably, even when the backend API or PostgreSQL database are offline or during network disruptions. Traditional state management patterns often couple UI views tightly with live network endpoints, causing the dashboard to freeze or crash when the backend is unreachable.
 
 ## Decision
 We decided to implement a highly resilient, offline-first state and data architecture:
