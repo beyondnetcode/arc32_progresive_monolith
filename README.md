@@ -1,10 +1,10 @@
-﻿# ðŸ¢ User Management System (UMS) - Enterprise Monorepo
+# 🏢 User Management System (UMS) - Enterprise Monorepo
 
 Welcome to the **User Management System (UMS)**, a highly resilient, enterprise-grade modular monolith built for **UMS**. This system is engineered to manage corporate identities, access control, and user lifecycles across the organization.
 
 The UMS is built leveraging the **BMAD Method**, enforcing strict **Clean Architecture (Hexagonal)** principles, $0-cost observability (AOP), and rigorous CI/CD quality gates. 
 
-## ðŸ› ï¸ Technology Stack
+## 🛠️ Technology Stack
 - **Backend**: NestJS (v10), TypeORM, PostgreSQL 16.
 - **Frontend**: React (v18), Vite, Zustand, TanStack React Query.
 - **Monorepo Orchestration**: Nx & npm Workspaces.
@@ -12,14 +12,14 @@ The UMS is built leveraging the **BMAD Method**, enforcing strict **Clean Archit
 
 ---
 
-## ðŸ“š Documentation Index
+## 📚 Documentation Index
 
 The repository contains extensive technical documentation following industry standards (C4 Model and Markdown Architectural Decision Records - MADR).
 
-### ðŸ›ï¸ Software Architecture Design
+### 🏛️ Software Architecture Design
 - [C4 Architecture Spec & Technical Inventory](./ums-workspace/docs/architecture-design/architecture_spec.md) - System Context, Containers, and Dependency inventory.
 
-### ðŸ“œ Architectural Decision Records (ADRs)
+### 📜 Architectural Decision Records (ADRs)
 Detailed logs of the foundational engineering decisions:
 
 1. [ADR 0001: Monorepo Orchestration with Nx and npm Workspaces](./ums-workspace/docs/architecture-design/adrs/0001-monorepo-orchestration-nx.md)
@@ -28,13 +28,13 @@ Detailed logs of the foundational engineering decisions:
 4. [ADR 0004: Frontend State Management and React Query Offline Architecture](./ums-workspace/docs/architecture-design/adrs/0004-frontend-offline-resilience.md)
 5. [ADR 0005: Zero-Cost Security and CI Pipeline with CodeQL](./ums-workspace/docs/architecture-design/adrs/0005-ci-cd-quality-codeql.md)
 
-### ðŸ“ˆ Technical Debt & Backlog (Proposed Architecture)
+### 📈 Technical Debt & Backlog (Proposed Architecture)
 6. [ADR 0006: Future Microservices Transition with Dapr Sidecars](./ums-workspace/docs/architecture-design/adrs/0006-future-microservices-transition-dapr.md)
 7. [ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry](./ums-workspace/docs/architecture-design/adrs/0007-observability-telemetry-loki-opentelemetry.md)
 
 ---
 
-## ðŸš€ Quick Start
+## 🚀 Quick Start
 ```bash
 # 0. Navigate to the Monorepo workspace
 cd ums-workspace
