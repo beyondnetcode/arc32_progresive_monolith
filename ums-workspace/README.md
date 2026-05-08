@@ -16,41 +16,48 @@ The UMS is built leveraging the **BMAD Method**, enforcing strict **Clean Archit
 
 ---
 
-## 📚 Documentation Index
+## 📚 Documentation Index & Navigation Guide
 
-The repository contains extensive technical documentation following industry standards (C4 Model and Markdown Architectural Decision Records - MADR).
+This repository contains extensive technical documentation following the **bMAD Method** and industry standards (C4 Model and Markdown Architectural Decision Records - MADR). Use the following curated guides to navigate the codebase:
 
-### 🏛️ Software Architecture Design
-- [C4 Architecture Spec & Technical Inventory](./docs/architecture-design/architecture_spec.md) - System Context, Containers, and Dependency inventory.
+### 📖 1. Standards & Mandates (Core)
+*   👉 **[Global Engineering Standards & BMAD Manifesto](./docs/engineering_standards.md)**: **MANDATORY reading**. Establishes the non-negotiable coding standards, SOLID, Clean Code, OWASP compliance, and optional DDD guidelines.
 
-### 📜 Architectural Decision Records (ADRs)
-Detailed logs of the foundational engineering decisions:
+### 🏗️ 2. Architectural Design
+*   👉 **[C4 Architecture Spec & Technical Inventory](./docs/architecture-design/architecture_spec.md)**: Details the Level 1 (System Context), Level 2 (Container), and Level 3 (Component) diagrams of the UMS, along with the physical technology inventory.
+*   👉 **[Gap Analysis & Optimization Roadmap](./docs/architecture-design/gap_analysis_and_optimization_plan.md)**: Analyzes the platform's architectural maturity against 16 Enterprise Quality Criteria and tracks active ADR implementations.
 
-1. [ADR 0001: Monorepo Orchestration with Nx and npm Workspaces](./docs/architecture-design/adrs/0001-monorepo-orchestration-nx.md)
-2. [ADR 0002: Clean Architecture and Hexagonal Boundaries on NestJS](./docs/architecture-design/adrs/0002-clean-architecture-nestjs.md)
-3. [ADR 0003: Strict TypeScript Standards and SonarJS Static Analysis](./docs/architecture-design/adrs/0003-strict-typescript-standards.md)
-4. [ADR 0004: Frontend State Management and React Query Offline Architecture](./docs/architecture-design/adrs/0004-frontend-offline-resilience.md)
-5. [ADR 0005: Zero-Cost Security and CI Pipeline with CodeQL](./docs/architecture-design/adrs/0005-ci-cd-quality-codeql.md)
+### 📜 3. Architectural Decision Records (ADRs)
+Foundational engineering decisions grouped by architectural focus:
 
-### 📈 Technical Debt & Backlog (Proposed Architecture)
-6. [ADR 0006: Future Microservices Transition with Dapr Sidecars](./docs/architecture-design/adrs/0006-future-microservices-transition-dapr.md)
-7. [ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry](./docs/architecture-design/adrs/0007-observability-telemetry-loki-opentelemetry.md)
-8. [ADR 0008: Progressive Multi-Module Evolution with API Gateway and BFF Patterns](./docs/architecture-design/adrs/0008-progressive-multimodule-evolution-gateway-bff.md)
-9. [ADR 0009: Strict Dependency Pinning and Automated Vulnerability Management](./docs/architecture-design/adrs/0009-strict-dependency-pinning-vulnerability-management.md)
-10. [ADR 0010: Multi-Tenancy Architecture Strategy for SaaS Evolution](./docs/architecture-design/adrs/0010-multi-tenancy-architecture-strategy.md)
-11. [ADR 0011: Fault Tolerance & Resiliency Patterns](./docs/architecture-design/adrs/0011-fault-tolerance-resiliency-patterns.md)
-12. [ADR 0012: Advanced Authorization (RBAC/ABAC)](./docs/architecture-design/adrs/0012-advanced-authorization-rbac-abac.md)
-13. [ADR 0013: Cloud Infrastructure Topology & DR](./docs/architecture-design/adrs/0013-cloud-infrastructure-topology-dr.md)
-14. [ADR 0014: Distributed Caching Strategy](./docs/architecture-design/adrs/0014-distributed-caching-strategy-redis.md)
-15. [ADR 0015: Event-Driven Architecture (EDA)](./docs/architecture-design/adrs/0015-event-driven-architecture-intra-domain.md)
-16. [ADR 0016: Immutable Business Audit Trail](./docs/architecture-design/adrs/0016-immutable-business-audit-trail.md)
-17. [ADR 0017: Feature Flagging Strategy](./docs/architecture-design/adrs/0017-feature-flagging-strategy.md)
-18. [ADR 0018: Testing Pyramid & Automated Quality Gates](./docs/architecture-design/adrs/0018-testing-pyramid-quality-gates.md)
-19. [ADR 0019: Tactical Design Patterns for Domain Integrity](./docs/architecture-design/adrs/0019-tactical-design-patterns-future-proofing.md)
+#### 🟢 General & Core Monorepo
+*   [ADR 0001: Monorepo Orchestration with Nx and npm Workspaces](./docs/architecture-design/adrs/0001-monorepo-orchestration-nx.md)
+*   [ADR 0002: Clean Architecture and Hexagonal Boundaries on NestJS](./docs/architecture-design/adrs/0002-clean-architecture-nestjs.md)
+*   [ADR 0003: Strict TypeScript Standards and SonarJS Static Analysis](./docs/architecture-design/adrs/0003-strict-typescript-standards.md)
+*   [ADR 0005: Zero-Cost Security and CI Pipeline with CodeQL](./docs/architecture-design/adrs/0005-ci-cd-quality-codeql.md)
+*   [ADR 0009: Strict Dependency Pinning and Automated Vulnerability Management](./docs/architecture-design/adrs/0009-strict-dependency-pinning-vulnerability-management.md)
 
-### 🏷️ Versioning & Audit Trail
-- [BMAD Automated Versioning Strategy](./docs/architecture-design/versioning_and_audit_strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
-- **[View the Official CHANGELOG](./CHANGELOG.md)** - The pristine audit log of all merged features and fixes across the monorepo.
+#### 🔵 Frontend & Client Integration
+*   [ADR 0004: Frontend State Management and React Query Offline Architecture](./docs/architecture-design/adrs/0004-frontend-offline-resilience.md)
+*   [ADR 0008: Progressive Multi-Module Evolution with API Gateway and BFF Patterns](./docs/architecture-design/adrs/0008-progressive-multimodule-evolution-gateway-bff.md)
+
+#### 🟠 SaaS, Scalability & Resilience
+*   [ADR 0006: Future Microservices Transition with Dapr Sidecars](./docs/architecture-design/adrs/0006-future-microservices-transition-dapr.md)
+*   [ADR 0007: Observability Telemetry with Grafana Loki and OpenTelemetry](./docs/architecture-design/adrs/0007-observability-telemetry-loki-opentelemetry.md)
+*   [ADR 0010: Multi-Tenancy Architecture Strategy for SaaS Evolution](./docs/architecture-design/adrs/0010-multi-tenancy-architecture-strategy.md)
+*   [ADR 0011: Fault Tolerance & Resiliency Patterns (Circuit Breakers)](./docs/architecture-design/adrs/0011-fault-tolerance-resiliency-patterns.md)
+*   [ADR 0012: Advanced Authorization (RBAC/ABAC)](./docs/architecture-design/adrs/0012-advanced-authorization-rbac-abac.md)
+*   [ADR 0013: Cloud Infrastructure Topology & DR](./docs/architecture-design/adrs/0013-cloud-infrastructure-topology-dr.md)
+*   [ADR 0014: Distributed Caching Strategy (Redis)](./docs/architecture-design/adrs/0014-distributed-caching-strategy-redis.md)
+*   [ADR 0015: Event-Driven Architecture (EDA)](./docs/architecture-design/adrs/0015-event-driven-architecture-intra-domain.md)
+*   [ADR 0016: Immutable Business Audit Trail (CDC)](./docs/architecture-design/adrs/0016-immutable-business-audit-trail.md)
+*   [ADR 0017: Feature Flagging Strategy](./docs/architecture-design/adrs/0017-feature-flagging-strategy.md)
+*   [ADR 0018: Testing Pyramid & Automated Quality Gates](./docs/architecture-design/adrs/0018-testing-pyramid-quality-gates.md)
+*   [ADR 0019: Tactical Design Patterns for Domain Integrity (Result Pattern)](./docs/architecture-design/adrs/0019-tactical-design-patterns-future-proofing.md)
+
+### 🏷️ 4. Versioning & Release Cycles
+*   [BMAD Automated Versioning Strategy](./docs/architecture-design/versioning_and_audit_strategy.md) - Learn how we automate Semantic Versioning and Release cycles.
+*   **[View the Official CHANGELOG](./CHANGELOG.md)** - The pristine audit log of all merged features and fixes across the monorepo.
 
 ---
 
