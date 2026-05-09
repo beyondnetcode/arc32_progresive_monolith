@@ -42,6 +42,7 @@ Contains the system's architectural specification based on the C4 Model standard
 *   📄 **[C4 Architecture Spec & Technical Inventory](./02-architecture/architecture-spec.md)**: Level 1 (Context), Level 2 (Container), and Level 3 (Component) technical diagrams.
 *   📄 **[Authoritative Technology Stack Definition](./02-architecture/stack.md)**: 100% cloud-agnostic and on-premise capable technology stack definitions and risk registers.
 *   📄 **[Technology Stack Cheat Sheet](./02-architecture/stack-summary.md)**: High-density quick-reference sheet of all selected tools and layers.
+*   📄 **[NestJS Latam DDD Evaluation](./02-architecture/nestjslatam-ddd-evaluation.md)**: Architectural evaluation of `@nestjslatam/ddd` for the Domain Core and tactical DDD primitives.
 
 
 ---
