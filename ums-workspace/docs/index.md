@@ -37,19 +37,23 @@ Details business rules, interactive sequences, conceptual database diagrams, and
 ---
 
 ### 🏗️ [Phase 02 - Software Architecture](./02-architecture/)
-Contains the system's architectural specification based on the C4 Model standard.
+Contains the system's architectural specification based on the C4 Model standard and the authoritative technology stack.
 *   📄 **[Bounded Context Map](./02-architecture/bounded-context-map.md)**: DDD context boundaries, integration patterns, and Anti-Corruption Layers.
 *   📄 **[C4 Architecture Spec & Technical Inventory](./02-architecture/architecture-spec.md)**: Level 1 (Context), Level 2 (Container), and Level 3 (Component) technical diagrams.
+*   📄 **[Authoritative Technology Stack Definition](./02-architecture/stack.md)**: 100% cloud-agnostic and on-premise capable technology stack definitions and risk registers.
+*   📄 **[Technology Stack Cheat Sheet](./02-architecture/stack-summary.md)**: High-density quick-reference sheet of all selected tools and layers.
 
 
 ---
 
 ### 📜 [Phase 03 - Architectural Decision Records (ADRs)](./03-adrs/)
 The chronological and immutable ledger of critical design decisions in MADR format.
-*   📄 **[ADR Ledger](./03-adrs/)**: Access the complete index of **26 active architectural decisions** (ranging from Nx Monorepo, Clean Architecture, RLS, to Identity Provider Abstraction, High-Performance Graph Compilation, Pluggable Output Projections, Centralized Authorization Kernel, Configuration Platform, Feature Flag Provider Abstraction, and Adaptive MFA/Passwordless).
+*   📄 **[ADR Ledger](./03-adrs/)**: Access the complete index of **28 active architectural decisions** (ranging from Nx Monorepo, Clean Architecture, RLS, to Identity Provider Abstraction, High-Performance Graph Compilation, Pluggable Output Projections, Centralized Authorization Kernel, Configuration Platform, Feature Flag Provider Abstraction, Adaptive MFA/Passwordless, Dual-Protocol APIs, and Self-Hosted Infrastructure).
 *   📄 **[ADR-0024: Configuration & Feature Management Platform](./03-adrs/0024-configuration-feature-management-platform.md)**: Establishes Multi-IdP config, System Behavioral Config, and Feature Flag framework.
 *   📄 **[ADR-0025: Feature Flag Provider Abstraction](./03-adrs/0025-feature-flag-provider-abstraction.md)**: Defines `IFeatureFlagPort` pluggable pattern — supports Internal engine, LaunchDarkly, Unleash, ConfigCat, Azure App Config.
 *   📄 **[ADR-0026: Multi-Tenant Adaptive MFA and Passwordless Authentication](./03-adrs/0026-mfa-passwordless-adaptive-authentication.md)**: Establishes dynamic adaptive MFA, WebAuthn/Passkeys, cryptographic trusted devices, and self-service recovery.
+*   📄 **[ADR-0027: Dual-Protocol REST & gRPC API Structure with Kong Gateway](./03-adrs/0027-dual-protocol-rest-grpc-api-gateway.md)**: Establishes dual public-facing REST and internal-facing high-performance gRPC interfaces.
+*   📄 **[ADR-0028: Self-Hosted, Open-Source Infrastructure for Hybrid & On-Premise Deployments](./03-adrs/0028-self-hosted-hybrid-infrastructure-on-premise.md)**: Guarantees cloud-agnostic capability and localized deployments with zero cloud lock-in via MinIO, RabbitMQ, and HashiCorp Vault.
 
 
 
