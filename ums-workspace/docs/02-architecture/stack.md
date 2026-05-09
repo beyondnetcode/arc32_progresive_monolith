@@ -11,7 +11,7 @@
 
 *   **Product Name:** User Management System (UMS)
 *   **Product Type:** Hybrid (SaaS & Localized On-Premise deployments)
-*   **Primary Users:** SCM Portal Users (Operators, Transportation Analysts), B2B Tenant Admins
+*   **Primary Users:** Integrated Application Users (Operators, Business Analysts), B2B Tenant Admins
 *   **Expected Scale (Initial):** < 1,000 tenants, ~50 concurrent users per tenant (~50,000 active concurrent connections total)
 *   **Expected Scale (Target):** > 10,000 tenants, ~500 concurrent users per tenant (~5,000,000 active concurrent connections total)
 *   **Team Size:** ~5–10 Engineers
@@ -213,7 +213,7 @@
 
 ### 9.2 RBAC / ABAC Approach
 *   **Chosen Tool:** **Hierarchical RBAC compiled into fine-grained permission graphs with ABAC context evaluation**
-*   **Why Chosen:** Satisfies both role-based routing (for UI rendering) and precise attribute evaluation (geofencing, action thresholds) required by modern enterprise SCM portals.
+*   **Why Chosen:** Satisfies both role-based routing (for UI rendering) and precise attribute evaluation (geofencing, action thresholds) required by modern integrated client portals.
 
 ### 9.3 Dependency Audit Tooling
 *   **Chosen Tool:** **Snyk Open Source CLI + `npm audit` run in CI/CD pipeline**

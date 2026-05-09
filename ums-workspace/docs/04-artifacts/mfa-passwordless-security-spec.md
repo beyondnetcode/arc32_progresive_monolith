@@ -75,8 +75,8 @@ Defines the dynamic policies governing MFA and passwordless requirements across 
 {
   "policy_id": "pol_security_baseline_logistics",
   "tenant_id": "tenant_logistics_corp",
-  "system_id": "scm_route_planner",
-  "role_scope": ["TransportationAnalyst", "SystemAdmin"],
+  "system_id": "sys_client_portal",
+  "role_scope": ["BusinessAnalyst", "SystemAdmin"],
   "mfa_enforcement": "ADAPTIVE",
   "allowed_factors": ["WEBAUTHN", "TOTP", "U2F"],
   "remember_device_days": 15,
@@ -170,8 +170,8 @@ The MFA and Passwordless subsystems adhere strictly to **Hexagonal Architecture 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Analyst as SCM Transportation Analyst
-    participant Portal as SCM Login Portal
+    actor Analyst as B2B Business Analyst
+    participant Portal as Client Application Portal
     participant Gateway as UMS Auth Gateway
     participant WebAuthnCore as WebAuthn Service (PDP)
     participant DB as PostgreSQL (RLS)
@@ -191,7 +191,7 @@ sequenceDiagram
     alt Validation Successful
         WebAuthnCore-->>Gateway: Verification Success (Identity claims)
         Gateway-->>Portal: Mint Tokens + Return Authorization Graph
-        Portal-->>Analyst: Redirect to SCM Dashboard (Login under 2 seconds)
+        Portal-->>Analyst: Redirect to Application Dashboard (Login under 2 seconds)
     else Signature Verification Failure
         WebAuthnCore-->>Gateway: Throw InvalidSignatureException
         Gateway-->>Portal: 401 Unauthorized [ERR_PASSKEY_FAILED]
@@ -279,7 +279,7 @@ Example of a structured security event logged to Grafana Loki:
 ### 5.1 User Stories & Given/When/Then Acceptance Criteria
 
 #### User Story 1: MFA Enforced Onboarding
-> **As an** SCM Transportation Analyst,
+> **As an** Integrated Application User,
 > **I want to** enroll my authenticator application (TOTP) or secure Passkey during my first login,
 > **So that** my corporate account is fully secured under Zero-Trust mandates.
 
@@ -297,8 +297,8 @@ Scenario: First login triggers MFA onboarding flow
 ```
 
 #### User Story 2: Passwordless Login with Passkey
-> **As a** SCM Transportation Analyst,
-> **I want to** login to the SCM Portal instantly using my device's biometric sensor (Passkey),
+> **As an** Integrated Application User,
+> **I want to** login to the Client Portal instantly using my device's biometric sensor (Passkey),
 > **So that** I do not have to remember or input complex passwords on public shared systems.
 
 ```gherkin

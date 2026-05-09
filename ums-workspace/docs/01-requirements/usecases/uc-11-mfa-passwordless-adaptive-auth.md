@@ -9,7 +9,7 @@ This document specifies the detailed transaction flow, actors, preconditions, po
 | Attribute | Specification |
 | :--- | :--- |
 | **Name** | Multi-Factor & Passwordless Adaptive Authentication |
-| **Primary Actor** | End User (e.g., SCM Transportation Analyst), Downstream Client System |
+| **Primary Actor** | End User (e.g., B2B Operator, Business Analyst), Downstream Client System |
 | **Preconditions** | The user has registered an account in UMS. The tenant security policy allows or enforces MFA/Passwordless. |
 | **Postconditions** | The user's identity is verified, a secure session is established, and the tailored authorization graph is returned. |
 
@@ -62,7 +62,7 @@ This flow details how a user logs in seamlessly using their device's native biom
 sequenceDiagram
     autonumber
     actor User as End User
-    participant Portal as SCM Login Portal
+    participant Portal as Client Application Portal
     participant Gateway as UMS Auth Gateway
     participant WebAuthn as WebAuthn Service
     participant DB as PostgreSQL (RLS)

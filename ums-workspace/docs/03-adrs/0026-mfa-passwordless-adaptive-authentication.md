@@ -61,7 +61,7 @@ Provides an automated recovery strategy via Bcrypt-hashed secure one-time Recove
 - **Strong Anti-Phishing Posture**: WebAuthn/Passkeys bind credential signatures to specific domain origins, eliminating phishing threat vectors.
 - **Zero Trust Alignment**: Verifies every request context explicitly based on risk-scoring, matching NIST AAL3 standards.
 - **Reduced MFA Fatigue**: "Remember Device" utilizes cryptographic browser tokens to minimize MFA prompts for safe contexts while dynamically demanding re-authentication for high-risk operations.
-- **Tenant Autonomy**: B2B clients manage their local security postures completely (e.g., enforcing WebAuthn for financial SCM roles while allowing TOTP for warehouse operators).
+- **Tenant Autonomy**: B2B clients manage their local security postures completely (e.g., enforcing WebAuthn for high-privilege business roles while allowing TOTP for standard operations).
 
 ### Negative
 - **Onboarding Overhead**: Mandatory MFA increases the user onboarding curve, mitigated by a sleek, interactive onboarding UI.
