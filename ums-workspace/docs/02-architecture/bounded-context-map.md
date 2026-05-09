@@ -131,8 +131,11 @@ graph TD
 - `IdpConfiguration` aggregate
 - `SystemConfiguration` aggregate (versioned)
 - `FeatureFlag` aggregate
-- `FlagEvaluationEngine` (domain service)
-- `ConfigCacheManager` (infrastructure adapter behind `IConfigCachePort`)
+- `FeatureFlagProviderConfig` aggregate *(per-tenant provider overrides)*
+- `FlagEvaluationEngine` (domain service — routes via port)
+- `IFeatureFlagPort` (core port — pluggable: Internal, LaunchDarkly, Unleash, ConfigCat, Azure App Config)
+- `IConfigCachePort` (infrastructure port — separate from auth graph cache)
+- `ISecretStorePort` (infrastructure port — vault-referenced credentials)
 
 **Does NOT own:**
 - User or organization identities (scopes them as foreign keys only)
@@ -215,8 +218,10 @@ graph TD
 | Boundary | ACL Mechanism | Reason |
 | :--- | :--- | :--- |
 | Authorization ↔ External IdP | `IAuthenticationPort` (Strategy Pattern) | Prevents Zitadel/Okta SDK from polluting core |
+| Config ↔ Feature Flag Providers | `IFeatureFlagPort` (Strategy Pattern) | Prevents LaunchDarkly/Unleash/ConfigCat SDKs from coupling to core. Mirrors IAuthenticationPort design (ADR-0025). |
 | Config ↔ Secret Vault | `ISecretStorePort` (Strategy Pattern) | Prevents AWS Secrets Manager / HashiCorp Vault SDK from leaking into domain |
 | Config ↔ Redis (cfg/flags) | `IConfigCachePort` | Separate port from auth graph cache to enforce namespace governance |
 | Authorization ↔ Redis (auth_graph) | `ICachePort` | Prevents Redis client from leaking into domain layer |
 | Authorization ↔ Event Bus | `IEventBusPort` | Prevents Kafka/RabbitMQ from coupling to use cases |
 | Console ↔ UMS APIs | REST API contracts (versioned) | Console is an external consumer; treated as any third party |
+
