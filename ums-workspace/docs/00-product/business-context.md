@@ -14,11 +14,22 @@ UMS resolves these issues by serving as an **abstract, sovereign Authorization &
 
 ```mermaid
 graph TD
-    User["Multi-Tenant Users"] -->|1. Authenticates SSO and Passkey| IdP["Zitadel IDP (Authentication Store)"]
-    IdP -->|2. Issues JWT token| User
-    User -->|3. Requests Page Access with JWT| UMS["UMS Authorization Engine"]
-    UMS -->|4. Compiles Permission Graph| DB["PostgreSQL Database with RLS"]
-    UMS -->|5. Injects Dynamic Menu and Roles| Client["Client Portal UI"]
+    User["Multi-Tenant User (Client Staff)"] -->|1. Request Login / Action| App["Downstream Client Application"]
+    
+    %% AUTHENTICATION CORNER (Optional & Pluggable)
+    App -->|2. Delegate Auth & Query Config| UMS["UMS Sovereign Authorization Kernel"]
+    UMS -.->|IAuthenticationPort (Pluggable)| IdP_Providers["Identity Providers (Internal bcrypt / Zitadel / Azure AD / Okta)"]
+    UMS -.->|IFeatureFlagPort (Pluggable)| FF_Providers["Feature Flag Engines (Internal PostgreSQL-Redis / LaunchDarkly / Unleash)"]
+    
+    %% RESOLUTION & PERSISTENCE CORNER
+    UMS -->|3. Read context-aware overrides| DB[("PostgreSQL 16 (RLS Isolated)")]
+    DB -->|4. Resolve dynamic rules| UMS
+    Note over UMS: Applies Dynamic Deep Merge:<br/>Global → Tenant → System → Branch → Role → User → Environment
+    
+    %% RESPONSE CORNER
+    UMS -->|5. Cache effective payload| Cache[("Redis Cache (cfg, flags, auth_graph)")]
+    UMS -->|6. Unified API Payload| App
+    Note over App: Unified JWT injection containing:<br/>1. Compiled Permission Graph<br/>2. Tenant/System Behavioral Config<br/>3. Evaluated Feature Flag States
 ```
 
 UMS separates **Authentication**, **Authorization**, and **Dynamic Configuration**:
