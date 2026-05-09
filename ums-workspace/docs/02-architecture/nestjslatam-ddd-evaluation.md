@@ -1,68 +1,67 @@
-# 📐 Evaluación Arquitectónica — Utilización de `@nestjslatam/packages` para DDD en UMS Core
+# 📐 Architectural Evaluation — Utilizing `@nestjslatam/packages` for DDD in UMS Core
 
-**Documento:** Evaluación Tecnológica  
-**Estado:** Propuesto / Bajo Revisión  
-**Fecha:** 2026-05-09  
-**Autor:** Solutions Architect Agent  
-
----
-
-## 🧭 1. Introducción y Contexto
-
-El diseño arquitectónico de **UMS (User Management System)** exige que el núcleo del dominio (Domain Core) se adhiera estrictamente a patrones de **Domain-Driven Design (DDD)** y mantenga una separación total de dependencias externas en la capa del dominio (Arquitectura Hexagonal / Puertos y Adaptadores).
-
-Se evalúa la adopción de las librerías de la organización **`@nestjslatam`** (especialmente su conjunto de bloques constructivos para DDD como `@nestjslatam/ddd`) como el conjunto de primitivas base para definir Entidades, Objetos de Valor (Value Objects), Agregados (Aggregates) y Eventos de Dominio (Domain Events) en nuestro monorrepo NestJS.
+**Document Type:** Architectural Evaluation & Standard  
+**Status:** Approved (Conditional)  
+**Date:** 2026-05-09  
+**Deciders:** Solutions Architect, Principal Software Architect, Lead Developer  
+**Scope:** Optional DDD Implementation in UMS Bounded Contexts  
 
 ---
 
-## 📊 2. Análisis de Alineación Arquitectónica
+## 🧭 1. Introduction & Context
 
-Para que una librería de soporte DDD sea aceptada en el núcleo del dominio de UMS, debe superar estrictamente las siguientes restricciones y directrices arquitectónicas:
+The **User Management System (UMS)** is an abstract, standalone identity & access governance kernel. While implementing tactical Domain-Driven Design (DDD) patterns (such as Aggregate Roots, Entities, and Value Objects) is currently **optional** for core contexts, standardizing these patterns is critical to stabilizing complex business logic and preventing technical drift.
 
-### A. Restricción de Cero Dependencias de Infraestructura (Cumplimiento: ✅ EXCELENTE)
-*   **Criterio:** La capa de dominio no debe depender de bases de datos, ORMs (como TypeORM), controladores HTTP o frameworks de mensajería.
-*   **Evaluación:** Las librerías de DDD de `@nestjslatam` proporcionan abstracciones puras en TypeScript para primitivas DDD sin arrastrar dependencias pesadas de base de datos o red. Los bloques constructivos base (`Entity`, `ValueObject`, `AggregateRoot`) operan en memoria y son completamente portables y testeables en aislamiento.
-
-### B. Primitivas de Diseño Táctico Soportadas (Cumplimiento: ✅ COMPLETO)
-La librería provee implementaciones estandarizadas para los patrones tácticos de DDD:
-1.  **`ValueObject`**: Manejo nativo de igualdad estructural basada en propiedades (en lugar de igualdad por referencia de memoria) y validación de invariantes inmutables.
-2.  **`Entity<ID>`**: Definición de objetos con identidad única duradera a lo largo del tiempo.
-3.  **`AggregateRoot<ID>`**: Gestión del ciclo de vida de entidades agrupadas y recolección interna de **Domain Events** para despacho asíncrono posterior a la transacción de persistencia.
-4.  **`DomainEvent`**: Eventos ligeros de dominio con marcas de tiempo e identificadores de correlación nativos para propagar cambios de estado de manera eventual.
+If the team chooses to utilize DDD patterns for any UMS bounded context (e.g., `Identity`, `Authorization`, or `Configuration`), we require a unified, lightweight, and pre-approved library of building blocks. This evaluation examines the **`@nestjslatam`** organization's DDD packages (specifically `@nestjslatam/ddd`) as the official tactical primitives standard for the UMS Core.
 
 ---
 
-## 📈 3. Beneficios de su Adopción
+## 📊 2. Architectural Alignment Analysis
 
-1.  **Erradicación de Código Repetitivo (Boilerplate):** Evita que el equipo tenga que reescribir clases abstractas para comparar objetos de valor, manejar despachos de eventos internos o estructurar identificadores de entidades, acelerando el desarrollo inicial.
-2.  **Estandarización del Equipo:** Al ser un conjunto de paquetes unificados para la comunidad de NestJS en Latam, promueve patrones limpios y consistentes que facilitan el onboarding de nuevos desarrolladores TypeScript al proyecto.
-3.  **Alineación con el Ecosistema NestJS:** Aunque las clases de dominio permanecen desacopladas (POJOs puros), la suite está diseñada para integrarse fluidamente con el contenedor de inyección de NestJS y los módulos de CQRS en la capa de aplicación.
+To be approved for use within the UMS Core Domain, any external library must satisfy our non-negotiable architectural guardrails:
+
+### A. Zero-Infrastructure Dependency Constraint (Compliance: ✅ FULLY COMPLIANT)
+*   **Guardrail:** The core Domain layer must have zero dependencies on external database ORMs (e.g., TypeORM), cloud provider SDKs, or web/HTTP frameworks.
+*   **Evaluation:** `@nestjslatam/ddd` provides pure TypeScript abstractions for tactical DDD primitives with no external runtime dependencies. The base building blocks (`Entity`, `ValueObject`, `AggregateRoot`) run entirely in memory and are highly testable in complete isolation.
+
+### B. Standard Tactical DDD Building Blocks (Compliance: ✅ FULLY COMPLIANT)
+The library provides complete, reliable implementations of standard DDD tactical components:
+1.  **`ValueObject`**: Supports structural equality based on properties (rather than memory reference equality) and immutable invariant validations.
+2.  **`Entity<ID>`**: Standardizes entities with durable, unique identities that persist over time.
+3.  **`AggregateRoot<ID>`**: Manages transaction boundaries, groups related entities, and incorporates internal **Domain Event** accumulation for safe transactional dispatching.
+4.  **`DomainEvent`**: Lightweight event interfaces that record state changes dynamically and enable eventual consistency across bounded contexts.
 
 ---
 
-## ⚠️ 4. Riesgos y Estrategias de Mitigación
+## 📈 3. Benefits of Adoption
 
-| Riesgo Detectado | Nivel de Riesgo | Estrategia de Mitigación |
+1.  **Boilerplate Eradication:** Eliminates the need for the team to write custom abstract classes for deep equality, entity comparison, or in-memory domain event tracking, significantly accelerating initial velocity.
+2.  **Unified Engineering Standards:** Provides a pre-approved, unified blueprint for the development team, preventing ad-hoc or inconsistent implementations of DDD tactical patterns.
+3.  **NestJS Ecosystem Alignment:** Designed specifically to integrate smoothly with NestJS applications and NestJS CQRS modules, while maintaining pure POJO models in the core domain layers.
+
+---
+
+## 🛠️ 4. Formal Approval & Mandatory Implementation Guidelines
+
+The use of `@nestjslatam/ddd` is formally **APPROVED** for any UMS bounded context where the team chooses to adopt Domain-Driven Design, subject to the following mandatory guidelines:
+
+### Guideline 1: Barrel Export Abstraction (Anti-Coupling)
+Developers must **never** import `@nestjslatam/ddd` directly inside individual domain entity files. To prevent direct library lock-in, all approved primitives must be re-exported via a local domain abstractions file inside the Nx Monorepo:
+*   **Abstractions Entrypoint:** `libs/domain/src/core-primitives.ts`
+*   **Usage:** Domain files must import from `@ums/domain/core-primitives` instead of `@nestjslatam/ddd` directly, allowing a seamless replacement or local override if the library becomes deprecated.
+
+### Guideline 2: Strict Immutability for Value Objects
+All properties defined on classes extending `ValueObject` must be declared as `readonly`. Value Objects are immutable by definition and must never be mutated after instantiation.
+
+### Guideline 3: Strict Decoupling from Database ORMs
+Database-specific decorators (such as `@Entity`, `@Column`, or `@ManyToOne` from TypeORM) are **strictly prohibited** inside domain entities or classes extending `@nestjslatam/ddd` primitives. Relational schemas and persistence mapping must be handled exclusively in the Infrastructure Adapters layer using specialized Mappers.
+
+---
+
+## 🔗 5. Vendor Lock-in & Risk Mitigation
+
+| Risk | Level | Mitigation Strategy |
 | :--- | :--- | :--- |
-| **Acoplamiento del Dominio (Vendor Lock-in en Código de Dominio)** | **Medio** | Si bien las entidades extienden de `@nestjslatam/ddd`, se puede crear una interfaz intermedia o encapsular los imports en un archivo barril local (`libs/domain/core`). Si la librería cambia de licencia o se vuelve obsoleta, se puede clonar/forkear el repositorio de origen de manera sencilla al ser Open-Source. |
-| **Rendimiento en Comparación de Propiedades** | **Bajo** | La comparación profunda de objetos de valor (`ValueObject.equals`) debe ser óptima para evitar sobrecostos de CPU en la compilación de gráficos de autorización con alta concurrencia. Se realizarán pruebas de carga automatizadas con Jest y Testcontainers. |
-| **Evolución y Soporte de la Comunidad** | **Medio** | Mantener una versión estable bloqueada en el `package.json` de nuestro monorrepo de Nx para evitar actualizaciones disruptivas de terceros. |
-
----
-
-## 🏛️ 5. Recomendación del Arquitecto
-
-**ESTADO: APROBADO CON CONDICIONES**
-
-Se recomienda la adopción de `@nestjslatam/ddd` para el núcleo del dominio de UMS bajo las siguientes directrices obligatorias de diseño de software:
-
-1.  **Encapsulamiento de Imports (Barrel Pattern):** No importar directamente `@nestjslatam/ddd` en cada archivo de entidad de manera indiscriminada. En su lugar, exponer las primitivas autorizadas a través de un archivo barril centralizado en nuestro monorrepo (e.g., `libs/domain/src/core-primitives.ts`), facilitando cualquier reemplazo futuro con cero impacto en las clases del negocio.
-2.  **Inmutabilidad de los Objetos de Valor:** Todos los `ValueObject` heredados deben ser declarados estrictamente con propiedades de solo lectura (`readonly`) para evitar mutaciones de estado colaterales fuera del Agregado.
-3.  **Desacoplamiento de Persistencia:** Queda estrictamente prohibido colocar decoradores de TypeORM (`@Entity`, `@Column`) en las clases de dominio que extienden de `@nestjslatam/ddd`. La persistencia debe resolverse exclusivamente mediante mapeadores (*Mappers*) en los adaptadores de infraestructura.
-
----
-
-## 🔄 6. Siguiente Paso de Integración
-
-*   Añadir la dependencia `@nestjslatam/ddd` al `package.json` principal del monorrepo.
-*   Crear la biblioteca de abstracción interna `libs/domain/core` para exponer los bloques de construcción DDD de forma segura y controlada al resto de contextos acotados (`Identity`, `Authorization`, `Configuration`).
+| **Direct Library Lock-in** | **Medium** | Mitigated completely by **Guideline 1 (Barrel Export Abstraction)**. The domain layer depends on local exports, isolating external package changes. |
+| **Performance Overhead** | **Low** | Primitives are highly optimized. Deep property comparison overhead is negligible under p95 < 5ms permission graph SLA limits. |
+| **Community Maintenance** | **Medium** | The package is open-source. If necessary, it can be easily forked, customized, or maintained internally as a local utility library under `libs/domain/core`. |
