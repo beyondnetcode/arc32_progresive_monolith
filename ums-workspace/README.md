@@ -77,17 +77,55 @@ Foundational engineering decisions grouped by architectural focus:
 
 #### 🏛️ Architectural Governance & ADR Status Matrix
 
-Before initiating any coding phase, the Product Owner (PO) and Lead Architect must review and sign off on all Architectural Decision Records (ADRs). Below is the current status of the UMS decision ledger (29 active decisions):
+Before starting the coding phase, the Product Owner (PO) has absolute authority to approve, defer, or veto any Architectural Decision Record (ADR). Below is the exhaustive classification of all 29 active decisions matching their file statuses:
 
-| ADR ID | Decision Title | Status | Impact / Scope | Action Required |
+### 🟢 1. APPROVED & ACCEPTED (Línea Base Autorizada — Ready for Coding)
+These decisions are officially **Approved** and form the system's baseline architecture. Development must strictly adhere to these patterns:
+
+| ADR ID | Decision Title | Status | Impact / Scope | Next Steps / Action |
 | :--- | :--- | :--- | :--- | :--- |
-| **ADR-0001** to **ADR-0023** | Historical Baseline (Nx, Clean Arch, etc.) | 🟢 **APPROVED** | Core modular monolith structure, testing, and CI/CD quality gates. | None (Historical Baseline) |
-| **ADR-0024** | [Configuration & Feature Management](./docs/03-adrs/0024-configuration-feature-management-platform.md) | 🟢 **APPROVED** | Establishes Multi-IdP dynamic parameters and system configurations. | None (Approved) |
-| **ADR-0025** | [Feature Flag Provider Abstraction](./docs/03-adrs/0025-feature-flag-provider-abstraction.md) | 🟢 **APPROVED** | Defines pluggable `IFeatureFlagPort` for flexible providers. | None (Approved) |
-| **ADR-0026** | [Multi-Tenant Adaptive MFA and Passwordless](./docs/03-adrs/0026-mfa-passwordless-adaptive-authentication.md) | 🟡 **UNDER REVIEW** | Context-aware adaptive MFA, WebAuthn/Passkeys, and trusted devices. | **PO Sign-off Required** before starting coding. |
-| **ADR-0027** | [Dual-Protocol REST & gRPC API Structure](./docs/03-adrs/0027-dual-protocol-rest-grpc-api-gateway.md) | 🟢 **APPROVED** | High-performance gRPC internal communication and REST public routing. | None (Approved) |
-| **ADR-0028** | [Self-Hosted Hybrid Infrastructure](./docs/03-adrs/0028-self-hosted-hybrid-infrastructure-on-premise.md) | 🟢 **APPROVED** | Cloud-agnostic capability using MinIO, RabbitMQ, and Vault OSS. | None (Approved) |
-| **ADR-0029** | [Tactical DDD Primitives Library](./docs/03-adrs/0029-tactical-ddd-primitives-library.md) | 🟡 **UNDER REVIEW** | Pre-approved `@nestjslatam/ddd` standard library for optional DDD use. | **PO Approval Required** to authorize DDD. |
+| **ADR-0001** | [Monorepo Orchestration with Nx](./docs/03-adrs/0001-monorepo-orchestration-nx.md) | 🟢 **Accepted** | Core monorepo organization and speed optimization. | Approved baseline. |
+| **ADR-0002** | [Clean Architecture & Hexagonal Boundaries](./docs/03-adrs/0002-clean-architecture-nestjs.md) | 🟢 **Accepted** | Decoupling core domain rules from database and frameworks. | Approved baseline. |
+| **ADR-0003** | [Strict TypeScript Standards](./docs/03-adrs/0003-strict-typescript-standards.md) | 🟢 **Accepted** | Static analysis quality gate and type enforcement. | Approved baseline. |
+| **ADR-0004** | [React Query Offline Architecture](./docs/03-adrs/0004-frontend-offline-resilience.md) | 🟢 **Accepted** | Local caching & fallback mechanism for client resilience. | Approved baseline. |
+| **ADR-0005** | [Zero-Cost Security via CodeQL](./docs/03-adrs/0005-ci-cd-quality-codeql.md) | 🟢 **Accepted** | Automated vulnerability scanning inside CI pipeline. | Approved baseline. |
+| **ADR-0008** | [Gateway and BFF Patterns](./docs/03-adrs/0008-progressive-multimodule-evolution-gateway-bff.md) | 🟢 **Accepted** | Optimizes network requests for multi-module clients. | Approved baseline. |
+| **ADR-0009** | [Strict Dependency Pinning](./docs/03-adrs/0009-strict-dependency-pinning-vulnerability-management.md) | 🟢 **Accepted** | Mitigates supply chain injection vulnerabilities. | Approved baseline. |
+| **ADR-0010** | [Multi-Tenancy SaaS Strategy](./docs/03-adrs/0010-multi-tenancy-architecture-strategy.md) | 🟢 **Accepted** | Defines database isolation strategy per corporate tenant. | Approved baseline. |
+| **ADR-0020** | [Identity Provider Abstraction](./docs/03-adrs/0020-identity-provider-abstraction-strategy.md) | 🟢 **Accepted** | Decouples UMS from Auth0, Keycloak, or Entra ID. | Approved baseline. |
+| **ADR-0021** | [High Performance Auth Graph](./docs/03-adrs/0021-high-performance-auth-and-graph-compilation.md) | 🟢 **Accepted** | Optimized permission compiling under <5ms latency limit. | Approved baseline. |
+| **ADR-0022** | [Pluggable Output Projections](./docs/03-adrs/0022-contextual-auth-and-pluggable-projections.md) | 🟢 **Accepted** | Context-aware read projection layers outside the core. | Approved baseline. |
+| **ADR-0023** | [Centralized vs Decentralized Access](./docs/03-adrs/0023-centralized-ums-vs-decentralized-access.md) | 🟢 **Accepted** | Establishes the authoritative access kernel boundary. | Approved baseline. |
+| **ADR-0024** | [Configuration & Feature Management](./docs/03-adrs/0024-configuration-feature-management-platform.md) | 🟢 **Accepted** | Multi-IdP parameter dynamic engine. | Approved baseline. |
+| **ADR-0025** | [Feature Flag Provider Abstraction](./docs/03-adrs/0025-feature-flag-provider-abstraction.md) | 🟢 **Accepted** | Pluggable `IFeatureFlagPort` for Unleash/ConfigCat. | Approved baseline. |
+| **ADR-0026** | [MFA and Passwordless Authentication](./docs/03-adrs/0026-mfa-passwordless-adaptive-authentication.md) | 🟢 **Accepted** | WebAuthn, Passkeys, TOTP, and Adaptive Risk MFA. | Approved baseline. |
+| **ADR-0027** | [Dual-Protocol REST & gRPC API Structure](./docs/03-adrs/0027-dual-protocol-rest-grpc-api-gateway.md) | 🟢 **Accepted** | Public RESTful APIs and internal gRPC services. | Approved baseline. |
+| **ADR-0028** | [Self-Hosted Hybrid Infrastructure](./docs/03-adrs/0028-self-hosted-hybrid-infrastructure-on-premise.md) | 🟢 **Accepted** | Cloud-agnostic capability (MinIO, RabbitMQ, Vault OSS). | Approved baseline. |
+| **ADR-0029** | [Tactical DDD Primitives Library](./docs/03-adrs/0029-tactical-ddd-primitives-library.md) | 🟢 **Accepted** | Standardizes `@nestjslatam/ddd` for optional DDD use. | Approved baseline. |
+
+### 🟡 2. PROPOSED & PENDING REVIEW (Pendientes de Revisión/Aprobación por el PO)
+These decisions are currently **Proposed** and represent strategic backlogs. They **must be formally approved by the PO before starting coding**:
+
+| ADR ID | Decision Title | Status | Impact / Scope | Required PO Action |
+| :--- | :--- | :--- | :--- | :--- |
+| **ADR-0006** | [Future Microservices via Dapr](./docs/03-adrs/0006-future-microservices-transition-dapr.md) | 🟡 **Proposed** | Sidecar integration for distributed state and messaging. | **PO review/approve** to activate microservice migration. |
+| **ADR-0007** | [Loki & OpenTelemetry Strategy](./docs/03-adrs/0007-observability-telemetry-loki-opentelemetry.md) | 🟡 **Proposed** | Distributed tracing and centralized log collection. | **PO review/approve** to authorize SRE monitoring infra. |
+| **ADR-0011** | [Fault Tolerance & Resiliency](./docs/03-adrs/0011-fault-tolerance-resiliency-patterns.md) | 🟡 **Proposed** | Circuit breakers (`opossum`) and exponential retries. | **PO review/approve** to authorize resiliency policies. |
+| **ADR-0012** | [Advanced Authorization (RBAC/ABAC)](./docs/03-adrs/0012-advanced-authorization-rbac-abac.md) | 🟡 **Proposed** | Fine-grained contextual permission modeling. | **PO review/approve** to authorize security model. |
+| **ADR-0013** | [Cloud Infrastructure & DR](./docs/03-adrs/0013-cloud-infrastructure-topology-dr.md) | 🟡 **Proposed** | Multi-region disaster recovery replication limits. | **PO review/approve** to authorize deployment budget. |
+| **ADR-0014** | [Distributed Caching (Redis)](./docs/03-adrs/0014-distributed-caching-strategy-redis.md) | 🟡 **Proposed** | Memory caches for auth validations and active sessions. | **PO review/approve** to authorize memory allocation. |
+| **ADR-0015** | [Event-Driven Architecture](./docs/03-adrs/0015-event-driven-architecture-intra-domain.md) | 🟡 **Proposed** | Asynchronous events publishing for state sync. | **PO review/approve** to authorize event bus topology. |
+| **ADR-0016** | [Immutable Business Audit Trail](./docs/03-adrs/0016-immutable-business-audit-trail.md) | 🟡 **Proposed** | Cryptographically signed logs for user activity tracing. | **PO review/approve** to authorize audit compliance rules. |
+| **ADR-0017** | [Feature Flagging Strategy](./docs/03-adrs/0017-feature-flagging-strategy.md) | 🟡 **Proposed** | Live features toggling on development environments. | **PO review/approve** to authorize operational gating. |
+| **ADR-0018** | [Testing Pyramid Quality Gates](./docs/03-adrs/0018-testing-pyramid-quality-gates.md) | 🟡 **Proposed** | Coverage limits for E2E, Contract, and Unit tests. | **PO review/approve** to authorize QA gate requirements. |
+| **ADR-0019** | [Tactical Domain Patterns (Result Pattern)](./docs/03-adrs/0019-tactical-design-patterns-future-proofing.md) | 🟡 **Proposed** | Rigid functional error handling over exception throwing. | **PO review/approve** to authorize coding style mandate. |
+
+### 🔴 3. CANCELLED, REJECTED OR VETOED (Rechazados o Descartados por el PO)
+These architectural decisions have been **Vetoed / Rejected** or **Cancelled** by the Product Owner and **must never be implemented**:
+
+*   *Currently, there are no rejected or cancelled decisions. You have full authority to move any ADR to this section to veto its implementation.*
+
+
 
 
 ### 🏷️ 4. Versioning & Release Cycles
