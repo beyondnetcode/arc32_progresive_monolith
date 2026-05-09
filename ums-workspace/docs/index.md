@@ -49,12 +49,13 @@ Contains the system's architectural specification based on the C4 Model standard
 
 ### 📜 [Phase 03 - Architectural Decision Records (ADRs)](./03-adrs/)
 The chronological and immutable ledger of critical design decisions in MADR format.
-*   📄 **[ADR Ledger](./03-adrs/)**: Access the complete index of **28 active architectural decisions** (ranging from Nx Monorepo, Clean Architecture, RLS, to Identity Provider Abstraction, High-Performance Graph Compilation, Pluggable Output Projections, Centralized Authorization Kernel, Configuration Platform, Feature Flag Provider Abstraction, Adaptive MFA/Passwordless, Dual-Protocol APIs, and Self-Hosted Infrastructure).
+*   📄 **[ADR Ledger](./03-adrs/)**: Access the complete index of **29 active architectural decisions** (ranging from Nx Monorepo, Clean Architecture, RLS, to Identity Provider Abstraction, High-Performance Graph Compilation, Pluggable Output Projections, Centralized Authorization Kernel, Configuration Platform, Feature Flag Provider Abstraction, Adaptive MFA/Passwordless, Dual-Protocol APIs, Self-Hosted Infrastructure, and Tactical DDD Primitives).
 *   📄 **[ADR-0024: Configuration & Feature Management Platform](./03-adrs/0024-configuration-feature-management-platform.md)**: Establishes Multi-IdP config, System Behavioral Config, and Feature Flag framework.
 *   📄 **[ADR-0025: Feature Flag Provider Abstraction](./03-adrs/0025-feature-flag-provider-abstraction.md)**: Defines `IFeatureFlagPort` pluggable pattern — supports Internal engine, LaunchDarkly, Unleash, ConfigCat, Azure App Config.
 *   📄 **[ADR-0026: Multi-Tenant Adaptive MFA and Passwordless Authentication](./03-adrs/0026-mfa-passwordless-adaptive-authentication.md)**: Establishes dynamic adaptive MFA, WebAuthn/Passkeys, cryptographic trusted devices, and self-service recovery.
 *   📄 **[ADR-0027: Dual-Protocol REST & gRPC API Structure with Kong Gateway](./03-adrs/0027-dual-protocol-rest-grpc-api-gateway.md)**: Establishes dual public-facing REST and internal-facing high-performance gRPC interfaces.
 *   📄 **[ADR-0028: Self-Hosted, Open-Source Infrastructure for Hybrid & On-Premise Deployments](./03-adrs/0028-self-hosted-hybrid-infrastructure-on-premise.md)**: Guarantees cloud-agnostic capability and localized deployments with zero cloud lock-in via MinIO, RabbitMQ, and HashiCorp Vault.
+*   📄 **[ADR-0029: Tactical DDD Primitives Library](./03-adrs/0029-tactical-ddd-primitives-library.md)**: Adopts `@nestjslatam/ddd` as the pre-approved standard library for tactical DDD primitives in case DDD is selected as part of the design.
 
 
 
