@@ -1,3 +1,13 @@
+## 0.0.4 (2026-05-10)
+
+### 🚀 Features
+
+- **devops:** provide authentication dependencies for ADR 0012 ([0da5161](https://github.com/beyondnetcode/ums/commit/0da5161))
+
+### ❤️ Thank You
+
+- Alberto Arroyo Raygada @nestjslatam
+
 ## 0.0.3 (2026-05-10)
 
 ### 🚀 Features
