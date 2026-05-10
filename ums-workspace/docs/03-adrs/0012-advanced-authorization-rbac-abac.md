@@ -1,7 +1,7 @@
 # ADR 0012: Advanced Authorization (RBAC/ABAC) and Security Auditing Strategy
 
 ## Status
-Proposed
+Approved
 
 ## Date
 2026-05-08

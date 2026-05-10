@@ -4,7 +4,9 @@
   "targetDefaults": {
     "build": {
       "cache": true,
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
     },
     "test": {
       "cache": true
@@ -14,7 +16,9 @@
     }
   },
   "release": {
-    "projects": ["*"],
+    "projects": [
+      "*"
+    ],
     "changelog": {
       "workspaceChangelog": {
         "createRelease": "github"
@@ -23,5 +27,6 @@
     "version": {
       "conventionalCommits": true
     }
-  }
+  },
+  "analytics": false
 }
