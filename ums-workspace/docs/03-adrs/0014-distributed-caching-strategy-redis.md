@@ -1,7 +1,7 @@
 # ADR 0014: Distributed Caching Strategy with Redis
 
 ## Status
-Proposed
+Approved
 
 ## Date
 2026-05-08

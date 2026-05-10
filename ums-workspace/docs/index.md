@@ -77,6 +77,7 @@ These decisions are officially **Approved** and form the system's baseline archi
 | **ADR-0010** | [Multi-Tenancy SaaS Strategy](./03-adrs/0010-multi-tenancy-architecture-strategy.md) | 🟢 **Accepted** | Defines database isolation strategy per corporate tenant. | Approved baseline. |
 | **ADR-0011** | [Fault Tolerance & Resiliency](./03-adrs/0011-fault-tolerance-resiliency-patterns.md) | 🟢 **Accepted** | Circuit breakers (`opossum`) and exponential retries. | Approved baseline. |
 | **ADR-0012** | [Advanced Authorization (RBAC/ABAC)](./03-adrs/0012-advanced-authorization-rbac-abac.md) | 🟢 **Accepted** | Fine-grained contextual permission modeling. | Approved baseline. |
+| **ADR-0014** | [Distributed Caching (Redis)](./03-adrs/0014-distributed-caching-strategy-redis.md) | 🟢 **Accepted** | Memory caches for auth validations and active sessions. | Approved baseline. |
 | **ADR-0020** | [Identity Provider Abstraction](./03-adrs/0020-identity-provider-abstraction-strategy.md) | 🟢 **Accepted** | Decouples UMS from Auth0, Keycloak, or Entra ID. | Approved baseline. |
 | **ADR-0021** | [High Performance Auth Graph](./03-adrs/0021-high-performance-auth-and-graph-compilation.md) | 🟢 **Accepted** | Optimized permission compiling under <5ms latency limit. | Approved baseline. |
 | **ADR-0022** | [Pluggable Output Projections](./03-adrs/0022-contextual-auth-and-pluggable-projections.md) | 🟢 **Accepted** | Context-aware read projection layers outside the core. | Approved baseline. |
@@ -95,7 +96,6 @@ These decisions are currently **Proposed** and represent strategic backlogs. The
 | :--- | :--- | :--- | :--- | :--- |
 | **ADR-0006** | [Future Microservices via Dapr](./03-adrs/0006-future-microservices-transition-dapr.md) | 🟡 **Proposed** | Sidecar integration for distributed state and messaging. | **PO review/approve** to activate microservice migration. |
 | **ADR-0013** | [Cloud Infrastructure & DR](./03-adrs/0013-cloud-infrastructure-topology-dr.md) | 🟡 **Proposed** | Multi-region disaster recovery replication limits. | **PO review/approve** to authorize deployment budget. |
-| **ADR-0014** | [Distributed Caching (Redis)](./03-adrs/0014-distributed-caching-strategy-redis.md) | 🟡 **Proposed** | Memory caches for auth validations and active sessions. | **PO review/approve** to authorize memory allocation. |
 | **ADR-0015** | [Event-Driven Architecture](./03-adrs/0015-event-driven-architecture-intra-domain.md) | 🟡 **Proposed** | Asynchronous events publishing for state sync. | **PO review/approve** to authorize event bus topology. |
 | **ADR-0016** | [Immutable Business Audit Trail](./03-adrs/0016-immutable-business-audit-trail.md) | 🟡 **Proposed** | Cryptographically signed logs for user activity tracing. | **PO review/approve** to authorize audit compliance rules. |
 | **ADR-0017** | [Feature Flagging Strategy](./03-adrs/0017-feature-flagging-strategy.md) | 🟡 **Proposed** | Live features toggling on development environments. | **PO review/approve** to authorize operational gating. |
