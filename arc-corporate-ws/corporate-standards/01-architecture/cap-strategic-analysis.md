@@ -23,8 +23,8 @@ Our architecture does not blindly choose a single side. Instead, it segments the
 *   **Technology**: Node.js Core + PostgreSQL (ACID).
 *   **Behavior on Partition**: If PostgreSQL primary experiences a split-brain partition, write operations halt to prevent data corruption rather than accepting dirty writes.
 *   **ADR References**:
-    *   [ADR-0010: Dual-Layer Isolation](./03-adrs/0010-multi-tenancy-architecture-strategy.md)
-    *   [ADR-0019: Unit of Work Pattern](./03-adrs/0019-tactical-design-patterns-future-proofing.md)
+    *   [ADR-0010: Dual-Layer Isolation](../02-adrs/core/0010-multi-tenancy-architecture-strategy.md)
+    *   [ADR-0019: Unit of Work Pattern](../02-adrs/core/0019-tactical-design-patterns-future-proofing.md)
 *   **Pros**: Zero balance corruption, accurate inventory, complete security auditing truth.
 *   **Cons**: Highly degraded during DB cluster outage.
 
@@ -33,9 +33,9 @@ Our architecture does not blindly choose a single side. Instead, it segments the
 *   **Technology**: Redis Clusters + RabbitMQ + CDN/Client Cache.
 *   **Behavior on Partition**: If Node A cannot talk to Node B, they will both continue serving data from their local cache or queue, even if the data is slightly stale (Eventual Consistency).
 *   **ADR References**:
-    *   [ADR-0014: 4-Tier Distributed Cache](./03-adrs/0014-distributed-caching-strategy-redis.md)
-    *   [ADR-0036: Message Bus Flow Control](./03-adrs/0036-message-bus-delivery-strategy-fifo-dlq.md)
-    *   [ADR-0004: Frontend Offline Resilience](./03-adrs/0004-frontend-offline-resilience.md)
+    *   [ADR-0014: 4-Tier Distributed Cache](../02-adrs/core/0014-distributed-caching-strategy-redis.md)
+    *   [ADR-0036: Message Bus Flow Control](../02-adrs/core/0036-message-bus-delivery-strategy-fifo-dlq.md)
+    *   [ADR-0004: Frontend Offline Resilience](../02-adrs/nodejs/0004-frontend-offline-resilience.md)
 *   **Pros**: Extremely low latency, operational during partial network degradation.
 *   **Cons**: "Stale-While-Revalidate" mechanics require developers to design UIs that handle eventual data arrival.
 
