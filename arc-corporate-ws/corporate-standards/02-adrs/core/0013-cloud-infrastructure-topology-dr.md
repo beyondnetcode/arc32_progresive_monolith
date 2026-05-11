@@ -27,5 +27,5 @@ Design infrastructure topology targeting Cloud-Native patterns enforcing high re
 - Requires sophisticated CI/CD pipelines engineered for multi-target orchestration setups.
 
 ## References
-- [ADR-0011: Fault Tolerance](./0011-fault-tolerance-resiliency-patterns.md)
-- [ADR-0028: Self-Hosted Hybrid Strategy](./0028-self-hosted-hybrid-infrastructure-on-premise.md)
+- [ADR-0011: Fault Tolerance](../02-adrs/core/0011-fault-tolerance-resiliency-patterns.md)
+- [ADR-0028: Self-Hosted Hybrid Strategy](../02-adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md)

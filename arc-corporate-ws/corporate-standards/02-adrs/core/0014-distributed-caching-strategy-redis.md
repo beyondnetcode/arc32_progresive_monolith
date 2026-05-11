@@ -40,4 +40,4 @@ Retain dedicated shared Redis namespaces serving the Core API domain.
 
 ## References
 - [Redis Cache-Aside Pattern](https://redis.io/docs/develop/cache/)
-- [ADR-0002: Clean Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
+- [ADR-0002: Clean Hexagonal Architecture](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)

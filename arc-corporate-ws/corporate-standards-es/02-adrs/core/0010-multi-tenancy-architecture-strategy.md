@@ -1,0 +1,43 @@
+# ADR 0010: Multi-Tenancy Architecture Strategy for SaaS Evolution
+
+## Status
+Approved
+
+## Date
+2026-05-08
+
+## Context
+As the system matures into a SaaS offering, we must isolate data for multiple tenants securely without exploding cloud infrastructure bills. There are three main partitioning approaches:
+1. **Database-per-Tenant**: Max isolation, maximum operational cost overhead.
+2. **Schema-per-Tenant**: Logical separation, but harder schema migration management.
+3. **Shared Database (Pooled)**: Single table space, discriminator IDs, high efficiency but potential data leakage if developers forget WHERE clauses.
+
+We need absolute leakage prevention alongside efficient resource scaling.
+
+## Decision
+Adopt a **Hybrid "Pooled" Multi-Tenancy Strategy** utilizing a mandatory **"Defense in Depth" Dual-Layer Isolation Framework**:
+
+1. **Layer 1: Application-Level Isolation (Primary - Engine Agnostic)**:
+   The persistence adapter layer MUST automatically inject the active `tenant_id` filter into all queries executed via ORM/Query Builders (e.g., using global filters or base repository query interceptors). This ensures functional data isolation remains completely agnostic of specific database engine capabilities.
+
+2. **Layer 2: Database-Level Failsafe (PostgreSQL RLS)**:
+   As an absolute safety net against human error (e.g., developer-written raw SQL queries skipping ORM filters), we leverage native **PostgreSQL Row-Level Security (RLS)**. The PostgreSQL engine enforces physical row filtering using transaction session variables set immediately upon opening the connection pool checkout.
+
+3. **Execution Scoping**: Pass `tenant_id` claims securely within verified JWTs. Utilize NestJS `AsyncLocalStorage` to hold the immutable context per-request, serving as the single source of truth used by both Layer 1 and Layer 2 resolvers.
+
+4. **VIP Isolation Readiness**: While 90% of tenants share the pool, the persistence abstraction layer must inherently support routing Enterprise clients to completely isolated physical database cluster end-points based on resolved tenant metadata, completely transparent to the domain.
+
+## Consequences
+
+### Positive
+- **Bulletproof Security**: Row isolation is enforced natively in Postgres engine, not trusted to error-prone backend application code.
+- **Extreme Scalability**: Run hundreds of basic tenants on a single Postgres instance without managing hundreds of separate schemas.
+- **Simplified Upgrades**: One single migration path applies cleanly to all Pooled tenants instantly.
+
+### Negative
+- **Noisy Neighbors**: A rogue query by one tenant can steal hardware capability. Requires strict throttling strategies.
+- **Restore Complexity**: Restoring the data lifecycle of only *one* tenant from backup is significantly more labor-intensive in a pooled model.
+
+## References
+- [PostgreSQL RLS Documentation](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+- [ADR-0031: Schema-per-Context Strategy](./0031-schema-per-context-domain-event-catalog.md)

@@ -34,6 +34,6 @@ Adopt **Dapr (Distributed Application Runtime)** as the microservices sidecar ru
 - Local Dapr development adds sidecar process overhead per service.
 
 ## References
-- [ADR-0015: Event-Driven Architecture](./0015-event-driven-architecture-intra-domain.md)
-- [ADR-0031: Schema-per-Context & Domain Event Catalog](./0031-schema-per-context-domain-event-catalog.md)
+- [ADR-0015: Event-Driven Architecture](../02-adrs/core/0015-event-driven-architecture-intra-domain.md)
+- [ADR-0031: Schema-per-Context & Domain Event Catalog](../02-adrs/core/0031-schema-per-context-domain-event-catalog.md)
 - [Dapr Documentation](https://dapr.io)

@@ -1,0 +1,32 @@
+# ADR 0023: Centralized Authorization Core Strategy
+
+## Status
+Approved
+
+## Date
+2026-05-09
+
+## Context
+Enterprise platform clusters suffer from disjointed identity silos. Spreading role verification across downstream applications invites fragmented policy enforcement, hidden security holes, massive administrative latency, and fragmented legal auditability. We require a consolidated authorization "kernel".
+
+## Decision
+Commit to building and deploying the system as the **Centralized Authorization Nucleus** serving all satellite company tools:
+
+1. **Kernel Consolidation**: Centralize the responsibility of analyzing identities, aggregating active role trees, and executing logic gates into a single, highly-hardened domain.
+2. **Decoupled Delivery**: Retain functional abstraction: identity validation (finding *who*) stays decoupled from logical authorization compilation (granting *what*), delegated cleanly via established Strategy injection layers.
+3. **Multi-Projection Output**: Produce canonical permission payloads formatted on-the-fly into either heavy JSON trees for portal rendering or efficient compressed JWT claim-sets for internal microservices verification.
+4. **Massive Velocity**: Anchor retrieval stability on Distributed Redis clusters executing permission resolutions under **<5ms total latency budgets**.
+
+## Consequences
+
+### Positive
+- Absolute separation of concerns (SoC). Downstream apps focus only on business flow, leaving auth security to the consolidated kernel.
+- Singular, authoritative governance record of all system accesses and privilege mutations.
+- Exceptional response velocities via Multi-Layer Distributed caching.
+
+### Negative
+- Forms a single architectural point of failure if not heavily scaled and redundant across zone clusters.
+
+## References
+- [ADR-0021: High Performance Authorization Graph](./0021-high-performance-auth-and-graph-compilation.md)
+- [ADR-0022: Contextual Auth and Projections](./0022-contextual-auth-and-pluggable-projections.md)

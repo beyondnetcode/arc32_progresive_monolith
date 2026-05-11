@@ -51,5 +51,5 @@ Product & Architecture require testing against the following hypothetical extrem
 ## References
 - [Grafana k6 Documentation](https://k6.io/docs/)
 - [Pact.io - Consumer Driven Contracts](https://docs.pact.io/)
-- [ADR-0011: Distributed Circuit Breakers](./0011-fault-tolerance-resiliency-patterns.md)
-- [ADR-0033: Transactional Outbox](./0033-transactional-outbox-pattern.md)
+- [ADR-0011: Distributed Circuit Breakers](../02-adrs/core/0011-fault-tolerance-resiliency-patterns.md)
+- [ADR-0033: Transactional Outbox](../02-adrs/core/0033-transactional-outbox-pattern.md)

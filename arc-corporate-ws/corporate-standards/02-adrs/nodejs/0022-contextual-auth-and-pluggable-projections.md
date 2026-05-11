@@ -27,5 +27,5 @@ Separate Identity Validation logic entirely from output composition capabilities
 - Requires cache invalidation synchrony across the different compiled formats.
 
 ## References
-- [ADR-0021: High Performance Auth Graph](./0021-high-performance-auth-and-graph-compilation.md)
-- [ADR-0020: IdP Strategy](./0020-identity-provider-abstraction-strategy.md)
+- [ADR-0021: High Performance Auth Graph](../02-adrs/nodejs/0021-high-performance-auth-and-graph-compilation.md)
+- [ADR-0020: IdP Strategy](../02-adrs/core/0020-identity-provider-abstraction-strategy.md)

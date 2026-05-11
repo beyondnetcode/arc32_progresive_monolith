@@ -40,4 +40,4 @@ Adopt a **Hybrid "Pooled" Multi-Tenancy Strategy** utilizing a mandatory **"Defe
 
 ## References
 - [PostgreSQL RLS Documentation](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
-- [ADR-0031: Schema-per-Context Strategy](./0031-schema-per-context-domain-event-catalog.md)
+- [ADR-0031: Schema-per-Context Strategy](../02-adrs/core/0031-schema-per-context-domain-event-catalog.md)

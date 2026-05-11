@@ -27,5 +27,5 @@ Treat dynamic feature routing as standard **Infrastructure injection**, complete
 - Introduces dynamic logic branching that inflates cyclomatic testing complexity.
 
 ## References
-- [ADR-0025: Feature Flag Abstraction](./0025-feature-flag-provider-abstraction.md)
-- [ADR-0024: Config Management](./0024-configuration-feature-management-platform.md)
+- [ADR-0025: Feature Flag Abstraction](../02-adrs/core/0025-feature-flag-provider-abstraction.md)
+- [ADR-0024: Config Management](../02-adrs/core/0024-configuration-feature-management-platform.md)

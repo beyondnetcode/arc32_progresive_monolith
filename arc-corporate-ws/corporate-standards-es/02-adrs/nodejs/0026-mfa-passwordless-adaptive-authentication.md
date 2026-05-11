@@ -1,0 +1,32 @@
+# ADR 0026: Adaptive MFA and Passwordless Platform
+
+## Status
+Approved
+
+## Date
+2026-05-09
+
+## Context
+Conventional password validation and raw static SMS MFA is heavily vulnerable to aggressive social engineering and phishing vectors. Enterprise clients demand Zero-Trust compliance, requiring phishing-resistant cryptographic mechanisms alongside frictionless experiences that do not exhaust end-users.
+
+## Decision
+Rollout an **Adaptive Risk-Managed MFA Framework** driving the Core authentication pipeline:
+
+1. **Passwordless First**: Infuse native WebAuthn (Passkeys) into authentication flows, empowering end-users to bind high-security hardware (TouchID, FaceID, Yubikeys) natively to logins.
+2. **Adaptive Scoring**: Deploy stateless pipeline checkpoints inspecting metadata (IP vectors, fingerprint anomalies, location impossible-travel checks). Produce internal risk matrices.
+3. **Dynamic Step-Up**: Move away from "always on" frictions. Trigger multi-factor requests dynamically only upon risk score threshold violations or requests touching critical business critical transactional paths.
+4. **Tenant Governance**: Allow each enterprise Tenant profile to activate, configure, and mandate their exact preferred security posture threshold.
+
+## Consequences
+
+### Positive
+- Establishes best-in-class Anti-Phishing defense matching strict NIST SP 800-63B standards.
+- Dramatically lifts operator throughput by reducing redundant validation fatigue on secure, established device vectors.
+
+### Negative
+- Initial onboarding learning curvature for non-technical operator demographics.
+- Minimal cryptography processing overhead required per login.
+
+## References
+- [ADR-0020: IdP Abstraction](./0020-identity-provider-abstraction-strategy.md)
+- [WebAuthn Official Guide](https://webauthn.guide/)

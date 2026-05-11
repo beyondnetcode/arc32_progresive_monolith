@@ -28,4 +28,4 @@ Implement a Hybrid Architecture bridging Role-Based (RBAC) and Attribute-Based (
 
 ## References
 - [NestJS Guard Documentation](https://docs.nestjs.com/guards)
-- [ADR-0010: Multi-Tenancy (RLS)](./0010-multi-tenancy-architecture-strategy.md)
+- [ADR-0010: Multi-Tenancy (RLS)](../02-adrs/core/0010-multi-tenancy-architecture-strategy.md)

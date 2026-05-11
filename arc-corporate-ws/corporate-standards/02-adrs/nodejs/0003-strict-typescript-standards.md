@@ -45,5 +45,5 @@ All rules are enforced in CI — PRs with TypeScript errors are blocked from mer
 - Third-party libraries with poor TypeScript definitions require careful wrapper typing.
 
 ## References
-- [ADR-0001: Monorepo Orchestration](./0001-monorepo-orchestration-nx.md)
-- [ADR-0002: Clean Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
+- [ADR-0001: Monorepo Orchestration](../02-adrs/core/0001-monorepo-orchestration-nx.md)
+- [ADR-0002: Clean Hexagonal Architecture](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)

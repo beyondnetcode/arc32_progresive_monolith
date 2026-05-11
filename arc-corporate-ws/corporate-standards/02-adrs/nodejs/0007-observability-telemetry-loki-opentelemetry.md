@@ -40,4 +40,4 @@ Adopt the **OpenTelemetry (OTel)** standard as the unified observability backbon
 
 ## References
 - [OpenTelemetry Documentation](https://opentelemetry.io)
-- [ADR-0002: Clean Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
+- [ADR-0002: Clean Hexagonal Architecture](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)
