@@ -22,12 +22,17 @@ This pattern is designed specifically for systems that:
 | **Progressive Evolution** | ADR-0006, ADR-0008 | Zero-refactoring path to microservices via Dapr |
 | **SaaS Multi-Tenancy** | ADR-0010 | Dual-Layer Isolation (ORM + PostgreSQL RLS) |
 | **Strict Decoupling** | ADR-0002, ADR-0003 | ESLint boundary enforcement |
-| **Resilience** | ADR-0011 | Circuit breakers via `opossum` |
+| **Resilience** | ADR-0011 | Distributed Circuit Breakers (Redis + Kong) |
 | **Security** | ADR-0005, ADR-0012, ADR-0020, ADR-0026 | Zero-trust perimeter + RBAC/ABAC |
 | **Internal API Latency** | ADR-0014, ADR-0021 | 4-Tier Cache (Client + CDN + BFF + Core) |
 | **Observability** | ADR-0007 | OTel + Loki + distributed tracing |
 | **Immutable Auditing** | ADR-0016 | Append-only audit ledger |
 | **Tech Sovereignty** | ADR-0002, ADR-0028 | 100% Swappable Infra/AOP without logic impact |
+
+#### 🔍 Supplemental Strategic Frameworks
+To deeply understand the mathematical and risk posture of this architecture, consult:
+*   👉 **[Design Maturity & Patterns Evaluation](./design-and-maturity-evaluation.md)**
+*   👉 **[CAP Theorem Strategic Analysis](./cap-theorem-strategic-analysis.md)**
 
 ---
 
