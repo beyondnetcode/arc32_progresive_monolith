@@ -1,4 +1,4 @@
-﻿# ⚡ Progressive Node.js Technology Stack Cheat Sheet (Quick Reference)
+# ⚡ Progressive Node.js Technology Stack Cheat Sheet (Quick Reference)
 
 This cheat sheet serves as the authoritative, high-density tool reference by architectural layer for developers and autonomous agents working on the Progressive Node.js Reference Architecture.
 
@@ -27,17 +27,17 @@ This cheat sheet serves as the authoritative, high-density tool reference by arc
 *   **Architectural Pattern:** Hexagonal Architecture (Ports & Adapters)
 *   **Monorepo Strategy:** Nx Monorepo
 *   **Execution Pattern:** Modular Monolith (Dapr-Ready)
-*   **Segregation Pattern:** Internal CQRS (NestJS CQRS Module)
+*   **Segregation Pattern:** Hybrid CQRS (ADR-0034 Matrix regulated)
 *   **Dependency Injection:** Native NestJS DI Container
 
 ### 5. Data Layer
-*   **Primary Relational Database:** PostgreSQL v16
+*   **Primary Relational Database:** PostgreSQL v16 (Schema Per Context isolation, ADR-0031)
 *   **Relational Mapping (ORM):** TypeORM (TypeScript)
 *   **High-Performance Queries:** Native `pg` driver
 *   **Schema Migration Engine:** TypeORM Migrations via Kubernetes Init-Containers
 *   **In-Memory Caching:** Redis v7.2 (Sentinel / Cluster Replications)
 *   **Object & Asset Store:** MinIO (S3-Compatible, Self-hosted)
-*   **Asynchronous Message Broker:** RabbitMQ (AMQP v0.9.1, Self-hosted)
+*   **Asynchronous Message Broker:** RabbitMQ governed by flow control (ADR-0036) & Outbox (ADR-0033)
 
 ### 6. Multi-tenancy Strategy
 *   **Data Isolation Model:** Shared Database with Row-Level Security (RLS)
@@ -61,8 +61,14 @@ This cheat sheet serves as the authoritative, high-density tool reference by arc
 *   **Access Control:** Hierarchical RBAC + Attribute-Based Access Control (ABAC)
 *   **Dependency Audit:** Snyk CLI + `npm audit` inside CI/CD pipelines
 
-### 10. Developer Experience (DevEx)
+### 10. Error Management Strategy
+*   **Pattern Standard:** Functional Result Pattern (`neverthrow`) per ADR-0038
+*   **Global Barrier:** NestJS ExceptionFilter capturing opaque internal trace IDs.
+
+### 11. Developer Experience (DevEx)
 *   **Local Services:** Docker Compose Spec
 *   **Unit Testing Framework:** Jest
 *   **Integration Testing:** Jest + Supertest with **Testcontainers**
+*   **Contract Verification:** Pact JS (Microservice consumer-driven)
+*   **Performance Injection:** **k6** (Grafana) TypeScript dynamic scripts
 *   **End-to-End (E2E) Testing:** Playwright

@@ -1,17 +1,19 @@
 # 🗃️ Conceptual Data Model
 
-The core domain model utilizes a **Hybrid Audit Strategy** (ADR-0014). Every transactional table inherits standard auditing columns, and an external immutable ledger tracks the historical delta changes.
+The core domain model utilizes a **Hybrid Audit Strategy** (ADR-0016). Every transactional table inherits standard auditing columns, and an external immutable ledger tracks the historical delta changes.
 
 ## 1. Entity Relationship Diagram (Mermaid)
 
 ```mermaid
 erDiagram
+    %% Intraschema Strong Coupling
     TENANT ||--o{ USER : hosts
-    TENANT ||--o{ TASK : isolates
-    USER ||--o{ TASK : creates
-    USER ||--o{ CATEGORY : defines
-    CATEGORY ||--o{ TASK : classifies
     TASK }o--o{ TAG : associated_with
+
+    %% Interschema Loose Coupling (Logical References via UUID)
+    USER ..o{ TASK : logical_ownership
+    USER ..o{ CATEGORY : logical_ownership
+    CATEGORY ..o{ TASK : classification
     
     %% System Multi-Tenancy Root
     TENANT {
@@ -30,7 +32,7 @@ erDiagram
     }
     CATEGORY {
         uuid id PK
-        uuid user_id FK
+        uuid user_id LogicalRef
         string name
         datetime created_at
         uuid created_by
@@ -40,8 +42,8 @@ erDiagram
     }
     TASK {
         uuid id PK
-        uuid user_id FK
-        uuid category_id FK
+        uuid user_id LogicalRef
+        uuid category_id LogicalRef
         string title
         string description
         enum status
@@ -57,10 +59,10 @@ erDiagram
         string color_hex
     }
 
-    %% Central Audit Ledger
+    %% Central Audit Ledger (Populated via Events asynchronously)
     AUDIT_LOG {
         uuid id PK
-        uuid user_id FK
+        uuid user_id LogicalRef
         string action_type
         string entity_name
         uuid entity_id
