@@ -51,8 +51,9 @@ The canonical system blueprint ledger consisting of all 30 fully approved record
 *   [ADR 0013: Cloud Topology & DR](./03-adrs/0013-cloud-infrastructure-topology-dr.md)
 *   [ADR 0014: Distributed Caching (Redis)](./03-adrs/0014-distributed-caching-strategy-redis.md)
 *   [ADR 0015: Event-Driven Architecture](./03-adrs/0015-event-driven-architecture-intra-domain.md)
-*   [ADR 0016: Immutable Audit Trail](./03-adrs/0016-immutable-business-audit-trail.md)
+*   [ADR 0029: Tactical DDD Primitives](./03-adrs/0029-tactical-ddd-primitives-library.md)
 *   [ADR 0030: Kong Gateway vs NestJS](./03-adrs/0030-api-gateway-kong-vs-nestjs.md)
+*   [ADR 0031: Schema-per-Context & Domain Event Catalog](./03-adrs/0031-schema-per-context-domain-event-catalog.md)
 
 ### Security & Features Governance
 *   [ADR 0012: Advanced Authorization (RBAC/ABAC)](./03-adrs/0012-advanced-authorization-rbac-abac.md)

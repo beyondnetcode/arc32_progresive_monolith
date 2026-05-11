@@ -131,4 +131,5 @@ As validated by the Principal Architect, all 30 original foundational decisions 
 19. **[ADR 0030: Kong Gateway vs NestJS Gateway](../03-adrs/0030-api-gateway-kong-vs-nestjs.md)**: Separation of infrastructure proxies from business orchestration.
 20. **[ADR 0029: Tactical DDD Primitives](../03-adrs/0029-tactical-ddd-primitives-library.md)**: Mandatory utilization of standardized `@nestjslatam/ddd`.
 
-*(Consult individual documents in `/docs/03-adrs/` for detailed breakdown of remaining records 0017-0025 and others)*.
+### 🟣 Group D: Microservices Evolution Readiness
+21. **[ADR 0031: Schema-per-Context & Domain Event Catalog](../03-adrs/0031-schema-per-context-domain-event-catalog.md)**: Each bounded context owns a dedicated PostgreSQL schema (`auth` | `tasks` | `taxonomy` | `audit`). All cross-context communication is governed by a formal Domain Event Catalog with typed payload contracts, enabling zero-migration microservices extraction.

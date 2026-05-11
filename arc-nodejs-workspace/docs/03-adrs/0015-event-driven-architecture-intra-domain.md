@@ -1,1 +1,61 @@
-﻿# ADR 0015: Event-Driven Architecture (EDA) for Intra-Domain Communication  ## Status Approved  ## Date 2026-05-08  ## Context As the Modular Monolith grows, allowing domains (e.g., Inventory, Billing, Operations) to call each other synchronously leads to tight coupling. If the Billing module is slow or crashes, an Inventory operation should not fail as a consequence.  ## Decision We will adopt an asynchronous **Event-Driven Architecture (EDA)** for intra-domain communication:  1. **Internal Event Bus**: Utilize an in-memory event bus (like NestJS `EventEmitter2`) for the current Modular Monolith stage. Domains will publish Domain Events (e.g., `Tarja.Completed`) instead of directly invoking services of other domains. 2. **Independent Consumers**: Other bounded contexts will subscribe to these events and process them independently (e.g., Billing module listening for `Tarja.Completed` to generate an invoice). 3. **Future Microservices Readiness**: This event-driven pattern ensures that if we split the monolith into microservices later (ADR 0006), the internal event bus can easily be swapped for a distributed message broker (e.g., Kafka or RabbitMQ) with zero changes to domain logic.  ## Consequences * **Pros**: High decoupling, superior fault isolation, and smooth transition to microservices. * **Cons**: Tracing execution flows becomes harder. Requires handling eventual consistency scenarios across domains.
+# ADR 0015: Event-Driven Architecture (EDA) for Intra-Domain Communication
+
+## Status
+Approved
+
+## Date
+2026-05-08
+
+## Updated
+2026-05-11 — Added reference to ADR-0031 Domain Event Catalog. Event definitions and the cross-context subscription map are now formally specified in that record.
+
+## Context
+As the Modular Monolith grows, allowing bounded contexts to call each other synchronously creates tight coupling. If one context is slow or fails, it should not cascade failures into other contexts. Additionally, inter-context communication must be defined as explicit typed contracts to enable safe future microservices extraction (ADR-0006).
+
+## Decision
+
+We will adopt an asynchronous **Event-Driven Architecture (EDA)** for all cross-bounded-context communication:
+
+### 1. Injectable Event Bus (`IEventBusPort`)
+The domain will never import a concrete message broker. All async communication is routed through a pure TypeScript port:
+
+```typescript
+export interface IEventBusPort {
+  publish<T extends DomainEvent>(event: T): Promise<void>;
+  subscribe<T extends DomainEvent>(
+    eventClass: new (...args: any[]) => T,
+    handler: (event: T) => Promise<void>,
+  ): void;
+}
+```
+
+The concrete implementation is injected by the NestJS DI container at startup via an environment variable:
+
+| `EVENT_BUS_IMPL` | Implementation | Usage |
+| :--- | :--- | :--- |
+| `in-memory` | NestJS `EventEmitter2` | Development / Testing |
+| `rabbitmq` | RabbitMQ via `@golevelup/nestjs-rabbitmq` | Production |
+| `kafka` | Kafka via `kafkajs` | High-scale scenarios |
+
+### 2. Domain Events as Cross-Context Contracts
+Every event that crosses a bounded context boundary must be a typed class with an `eventId` (UUID for idempotency) and `occurredAt` timestamp. The complete approved catalog of cross-context events is defined in:
+
+👉 **[ADR-0031: Domain Event Catalog](./0031-schema-per-context-domain-event-catalog.md)**
+
+### 3. Intra-Context (Internal) vs Cross-Context Events
+- **Intra-context events** (within the same bounded context): May use synchronous NestJS event emitters with no schema constraints.
+- **Cross-context events** (crossing bounded context boundaries): MUST use `IEventBusPort` and MUST conform to the typed payload definitions in ADR-0031.
+
+### 4. Future Microservices Readiness (ADR-0006)
+When a bounded context is extracted into an independent microservice:
+- Replace the `in-memory` bus implementation with `rabbitmq` or `kafka` — **zero domain code changes required**.
+- The `IEventBusPort` abstraction guarantees the domain remains agnostic to the transport layer.
+
+## Consequences
+* **Pros**: High decoupling, fault isolation, explicit integration contracts, smooth microservices transition path.
+* **Cons**: Eventual consistency across contexts must be embraced. Distributed tracing (ADR-0007) is required to follow event flows across context boundaries.
+
+## References
+- [ADR-0006: Future Microservices via Dapr](./0006-future-microservices-transition-dapr.md)
+- [ADR-0007: Observability with OpenTelemetry](./0007-observability-telemetry-loki-opentelemetry.md)
+- [ADR-0031: Schema-per-Context and Domain Event Catalog](./0031-schema-per-context-domain-event-catalog.md)
