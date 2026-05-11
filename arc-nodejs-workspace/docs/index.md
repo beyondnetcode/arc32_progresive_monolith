@@ -27,6 +27,7 @@ Technical layout, topology, and C4 Model definitions.
 *   [C4 Model Specification & Container View](./02-architecture/architecture-spec.md)
 *   [Bounded Context Domain Mapping](./02-architecture/bounded-context-map.md)
 *   [📊 Design Maturity & Patterns Evaluation](./02-architecture/design-and-maturity-evaluation.md)
+*   [⚖️ CAP Theorem Strategic Analysis](./02-architecture/cap-theorem-strategic-analysis.md)
 *   [Tactical DDD Standard Evaluation](./02-architecture/nestjslatam-ddd-evaluation.md)
 
 ---
