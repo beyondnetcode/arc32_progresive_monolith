@@ -41,15 +41,31 @@ Defines how systems based on this stack interact with the corporate ecosystem.
 
 ```mermaid
 graph TD
-    Users["Users / Digital Channels"]
+    Users["Users / Multi-Channel Digital Apps"]
+    subgraph IngressLayers["Tiers 1 & 2: Traffic Governance"]
+        Kong["Kong API Gateway (Security)"]
+        BFF["BFF Orchestrator (Transformation)"]
+    end
+    
     System["[Node.js API Core System]"]
-    ExternalAPI["External Services (REST / gRPC)"]
-    Identity["Federated Identity Providers"]
-    MessageBroker["Messaging Bus (Async)"]
+    
+    subgraph ExternalSystems["Integrated Ecosystem"]
+        ExternalAPI["External Services (REST / gRPC)"]
+        Identity["Federated Identity Providers"]
+        
+        subgraph MessageBusLayer["Injectable Messaging Bus"]
+            IBusPort["<< Abstract >> EventBus Port"]
+            BusImpls["In-Memory / RabbitMQ / Redis"]
+        end
+    end
 
-    Users -->|HTTP/REST + JSON| System
+    Users -->|HTTPS| Kong
+    Kong -->|Forward| BFF
+    BFF -->|Aggregated REST| System
+    
     System -->|Queries / Validation| Identity
-    System -->|Event Consuming / Publishing| MessageBroker
+    System -->|Inject Implementation| IBusPort
+    IBusPort -.->|Publish Events| BusImpls
     System -->|Non-blocking calls| ExternalAPI
 ```
 
@@ -85,25 +101,29 @@ The recommended physical topology for this ecosystem includes three distribution
 ```mermaid
 graph TD
     subgraph Clients["Presentation Layer"]
-        FrontApp["Client App (React/Angular)"]
+        FrontApp["Web App (React/Angular)"]
         MobileApp["Mobile Application"]
     end
 
-    subgraph GatewayLayer["Orchestration Layer"]
-        BFF["BFF Gateway (Light Load / Aggregation)"]
+    subgraph GatewayLayer["Orchestration Layer (Tiers 1 & 2)"]
+        KongIngress["Kong API Gateway (Reverse Proxy)"]
+        BFF["BFF Gateway (Aggregation / Payload Shaping)"]
     end
 
-    subgraph CoreServices["Domain Services Layer"]
-        NodeAPI["Node.js API Core (Async)"]
-        FastCache["Distributed Cache Layer (Redis)"]
-        MainDB["Database (Relational/NoSQL)"]
+    subgraph CoreServices["Domain Core Tier"]
+        NodeAPI["Node.js API Core (Hexagonal Business Logic)"]
+        FastCache["Distributed Cache (Redis)"]
+        MainDB["SQL Database (RLS Enabled)"]
+        EventBus["Injectable Event Bus (In-Memory / RabbitMQ)"]
     end
 
-    FrontApp --> BFF
-    MobileApp --> BFF
+    FrontApp --> KongIngress
+    MobileApp --> KongIngress
+    KongIngress --> BFF
     BFF --> NodeAPI
     NodeAPI --> MainDB
     NodeAPI <--> FastCache
+    NodeAPI -.->|Publish| EventBus
 ```
 
 ---
