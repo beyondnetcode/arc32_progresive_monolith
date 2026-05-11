@@ -15,6 +15,7 @@ Mandate specific Functional and Structure patterns protecting core purity:
 1. **The Result Pattern**: Eliminate raw error throwing from inside application use cases. Methods strictly return a typed functional `Result<V, E>` wrapper. Outer adapters (e.g., HTTP Controller) interrogate `result.isFailure()` and map domain domain errors to transport errors (e.g., 404).
 2. **Null Object Avoidance**: Forbid standard `null` usage for common logical outcomes. Return strongly typed semantic empty objects or `Optional` representations to force client null-handling verification.
 3. **Decorator Boundary separation**: Offload global cross-cutting filters (metrics, tracing, logging) into transparent Typescript method Decorators at the entry gate, preventing telemetry poisoning of actual algorithm code.
+4. **Unit of Work Pattern**: All database state mutations within a single Application Use Case transaction must operate under an atomic `IUnitOfWork` context. This guarantees that multiple repository updates and secondary effects (like audit logging inserts) either commit successfully together as a single transaction or rollback totally upon any intermediary failure, preserving consistent aggregate states.
 
 ## Consequences
 
