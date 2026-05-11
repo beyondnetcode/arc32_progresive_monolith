@@ -29,7 +29,7 @@ Click on the phases or files to navigate quickly and directly through the knowle
 *   📋 **[Phase 01 - Domain Requirements](./docs/01-requirements/)**:
     *   [Atomic Use Cases](./docs/01-requirements/usecases/) | [Conceptual Data Model](./docs/01-requirements/conceptual-data-model.md) | [Permission Matrix](./docs/01-requirements/permission-matrix-example.md) | [DDD Glossary](./docs/01-requirements/glossary.md)
 *   🏗️ **[Phase 02 - Architectural Design](./docs/02-architecture/)**:
-    *   [C4 Master Specification](./docs/02-architecture/architecture-spec.md)
+    *   **[Node.js Reference Architecture](./docs/02-architecture/reference-architecture-nodejs-arc42.md)** | [C4 Master Specification](./docs/02-architecture/architecture-spec.md)
 *   📜 **[Phase 03 - Architectural Decision Records (ADRs)](./docs/03-adrs/)**:
     *   [23 ADRs History](./docs/03-adrs/)
 *   🛠️ **[Phase 04 - Engineering Standards and Artifacts](./docs/04-artifacts/)**:
@@ -44,6 +44,7 @@ Click on the phases or files to navigate quickly and directly through the knowle
 
 ### 🏗️ 2. Architectural Design
 *   👉 **[ULPMS Master Documentation Index & Guides](./docs/index.md)**: The central navigation map linking all 6 phases of product vision, requirements, architecture specifications, ADRs, engineering standards, and deployment roadmaps.
+*   👉 **[Corporate Node.js Reference Architecture](./docs/02-architecture/reference-architecture-nodejs-arc42.md)**: The official corporate blueprint for API-driven systems following the international **arc42** standard. UMS acts as the canonical technical instance of this architecture.
 *   👉 **[C4 Architecture Spec & Technical Inventory](./docs/02-architecture/architecture-spec.md)**: Details the Level 1 (System Context), Level 2 (Container), and Level 3 (Component) diagrams of the UMS, along with the physical technology inventory.
 *   👉 **[Gap Analysis & Optimization Roadmap](./docs/04-artifacts/gap-analysis-and-optimization-plan.md)**: Analyzes the platform's architectural maturity against 16 Enterprise Quality Criteria and tracks active ADR implementations.
 *   👉 **[Vendor Lock-In & Financial Risk Assessment](./docs/02-architecture/vendor-risk-assessment.md)**: Analyzes financial and operational risks associated with commercial identity providers, caching mechanisms, and feature flag solutions.

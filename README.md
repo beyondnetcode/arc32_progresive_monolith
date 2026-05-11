@@ -27,7 +27,7 @@ Click on the phases or files to navigate quickly and directly through the knowle
 *   📋 **[Phase 01 - Domain Requirements](./ums-workspace/docs/01-requirements/)**:
     *   [Atomic Use Cases](./ums-workspace/docs/01-requirements/usecases/) | [Conceptual Data Model](./ums-workspace/docs/01-requirements/conceptual-data-model.md) | [Permission Matrix](./ums-workspace/docs/01-requirements/permission-matrix-example.md) | [DDD Glossary](./ums-workspace/docs/01-requirements/glossary.md)
 *   🏗️ **[Phase 02 - Architectural Design](./ums-workspace/docs/02-architecture/)**:
-    *   [C4 Master Specification](./ums-workspace/docs/02-architecture/architecture-spec.md)
+    *   **[Node.js Reference Architecture](./ums-workspace/docs/02-architecture/reference-architecture-nodejs-arc42.md)** | [C4 Master Specification](./ums-workspace/docs/02-architecture/architecture-spec.md)
 *   📜 **[Phase 03 - Architectural Decision Records (ADRs)](./ums-workspace/docs/03-adrs/)**:
     *   [23 ADRs History](./ums-workspace/docs/03-adrs/)
 *   🛠️ **[Phase 04 - Engineering Standards and Artifacts](./ums-workspace/docs/04-artifacts/)**:
@@ -42,7 +42,8 @@ Click on the phases or files to navigate quickly and directly through the knowle
 
 ### 🏗️ 2. Architectural Design
 *   👉 **[ULPMS Master Documentation Index & Guides](./ums-workspace/docs/index.md)**: The central navigation map linking all 6 phases of product vision, requirements, architecture specifications, ADRs, engineering standards, and deployment roadmaps.
-*   👉 **[C4 Architecture Spec & Technical Inventory](./ums-workspace/docs/02-architecture/architecture-spec.md)**: Details the Level 1 (System Context), Level 2 (Container), and Level 3 (Component) diagrams of the UMS, along with the physical technology inventory.
+*   👉 **[Corporate Node.js Reference Architecture](./ums-workspace/docs/02-architecture/reference-architecture-nodejs-arc42.md)**: The official corporate blueprint for API-driven systems following the international **arc42** standard. UMS acts as the canonical technical instance of this architecture.
+*   👉 **[C4 Architecture Spec & Technical Inventory](./ums-workspace/docs/02-architecture/architecture-spec.md)**: The legacy/detailed C4 mapping (Level 1, 2, and 3) along with physical technology inventories.
 *   👉 **[Gap Analysis & Optimization Roadmap](./ums-workspace/docs/04-artifacts/gap-analysis-and-optimization-plan.md)**: Analyzes the platform's architectural maturity against 16 Enterprise Quality Criteria and tracks active ADR implementations.
 
 ### 📜 3. Architectural Decision Records (ADRs)
