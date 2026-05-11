@@ -1,4 +1,4 @@
-﻿# 📐 Authoritative Technology Stack Definition — Reference Skeleton
+# 📐 Authoritative Technology Stack Definition — Reference Skeleton
 
 **Document Type:** Architecture Blueprint  
 **Status:** Approved  
@@ -105,20 +105,20 @@
     *   *Distributed Microservices from Day 1*: High operational complexity, deployment overhead, and network latency that would overwhelm a small engineering team.
 
 ### 4.3 CQRS Approach
-*   **Chosen Tool:** **Internal CQRS via NestJS CQRS module**
-*   **Why Chosen:** Decouples heavy permission graph compilation (Queries) from basic identity mutations (Commands), optimizing read performance. Caches read-projections in Redis while writing sequentially to PostgreSQL.
+*   **Chosen Tool:** **Hybrid CQRS (BFF aggregates + Dedicated Write-Audit tables)** governed by **ADR-0034**.
+*   **Why Chosen:** Separates read/write intensity without over-engineering. A dedicated matrix dictates that Full CQRS is only unleashed when Read:Write ratios surpass 100:1 or DB lock contention spikes. Uses Redis projections for BFF queries and strictly ACID SQL for Commands.
 *   **Alternatives Rejected:**
-    *   *Direct CRUD*: Directly querying and compiling relational tables on every read request degrades database performance under high concurrent loads.
+    *   *Universal CQRS*: Rejected due to severe code complexity inflation when applied to simple CRUD entities.
 
 ---
 
 ## 5. Data Layer
 
 ### 5.1 Primary Database + ORM/Query Builder
-*   **Chosen Tool:** **PostgreSQL v16 + TypeORM (for write-mappings) and `pg` native driver (for raw performance queries)**
-*   **Why Chosen:** PostgreSQL 16 offers robust, enterprise-grade relational capabilities, native JSONB support, and powerful Row-Level Security (RLS) for tenant isolation. TypeORM accelerates basic CRUD, while the native `pg` driver is utilized for highly optimized raw queries during high-concurrency permission graph resolution.
+*   **Chosen Tool:** **PostgreSQL v16 (Schema Per Context Isolation, ADR-0031)**
+*   **Why Chosen:** PostgreSQL 16 provides enterprise ACID capabilities. Mandated **Schema-Per-Context** guarantees that no module ever performs a direct SQL join across another module's private data, maintaining 100% forward-portability for future Microservice extraction.
 *   **Alternatives Rejected:**
-    *   *MongoDB*: Lacks robust ACID transactional guarantees for complex relational authorization matrices.
+    *   *Shared Public Schema*: Causes fatal coupling between modules, making internal schema refactors impossible without massive cross-team impacts.
 
 ### 5.2 Migration Strategy
 *   **Chosen Tool:** **TypeORM Migrations executed via K8s Init-Containers**
@@ -139,10 +139,10 @@
     *   *AWS S3*: Rejected as a primary choice because it is a proprietary cloud service that cannot run on-premise for localized deployments.
 
 ### 5.5 Message Queue / Event Bus
-*   **Chosen Tool:** **RabbitMQ (Self-hosted, AMQP v0.9.1)**
-*   **Why Chosen:** High-performance, lightweight, and fully self-hostable broker with robust routing capabilities. Fits on-premise networks perfectly and carries low administrative overhead.
+*   **Chosen Tool:** **RabbitMQ governed by Distributed Sagas (ADR-0035) & Flow Control (ADR-0036)**
+*   **Why Chosen:** High-performance AMQP broker. All transmissions MUST adhere to `ADR-0036` rules: **FIFO** for sequences, **Fire & Forget** for side-effects, and **Mandatory DLQ quarantine** for poison pills. Uses **Transactional Outbox (ADR-0033)** to prevent partial-write data loss.
 *   **Alternatives Rejected:**
-    *   *Apache Kafka*: Offers higher throughput but carries massive administrative and infrastructure overhead (Zookeeper/KRaft) that is unnecessary for our initial scale.
+    *   *Direct Synchronous HTTP calls*: Creates "Distributed Monolith" anti-pattern where a crashed secondary service causes the primary checkout flow to fail.
 
 ---
 
@@ -231,15 +231,27 @@
 *   **Chosen Tool:** **Nx Monorepo**
 *   **Why Chosen:** Simplifies dependency management, allows sharing TypeScript types between frontend and backend instantly, and uses advanced build caching to minimize CI compile times.
 
-### 10.3 Testing Pyramid
-*   **Chosen Tool:**
-    *   *Unit Tests*: Jest (aiming for >80% coverage).
-    *   *Integration Tests*: Jest + Supertest with **Testcontainers** (spinning up ephemeral PostgreSQL and Redis instances in local Docker for realistic testing).
-    *   *End-to-End*: Playwright for Web Console regression testing.
+### 10.3 Verification Pyramid & Load Strategy (ADR-0037)
+*   **Chosen Tools:**
+    *   *Unit Tests*: Jest (Mandatory explicit mocks, zero IO).
+    *   *Integration*: Jest + **Testcontainers** (Active postgres/redis spun up per run).
+    *   *Contract Testing*: **Pact JS** (Guarantees gRPC API safety).
+    *   *Load/Concurrency*: **k6 (Grafana)** script-driven TS injection verifying race conditions.
+    *   *Chaos*: Scheduled pod termination verifying Distributed Circuit Breakers (ADR-0011).
 
 ---
 
-## 11. Third-party Services
+## 11. Error Management Strategy
+
+### 11.1 Pattern Enforcement
+*   **Chosen Tool:** **Functional Result Pattern (neverthrow / Result<T, E> class) (ADR-0038)**
+*   **Why Chosen:** Eliminates silent runtime crashes for business logic failures. Forces Type-Safe compile-time error checking. Ensures clear boundary propagation from core logic to REST/gRPC controller mappings.
+*   **Alternatives Rejected:**
+    *   *Standard Exception Throwing*: Unsafe, untyped, and scatters error management control flow invisibly throughout the execution stack.
+
+---
+
+## 12. Third-party Services
 
 To avoid cloud-provider lock-in and support offline, on-premise environments, **zero external SaaS integrations are mandatory**. Optional integrations are fully abstracted behind Domain Ports.
 
@@ -250,7 +262,7 @@ To avoid cloud-provider lock-in and support offline, on-premise environments, **
 
 ---
 
-## 12. Vendor Lock-in Risk Register
+## 13. Vendor Lock-in Risk Register
 
 | Component | Chosen Solution | Lock-in Risk | Mitigation Strategy | Re-evaluate Trigger |
 | :--- | :--- | :--- | :--- | :--- |
@@ -261,7 +273,7 @@ To avoid cloud-provider lock-in and support offline, on-premise environments, **
 
 ---
 
-## 13. Decision Log
+## 14. Decision Log
 
 ### Decision 1: Node.js/TypeScript Runtime
 *   **Options Considered:** TypeScript (Node.js), Golang, Java (Spring Boot)
@@ -277,7 +289,7 @@ To avoid cloud-provider lock-in and support offline, on-premise environments, **
 
 ---
 
-## 14. Open Questions
+## 15. Open Questions
 
 1.  **On-premise SMS Gateways:** What local SMS hardware or telecommunication providers are pre-approved by localized enterprise clients?
     *   *Information Needed:* Active local SMS contracts or SMS gateway hardware specs.
