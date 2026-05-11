@@ -7,7 +7,7 @@
 
 ## 1. Introduction and Goals
 
-This reference architecture provides a standardized blueprint for building modern, highly scalable, multi-tenant SaaS systems. All 30 Architectural Decision Records (ADRs) are reflected throughout the diagrams of this document.
+This reference architecture provides a standardized blueprint for building modern, highly scalable, multi-tenant SaaS systems. All 32 Architectural Decision Records (ADRs) are reflected throughout the diagrams of this document.
 
 ### 1.1 Purpose and Applicability
 This pattern is designed specifically for systems that:
@@ -20,11 +20,11 @@ This pattern is designed specifically for systems that:
 | Quality Attribute | Source ADR | Target |
 | :--- | :--- | :--- |
 | **Progressive Evolution** | ADR-0006, ADR-0008 | Zero-refactoring path to microservices via Dapr |
-| **SaaS Multi-Tenancy** | ADR-0010 | Shared DB + PostgreSQL RLS isolation |
+| **SaaS Multi-Tenancy** | ADR-0010 | Dual-Layer Isolation (ORM + PostgreSQL RLS) |
 | **Strict Decoupling** | ADR-0002, ADR-0003 | ESLint boundary enforcement |
 | **Resilience** | ADR-0011 | Circuit breakers via `opossum` |
 | **Security** | ADR-0005, ADR-0012, ADR-0020, ADR-0026 | Zero-trust perimeter + RBAC/ABAC |
-| **Internal API Latency** | ADR-0014, ADR-0021 | P95 < 50ms via Redis Read-Aside |
+| **Internal API Latency** | ADR-0014, ADR-0021 | Multi-Layer Cache (CDN + BFF + Core) |
 | **Observability** | ADR-0007 | OTel + Loki + distributed tracing |
 | **Immutable Auditing** | ADR-0016 | Append-only audit ledger |
 
@@ -61,20 +61,24 @@ graph TD
         B2B["B2B Partner (gRPC / REST API Key)"]
     end
 
+    subgraph NetEdge["Network Edge (Optional)"]
+        CDN["CDN (Content Delivery Network)\n[Multi-Layer Cache · ADR-0014]"]
+    end
+
     subgraph Tier1["Tier 1 — Edge API Gateway (ADR-0030)"]
         Kong["Kong OSS\n[Rate Limiting · JWT Validation · CORS · Routing]"]
     end
 
     subgraph Tier2["Tier 2 — BFF Orchestration Layer (ADR-0008)"]
-        WebBFF["NestJS Web BFF\n[Aggregation · Payload Shaping]"]
-        MobileBFF["NestJS Mobile BFF\n[Compact Responses]"]
+        WebBFF["NestJS Web BFF\n[Aggregation · BFF Cache]"]
+        MobileBFF["NestJS Mobile BFF\n[Compact Responses · BFF Cache]"]
         CoreAPI["NestJS Core API\n[Hexagonal Domain · RBAC/ABAC]"]
     end
 
     subgraph ExternalIntegrations["External Integration Layer"]
         IdP["Federated IdP (Auth0 / Entra ID)\n[ADR-0020, ADR-0026]"]
         
-        subgraph EventBusAbstraction["Injectable Event Bus (ADR-0015)"]
+        subgraph EventBusAbstraction["Injectable Event Bus (ADR-0015, ADR-0031)"]
             IBusPort["«Port» IEventBusPort"]
             InMemory["In-Memory (Dev/Test)"]
             RabbitMQ["RabbitMQ (Production)"]
@@ -93,16 +97,15 @@ graph TD
         OTel --> Jaeger
     end
 
-    WebApp -->|HTTPS| Kong
-    MobileApp -->|HTTPS| Kong
-    B2B -->|gRPC/REST| Kong
+    WebApp & MobileApp & B2B -->|TLS/HTTP| CDN
+    CDN -->|Dynamic Forward| Kong
 
-    Kong -->|Forward Auth'd Traffic| WebBFF
-    Kong -->|Forward Auth'd Traffic| MobileBFF
-    Kong -->|Forward Auth'd Traffic| CoreAPI
+    Kong -->|Route| WebBFF
+    Kong -->|Route| MobileBFF
+    Kong -->|Route B2B| CoreAPI
 
-    WebBFF -->|Orchestrates| CoreAPI
-    MobileBFF -->|Orchestrates| CoreAPI
+    WebBFF -->|Internal gRPC| CoreAPI
+    MobileBFF -->|Internal gRPC| CoreAPI
 
     CoreAPI -->|Validate Claims| IdP
     CoreAPI -->|Publish Events| IBusPort
@@ -120,7 +123,7 @@ graph TD
 All business logic in the Domain and Application layers has **zero runtime dependencies** on frameworks, ORMs, or cloud services. The infrastructure layer implements pure TypeScript Ports.
 
 ### 4.2 SaaS Multi-Tenancy Strategy (ADR-0010)
-Shared PostgreSQL schema with **Row-Level Security (RLS)** policies. Tenant context is propagated via `AsyncLocalStorage` and enforced at the database engine — not at the ORM level.
+Employs **Dual-Layer Isolation Defense**. (Layer 1) Persistence adapters automatically append `tenant_id` filtering to generic queries. (Layer 2) Shared PostgreSQL **Row-Level Security (RLS)** policies enforce strict session containment at the SQL engine level as an absolute failsafe.
 
 ### 4.3 Two-Tier Gateway Pattern (ADR-0030)
 | Tier | Technology | Responsibility |
@@ -235,26 +238,38 @@ graph TD
 sequenceDiagram
     autonumber
     participant C as Web App
-    participant K as Kong (Tier 1)
-    participant B as NestJS BFF (Tier 2)
-    participant A as Core API
-    participant R as Redis Cache
+    participant CDN as CDN (Layer 1)
+    participant B as NestJS BFF (Layer 2)
+    participant R as Redis Distributed
+    participant A as Core API (Layer 3)
     participant D as PostgreSQL (RLS)
 
-    C->>K: HTTPS Request + JWT
-    Note over K: Rate Limit · Validate JWT Signature
-    K->>B: Forwarded Request (+ X-Tenant-ID header)
-    B->>A: Aggregated Internal Call
-    A->>R: Read-Aside Cache Lookup (ADR-0014)
-    alt Cache Hit
-        R-->>A: Cached Response (< 5ms)
-    else Cache Miss
-        A->>D: SQL Query (RLS active → tenant scope)
-        D-->>A: Tenant-scoped Results
-        A->>R: Populate Cache
+    C->>CDN: HTTPS Request
+    alt CDN Hit
+        CDN-->>C: Return Static Content
+    else CDN Miss
+        CDN->>B: Forward Request to Origin
+        B->>R: BFF Cache Lookup (View-Models)
+        alt BFF Cache Hit
+            R-->>B: Return Composite Response
+            B-->>CDN: Cacheable Response
+            CDN-->>C: Delivered Content
+        else BFF Cache Miss
+            B->>A: gRPC Call (ADR-0032)
+            A->>R: Core Cache Lookup (Perms/Data)
+            alt Core Hit
+                R-->>A: Domain Object
+            else Core Miss
+                A->>D: SQL Query (Dual-Layer Isolation)
+                D-->>A: Filtered Results
+                A->>R: Populate Core Cache
+            end
+            A-->>B: gRPC Response
+            B->>R: Populate BFF Cache
+            B-->>CDN: Fully Composed Body
+            CDN-->>C: Deliver
+        end
     end
-    A-->>B: Domain Response
-    B-->>C: Shaped Payload
 ```
 
 ### 6.2 Asynchronous Event Flow — Injectable Bus (ADR-0015, ADR-0016)
@@ -350,7 +365,7 @@ graph TD
 | **Circuit Breakers** | ADR-0011 | `opossum` + Exponential Backoff | §5, §6.3 |
 | **RBAC/ABAC Authorization** | ADR-0012 | JWT Claims + NestJS Guards | §5 |
 | **Cloud DR Topology** | ADR-0013 | Multi-AZ + Streaming Replication | §7 |
-| **Distributed Caching** | ADR-0014 | Redis Read-Aside behind `ICachePort` | §5, §6.1 |
+| **Distributed Caching** | ADR-0014 | Multi-Layer Tiered Cache behind `ICachePort` | §5, §6.1 |
 | **Event-Driven (Injectable Bus)** | ADR-0015 | `IEventBusPort` → In-Mem / RabbitMQ | §3.1, §4.4, §5, §6.2 |
 | **Immutable Audit Trail** | ADR-0016 | Append-only table + DB trigger | §5, §6.2 |
 | **Feature Flagging** | ADR-0017 | `IFeatureFlagPort` (Unleash/ConfigCat) | §5 |
@@ -367,6 +382,8 @@ graph TD
 | **Self-Hosted OSS Infra** | ADR-0028 | MinIO + RabbitMQ + Vault OSS | §5, §7 |
 | **Tactical DDD Primitives** | ADR-0029 | `@nestjslatam/ddd` via barrel re-exports | §4.1 |
 | **Two-Tier Gateway** | ADR-0030 | Kong (Edge) + NestJS BFF (Aggregation) | §3.1, §4.3, §5, §6.1 |
+| **Domain Event Catalog** | ADR-0031 | Multi-schema extraction + Async Contracts | §5, §6.2 |
+| **Protocol Selection** | ADR-0032 | gRPC (Int) vs REST (Ext) vs GraphQL | §3.1, §5, §6.1 |
 
 ---
 
@@ -379,7 +396,7 @@ graph TD
 | **SAST Vulnerabilities** | 0 High/Critical | ADR-0005, ADR-0009 |
 | **Test Coverage** | ≥ 70% | ADR-0018 |
 | **Memory Footprint** | Low idle (microservice density) | ADR-0002, ADR-0006 |
-| **Tenant Data Bleed** | Zero tolerance | ADR-0010 (RLS enforcement) |
+| **Tenant Data Bleed** | Zero tolerance | ADR-0010 (Dual-Layer Isolation) |
 
 ---
 

@@ -22,7 +22,7 @@ Commit to building and deploying the system as the **Centralized Authorization N
 ### Positive
 - Absolute separation of concerns (SoC). Downstream apps focus only on business flow, leaving auth security to the consolidated kernel.
 - Singular, authoritative governance record of all system accesses and privilege mutations.
-- Exceptional response velocities via Redis Read-Aside caching.
+- Exceptional response velocities via Multi-Layer Distributed caching.
 
 ### Negative
 - Forms a single architectural point of failure if not heavily scaled and redundant across zone clusters.

@@ -31,7 +31,7 @@ Technical layout, topology, and C4 Model definitions.
 ---
 
 ## 📜 Phase 03: Architectural Decision Records (ADRs)
-The canonical system blueprint ledger consisting of all 30 fully approved records.
+The canonical system blueprint ledger consisting of all 32 fully approved records.
 
 ### Core Foundation & Tooling
 *   [ADR 0001: Monorepo Orchestration with Nx](./03-adrs/0001-monorepo-orchestration-nx.md)
