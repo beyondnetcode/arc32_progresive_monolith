@@ -33,7 +33,7 @@ Technical layout, topology, and C4 Model definitions.
 ---
 
 ## 📜 Phase 03: Architectural Decision Records (ADRs)
-The canonical system blueprint ledger consisting of all 36 fully approved records.
+The canonical system blueprint ledger consisting of all 37 fully approved records.
 
 ### Core Foundation & Tooling
 *   [ADR 0001: Monorepo Orchestration with Nx](./03-adrs/0001-monorepo-orchestration-nx.md)
@@ -43,6 +43,7 @@ The canonical system blueprint ledger consisting of all 36 fully approved record
 *   [ADR 0005: CI/CD Quality with CodeQL](./03-adrs/0005-ci-cd-quality-codeql.md)
 *   [ADR 0009: Strict Dependency Pinning](./03-adrs/0009-strict-dependency-pinning-vulnerability-management.md)
 *   [ADR 0018: Testing Pyramid & Quality Gates](./03-adrs/0018-testing-pyramid-quality-gates.md)
+*   [ADR 0037: Performance & Chaos Verification](./03-adrs/0037-performance-concurrency-chaos-strategy.md)
 
 ### SaaS, Distribution & Scalability
 *   [ADR 0006: Future Microservices with Dapr](./03-adrs/0006-future-microservices-transition-dapr.md)

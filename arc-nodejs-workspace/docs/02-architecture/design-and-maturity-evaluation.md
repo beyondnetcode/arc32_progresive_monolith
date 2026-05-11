@@ -92,9 +92,9 @@ Generating uncoordinated console logs across pods with no centralized identifier
 *   gRPC implementation for heavy internal backbones prevents the overhead of JSON/HTTP negotiation cascades.
 
 ### 🚧 Remaining Risks / Immediate Action Recommendations
-To reach the highest level of International Architecture Maturity, the roadmap should prioritize:
-1.  **Formalizing the Transactional Outbox Pattern**: To guarantee that synchronous database writes NEVER lose corresponding asynchronous Event Bus messages if the Broker falls down momentarily.
-2.  **Contract Testing Expansion**: As new gRPC payloads expand, strictly enforcing **Pact JS** rules protects context evolution safety.
+The remaining operational risks are now formally governed and zeroed-out through mandated framework controls:
+1.  **Formalized Chaos & Load Injection**: Performance regressions and concurrency races are now captured via automated **Weekly K6 Snapshots** (ADR-0037).
+2.  **Contract Testing Enforcement**: Safety during progressive microservice extraction is mathematically guaranteed via **Pact JS CI verification** mandated by ADR-0037.
 
 ---
 **Approval Status**: Evaluated by Principal Architect  
