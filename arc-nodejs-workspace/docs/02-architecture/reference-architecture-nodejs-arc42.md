@@ -27,6 +27,7 @@ This pattern is designed specifically for systems that:
 | **Internal API Latency** | ADR-0014, ADR-0021 | 4-Tier Cache (Client + CDN + BFF + Core) |
 | **Observability** | ADR-0007 | OTel + Loki + distributed tracing |
 | **Immutable Auditing** | ADR-0016 | Append-only audit ledger |
+| **Tech Sovereignty** | ADR-0002, ADR-0028 | 100% Swappable Infra/AOP without logic impact |
 
 ---
 

@@ -20,6 +20,11 @@ The architecture is divided into three explicit layers:
 
 Dependency direction is strictly enforced: Infrastructure → Application → Core. Never the reverse.
 
+### 4. Aspect-Oriented Programming (AOP) Isolation
+Cross-cutting concerns (Logging, Auditing, Distributed Tracing, Caching, Transaction Management) must NEVER hard-couple third-party library decorators or SDKs inside the Core or Application layers.
+- **Prohibited**: Injecting `@SentryCapture`, `@OpentelemetrySpan`, or `@Cacheable` directly onto UseCase methods.
+- **Allowed**: Encapsulating AOP concerns inside **NestJS Interceptors, Middleware, or Decorator Wrappers residing exclusively in the Adapter/Infrastructure layer**, wrapping the pure UseCase execution cleanly from the outside.
+
 ## Consequences
 
 ### Positive
