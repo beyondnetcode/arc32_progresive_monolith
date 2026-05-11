@@ -12,9 +12,10 @@ Mission-critical deployments must integrate with volatile third-party APIs (e.g.
 ## Decision
 Implement explicit Resilience Patterns protecting all outbound system exits:
 
-1. **Circuit Breaker (Opossum)**: Wrap outbound network calls in high-level infrastructure adapters using the Circuit Breaker pattern. If target endpoint errors surpass established thresholds, the circuit switches to "Open" immediately, returning explicit errors before even attempting the slow call, thus saving local execution time and thread pools.
+1. **Distributed Circuit Breaker (Opossum + Redis)**: Wrap outbound network calls in high-level infrastructure adapters. The operational state of the circuit (Open/Closed/Half-Open) MUST be stored in the shared **Redis Cluster** instead of local process memory. When a single application node trips the breaker, the state propels globally across the cluster instantly, preventing redundant failing calls from peer nodes.
 2. **Retry with Backoff**: Configure interceptors for non-fatal transient codes to execute transparent exponential backoff attempts natively within adapter logic before handing up an error result.
-3. **Decoupled Domain logic**: The core business domain must remain 100% agnostic to these patterns. It invokes a standard port, and receives either the business entity response or a standardized `DomainException` mapped inside the failing adapter.
+3. **Decoupled Domain logic**: The core business domain must remain 100% agnostic to these patterns.
+4. **Ingress Edge Active Healthchecks**: Enable Kong Gateway upstream circuit-breaking logic. Kong monitors endpoint responsiveness and terminates upstream target assignments at the API gateway level if health metrics collapse, shielding backend nodes from direct wave hits.
 
 ## Consequences
 

@@ -12,7 +12,7 @@ This matrix rates our current infrastructure and design readiness against standa
 | :--- | :--- | :--- | :--- | :--- |
 | **Integration** | **Strangler Fig** | **Critical Core** | 🟢 100% Ready | The foundational strategy of the architecture. Modules are logically isolated for incremental microservice splitting without service downtime. |
 | **Composition** | **BFF (Backend for Frontend)** | **Core Mandatory** | 🟢 100% Adopted | Officially implemented via specialized NestJS layers per device (ADR-0008). Prevents cross-channel pollution. |
-| **Reliability** | **Circuit Breaker** | **Operational** | 🟢 90% Adopted | Implemented via `opossum` wrapper around external infrastructure/B2B integrations (ADR-0011). Prevents cascading failure. |
+| **Reliability** | **Circuit Breaker** | **Operational** | 🟢 100% Adopted | Implemented via **Distributed Circuit Breakers** sharing state via Redis (ADR-0011) combined with active upstream healthcheck monitoring at Kong Ingress Edge. |
 | **Database** | **Schema Per Context** | **Core Mandatory** | 🟢 100% Adopted | Solves coupling from day one. Prevents raw SQL join poisoning across domains (ADR-0031). Zero-refactor DB portability. |
 | **Scalability** | **CQRS (Basic)** | **High Value** | 🟢 100% Adopted | Formally governed via Matrix (ADR-0034). Applied as aggregate Read-Models at BFF and isolated storage for high contention. |
 | **Consistency** | **Saga Pattern** | **Distributed Future** | 🟢 100% Adopted | Formal Strategy established (ADR-0035) utilizing Choreography/Orchestration mechanics tailored to workflow size. |
