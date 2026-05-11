@@ -12,8 +12,8 @@ Defines our bounded system within the enterprise ecosystem, its consumers (tenan
 ```mermaid
 graph TD
     subgraph Clients["Multi-Tenant Client Ecosystem"]
-        WebPortal["Web Client (Angular/React)"]
-        MobileApp["Mobile Applications"]
+        WebPortal["Web Client\n[React Query Offline Cache]"]
+        MobileApp["Mobile Applications\n[Native SQLite Cache]"]
         ThirdParty["B2B External Services (API keys)"]
     end
 
@@ -47,6 +47,10 @@ Demonstrates the physical segregation of communication entry-points (BFFs) down 
 
 ```mermaid
 graph TD
+    subgraph ClientLayer["Layer -1: Client Core"]
+        WebClient["Web UI\n[React Query / Client Cache]"]
+    end
+
     subgraph PublicEdge["Layer 0: Static Cache"]
         CDN["CDN / Browser Cache (Optional)"]
     end
@@ -69,6 +73,7 @@ graph TD
         RedisCache[("Redis Distributed Cache")]
     end
 
+    WebClient -->|HTTPS Request| CDN
     CDN -->|Dynamic Forward| KongGateway
     KongGateway -->|HTTP/REST| WebBFF
     KongGateway -->|HTTP/REST| MobileBFF

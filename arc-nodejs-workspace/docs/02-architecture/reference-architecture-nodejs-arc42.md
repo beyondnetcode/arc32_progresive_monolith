@@ -24,7 +24,7 @@ This pattern is designed specifically for systems that:
 | **Strict Decoupling** | ADR-0002, ADR-0003 | ESLint boundary enforcement |
 | **Resilience** | ADR-0011 | Circuit breakers via `opossum` |
 | **Security** | ADR-0005, ADR-0012, ADR-0020, ADR-0026 | Zero-trust perimeter + RBAC/ABAC |
-| **Internal API Latency** | ADR-0014, ADR-0021 | Multi-Layer Cache (CDN + BFF + Core) |
+| **Internal API Latency** | ADR-0014, ADR-0021 | 4-Tier Cache (Client + CDN + BFF + Core) |
 | **Observability** | ADR-0007 | OTel + Loki + distributed tracing |
 | **Immutable Auditing** | ADR-0016 | Append-only audit ledger |
 
@@ -56,8 +56,8 @@ This diagram captures the complete system context. It reflects:
 ```mermaid
 graph TD
     subgraph Clients["Channel Layer — Client Applications"]
-        WebApp["Web App (React / Angular)"]
-        MobileApp["Mobile App (iOS / Android)"]
+        WebApp["Web App\n[React Query Cache · ADR-0004]"]
+        MobileApp["Mobile App\n[Offline Persistence · ADR-0004]"]
         B2B["B2B Partner (gRPC / REST API Key)"]
     end
 
@@ -147,9 +147,9 @@ This C4 Level-2 Container diagram reflects **all active ADRs** in their physical
 
 ```mermaid
 graph TD
-    subgraph ClientLayer["Client Channel Layer"]
-        WebApp["Web App"]
-        MobileApp["Mobile App"]
+    subgraph ClientLayer["Client Channel Layer (ADR-0004)"]
+        WebApp["Web App\n[React Query / Stale-While-Revalidate]"]
+        MobileApp["Mobile App\n[Native Offline Storage]"]
         B2BClient["B2B Client (API Key)"]
     end
 
@@ -238,13 +238,18 @@ graph TD
 sequenceDiagram
     autonumber
     participant C as Web App
+    participant CL as Client Cache (ADR-0004)
     participant CDN as CDN (Layer 1)
     participant B as NestJS BFF (Layer 2)
     participant R as Redis Distributed
     participant A as Core API (Layer 3)
     participant D as PostgreSQL (RLS)
 
-    C->>CDN: HTTPS Request
+    C->>CL: Query State (React Query)
+    alt Cache Hit (Immediate Render)
+        CL-->>C: Data (Stale-While-Revalidate)
+    end
+    C->>CDN: HTTPS Request (Fetch/Background Update)
     alt CDN Hit
         CDN-->>C: Return Static Content
     else CDN Miss
@@ -254,6 +259,7 @@ sequenceDiagram
             R-->>B: Return Composite Response
             B-->>CDN: Cacheable Response
             CDN-->>C: Delivered Content
+            C->>CL: Sync Client Cache
         else BFF Cache Miss
             B->>A: gRPC Call (ADR-0032)
             A->>R: Core Cache Lookup (Perms/Data)
@@ -267,7 +273,8 @@ sequenceDiagram
             A-->>B: gRPC Response
             B->>R: Populate BFF Cache
             B-->>CDN: Fully Composed Body
-            CDN-->>C: Deliver
+            CDN-->>C: Deliver Response
+            C->>CL: Populate/Sync Client Cache
         end
     end
 ```
