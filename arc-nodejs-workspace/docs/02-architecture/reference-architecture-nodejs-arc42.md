@@ -7,7 +7,7 @@
 
 ## 1. Introduction and Goals
 
-This reference architecture provides a standardized blueprint for building modern, highly scalable, multi-tenant SaaS systems. All 37 Architectural Decision Records (ADRs) are reflected throughout the diagrams of this document.
+This reference architecture provides a standardized blueprint for building modern, highly scalable, multi-tenant SaaS systems. All 38 Architectural Decision Records (ADRs) are reflected throughout the diagrams of this document.
 
 ### 1.1 Purpose and Applicability
 This pattern is designed specifically for systems that:
@@ -402,6 +402,7 @@ graph TD
 | **Distributed Sagas** | ADR-0035 | Compensating Transaction Strategy | §6.2 |
 | **Messaging Strategy** | ADR-0036 | FIFO vs Fire & Forget vs DLQ Policies | §6.2 |
 | **Performance Testing** | ADR-0037 | K6 Load + Pact Contract Verification | §5, §6.3 |
+| **Error Management** | ADR-0038 | Result Pattern + Unified Boundaries | §5, §6.3 |
 
 ---
 
