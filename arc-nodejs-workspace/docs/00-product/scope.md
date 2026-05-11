@@ -33,6 +33,6 @@ The system delivers atomic task management scoped to isolated users, demonstrati
 To prevent bloating the pure reference architecture:
 
 - **Team Collaboration**: Tasks cannot be shared between users; there is no group assignment concept.
-- **Multi-Factor Authentication**: Not included. Kept as simple JWT username/pass for template speed.
+- **Multi-Factor Authentication (To-Do Domain)**: MFA is not a business requirement of the To-Do use cases themselves. However, the **enterprise SaaS architecture layer** fully implements MFA/Passkeys via ADR-0026 as a demonstrable pattern available for any system adopting this skeleton.
 - **Advanced Search Engines**: No Elasticsearch integrations. Standard relational indexed filtering only.
 - **Recurring Tasks**: Temporal recurrence loops are omitted.

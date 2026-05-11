@@ -3,7 +3,11 @@
 ## 1. Problem Statement
 Enterprise software delivery often suffers from highly coupled architectures that mix domain complexity with infrastructural details. Junior and intermediate developers frequently struggle to understand where to apply **Clean Architecture**, **Hexagonal Boundaries**, and **Domain-Driven Design (DDD)** principles when starting with monolithic "getting started" projects that are already too coupled or conversely, too abstract.
 
-This project addresses the need for a **Pure Architectural Skeleton**. By using the ubiquitous "To-Do App" domain, we strip away business complexity, ensuring cognitive overhead is dedicated 100% to mastering modern NodeJS patterns, observability, and testing automation.
+This project solves that problem through a **two-layer approach**:
+- **The Skeleton Layer**: A pure architectural instructional framework with strict Hexagonal boundaries, observable infrastructure, and 30 approved ADRs.
+- **The Demo App Layer**: A fully implemented **Enterprise SaaS Multi-Tenant To-Do Platform** that physically instantiates every pattern in the skeleton, proving it is production-ready — not just theoretical.
+
+By using the universally understood "To-Do" domain, all cognitive overhead is directed 100% toward mastering the enterprise Node.js architecture patterns, not toward learning business rules.
 
 ---
 
