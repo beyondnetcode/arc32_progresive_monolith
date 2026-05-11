@@ -1,32 +1,32 @@
-# MCP Security: Permisos y Guardarraíles
+# Seguridad en MCP: Permisos y Guardrails
 
-La conexión directa de un motor de inferencia no-determinista (LLM) con tus APIs de backend presenta nuevos vectores de ataque. Un agente "convencido" mediante jailbreak puede intentar abusar de las tools que posee. Por ello, la seguridad en el harness MCP es no negociable.
+Conectar un motor de inferencia no determinista (LLM) directamente con tus APIs de backend introduce nuevos vectores de ataque. Un agente "convencido" vía jailbreak puede intentar abusar de sus herramientas. Por lo tanto, la seguridad en el harness MCP no es negociable.
 
 ## Modelo de Mínimo Privilegio
-Aplica el principio de menor privilegio a nivel de Tooling:
+Aplicar el principio de menor privilegio a nivel de Herramientas:
 
-*   **Separación por Rol:** Un agente encargado de reportes de BI NUNCA debe recibir acceso a un Servidor MCP que exponga tools de escritura (`DELETE`, `UPDATE`).
-*   **Scopes Dinámicos:** El harness debe filtrar el catálogo de tools que inyecta al LLM basándose en la identidad del usuario final que está operando tras el agente.
+*   **Separación por Rol:** Un agente de reportes de BI NUNCA debe recibir acceso a un Servidor MCP que exponga herramientas de escritura (`DELETE`, `UPDATE`).
+*   **Alcances Dinámicos:** El harness debe filtrar el catálogo de herramientas inyectado en el LLM basándose en la identidad del usuario final que está operando a través del agente.
 
-## Guardarraíles Obligatorios para Producción
+## Guardrails Obligatorios para Producción
 
-Para que un MCP Server sea aprobado por Seguridad Corporativa, debe implementar:
+Para que un Servidor MCP sea aprobado por Seguridad Corporativa, debe implementar:
 
 1.  **Autenticación Robusta:** 
     *   Si se usa HTTP/SSE, validación de tokens mTLS o tokens Bearer de corta duración (OAuth2).
-    *   No depender de la seguridad por oscuridad de la red interna.
-2.  **Auditoría Irrevocable (Audit Log):** 
-    *   Cada llamada de tipo `CallTool` debe grabarse en una base de datos inmutable con: `timestamp`, `agente_id`, `usuario_humano_id`, `tool_name`, `input_arguments` y `hash_de_respuesta`.
-3.  **Rate Limiting Adaptativo:**
-    *   Limitar no solo peticiones/segundo, sino costo económico acumulado (ej: no más de $10 USD en llamadas a la API de geolocalización por agente por hora).
+    *   No confiar en la seguridad por oscuridad dentro de la red interna.
+2.  **Log de Auditoría Irrevocable:** 
+    *   Cada petición `CallTool` debe registrarse en una base de datos inmutable con: `timestamp`, `agent_id`, `human_user_id`, `tool_name`, `input_arguments` y `response_hash`.
+3.  **Limitación de Tasa Adaptativa (Rate Limiting):**
+    *   Limitar no solo peticiones/segundo, sino el costo financiero acumulado (ej., no más de $10 USD en llamadas a APIs geolocalizadas por agente por hora).
 4.  **Sandbox de Ejecución:**
-    *   Las tools que permitan ejecutar scripts, queries SQL raw, o comandos de sistema DEBEN ejecutarse en contenedores efímeros (Docker/gVisor) con acceso de red estrictamente bloqueado o whitelistado.
+    *   Las herramientas que permitan la ejecución de scripts, queries SQL en bruto o comandos del sistema DEBEN correr en contenedores efímeros (Docker/gVisor) con acceso de red estrictamente bloqueado o con lista blanca (whitelisted).
 
 ## La Gran Advertencia de Veracidad
 
 > [!CAUTION]
-> **El modelo no valida la verdad.** El LLM asume que CUALQUIER RESPUESTA que devuelve una herramienta es la verdad absoluta y construirá su razonamiento sobre ella. 
-> Si un atacante compromete tu MCP Server para que retorne data falsa, engañará instantáneamente a tu Agente. La integridad de los datos de salida de tu tool es tan importante como la sanitización de los inputs.
+> **El modelo no valida la verdad.** El LLM asume que CUALQUIER RESPUESTA devuelta por una herramienta es la verdad absoluta y construirá su razonamiento sobre ella.
+> Si un atacante compromete tu Servidor MCP para que devuelva datos falsos, engañará instantáneamente a tu Agente. La integridad de los datos de salida de la herramienta es tan importante como la sanitización de la entrada.
 
-## Aprobación Humana Obligatoria (Human-in-the-Loop)
-Cualquier tool catalogada como **"Destructiva"** (Borrar base de datos, cancelar suscripción, ejecutar pago masivo) requiere que el harness intercepte la llamada, la ponga en estado `PENDIENTE_APROBACION` y espere a que un humano haga click en un botón físico antes de ejecutar el código en el backend.
+## Human-in-the-Loop Obligatorio
+Cualquier herramienta categorizada como **"Destructiva"** (Borrar base de datos, cancelar suscripción masiva, ejecutar pago por lote) requiere que el harness intercepte la llamada, establezca el estado en `PENDING_APPROVAL` (Pendiente de Aprobación) y espere a que un humano haga clic físicamente en un botón antes de ejecutar el código del backend.

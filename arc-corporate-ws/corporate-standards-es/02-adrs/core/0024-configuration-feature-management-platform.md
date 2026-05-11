@@ -1,32 +1,32 @@
-# ADR 0024: Centralized Configuration & Feature Platform
+# ADR 0024: Plataforma de Gestión de Características y Configuración
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-09
 
-## Context
-Modern SaaS demands total runtime agility. Rigidly encoding Identity Provider bindings, operational variables (e.g. session TTL, company branding), or feature flag parameters directly into application environment variables creates heavy deploy friction, invalidates immediate auditing, and kills flexible tenant-specific personalization at runtime.
+## Contexto
+El SaaS moderno demanda agilidad total en tiempo de ejecución. Codificar rígidamente los enlaces de Proveedores de Identidad, variables operativas (ej. TTL de sesión, branding de la empresa) o parámetros de feature flags directamente en variables de entorno de la aplicación crea una pesada fricción de despliegue, invalida la auditoría inmediata y mata la personalización flexible específica de inquilinos en tiempo de ejecución.
 
-## Decision
-Introduce an authoritative **Configuration & Feature Management Bounded Context** consolidating system behaviors:
+## Decisión
+Introducir un **Contexto Delimitado de Gestión de Características y Configuración** autoritativo que consolide los comportamientos del sistema:
 
-1. **Dynamic IdP Store**: Shift identity configurations out of environment files into multi-tenant database pools, encrypted with AES-256 referencing external secret vaults. Allows changing tenant SSO providers instantly with zero code push.
-2. **System Dynamics**: Deliver versioned JSON settings governing behaviors (MFA requirements, branding, feature access) read directly by application controllers at lifecycle instantiation or real-time socket pushes.
-3. **Flag Framework**: Deploy an integrated Boolean/Variant Flag engine supporting deep multidimensional targeting (Role, Environment, Branch, Group) and percentage-based traffic splitting.
-4. **Redis Velocity Layer**: Isolate config evaluations into dedicated Redis namespaces (`cfg:*`, `flags:*`), guaranteeing sub-3ms decision evaluations at execution intersections.
+1. **Almacén de IdP Dinámico**: Trasladar las configuraciones de identidad fuera de los archivos de entorno hacia pools de bases de datos multi-tenant, cifrados con AES-256 haciendo referencia a bóvedas de secretos externas. Permite cambiar los proveedores SSO de los inquilinos instantáneamente con cero empuje de código.
+2. **Dinámica del Sistema**: Entregar configuraciones JSON versionadas que gobiernan comportamientos (requisitos MFA, branding, acceso a características) leídas directamente por los controladores de la aplicación en la instanciación del ciclo de vida o empujes de sockets en tiempo real.
+3. **Marco de Banderas (Flag Framework)**: Desplegar un motor integrado de Banderas Booleanas/Variantes que soporte una profunda segmentación multidimensional (Rol, Entorno, Rama, Grupo) y división de tráfico basada en porcentajes.
+4. **Capa de Velocidad Redis**: Aislar las evaluaciones de configuración en namespaces Redis dedicados (`cfg:*`, `flags:*`), garantizando evaluaciones de decisión sub-3ms en las intersecciones de ejecución.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- True dynamic multitenancy: systems adapt in real-time per company profile without reloads.
-- Complete lifecycle tracking: any configuration pivot creates absolute historical records.
-- Direct risk isolation through safe incremental rollout gates.
+### Positivas
+- Verdadero multi-tenancy dinámico: los sistemas se adaptan en tiempo real por perfil de empresa sin recargas.
+- Seguimiento completo del ciclo de vida: cualquier pivotaje de configuración crea registros históricos absolutos.
+- Aislamiento directo del riesgo a través de puertas de despliegue incremental seguras.
 
-### Negative
-- Modest expansion of database schema topology and active Redis key governance strategies.
+### Negativas
+- Modesta expansión de la topología del esquema de base de datos y de las estrategias de gobernanza de claves Redis activas.
 
-## References
-- [ADR-0025: Feature Flag Abstraction Strategy](./0025-feature-flag-provider-abstraction.md)
-- [ADR-0014: Redis Cache Strategy](./0014-distributed-caching-strategy-redis.md)
+## Referencias
+- [ADR-0025: Estrategia de Abstracción de Feature Flags](../02-adrs/core/0025-feature-flag-provider-abstraction.md)
+- [ADR-0014: Estrategia de Caché Redis](../02-adrs/core/0014-distributed-caching-strategy-redis.md)

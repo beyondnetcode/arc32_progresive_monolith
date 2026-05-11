@@ -1,33 +1,33 @@
-# ADR 0020: Identity Provider Abstraction Strategy
+# ADR 0020: Estrategia de Abstracción de Proveedor de Identidad
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-09
 
-## Context
-Enterprise authentication needs migrate, shift, and fragment over time. Tying system internals direct to vendor SDKs (e.g., Zitadel, Okta) causes total lock-in and leaves the platform incapable of answering air-gapped deployment needs, SAML requirements from external corporate hubs, or standard internal legacy hashing flows.
+## Contexto
+Las necesidades de autenticación empresarial migran, cambian y se fragmentan con el tiempo. Vincular los internos del sistema directamente a los SDKs de proveedores (ej. Zitadel, Okta) causa un bloqueo total y deja a la plataforma incapaz de responder a necesidades de despliegue desconectados (air-gapped), requisitos SAML de hubs corporativos externos, o flujos internos estándar heredados de hashing.
 
-## Decision
-Separate credential verification from the business layer via polymorphic **Strategy injection** secured by a local Hexagonal interface (`IAuthenticationPort`):
+## Decisión
+Separar la verificación de credenciales de la capa de negocio vía la **inyección polimórfica de Estrategia** asegurada por una interfaz Hexagonal local (`IAuthenticationPort`):
 
-1. **Zero Lock-in**: The core core trusts a single validation Port logic. It cares only if credentials resolve to a verified user vector.
-2. **Dynamic Execution**: The resolver activates correct concrete Adapters at runtime (via `Tenant` configuration flags) feeding off of:
-    - Local Store (Bcrypt storage)
-    - Enterprise Identity Providers (Cognito, Azure AD, Okta, Zitadel, Auth0)
-    - General federated endpoints (OIDC/SAML)
-3. **Progressive Security**: Wire current protocols supporting Modern Standards (Passkeys, MFA, WebAuthn) natively into the abstracted provider pool.
+1. **Bloqueo Cero (Zero Lock-in)**: El núcleo core confía en una única lógica de Puerto de validación. Solo le importa si las credenciales se resuelven en un vector de usuario verificado.
+2. **Ejecución Dinámica**: El resolutor activa los Adaptadores concretos correctos en tiempo de ejecución (vía banderas de configuración de `Tenant`) alimentándose de:
+    - Almacén Local (almacenamiento Bcrypt)
+    - Proveedores de Identidad Empresarial (Cognito, Azure AD, Okta, Zitadel, Auth0)
+    - Endpoints federados generales (OIDC/SAML)
+3. **Seguridad Progresiva**: Conectar protocolos actuales que soporten Estándares Modernos (Passkeys, MFA, WebAuthn) nativamente en el pool de proveedores abstraído.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- High deployment fluidity. Deploy same code inside Azure cloud or within private disconnected local hardware.
-- Clients retain sovereignty: each enterprise Tenant may configure and point towards their own respective company AD/SAML.
+### Positivas
+- Alta fluidez de despliegue. Desplegar el mismo código dentro de la nube Azure o dentro de hardware local privado desconectado.
+- Los clientes conservan la soberanía: cada Inquilino (Tenant) empresarial puede configurar y apuntar hacia el AD/SAML de su propia compañía.
 
-### Negative
-- Increases initialization factory complexity required to correctly instantiate correct credential drivers based on runtime host context.
+### Negativas
+- Aumenta la complejidad de la factoría de inicialización requerida para instanciar correctamente los controladores de credenciales adecuados basados en el contexto del host en tiempo de ejecución.
 
-## References
-- [ADR-0026: MFA and Passwordless](./0026-mfa-passwordless-adaptive-authentication.md)
-- [ADR-0002: Clean Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
+## Referencias
+- [ADR-0026: MFA y Passwordless](../02-adrs/nodejs/0026-mfa-passwordless-adaptive-authentication.md)
+- [ADR-0002: Arquitectura Hexagonal Limpia](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)

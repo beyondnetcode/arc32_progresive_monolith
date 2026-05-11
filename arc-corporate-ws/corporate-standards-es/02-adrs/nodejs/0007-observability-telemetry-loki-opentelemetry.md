@@ -1,43 +1,43 @@
-# ADR 0007: Observability with OpenTelemetry, Loki, and Jaeger
+# ADR 0007: Observabilidad con OpenTelemetry, Loki y Jaeger
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Without structured logging and distributed tracing, diagnosing production issues requires guesswork. Log messages without correlation IDs make it impossible to trace a single user request across multiple service layers (Kong → BFF → Core API → Database). Observability must be a first-class citizen, not an afterthought.
+## Contexto
+Sin registros estructurados y rastreo distribuido, diagnosticar problemas en producción requiere conjeturas. Mensajes de registro sin IDs de correlación hacen imposible rastrear una única petición de usuario a través de múltiples capas de servicio (Kong -> BFF -> API Core -> Base de Datos). La observabilidad debe ser un ciudadano de primera clase, no una ocurrencia tardía.
 
-## Decision
-Adopt the **OpenTelemetry (OTel)** standard as the unified observability backbone, with the following toolchain:
+## Decisión
+Adoptar el estándar **OpenTelemetry (OTel)** como el espinazo unificado de observabilidad, con la siguiente cadena de herramientas:
 
-| Signal | Technology | Purpose |
+| Señal | Tecnología | Propósito |
 | :--- | :--- | :--- |
-| **Traces** | OpenTelemetry SDK + Jaeger | Distributed request tracing across all tiers |
-| **Logs** | Pino + Grafana Loki | Structured JSON log aggregation and querying |
-| **Metrics** | Prometheus + Grafana | SRE metrics: latency, error rate, throughput |
+| **Trazas** | OpenTelemetry SDK + Jaeger | Rastreo distribuido de peticiones a través de todos los niveles |
+| **Logs** | Pino + Grafana Loki | Agregación y consulta de logs JSON estructurados |
+| **Métricas**| Prometheus + Grafana | Métricas SRE: latencia, tasa de errores, rendimiento |
 
-**Implementation rules:**
+**Reglas de implementación:**
 
-1. **Auto-instrumentation**: NestJS HTTP, TypeORM, and Redis calls are automatically instrumented via OTel auto-instrumentation packages — no manual span creation required for standard flows.
-2. **Vendor-Agnostic Routing**: The application MUST ONLY emit vendor-neutral telemetry to a local **OpenTelemetry Collector**. Switching final backends (e.g., from Jaeger to Datadog, or Loki to Elastic) requires changing ONLY the Collector's YAML config, with **zero modifications or redeployments** to application source code.
-3. **Manual spans**: Business-significant operations (use case execution, cache misses) get explicit `tracer.startSpan()` wrapping.
-4. **Trace propagation**: All outbound HTTP calls include `traceparent` headers (W3C Trace Context standard).
-5. **Structured logs**: Every log entry includes `traceId`, `spanId`, `tenantId`, and `userId` for full correlation.
+1. **Auto-instrumentación**: Las llamadas HTTP de NestJS, TypeORM y Redis se instrumentan automáticamente vía paquetes de auto-instrumentación de OTel — no se requiere la creación manual de span para flujos estándar.
+2. **Enrutamiento Agnóstico al Proveedor**: La aplicación DEBE ÚNICAMENTE emitir telemetría neutral al proveedor hacia un **Colector OpenTelemetry** local. Cambiar los backends finales (ej., de Jaeger a Datadog, o de Loki a Elastic) requiere cambiar ÚNICAMENTE la configuración YAML del Colector, con **cero modificaciones o re-despliegues** en el código fuente de la aplicación.
+3. **Spans manuales**: Las operaciones significativas de negocio (ejecución de casos de uso, fallos de caché) obtienen una envoltura explícita con `tracer.startSpan()`.
+4. **Propagación de trazas**: Todas las llamadas HTTP salientes incluyen cabeceras `traceparent` (estándar W3C Trace Context).
+5. **Logs estructurados**: Cada entrada de registro incluye `traceId`, `spanId`, `tenantId` y `userId` para una correlación completa.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Single `traceId` traces a request from the Kong gateway log all the way to the PostgreSQL query plan.
-- Grafana dashboards provide SRE-level visibility with P50/P95/P99 latency breakdowns.
-- Zero code changes to the domain Core — all instrumentation lives in the infrastructure and adapter layers.
-- **Absolute Tech Sovereignty**: Zero vendor lock-in. The OTel protocol decouples us from Datadog, Dynatrace, Grafana, or any commercial vendor natively.
+### Positivas
+- Un único `traceId` rastrea una petición desde el log del gateway Kong hasta el plan de consulta de PostgreSQL.
+- Los dashboards de Grafana proporcionan visibilidad a nivel de SRE con desglose de latencia P50/P95/P99.
+- Cero cambios de código en el Core de dominio — toda la instrumentación reside en las capas de infraestructura y adaptadores.
+- **Soberanía Tecnológica Absoluta**: Cero bloqueo de proveedor. El protocolo OTel nos desacopla de Datadog, Dynatrace, Grafana, o cualquier proveedor comercial de forma nativa.
 
-### Negative
-- OTel Collector is an additional infrastructure component to deploy and maintain.
-- Careless span creation can introduce performance overhead; auto-instrumentation must be profiled.
+### Negativas
+- El Colector de OTel es un componente de infraestructura adicional para desplegar y mantener.
+- La creación descuidada de spans puede introducir sobrecarga de rendimiento; la auto-instrumentación debe ser perfilada.
 
-## References
-- [OpenTelemetry Documentation](https://opentelemetry.io)
-- [ADR-0002: Clean Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
+## Referencias
+- [Documentación de OpenTelemetry](https://opentelemetry.io)
+- [ADR-0002: Arquitectura Hexagonal Limpia](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)

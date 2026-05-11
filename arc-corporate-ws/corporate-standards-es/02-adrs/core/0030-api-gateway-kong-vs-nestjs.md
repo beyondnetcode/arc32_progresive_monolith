@@ -1,47 +1,47 @@
-# ADR 0030: API Gateway Strategy - Kong Edge vs NestJS BFF
+# ADR 0030: Estrategia de Gateway de API - Kong Edge vs NestJS BFF
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-10
 
-## Context
-Utilizing Node.js application threads to perform pure network-level infrastructure routing, massive volume rate-limiting, or generic SSL termination wastes single-threaded event loops on overhead, degrading critical application speed. Conversely, pushing complex API payload merges or recursive database aggregates into raw proxy Lua scripts creates operational gridlock.
+## Contexto
+Utilizar hilos de la aplicación Node.js para realizar enrutamiento de infraestructura a nivel de red puro, limitación de tasa de volumen masivo o terminación SSL genérica desperdicia bucles de eventos de un solo hilo en sobrecarga, degradando la velocidad crítica de la aplicación. Por el contrario, empujar fusiones complejas de cargas útiles de API o agregados recursivos de bases de datos en scripts Lua de proxy sin procesar crea un atasco operativo.
 
-## Decision
-Formalize a rigid **Two-Tier Distributed Gateway Model** to correctly decouple infrastructure from orchestration:
+## Decisión
+Formalizar un rígido **Modelo de Gateway Distribuido de Dos Capas** para desacoplar correctamente la infraestructura de la orquestación:
 
-1. **Tier 1 - Edge Gateway (Kong OSS)**: High-throughput NGINX-based barrier. Sits on the literal public cluster perimeter. Manages only non-functional transversal rules: SSL, API key throttling, simple JWT origin signature validation, path forwarding, and WAF rules.
-2. **Tier 2 - Application Gateway (NestJS BFF)**: Custom Node logic deployed safely within Tier 1 security zone. Responsible for composing heterogeneous data responses, stripping PII for generic UI formats, tailoring device payloads, and managing user cookie mechanics.
+1. **Capa 1 - Edge Gateway (Kong OSS)**: Barrera de alto rendimiento basada en NGINX. Se sitúa literalmente en el perímetro del clúster público. Gestiona solo reglas transversales no funcionales: SSL, estrangulamiento de claves de API, validación de firma de origen JWT simple, reenvío de ruta y reglas WAF.
+2. **Capa 2 - Gateway de Aplicación (NestJS BFF)**: Lógica de Node personalizada desplegada de forma segura dentro de la zona de seguridad de Capa 1. Responsable de componer respuestas de datos heterogéneos, eliminar PII para formatos de UI genéricos, adaptar las cargas útiles del dispositivo y gestionar la mecánica de cookies del usuario.
 
-### Updated Two-Tier Architecture
+### Arquitectura Actualizada de Dos Capas
 
 ```mermaid
 graph TD
-    U["Public Clients (Mobile / Web)"] -->|TLS/HTTP| K["[Tier 1] Kong Edge Gateway"]
+    U["Clientes Públicos (Mobile / Web)"] -->|TLS/HTTP| K["[Capa 1] Kong Edge Gateway"]
     
-    subgraph SecureCluster["Protected Network"]
-        K -->|Forward| W["[Tier 2] NestJS Web BFF"]
-        K -->|Forward| M["[Tier 2] NestJS Mobile BFF"]
+    subgraph SecureCluster["Red Protegida"]
+        K -->|Reenvío| W["[Capa 2] NestJS Web BFF"]
+        K -->|Reenvío| M["[Capa 2] NestJS Mobile BFF"]
         
-        W --> API["Reference Platform Core"]
+        W --> API["Núcleo Plataforma Referencia"]
         W --> TMS["Transport Service"]
         M --> API
     end
 ```
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Separates raw binary concerns from logical aggregation. Node doesn't waste cycles blocking DDOS/Spams.
-- Extreme throughput scale capability. NGINX core comfortably eats traffic volumes Node alone cannot.
-- Improves backend isolation (Tier 1 explicitly shields Tier 2).
+### Positivas
+- Separa las preocupaciones binarias en bruto de la agregación lógica. Node no desperdicia ciclos bloqueando DDOS/Spams.
+- Capacidad de escala de rendimiento extremo. El núcleo de NGINX devora cómodamente volúmenes de tráfico que Node solo no puede.
+- Mejora el aislamiento del backend (la Capa 1 protege explícitamente a la Capa 2).
 
-### Negative
-- Adds a second hop latency variable (typically negligible <1ms overhead if deployed correctly).
-- Introduces Kong management operational stack lifecycle.
+### Negativas
+- Añade una variable de latencia de segundo salto (típicamente insignificante <1ms de sobrecarga si se despliega correctamente).
+- Introduce el ciclo de vida del stack operativo de gestión de Kong.
 
-## References
-- [ADR-0008: Progressive BFF Patterns](./0008-progressive-multimodule-evolution-gateway-bff.md)
-- [ADR-0027: Dual Protocol Edge](./0027-dual-protocol-rest-grpc-api-gateway.md)
+## Referencias
+- [ADR-0008: Patrones Progresivos de BFF](../02-adrs/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md)
+- [ADR-0027: Borde de Protocolo Dual](../02-adrs/nodejs/0027-dual-protocol-rest-grpc-api-gateway.md)

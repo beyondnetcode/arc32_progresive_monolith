@@ -1,99 +1,99 @@
-# 🚀 Getting Started Guide — Initiating a New Product from Reference
+# 🚀 Guía de Inicio Rápido — Iniciando un Nuevo Producto desde la Referencia
 
-**Role:** Developer / Solutions Architect  
-**Objective:** Instantiate a production-ready repository from the Corporate Reference Framework.
+**Rol:** Desarrollador / Arquitecto de Soluciones  
+**Objetivo:** Instanciar un repositorio listo para producción desde el Framework de Referencia Corporativo.
 
 ---
 
-## 1. Overview
-This Reference Architecture is designed to be **cloned as a template**, not imported as an `npm` library. It delivers a fully configured environment with pre-baked security, monorepo governance, and deployment pipelines.
+## 1. Descripción General
+Esta Arquitectura de Referencia está diseñada para ser **clonada como una plantilla**, no importada como una librería `npm`. Ofrece un entorno totalmente configurado con seguridad pre-integrada, gobernanza de monorepo y pipelines de despliegue.
 
-## 2. Prerequisites
-Before initializing, ensure your local machine has:
+## 2. Prerrequisitos
+Antes de inicializar, asegúrate de que tu máquina local tenga:
 *   **Node.js**: v20.x (LTS)
-*   **pnpm**: v8.x (or `npm` v10)
-*   **Docker & Docker Compose**: v25+ (Required for local services)
-*   **Nx CLI**: Installed globally via `npm install -g nx`
+*   **pnpm**: v8.x (o `npm` v10)
+*   **Docker y Docker Compose**: v25+ (Requerido para servicios locales)
+*   **Nx CLI**: Instalado globalmente vía `npm install -g nx`
 
 ---
 
-## 3. Initialization Procedure
+## 3. Procedimiento de Inicialización
 
-### Step A: Repository Cloning
-Clone the corporate boilerplate without preserving historical commits:
+### Paso A: Clonación del Repositorio
+Clona el boilerplate corporativo sin preservar los commits históricos:
 ```bash
-# 1. Clone to a new directory
-git clone --depth 1 <corporate-repo-url> my-new-product
+# 1. Clonar a un nuevo directorio
+git clone --depth 1 <corporate-repo-url> mi-nuevo-producto
 
-# 2. Move into the project
-cd my-new-product
+# 2. Entrar en el proyecto
+cd mi-nuevo-producto
 
-# 3. Remove origin reference and initialize fresh Git
+# 3. Eliminar la referencia al origen e inicializar un Git limpio
 rm -rf .git
 git init
 git add .
 git commit -m "chore: bootstrap project from corporate reference v1.0"
 ```
 
-### Step B: Dependency Installation
-The reference uses an Nx Monorepo. Execute root installation:
+### Paso B: Instalación de Dependencias
+La referencia utiliza un Monorepo Nx. Ejecuta la instalación en la raíz:
 ```bash
-# Install using strictly pinned lockfile
+# Instalar usando lockfile estrictamente fijado
 npm ci 
-# or if using pnpm
+# o si usas pnpm
 pnpm install --frozen-lockfile
 ```
 
-### Step C: Local Infrastructure Setup
-Spin up the unified local dependency mesh (PostgreSQL, Redis, RabbitMQ, Vault, Kong):
+### Paso C: Configuración de Infraestructura Local
+Levanta la malla de dependencias locales unificada (PostgreSQL, Redis, RabbitMQ, Vault, Kong):
 ```bash
 docker compose up -d
 ```
-*Verify all containers are `Up (healthy)` using `docker ps`.*
+*Verifica que todos los contenedores estén `Up (healthy)` usando `docker ps`.*
 
 ---
 
-## 4. Running the Reference Sandbox (To-Do Product)
-To verify your installation works correctly, boot up the demo applications:
+## 4. Ejecutando el Sandbox de Referencia (Producto To-Do)
+Para verificar que tu instalación funciona correctamente, arranca las aplicaciones de demostración:
 
 ```bash
-# Start the API and BFF concurrently via Nx
+# Iniciar el API y el BFF concurrentemente vía Nx
 nx run-many --target=serve --projects=api,web-bff
 ```
-The Sandbox runs the To-Do domain demonstrating:
-1.  **Hexagonal Core**: Pure typescript domain logic.
-2.  **Multi-Tenant RLS**: Database isolation in active sessions.
-3.  **Observability**: Traces injected automatically.
+El Sandbox ejecuta el dominio To-Do demostrando:
+1.  **Núcleo Hexagonal**: Lógica de dominio en typescript puro.
+2.  **RLS Multi-Tenant**: Aislamiento de base de datos en sesiones activas.
+3.  **Observabilidad**: Trazas inyectadas automáticamente.
 
 ---
 
-## 5. Scaffold a New Feature
-Do not create files manually. Utilize the Nx generators to respect mandatory library boundaries:
+## 5. Crear el Andamiaje (Scaffold) de una Nueva Característica
+No crees archivos manualmente. Utiliza los generadores de Nx para respetar los límites obligatorios de librería:
 
 ```bash
-# Generate a new Bounded Context library
-nx g @nx/nest:library my-new-context --directory=libs/domain
+# Generar una nueva librería de Contexto Delimitado
+nx g @nx/nest:library mi-nuevo-contexto --directory=libs/domain
 
-# Generate a feature Use Case inside the library
-nx g @nx/nest:service use-cases/create-item --project=domain-my-new-context
+# Generar un Caso de Uso de característica dentro de la librería
+nx g @nx/nest:service use-cases/create-item --project=domain-mi-nuevo-contexto
 ```
 
-## 6. Mandatory Check-in Gates
-Before pushing your first commit, run the quality suite. If these fail, CI/CD will block your merge:
+## 6. Puertas Obligatorias de Check-in
+Antes de hacer push a tu primer commit, ejecuta la suite de calidad. Si éstas fallan, el CI/CD bloqueará tu fusión:
 ```bash
-# 1. Lint & Formatting check
+# 1. Comprobación de Lint y Formato
 nx run-many -t lint
 
-# 2. Testing Pyramid (Unit/Integration)
+# 2. Pirámide de Pruebas (Unitarias/Integración)
 nx run-many -t test
 
-# 3. Dependency Vulnerability Check
+# 3. Comprobación de Vulnerabilidades de Dependencias
 npm audit
 ```
 
 ---
 
-## 🆘 Assistance
-If you encounter issues during bootstrap, refer to:
-*   📜 **[Architecture Decision Records](../03-adrs/index.md)**: To understand WHY things are configured this way.
-*   📘 **[Engineering Standards](../04-artifacts/engineering-standards.md)**: For code review guidelines.
+## 🆘 Asistencia
+Si encuentras problemas durante el arranque, consulta:
+*   📜 **[Registros de Decisión de Arquitectura](../02-adrs/index.md)**: Para entender POR QUÉ las cosas están configuradas de esta manera.
+*   📘 **[Estándares de Ingeniería](../03-engineering/engineering-manifesto.md)**: Para las directrices de revisión de código.

@@ -1,31 +1,31 @@
-# ADR 0022: Contextual Authentication and Pluggable Output Projections
+# ADR 0022: Autenticación Contextual y Proyecciones de Salida Enchufables
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-SaaS execution planes face heavy integration friction: lightweight microservices need small condensed binary token formats to prevent data bloat, while heavy Frontend clients (Angular/React) demand full recursive JSON tree outputs to dynamically draw navigational menus. Hardcoding to a single output format limits either bandwidth efficiency or application speed.
+## Contexto
+Los planos de ejecución SaaS enfrentan una pesada fricción de integración: los microservicios ligeros necesitan formatos de tokens binarios condensados pequeños para prevenir el hinchazón de datos, mientras que los clientes Frontend pesados (Angular/React) demandan salidas completas de árboles JSON recursivos para dibujar dinámicamente los menús de navegación. Codificar rígidamente un único formato de salida limita ya sea la eficiencia del ancho de banda o la velocidad de la aplicación.
 
-## Decision
-Separate Identity Validation logic entirely from output composition capabilities, enforcing specialized runtime projectors:
+## Decisión
+Separar la lógica de Validación de Identidad enteramente de las capacidades de composición de salida, imponiendo proyectores especializados en tiempo de ejecución:
 
-1. **Pluggable Projector Map**: The Core service emits a universal permission model. Dedicated pluggable projectors capture this payload and reformat it tailored to consumers (e.g., a JWT compressor for internal services, a rich JSON graph generator for browser agents).
-2. **Contextual Node Routing**: Native design support for resolving hierarchy down through Tenant, down into physical Branch ("Sede") node routing dynamically on demand.
-3. **Standard Read Caching**: Route all projections through High-Performance Redis bridges, retaining common target sub-millisecond execution goals for read-intensive validation endpoints.
+1. **Mapa de Proyectores Enchufables**: El servicio Core emite un modelo de permisos universal. Proyectores enchufables dedicados capturan esta carga útil y la reformatean adaptada a los consumidores (ej., un compresor JWT para servicios internos, un generador de grafos JSON rico para agentes de navegador).
+2. **Enrutamiento de Nodo Contextual**: Soporte de diseño nativo para resolver la jerarquía bajando a través del Inquilino, hasta llegar dinámicamente bajo demanda al enrutamiento del nodo de Sucursal física ("Sede").
+3. **Caché de Lectura Estándar**: Enrutar todas las proyecciones a través de puentes Redis de Alto Rendimiento, reteniendo las metas comunes de ejecución de destino por debajo del milisegundo para endpoints de validación de lectura intensiva.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Unifies governance under a single security source, while respecting varying downstream protocol tolerances.
-- Natively empowers location-aware and node-specific authorization flows without database hacks.
+### Positivas
+- Unifica la gobernanza bajo una única fuente de seguridad, respetando las variadas tolerancias de protocolos aguas abajo.
+- Empodera nativamente los flujos de autorización sensibles a la ubicación y específicos de los nodos sin hacks de base de datos.
 
-### Negative
-- Inflates initial code volume to support various projection templates.
-- Requires cache invalidation synchrony across the different compiled formats.
+### Negativas
+- Aumenta el volumen de código inicial para soportar varias plantillas de proyección.
+- Requiere sincronía de invalidación de caché a través de los diferentes formatos compilados.
 
-## References
-- [ADR-0021: High Performance Auth Graph](./0021-high-performance-auth-and-graph-compilation.md)
-- [ADR-0020: IdP Strategy](./0020-identity-provider-abstraction-strategy.md)
+## Referencias
+- [ADR-0021: Grafo Auth de Alto Rendimiento](../02-adrs/nodejs/0021-high-performance-auth-and-graph-compilation.md)
+- [ADR-0020: Estrategia de IdP](../02-adrs/core/0020-identity-provider-abstraction-strategy.md)

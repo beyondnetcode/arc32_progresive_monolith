@@ -1,5 +1,8 @@
 # 🤖 AI-Augmented Architecture
 
+> 🌐 **Bilingual Navigation:** [🇪🇸 Versión en Español](../../corporate-standards-es/ai-augmented/README.md)
+
+
 ## What is this?
 This section is an optional extension of the corporate reference architecture for teams looking to incorporate AI agents. It defines standards to leverage autonomous agents, harness engineering, Model Context Protocol (MCP), tools, and AI-augmented workflows.
 

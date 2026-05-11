@@ -1,31 +1,31 @@
-# ADR 0018: Testing Pyramid and Automated Quality Gates
+# ADR 0018: Pirámide de Pruebas y Puertas de Calidad Automatizadas
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Without rigid test requirements, gradual codebase regression quickly turns maintainable monoliths into unstable legacy bundles. We require strict testing criteria bounding execution confidence automatically enforced before code enters target branch flows.
+## Contexto
+Sin requisitos de pruebas rígidos, la regresión gradual de la base de código convierte rápidamente monolitos mantenibles en paquetes de legado inestables. Requerimos criterios de prueba estrictos que limiten la confianza de ejecución impuesta automáticamente antes de que el código entre en los flujos de ramas objetivo.
 
-## Decision
-Commit to a standard software testing hierarchy and mechanical deployment blocking:
+## Decisión
+Comprometerse con una jerarquía de pruebas de software estándar y el bloqueo mecánico de despliegues:
 
-1. **Unit Layer (Fast)**: Dominate total test volume using standard Jest executions isolating pure core and application classes. Tests must not execute IO or container startups.
-2. **Integration Layer (Safe)**: Test Persistence and Gateway adapters against active databases using testcontainer engines (e.g., live PostgreSQL/Redis in ephemeral containers).
-3. **e2e Layer (Complete)**: Deploy isolated `supertest` routines orchestrating full HTTP routes (Controller ➔ Service ➔ Database) testing actual external boundary security and transport.
-4. **Binary Gates**: The CI pipeline rigorously denies processing merge commits that collapse general test coverage thresholds underneath established corporate minima (**70% baseline**).
+1. **Capa Unitaria (Rápida)**: Dominar el volumen total de pruebas usando ejecuciones estándar de Jest que aíslen las clases core y de aplicación puras. Las pruebas no deben ejecutar E/S o arranques de contenedores.
+2. **Capa de Integración (Segura)**: Probar los adaptadores de Persistencia y Gateway contra bases de datos activas usando motores de testcontainers (ej. PostgreSQL/Redis activos en contenedores efímeros).
+3. **Capa e2e (Completa)**: Desplegar rutinas `supertest` aisladas que orquesten rutas HTTP completas (Controlador -> Servicio -> Base de Datos) probando la seguridad de límites externos reales y el transporte.
+4. **Puertas Binarias**: La pipeline CI niega rigurosamente el procesamiento de commits de fusión que hagan colapsar los umbrales generales de cobertura de pruebas por debajo de los mínimos corporativos establecidos (**línea base del 70%**).
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Protects against regression cascades at infinite release speed.
-- Encourages safe developer refactoring confidence.
+### Positivas
+- Protege contra cascadas de regresión a velocidad de liberación infinita.
+- Fomenta la confianza de refactorización segura del desarrollador.
 
-### Negative
-- Marginal time addition required during the creation phase of complex routines.
-- Requires active orchestration (testcontainers) to maintain local speed optimization.
+### Negativas
+- Adición marginal de tiempo requerida durante la fase de creación de rutinas complejas.
+- Requiere orquestación activa (testcontainers) para mantener la optimización de velocidad local.
 
-## References
-- [ADR-0005: Security Gates](./0005-ci-cd-quality-codeql.md)
+## Referencias
+- [ADR-0005: Puertas de Seguridad](../02-adrs/core/0005-ci-cd-quality-codeql.md)

@@ -1,38 +1,38 @@
-# ADR 0005: CI/CD Security Quality Gates with CodeQL
+# ADR 0005: Puertas de Calidad de Seguridad CI/CD con CodeQL
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Security vulnerabilities introduced via code (SQL injection, prototype pollution, insecure deserialization) are frequently missed in manual code reviews. Additionally, third-party dependencies can introduce known CVEs that go undetected without automated scanning. Security must be enforced mechanically, not left to human review.
+## Contexto
+Las vulnerabilidades de seguridad introducidas a través del código (inyección SQL, polución de prototipo, deserialización insegura) se pasan por alto frecuentemente en las revisiones manuales de código. Además, las dependencias de terceros pueden introducir CVEs conocidos que no se detectan sin un escaneo automatizado. La seguridad debe imponerse mecánicamente, no dejarse a la revisión humana.
 
-## Decision
-Integrate **GitHub CodeQL** and **npm audit** as mandatory quality gates in the CI/CD pipeline.
+## Decisión
+Integrar **GitHub CodeQL** y **npm audit** como puertas de calidad obligatorias en la pipeline de CI/CD.
 
-**Pipeline gates:**
+**Puertas de la pipeline:**
 
-1. **CodeQL Static Analysis** — Runs on every pull request. Scans for OWASP Top 10 vulnerability patterns in TypeScript source code. PRs with `High` or `Critical` findings are blocked from merging.
+1. **Análisis Estático CodeQL** — Se ejecuta en cada pull request. Escanea patrones de vulnerabilidad OWASP Top 10 en el código fuente de TypeScript. Los PRs con hallazgos `High` (Altos) o `Critical` (Críticos) se bloquean para su fusión.
 
-2. **Dependency Vulnerability Scan** — `npm audit --audit-level=high` runs in CI. Any dependency with a `High` or `Critical` CVE blocks the pipeline.
+2. **Escaneo de Vulnerabilidades de Dependencias** — `npm audit --audit-level=high` se ejecuta en CI. Cualquier dependencia con un CVE `High` o `Critical` bloquea la pipeline.
 
-3. **Secret Detection** — GitHub's built-in secret scanning is enabled on the repository to detect accidentally committed API keys or credentials.
+3. **Detección de Secretos** — El escaneo de secretos integrado de GitHub se habilita en el repositorio para detectar claves de API o credenciales comprometidas accidentalmente.
 
-**SLA:** All `Critical` findings must be resolved within 24 hours. `High` findings within 72 hours.
+**SLA:** Todos los hallazgos `Critical` deben resolverse dentro de 24 horas. Hallazgos `High` dentro de 72 horas.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Security vulnerabilities are caught at PR time, before reaching any environment.
-- Zero additional infrastructure cost — CodeQL is free for public and GitHub Team repositories.
-- Creates a documented audit trail of security decisions for compliance requirements.
+### Positivas
+- Las vulnerabilidades de seguridad se capturan en el momento del PR, antes de llegar a cualquier entorno.
+- Cero costo de infraestructura adicional — CodeQL es gratuito para repositorios públicos y de GitHub Team.
+- Crea una pista de auditoría documentada de decisiones de seguridad para requisitos de cumplimiento.
 
-### Negative
-- CodeQL scans add approximately 2-5 minutes to CI pipeline duration.
-- False positives require manual suppression with documented justification comments.
+### Negativas
+- Los escaneos de CodeQL añaden aproximadamente entre 2-5 minutos a la duración de la pipeline de CI.
+- Los falsos positivos requieren supresión manual con comentarios de justificación documentados.
 
-## References
-- [GitHub CodeQL Documentation](https://docs.github.com/en/code-security/code-scanning)
-- [ADR-0009: Strict Dependency Pinning](./0009-strict-dependency-pinning-vulnerability-management.md)
+## Referencias
+- [Documentación de GitHub CodeQL](https://docs.github.com/en/code-security/code-scanning)
+- [ADR-0009: Fijación Estricta de Dependencias](../02-adrs/core/0009-strict-dependency-pinning-vulnerability-management.md)

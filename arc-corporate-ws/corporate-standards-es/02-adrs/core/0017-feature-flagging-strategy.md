@@ -1,31 +1,31 @@
-# ADR 0017: Feature Flagging Strategy for Progressive Delivery
+# ADR 0017: Estrategia de Feature Flagging para Entrega Progresiva
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-09
 
-## Context
-Pushing new functional expansions to production carries elevated operational risk. To lower risk ceilings, code must ship deactivated into targeted runtime paths, unlocking specifically for Alpha clients, gradual user demographics, or entire clusters without invoking pipeline re-deployments or database migrations.
+## Contexto
+Impulsar nuevas expansiones funcionales a producción conlleva un riesgo operativo elevado. Para rebajar los techos de riesgo, el código debe liberarse desactivado dentro de rutas de tiempo de ejecución dirigidas, desbloqueándose específicamente para clientes Alpha, datos demográficos de usuarios graduales, o clústeres enteros sin invocar re-despliegues de pipeline o migraciones de base de datos.
 
-## Decision
-Treat dynamic feature routing as standard **Infrastructure injection**, completely disjoint from persistence architectures:
+## Decisión
+Tratar el enrutamiento dinámico de características como una **Inyección de Infraestructura** estándar, completamente disjunta de las arquitecturas de persistencia:
 
-1. **Service Decoupling**: Avoid physical db `toggles` table creation. Utilize authoritative external SaaS management planes (e.g., ConfigCat, Unleash, LaunchDarkly) natively via efficient local runtime SDK mirrors.
-2. **Hexagonal Inversion**: Codebases communicate strictly with local abstract interfaces (`IFeatureTogglePort`). Concrete vendors implement hidden adapter modules evaluating expressions safely off-thread.
-3. **Runtime Evaluators**: Route branching inside service commands utilizing injected toggle checks for zero-touch immediate canary switches and instant rollbacks.
+1. **Desacoplamiento de Servicios**: Evitar la creación de tablas físicas `toggles` en la base de datos. Utilizar planos de gestión SaaS externos autoritativos (ej. ConfigCat, Unleash, LaunchDarkly) nativamente a través de espejos locales SDK eficientes en tiempo de ejecución.
+2. **Inversión Hexagonal**: Las bases de código se comunican estrictamente con interfaces abstractas locales (`IFeatureTogglePort`). Los proveedores concretos implementan módulos adaptadores ocultos que evalúan expresiones de forma segura fuera del hilo principal.
+3. **Evaluadores en Tiempo de Ejecución**: Enrutar bifurcaciones dentro de los comandos del servicio utilizando verificaciones de toggle inyectadas para interruptores canarios inmediatos sin intervención (zero-touch) y rollbacks instantáneos.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Permits decoupled Trunk-Based engineering: merges do not equate releases.
-- Grants instant operational controls (Kill Switch) to non-technical staff outside CI limits.
+### Positivas
+- Permite ingeniería Trunk-Based desacoplada: las fusiones (merges) no equivalen a lanzamientos.
+- Concede controles operativos instantáneos (Kill Switch) a personal no técnico fuera de los límites de CI.
 
-### Negative
-- Accumulates "Technical Debt" if flags aren't scheduled for removal post-stabilization.
-- Introduces dynamic logic branching that inflates cyclomatic testing complexity.
+### Negativas
+- Acumula "Deuda Técnica" si las banderas no están programadas para su eliminación tras la estabilización.
+- Introduce bifurcaciones lógicas dinámicas que inflan la complejidad ciclomática de las pruebas.
 
-## References
-- [ADR-0025: Feature Flag Abstraction](./0025-feature-flag-provider-abstraction.md)
-- [ADR-0024: Config Management](./0024-configuration-feature-management-platform.md)
+## Referencias
+- [ADR-0025: Abstracción de Feature Flags](../02-adrs/core/0025-feature-flag-provider-abstraction.md)
+- [ADR-0024: Gestión de Configuración](../02-adrs/core/0024-configuration-feature-management-platform.md)

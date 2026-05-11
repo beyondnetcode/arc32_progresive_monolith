@@ -1,31 +1,31 @@
-# ADR 0016: Immutable Business Audit Trail and Change Tracking
+# ADR 0016: Pista de Auditoría de Negocio Inmutable y Rastreo de Cambios
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-09
 
-## Context
-Regulated operations require absolute traceability. Simply capturing the final state of entities does not suffice for forensic or audit purposes; we must accurately detect *who* changed the data, *when*, from *what* network vector, and recording exact delta differentials of *before* and *after* values.
+## Contexto
+Las operaciones reguladas requieren una trazabilidad absoluta. Simplemente capturar el estado final de las entidades no es suficiente para propósitos forenses o de auditoría; debemos detectar con precisión *quién* cambió los datos, *cuándo*, desde *qué* vector de red, y registrando diferenciales exactos de los valores de *antes* y *después*.
 
-## Decision
-Deploy a **Hybrid Audit Strategy** balancing performant direct reading with deep historical archiving:
+## Decisión
+Desplegar una **Estrategia de Auditoría Híbrida** equilibrando la lectura directa performante con el archivado histórico profundo:
 
-1. **Metadata Layer (Row-Level)**: Physical entities inherit standard persistent audit columns: `created_at`, `created_by`, `updated_at`, `updated_by`, and a concurrency tracking `version` integer. 
-2. **Ledger Layer (Application Deltas)**: Application command handlers generate application-level events forwarding structured old/new value JSON bundles directly toward the audit infrastructure connector.
-3. **Permanent Persistence**: Write final resolved ledger records toward an append-only target. Apply database triggers directly overriding the physical DB engine to throw blocking exceptions on any generic SQL user attempting `DELETE` or `UPDATE` actions against current audit archives.
+1. **Capa de Metadatos (Nivel de Fila)**: Las entidades físicas heredan columnas de auditoría persistentes estándar: `created_at`, `created_by`, `updated_at`, `updated_by`, y un entero `version` para el rastreo de concurrencia.
+2. **Capa de Libro Mayor (Deltas de Aplicación)**: Los manejadores de comandos de la aplicación generan eventos a nivel de aplicación que reenvían paquetes JSON estructurados con los valores antiguos/nuevos directamente hacia el conector de infraestructura de auditoría.
+3. **Persistencia Permanente**: Escribir los registros finales resueltos del libro mayor hacia un objetivo de "solo adición" (append-only). Aplicar triggers de base de datos que sobrescriban directamente el motor físico de la BD para lanzar excepciones de bloqueo sobre cualquier usuario genérico SQL que intente acciones de `DELETE` o `UPDATE` contra los archivos de auditoría actuales.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Dual benefit: super-fast local visibility of latest modifier, plus absolute legal replay capability from append-only ledger.
-- Eliminates vendor trigger coupling by handling intent aggregation inside application flow.
+### Positivas
+- Beneficio dual: visibilidad local superrápida del último modificador, más capacidad absoluta de repetición legal desde el libro mayor de solo adición.
+- Elimina el acoplamiento de triggers del proveedor al manejar la agregación de intenciones dentro del flujo de la aplicación.
 
-### Negative
-- Developer rigor is required to ensure all write operations faithfully hook auditing dispatch hooks.
-- Physical storage footprint linearly expands indefinitely via continuous appends; archivals will eventually require lifecycle rotation policies.
+### Negativas
+- Se requiere rigor del desarrollador para asegurar que todas las operaciones de escritura se enganchen fielmente a los disparadores de despacho de auditoría.
+- La huella de almacenamiento físico se expande linealmente indefinidamente a través de continuas adiciones; los archivados eventualmente requerirán políticas de rotación de ciclo de vida.
 
-## References
-- [ADR-0031: Domain Event Catalog](./0031-schema-per-context-domain-event-catalog.md)
-- [ADR-0015: Event Driven Architecture](./0015-event-driven-architecture-intra-domain.md)
+## Referencias
+- [ADR-0031: Catálogo de Eventos de Dominio](../02-adrs/core/0031-schema-per-context-domain-event-catalog.md)
+- [ADR-0015: Arquitectura Dirigida por Eventos](../02-adrs/core/0015-event-driven-architecture-intra-domain.md)

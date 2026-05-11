@@ -1,28 +1,26 @@
-# Catálogo de Modelos Evaluados y Benchmarks
+# Catálogo de Modelos Autorizados (Horizonte Mayo 2026)
 
-Este es el registro vivo de los modelos autorizados para su uso en productos corporativos, categorizados por su perfil de rendimiento.
+A continuación se presentan las únicas familias de LLM autorizadas por el Comité de Arquitectura para su integración en productos corporativos. Cualquier modelo no listado requiere un ticket de autorización temporal para pruebas.
 
-## 🏆 Modelos Grandes / Líderes de Razonamiento
+## Familias Comerciales Autorizadas (Vía Gateway Corporativo)
 
-| Modelo | Proveedor | Ventana de Contexto | Fortalezas | Estatus |
-| :--- | :--- | :--- | :--- | :--- |
-| Claude 3.5 Sonnet | Anthropic | 200K | Codificación TS/.NET superior, siguiendo de instrucciones complejas. | Aprobado |
-| GPT-4o | OpenAI | 128K | Velocidad, razonamiento multimodal, fuerte en soporte multilenguaje. | Aprobado |
-| Gemini 1.5 Pro | Google | 2M | Lectura masiva de documentación de arquitectura, análisis de repositorios completos. | Aprobado |
+### ☁️ Familia Google Gemini
+*   **Gemini 1.5 Pro**: Recomendado para lectura masiva de código debido a su ventana de tokens de 2M. Capacidad superior para razonamiento estructural entre repositorios.
+*   **Gemini 1.5 Flash**: Recomendado para extracción barata y rápida de metadatos estructurados de imágenes o grandes volúmenes de texto.
 
-## 🚀 Modelos Rápidos / De Bajo Coste
+### ☁️ Familia Anthropic Claude
+*   **Claude 3.5 Sonnet**: Benchmark global actual para codificación de software nativo y llamadas deterministas a herramientas. Designado como modelo primario para IDEs y agentes locales.
+*   **Claude 3.5 Haiku**: El rendimiento más rápido para clasificación con latencia inferior a un segundo.
 
-| Modelo | Proveedor | Coste Relativo | Casos de Uso Ideales | Estatus |
-| :--- | :--- | :--- | :--- | :--- |
-| GPT-4o-mini | OpenAI | ~10% de 4o | Clasificación masiva, extracción de data, pre-filtros de seguridad. | Aprobado |
-| Claude 3 Haiku | Anthropic | Muy Bajo | Tareas RAG de alta concurrencia, respuestas < 1 segundo. | Aprobado |
+### ☁️ Familia OpenAI GPT
+*   **GPT-4o**: Altamente robusto para lógica de workflows legados y llamadas complejas a funciones donde la compatibilidad nativa requiere el estándar histórico de OpenAI.
+*   **o1 (Serie de Razonamiento)**: Autorizado solo para cálculos científicos o tareas intensas de optimización algorítmica. Bloqueado para chatbots conversacionales debido al alto costo por token de razonamiento.
 
-## 🏠 Modelos Locales / Self-Hosted
+## Familias Open Source / Locales Autorizadas (Autohospedadas)
 
-| Modelo | Licencia | Parámetros | Despliegue Recomendado | Estatus |
-| :--- | :--- | :--- | :--- | :--- |
-| Llama 3.1 70B | Meta Llama | 70B | GPU Clusters Privados (vLLM) | Aprobado |
-| Mistral Small | Apache 2.0 | 22B | Servidores CPU optimizados / Edge | En Evaluación |
+### 🏠 Serie Meta Llama 3.x
+*   **Llama 3.1 70B / 405B**: Alternativa primaria para soberanía de datos absoluta. Debe correr en clústeres internos de Kubernetes/GPU (vLLM).
+*   **Llama 3.1 8B**: Para runtimes en el borde (edge) o micro-agentes embebidos rápidos.
 
 ---
-*Última revisión de catálogo: Q1 2026.*
+*Nota: Los modelos listados aquí se derivan de tablas de clasificación estándar de la industria y superan nuestros benchmarks internos de RPT (Reasoning Per Token).*

@@ -1,31 +1,31 @@
-# ADR 0012: Advanced Authorization (RBAC/ABAC) Strategy
+# ADR 0012: Estrategia de Autorización Avanzada (RBAC/ABAC)
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Basic JWT identification determines *who* is accessing the service, but SaaS applications need to restrict *what* they can physically do. Users in active operational tenants need permission matrix checks depending on dynamic conditions, and role assignments must remain scoped firmly inside their specific Tenant context.
+## Contexto
+La identificación básica por JWT determina *quién* está accediendo al servicio, pero las aplicaciones SaaS necesitan restringir *qué* pueden hacer físicamente. Los usuarios en inquilinos (tenants) operativos activos necesitan verificaciones de matrices de permisos dependiendo de condiciones dinámicas, y las asignaciones de roles deben permanecer firmemente acotadas dentro de su contexto específico de Inquilino.
 
-## Decision
-Implement a Hybrid Architecture bridging Role-Based (RBAC) and Attribute-Based (ABAC) access control:
+## Decisión
+Implementar una Arquitectura Híbrida tendiendo un puente entre el control de acceso Basado en Roles (RBAC) y Basado en Atributos (ABAC):
 
-1. **NestJS Guard Framework**: Deploy custom `@Roles()` and `@Permissions()` annotations on controllers. Use native Global Interceptors to read the parsed JWT, fetch metadata associated with claims, and approve/deny execution pipeline entries immediately.
-2. **Strict Tenant Scoping**: Permissions are never global. A user might be a supervisor in Tenant A, and an observer in Tenant B. Checks must intersect the target endpoint context with the active `AsyncLocalStorage` current Tenant token.
-3. **Immutable Security Trail**: Crucial privileges changes or failed privilege elevation attempts automatically broadcast messages to the Audit Log context asynchronously, aiding automated threat surveillance streams.
+1. **Marco de Guardias de NestJS**: Desplegar anotaciones personalizadas `@Roles()` y `@Permissions()` en los controladores. Usar Interceptores Globales nativos para leer el JWT parseado, obtener los metadatos asociados con las claims, y aprobar/denegar las entradas en la pipeline de ejecución inmediatamente.
+2. **Acotación Estricta por Inquilino**: Los permisos nunca son globales. Un usuario puede ser un supervisor en el Inquilino A, y un observador en el Inquilino B. Las comprobaciones deben intersecar el contexto del endpoint objetivo con el token del Inquilino actual activo de `AsyncLocalStorage`.
+3. **Pista de Seguridad Inmutable**: Los cambios cruciales de privilegios o los intentos fallidos de elevación de privilegios transmiten mensajes automáticamente al contexto de Log de Auditoría de forma asíncrona, ayudando a los flujos de vigilancia automatizada de amenazas.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Fine-grained access policy that adapts effortlessly to complex regulatory business setups.
-- Protects against lateral internal attacks between system tiers or tenants.
+### Positivas
+- Política de acceso de grano fino que se adapta sin esfuerzo a configuraciones de negocio regulatorias complejas.
+- Protege contra ataques internos laterales entre niveles del sistema o inquilinos.
 
-### Negative
-- Management matrix growth requires careful administrative tooling to maintain over time.
-- Designing JWT tokens carefully is necessary to avoid oversized packet payloads causing header bloat.
+### Negativas
+- El crecimiento de la matriz de gestión requiere herramientas administrativas cuidadosas para mantenerse a lo largo del tiempo.
+- Diseñar los tokens JWT cuidadosamente es necesario para evitar cargas útiles de paquetes sobredimensionadas que causen hinchazón en las cabeceras (header bloat).
 
-## References
-- [NestJS Guard Documentation](https://docs.nestjs.com/guards)
-- [ADR-0010: Multi-Tenancy (RLS)](./0010-multi-tenancy-architecture-strategy.md)
+## Referencias
+- [Documentación de NestJS Guard](https://docs.nestjs.com/guards)
+- [ADR-0010: Multi-Tenancy (RLS)](../02-adrs/core/0010-multi-tenancy-architecture-strategy.md)

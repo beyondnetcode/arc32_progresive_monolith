@@ -1,31 +1,31 @@
-# ADR 0021: High-Performance Authentication Graph Compilation
+# ADR 0021: Compilación de Grafos de Autorización de Alto Rendimiento
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Login processes generate the absolute heaviest initial load footprint. Traversing dynamic recursive nested roles, generating dynamic menu matrices, and filtering multi-tenant capabilities directly from SQL tables upon every transaction generates unbearable latencies and kills total gateway throughput.
+## Contexto
+Los procesos de inicio de sesión generan la huella de carga inicial más pesada en absoluto. Atravesar roles anidados recursivos dinámicos, generar matrices de menús dinámicas y filtrar capacidades multi-tenant directamente desde las tablas SQL en cada transacción genera latencias insoportables y mata el rendimiento total del gateway.
 
-## Decision
-Standardize authentication login gateways to yield lightweight, pre-digested **Hierarchical Authorization Graphs** boosted via Distributed memory side-caches:
+## Decisión
+Estandarizar los gateways de inicio de sesión de autenticación para producir **Grafos de Autorización Jerárquicos** ligeros y predigeridos, impulsados vía cachés secundarias en memoria distribuida:
 
-1. **Stateless Signing**: Session legitimacy verification continues over asymmetric RS256 Token validation, rotated dynamically (RTR).
-2. **Aggregated Graphing**: Instead of repeatedly joining relational tables, resolve the entirety of `Role ➔ System ➔ Menu ➔ Submenu ➔ Action` mappings once.
-3. **Read-Aside Memory Burst**: Serialize this graph structure directly into Redis, partitioned by user and tenant context keys. Keep general access authorization resolution under physical **<5ms benchmarks**.
-4. **Explicit-Deny Superiority**: Hardcode rule precedence such that local overrides (`DENY`) explicitly supersede general permissive structures (`ALLOW`) regardless of hierarchy position.
+1. **Firma Sin Estado**: La verificación de legitimidad de la sesión continúa sobre la validación de Token RS256 asimétrica, rotada dinámicamente (RTR).
+2. **Grafado Agregado**: En lugar de unir repetidamente tablas relacionales, resolver la totalidad de los mapeos de `Rol -> Sistema -> Menú -> Submenú -> Acción` una vez.
+3. **Ráfaga de Memoria Read-Aside**: Serializar esta estructura de grafo directamente en Redis, particionada por claves de contexto de usuario e inquilino. Mantener la resolución de autorización de acceso general bajo los **benchmarks físicos de <5ms**.
+4. **Superioridad de Denegación Explícita**: Codificar la precedencia de reglas de tal manera que las anulaciones locales (`DENY`/Denegar) superen explícitamente las estructuras permisivas generales (`ALLOW`/Permitir) independientemente de la posición en la jerarquía.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Dramatic latency subtraction. Achieves maximum density performance for end-users on mobile/web immediately post-handshake.
-- Linear scalability: Authentication gateways may horizontally replicate indefinitely without impacting SQL disk capability.
+### Positivas
+- Reducción dramática de la latencia. Logra el máximo rendimiento de densidad para los usuarios finales en móvil/web inmediatamente tras el apretón de manos.
+- Escalabilidad lineal: Los gateways de autenticación pueden replicarse horizontalmente indefinidamente sin impactar la capacidad del disco SQL.
 
-### Negative
-- Demands rigorous Redis cache invalidation logic explicitly bound to any permissions management write-events.
+### Negativas
+- Exige una rigurosa lógica de invalidación de caché de Redis explícitamente vinculada a cualquier evento de escritura de gestión de permisos.
 
-## References
-- [ADR-0014: Redis Cache](./0014-distributed-caching-strategy-redis.md)
-- [ADR-0022: Contextual Authorization](./0022-contextual-auth-and-pluggable-projections.md)
+## Referencias
+- [ADR-0014: Caché Redis](../02-adrs/core/0014-distributed-caching-strategy-redis.md)
+- [ADR-0022: Autorización Contextual](../02-adrs/nodejs/0022-contextual-auth-and-pluggable-projections.md)

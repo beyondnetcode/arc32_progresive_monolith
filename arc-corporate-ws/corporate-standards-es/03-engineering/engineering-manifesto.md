@@ -1,72 +1,72 @@
-# 🏛️ Global Engineering Standards & Developer Guidelines (BMAD Manifesto)
+# 🏛️ Estándares Globales de Ingeniería y Guías para Desarrolladores (Manifiesto BMAD)
 
-## 1. 🌟 Core Engineering Principles (Mandatory)
-All code, wrappers, and architectural designs within this monorepo **MUST** strictly adhere to the following principles. Code reviews will reject any Pull Request violating these foundations:
+## 1. 🌟 Principios Core de Ingeniería (Obligatorios)
+Todo código, wrappers y diseños arquitectónicos dentro de este monorepo **DEBEN** adherirse estrictamente a los siguientes principios. Las revisiones de código rechazarán cualquier Pull Request que viole estos fundamentos:
 
-*   **SOLID**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion.
-*   **DRY (Don't Repeat Yourself)**: Eliminate unnecessary duplication. Consolidate shared logic into utilities or shared-kernel libraries.
-*   **KISS (Keep It Simple, Stupid)**: Avoid over-engineering. Write code that is easy to read, understand, and debug.
-*   **YAGNI (You Aren't Gonna Need It)**: Do not add functionality, abstractions, or tools until they are strictly necessary.
-*   **SoC (Separation of Concerns)**: Keep layers completely isolated. A controller must not write business logic; a use case must not execute raw SQL.
-*   **Clean Code & Clean Architecture**: Maintain strict boundaries (Adapters vs. Core). Ensure code readability and intent-revealing names.
-*   **Secure by Design & OWASP**: Validate all inputs (DTOs), sanitize outputs, enforce RBAC natively, and prevent SQL/NoSQL injections by default.
-
----
-
-## 2. 🛡️ Domain-Driven Design (DDD): Optional & Pragmatic
-While our architecture supports tactical and strategic DDD:
-**DDD is strictly OPTIONAL**. 
-It shall only be used when it adds tangible value to a complex business domain. It must **not** be considered a mandatory or restrictive straitjacket for the architecture. For simple CRUD (Create, Read, Update, Delete) operations, standard Hexagonal Use Cases and Data Mappers are more than sufficient. Over-applying DDD to simple entities is considered an anti-pattern (Over-engineering).
+*   **SOLID**: Responsabilidad Única, Abierto/Cerrado, Sustitución de Liskov, Segregación de Interfaces e Inversión de Dependencias.
+*   **DRY (Don't Repeat Yourself)**: Eliminar la duplicación innecesaria. Consolidar la lógica compartida en utilidades o librerías compartidas (shared-kernel).
+*   **KISS (Keep It Simple, Stupid)**: Evitar la sobre-ingeniería. Escribir código que sea fácil de leer, entender y depurar.
+*   **YAGNI (You Aren't Gonna Need It)**: No añadir funcionalidad, abstracciones o herramientas hasta que sean estrictamente necesarias.
+*   **SoC (Separation of Concerns)**: Mantener las capas completamente aisladas. Un controlador no debe escribir lógica de negocio; un caso de uso no debe ejecutar SQL puro.
+*   **Clean Code y Arquitectura Limpia**: Mantener límites estrictos (Adaptadores vs. Core). Asegurar la legibilidad del código y nombres que revelen la intención.
+*   **Seguro por Diseño & OWASP**: Validar todas las entradas (DTOs), sanear las salidas, imponer RBAC de forma nativa y prevenir inyecciones SQL/NoSQL por defecto.
 
 ---
 
-## 3. 🚫 Architectural & Code Anti-Patterns (Strictly Forbidden)
-To guarantee high maintainability and low technical debt, the following practices are explicitly banned:
-*   **High Coupling**: Direct dependencies on concrete third-party tools within the Core. (Violates DIP).
-*   **God Classes / Magic Modules**: Classes that handle routing, validation, business logic, and database saving simultaneously.
-*   **Vendor Lock-In without Adapters**: Hardcoding SDKs (e.g., AWS SDK, Unleash, Redis) outside of isolated Infrastructure Ports/Adapters.
-*   **Spaghetti Code & Callback Hells**: Lack of structured async/await or functional monads (like the Result Pattern).
-*   **Ignored Exceptions**: Catching errors without properly logging them or returning generic 500s without trace IDs.
+## 2. 🛡️ Domain-Driven Design (DDD): Opcional y Pragmático
+Aunque nuestra arquitectura soporta DDD táctico y estratégico:
+**DDD es estrictamente OPCIONAL**.
+Solo se utilizará cuando añada un valor tangible a un dominio de negocio complejo. **No** debe considerarse una camisa de fuerza obligatoria o restrictiva para la arquitectura. Para operaciones simples CRUD (Crear, Leer, Actualizar, Borrar), los Casos de Uso Hexagonales estándar y los Mapeadores de Datos son más que suficientes. La aplicación excesiva de DDD a entidades simples se considera un anti-patrón (Sobre-ingeniería).
 
 ---
 
-## 4. ⚙️ Technical Governance & Enforcement Mechanisms
-Human review is flawed. We rely on **Automated Enforcement** to ensure these principles are sustainable over time within the BMAD framework:
-
-1.  **Linters & Architectural Rules**: 
-    *   `eslint-plugin-boundaries` will automatically fail the build if a developer imports an outer layer (infrastructure) into an inner layer (core).
-2.  **Static Code Analysis**: 
-    *   `eslint-plugin-sonarjs` runs locally to detect cognitive complexity, cognitive debt, and code smells before a commit is even created.
-3.  **Quality Gates & CI/CD Validations**: 
-    *   GitHub Actions will block merging if tests fail or if the build breaks.
-4.  **Automated Testing & Coverage Thresholds**: 
-    *   Unit and E2E tests are mandatory. SonarQube/Jest will enforce a hard threshold of **>70% Code Coverage**.
-5.  **Dependency & Security Scanning**: 
-    *   Mandatory `npm audit --audit-level=high` in CI/CD pipelines to block vulnerable dependencies. GitHub CodeQL runs asynchronously to detect OWASP vulnerabilities.
-6.  **Coding Standards Enforcement**: 
-    *   Prettier and ESLint are enforced via Husky `pre-commit` hooks. Code that is not formatted correctly cannot be committed.
+## 3. 🚫 Anti-patrones Arquitectónicos y de Código (Estrictamente Prohibidos)
+Para garantizar una alta mantenibilidad y una baja deuda técnica, se prohíben explícitamente las siguientes prácticas:
+*   **Alto Acoplamiento**: Dependencias directas en herramientas concretas de terceros dentro del Core. (Viola DIP).
+*   **Clases Dios / Módulos Mágicos**: Clases que manejan el enrutamiento, la validación, la lógica de negocio y el guardado en la base de datos simultáneamente.
+*   **Bloqueo de Proveedor sin Adaptadores**: Escribir a fuego (hardcoding) SDKs (ej. AWS SDK, Unleash, Redis) fuera de los Puertos/Adaptadores de Infraestructura aislados.
+*   **Código Espagueti e Infierno de Callbacks**: Falta de async/await estructurado o mónadas funcionales (como el Patrón Result).
+*   **Excepciones Ignoradas**: Capturar errores sin registrarlos adecuadamente o devolver genéricos 500s sin IDs de traza.
 
 ---
 
-## 5. 🎯 Decision Priority Matrix
-Whenever a technical decision is made (e.g., writing a new ADR, choosing a library, or designing a module), the architect and developers must prioritize the following attributes, in order:
-1.  **Mantenibilidad** (Maintainability)
-2.  **Escalabilidad** (Scalability)
-3.  **Extensibilidad** (Extensibility)
-4.  **Desacoplamiento** (Decoupling)
-5.  **Observabilidad** (Observability)
-6.  **Seguridad** (Security)
-7.  **Resiliencia** (Resilience)
-8.  **Testabilidad** (Testability)
-9.  **Performance** (Performance)
-10. **Claridad Arquitectónica** (Architectural Clarity)
+## 4. ⚙️ Gobernanza Técnica y Mecanismos de Aplicación
+La revisión humana es imperfecta. Confiamos en la **Aplicación Automatizada** para asegurar que estos principios sean sostenibles a lo largo del tiempo dentro del marco BMAD:
+
+1.  **Linters y Reglas Arquitectónicas**:
+    *   `eslint-plugin-boundaries` fallará automáticamente la construcción si un desarrollador importa una capa exterior (infraestructura) en una capa interior (core).
+2.  **Análisis Estático de Código**:
+    *   `eslint-plugin-sonarjs` se ejecuta localmente para detectar complejidad cognitiva, deuda cognitiva y olores de código (code smells) antes de que se cree un commit.
+3.  **Puertas de Calidad y Validaciones CI/CD**:
+    *   GitHub Actions bloqueará la fusión si las pruebas fallan o si la construcción se rompe.
+4.  **Pruebas Automatizadas y Umbrales de Cobertura**:
+    *   Las pruebas Unitarias y E2E son obligatorias. SonarQube/Jest impondrán un umbral duro de **>70% de Cobertura de Código**.
+5.  **Escaneo de Dependencias y Seguridad**:
+    *   Obligatorio `npm audit --audit-level=high` en las pipelines CI/CD para bloquear dependencias vulnerables. GitHub CodeQL se ejecuta de forma asíncrona para detectar vulnerabilidades OWASP.
+6.  **Cumplimiento de Estándares de Codificación**:
+    *   Prettier y ESLint se imponen a través de ganchos `pre-commit` de Husky. El código que no esté formateado correctamente no podrá ser commiteado.
 
 ---
 
-## 6. 📝 Pull Request Quality Checklist
-Before submitting a PR, developers must verify:
-- [ ] No outer-layer logic is leaked into the Domain.
-- [ ] Cross-cutting concerns (Logging, Caching) use Decorators or Ports (No hardcoded tool logic in the core).
-- [ ] DDD was only used if the domain complexity justified it; otherwise, standard Clean Architecture was used.
-- [ ] Test coverage for the new feature is >70%.
-- [ ] Local `npm run lint` and `npm run test` pass successfully.
+## 5. 🎯 Matriz de Prioridad de Decisión
+Cada vez que se toma una decisión técnica (ej. escribir un nuevo ADR, elegir una librería o diseñar un módulo), el arquitecto y los desarrolladores deben priorizar los siguientes atributos, en orden:
+1.  **Mantenibilidad**
+2.  **Escalabilidad**
+3.  **Extensibilidad**
+4.  **Desacoplamiento**
+5.  **Observabilidad**
+6.  **Seguridad**
+7.  **Resiliencia**
+8.  **Testabilidad**
+9.  **Rendimiento**
+10. **Claridad Arquitectónica**
+
+---
+
+## 6. 📝 Checklist de Calidad de Pull Request
+Antes de enviar un PR, los desarrolladores deben verificar:
+- [ ] No se filtra lógica de capa externa en el Dominio.
+- [ ] Los intereses transversales (Registro, Caché) usan Decoradores o Puertos (No hay lógica de herramientas a fuego en el core).
+- [ ] DDD solo se utilizó si la complejidad del dominio lo justificaba; de lo contrario, se usó la Arquitectura Limpia estándar.
+- [ ] La cobertura de pruebas para la nueva funcionalidad es >70%.
+- [ ] `npm run lint` y `npm run test` locales pasan con éxito.

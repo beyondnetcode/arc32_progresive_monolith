@@ -1,43 +1,43 @@
-# ADR 0010: Multi-Tenancy Architecture Strategy for SaaS Evolution
+# ADR 0010: Estrategia de Arquitectura Multi-Tenancy para la Evolución SaaS
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-As the system matures into a SaaS offering, we must isolate data for multiple tenants securely without exploding cloud infrastructure bills. There are three main partitioning approaches:
-1. **Database-per-Tenant**: Max isolation, maximum operational cost overhead.
-2. **Schema-per-Tenant**: Logical separation, but harder schema migration management.
-3. **Shared Database (Pooled)**: Single table space, discriminator IDs, high efficiency but potential data leakage if developers forget WHERE clauses.
+## Contexto
+A medida que el sistema madura hacia una oferta SaaS, debemos aislar los datos de múltiples inquilinos (tenants) de forma segura sin disparar las facturas de infraestructura cloud. Existen tres enfoques principales de particionado:
+1. **Base de Datos por Inquilino**: Máximo aislamiento, máxima sobrecarga de costo operativo.
+2. **Esquema por Inquilino**: Separación lógica, pero gestión de migraciones de esquema más difícil.
+3. **Base de Datos Compartida (Pooled)**: Un solo espacio de tablas, IDs discriminadores, alta eficiencia pero potencial filtración de datos si los desarrolladores olvidan las cláusulas WHERE.
 
-We need absolute leakage prevention alongside efficient resource scaling.
+Necesitamos prevención absoluta de filtraciones junto con un escalado de recursos eficiente.
 
-## Decision
-Adopt a **Hybrid "Pooled" Multi-Tenancy Strategy** utilizing a mandatory **"Defense in Depth" Dual-Layer Isolation Framework**:
+## Decisión
+Adoptar una **Estrategia Multi-Tenancy Híbrida "Pooled"** utilizando un **Marco de Aislamiento de Doble Capa obligatorio de "Defensa en Profundidad"**:
 
-1. **Layer 1: Application-Level Isolation (Primary - Engine Agnostic)**:
-   The persistence adapter layer MUST automatically inject the active `tenant_id` filter into all queries executed via ORM/Query Builders (e.g., using global filters or base repository query interceptors). This ensures functional data isolation remains completely agnostic of specific database engine capabilities.
+1. **Capa 1: Aislamiento a Nivel de Aplicación (Primario - Agnóstico al Motor)**:
+   La capa de adaptadores de persistencia DEBE inyectar automáticamente el filtro `tenant_id` activo en todas las consultas ejecutadas vía ORM/Constructores de Consultas (ej. usando filtros globales o interceptores de consulta del repositorio base). Esto asegura que el aislamiento funcional de datos permanezca completamente agnóstico de las capacidades específicas del motor de base de datos.
 
-2. **Layer 2: Database-Level Failsafe (PostgreSQL RLS)**:
-   As an absolute safety net against human error (e.g., developer-written raw SQL queries skipping ORM filters), we leverage native **PostgreSQL Row-Level Security (RLS)**. The PostgreSQL engine enforces physical row filtering using transaction session variables set immediately upon opening the connection pool checkout.
+2. **Capa 2: Red de Seguridad a Nivel de Base de Datos (RLS de PostgreSQL)**:
+   Como una red de seguridad absoluta contra errores humanos (ej. consultas SQL puras escritas por desarrolladores que se saltan los filtros del ORM), aprovechamos la **Seguridad a Nivel de Fila (RLS)** nativa de PostgreSQL. El motor de PostgreSQL impone el filtrado físico de filas utilizando variables de sesión de transacción establecidas inmediatamente al abrir el checkout del pool de conexiones.
 
-3. **Execution Scoping**: Pass `tenant_id` claims securely within verified JWTs. Utilize NestJS `AsyncLocalStorage` to hold the immutable context per-request, serving as the single source of truth used by both Layer 1 and Layer 2 resolvers.
+3. **Alcance de la Ejecución**: Pasar las claims de `tenant_id` de forma segura dentro de JWTs verificados. Utilizar `AsyncLocalStorage` de NestJS para mantener el contexto inmutable por petición, sirviendo como la fuente única de la verdad utilizada por los resolutores tanto de la Capa 1 como de la Capa 2.
 
-4. **VIP Isolation Readiness**: While 90% of tenants share the pool, the persistence abstraction layer must inherently support routing Enterprise clients to completely isolated physical database cluster end-points based on resolved tenant metadata, completely transparent to the domain.
+4. **Preparación para Aislamiento VIP**: Mientras el 90% de los inquilinos comparten el pool, la capa de abstracción de persistencia debe soportar inherentemente el enrutamiento de clientes Enterprise a endpoints de clúster de base de datos física completamente aislados basados en metadatos del inquilino resueltos, de forma completamente transparente para el dominio.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- **Bulletproof Security**: Row isolation is enforced natively in Postgres engine, not trusted to error-prone backend application code.
-- **Extreme Scalability**: Run hundreds of basic tenants on a single Postgres instance without managing hundreds of separate schemas.
-- **Simplified Upgrades**: One single migration path applies cleanly to all Pooled tenants instantly.
+### Positivas
+- **Seguridad Blindada**: El aislamiento de filas se impone de forma nativa en el motor Postgres, sin confiar en el propenso a errores código de la aplicación backend.
+- **Escalabilidad Extrema**: Ejecuta cientos de inquilinos básicos en una sola instancia de Postgres sin gestionar cientos de esquemas separados.
+- **Actualizaciones Simplificadas**: Una única ruta de migración se aplica limpiamente a todos los inquilinos agrupados (Pooled) instantáneamente.
 
-### Negative
-- **Noisy Neighbors**: A rogue query by one tenant can steal hardware capability. Requires strict throttling strategies.
-- **Restore Complexity**: Restoring the data lifecycle of only *one* tenant from backup is significantly more labor-intensive in a pooled model.
+### Negativas
+- **Vecinos Ruidosos (Noisy Neighbors)**: Una consulta descontrolada de un inquilino puede robar capacidad de hardware. Requiere estrategias estrictas de estrangulamiento (throttling).
+- **Complejidad de Restauración**: Restaurar el ciclo de vida de los datos de *solo un* inquilino desde el backup requiere significativamente más mano de obra en un modelo agrupado.
 
-## References
-- [PostgreSQL RLS Documentation](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
-- [ADR-0031: Schema-per-Context Strategy](./0031-schema-per-context-domain-event-catalog.md)
+## Referencias
+- [Documentación de RLS en PostgreSQL](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+- [ADR-0031: Estrategia de Esquema por Contexto](../02-adrs/core/0031-schema-per-context-domain-event-catalog.md)

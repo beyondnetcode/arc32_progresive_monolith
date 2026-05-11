@@ -1,19 +1,19 @@
-# Harness Reference: La Armadura del Agente
+# Referencia del Harness: La Armadura del Agente
 
 ## Definición Formal de Harness
-En esta arquitectura corporativa, definimos **Harness** como la infraestructura técnica determinista que envuelve a un modelo probabilístico. Su objetivo es restringir, potenciar y validar las capacidades de razonamiento del LLM, convirtiéndolo en un agente capaz de operar con seguridad en entornos de producción.
+En esta arquitectura corporativa, definimos el **Harness** (Arnés) como la infraestructura técnica determinista que envuelve a un modelo probabilístico. Su objetivo es restringir, potenciar y validar las capacidades de razonamiento del LLM, convirtiéndolo en un agente capaz de operar de forma segura en entornos productivos.
 
-No es el "cerebro" (eso es el modelo); es el "sistema nervioso y el exoesqueleto".
+No es el "cerebro" (ese es el modelo); es el "sistema nervioso y el exoesqueleto".
 
 ## Capas de un Harness Corporativo
 
 ```mermaid
 graph TD
-    A[Usuario / Trigger] --> B[Capa 1: System Prompt & Identidad]
-    B --> C[Capa 2: Model Selection]
-    C <--> D[Capa 3: Context Injection / RAG / MCP]
-    C <--> E[Capa 4: Tooling Catalog]
-    E --> F{Capa 5: Permisos y Sandbox}
+    A[Usuario / Disparador] --> B[Capa 1: Prompt de Sistema & Identidad]
+    B --> C[Capa 2: Selección del Modelo]
+    C <--> D[Capa 3: Inyección de Contexto / RAG / MCP]
+    C <--> E[Capa 4: Catálogo de Herramientas]
+    E --> F{Capa 5: Permisos & Sandbox}
     F -- Aprobado --> G[Ejecución Determinista]
     G --> H[Capa 6: Capas de Verificación / Hooks]
     H --> C
@@ -22,60 +22,60 @@ graph TD
 ## Los Cuatro Pilares de un Harness Robusto
 
 ### 1. Documentación como Código (AGENTS.md)
-El agente es un "usuario nuevo" permanente. No asume nada. El primer paso del harness es inyectar la verdad fundamental del proyecto: comandos de build, tecnologías, reglas de estilo y dependencias, centralizados en el archivo estandarizado `AGENTS.md`.
+Un agente es un "usuario nuevo" permanente. No asume nada. El primer paso del harness es inyectarle la verdad fundacional del proyecto: comandos de construcción, tecnologías, reglas de estilo y dependencias, centralizadas en el archivo estandarizado `AGENTS.md`.
 
 ### 2. Restricciones Arquitectónicas
-Establecer límites legibles por máquinas. En lugar de rogarle al agente que no use una librería vieja, el harness debe configurar herramientas que prevengan el uso de imports no autorizados o usar linters estrictos que fallen si el agente intenta romper las fronteras hexagonales (`eslint-plugin-boundaries`).
+Establecer límites legibles por máquina. En lugar de rogarle al agente que no use una librería obsoleta, el harness debe configurar herramientas que prevengan importaciones no autorizadas o usar linters estrictos que fallen si el agente intenta romper los límites hexagonales (`eslint-plugin-boundaries`).
 
-### 3. Verificación en Capas
-Es inaceptable confiar ciegamente en el output del LLM. El harness debe implementar un ciclo de "Red, Green, Refactor" automatizado:
-*   **Hook Post-Tool:** Inmediatamente tras una edición, correr linter.
-*   **Pre-commit:** Ejecutar unit tests del área modificada.
-*   **CI:** Pruebas de regresión completa.
+### 3. Verificación por Capas
+Confiar ciegamente en la salida del LLM es inaceptable. El harness debe implementar un ciclo automatizado de "Red, Green, Refactor":
+*   **Hook Post-Herramienta:** Inmediatamente después de una edición, ejecutar el linter.
+*   **Pre-commit:** Ejecutar pruebas unitarias para el área modificada.
+*   **CI:** Suite de pruebas de regresión completa.
 
 ### 4. Recolección de Basura (Garbage Collection)
-Los agentes pueden generar deuda técnica silenciosa, redundancia o archivos fantasma. Un harness avanzado orquesta "agentes de limpieza" (Linter Agents) periódicos cuya única misión es patrullar el código en busca de inconsistencias estilísticas e incongruencias de contexto introducidas por previas pasadas de IA.
+Los agentes pueden generar silenciosamente deuda técnica, redundancia o archivos fantasma. Un harness avanzado orquesta "agentes limpiadores" periódicos (Linter Agents) cuya única misión es patrullar el código buscando inconsistencias estilísticas e incongruencias de contexto introducidas por pasadas previas de IA.
 
 ---
 
-## El Ciclo Agéntico Base (Pseudocódigo)
+## Ciclo Agéntico Base (Pseudocódigo)
 
 El motor de ejecución del harness sigue este patrón de control:
 
 ```python
-mensajes = [system_prompt, input_usuario]
+messages = [system_prompt, user_input]
 
-mientras True:
+while True:
     # 1. Inferencia del modelo
-    respuesta = call_model(mensajes)
+    response = call_model(messages)
     
     # 2. Detección de llamadas a herramientas
-    solicitudes_tools = extract_tool_calls(respuesta)
+    tool_requests = extract_tool_calls(response)
     
-    # Si el modelo no quiere usar más tools, el ciclo termina.
-    si no solicitudes_tools: 
-        retornar respuesta
+    # Si el modelo no desea usar más herramientas, el ciclo termina.
+    if not tool_requests: 
+        return response
     
-    # 3. Ejecución secuencial o paralela de tools autorizadas
-    para cada solicitud en solicitudes_tools:
-        si verificar_permisos(solicitud.nombre):
-            resultado = execute_tool(solicitud.nombre, solicitud.argumentos)
+    # 3. Ejecución secuencial o paralela de herramientas autorizadas
+    for request in tool_requests:
+        if check_permissions(request.name):
+            result = execute_tool(request.name, request.args)
             
             # Hook de validación inmediata (determinista)
-            resultado_validado = run_post_tool_hooks(solicitud.nombre, resultado)
+            validated_result = run_post_tool_hooks(request.name, result)
             
-            mensajes.append({
+            messages.append({
                 "role": "tool", 
-                "tool_call_id": solicitud.id, 
-                "content": resultado_validado
+                "tool_call_id": request.id, 
+                "content": validated_result
             })
-        sino:
-            mensajes.append({
+        else:
+            messages.append({
                 "role": "tool", 
-                "tool_call_id": solicitud.id, 
+                "tool_call_id": request.id, 
                 "content": "ERROR: Permiso denegado para ejecutar esta herramienta."
             })
 ```
 
 > [!WARNING]
-> **Advertencia sobre la manipulación del Harness:** El modelo no tiene visibilidad del código fuente de una herramienta a menos que se la des. Solo entiende la **Descripción (Meta-data)** de la herramienta. Descripciones ambiguas generan alucinaciones de uso catastróficas.
+> **Advertencia sobre la Manipulación del Harness:** El modelo no tiene visibilidad del código fuente de una herramienta a menos que se le provea específicamente. Solo entiende la **Descripción (Metadatos)** de la misma. Descripciones ambiguas generan alucinaciones de uso catastróficas.

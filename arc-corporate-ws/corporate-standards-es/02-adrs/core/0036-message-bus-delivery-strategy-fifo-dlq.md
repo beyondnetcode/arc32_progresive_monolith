@@ -1,71 +1,71 @@
-# ADR 0036: Message Bus Delivery & Flow Control Strategy
+# ADR 0036: Estrategia de Entrega y Control de Flujo del Bus de Mensajes
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-11
 
-## Context
-Event-driven asynchronous architectures require diverse communication guarantees depending on the criticality and nature of the payload. Blindly applying strict ordering (FIFO) everywhere degrades throughput massively, while applying standard fire-and-forget without fallback leads to data loss in critical financial flows. We require canonical rules specifying which messaging delivery mode MUST be applied per transaction type.
+## Contexto
+Las arquitecturas asíncronas dirigidas por eventos requieren diversas garantías de comunicación dependiendo de la criticidad y naturaleza de la carga útil. Aplicar ciegamente el orden estricto (FIFO) en todas partes degrada el rendimiento masivamente, mientras que aplicar el estándar "fuego y olvido" sin respaldo conduce a la pérdida de datos en flujos financieros críticos. Requerimos reglas canónicas que especifiquen qué modo de entrega de mensajería DEBE aplicarse por tipo de transacción.
 
-## Decision
-Adopt the following **Event Delivery Decision Framework** mapping business context to infrastructure queue behaviors:
+## Decisión
+Adoptar el siguiente **Marco de Decisión de Entrega de Eventos** mapeando el contexto de negocio a los comportamientos de la cola de infraestructura:
 
-### 1. Mode: "Fire & Forget" (Standard Fan-out / Topic)
-*   **Definition**: Asynchronous processing with no guarantee of order, maximum horizontal consumer parallelism.
-*   **Inflection Points / When to Use**:
-    *   High-volume metrics, tracing, and logs.
-    *   Secondary side-effects that do not impact immediate core business flow (e.g., sending email notifications, warm-cache invalidation).
-    *   Data synchronization where newer messages natively contain total state overrides.
-*   **Trade-off**: Maximum performance. Potential out-of-order execution.
+### 1. Modo: "Fuego y Olvido" (Standard Fan-out / Topic)
+*   **Definición**: Procesamiento asíncrono sin garantía de orden, máximo paralelismo horizontal de consumidores.
+*   **Puntos de inflexión / Cuándo Usar**:
+    *   Métricas, rastreo y logs de alto volumen.
+    *   Efectos secundarios secundarios que no impactan el flujo de negocio core inmediato (ej. envío de notificaciones por email, invalidación de caché cálido).
+    *   Sincronización de datos donde los mensajes más nuevos contienen nativamente sobrescrituras totales del estado.
+*   **Compromiso**: Máximo rendimiento. Potencial ejecución fuera de orden.
 
-### 2. Mode: "Strict FIFO Ordering" (Guaranteed Sequence)
-*   **Definition**: Processing strictly in the order received, tied to a partition key (e.g., `AggregateId`).
-*   **Inflection Points / When to Use**:
-    *   **Transactional Accounting**: Ledger entry sequences (debit must complete before balance check logic).
-    *   **Inventory Locking**: Consecutive stock decrement/increment operations.
-    *   **State Machine Transitions**: Sequential multi-step business workflows where Step 3 crashes if Step 2 hasn't committed.
-*   **Implementation Guardrail**: FIFO queues restrict concurrency to a single consumer per shard/partition. Used surgically only where data corruption would occur without it.
+### 2. Modo: "Orden FIFO Estricto" (Secuencia Garantizada)
+*   **Definición**: Procesamiento estrictamente en el orden recibido, vinculado a una clave de partición (ej. `AggregateId`).
+*   **Puntos de inflexión / Cuándo Usar**:
+    *   **Contabilidad Transaccional**: Secuencias de entrada del libro mayor (el débito debe completarse antes de la lógica de comprobación de balance).
+    *   **Bloqueo de Inventario**: Operaciones consecutivas de decremento/incremento de stock.
+    *   **Transiciones de Máquina de Estados**: Flujos de trabajo de negocio secuenciales de múltiples pasos donde el Paso 3 colapsa si el Paso 2 no se ha confirmado.
+*   **Barandilla de Implementación**: Las colas FIFO restringen la concurrencia a un único consumidor por fragmento/partición. Utilizado quirúrgicamente solo donde la corrupción de datos ocurriría sin ello.
 
-### 3. Global Policy: "Dead Letter Queues (DLQ)" & Poison Pill Defense
-*   **Policy**: MANDATORY for every business-domain queue.
-*   **Inflection Points / Configuration**:
-    *   All consumer errors trigger a local **Retry Mechanism** with exponential backoff (Maximum 3 Attempts).
-    *   Upon 4th consecutive failure (Poison Pill), the message MUST be auto-rerouted to a `.{queue_name}.dlq` holding container.
-    *   Prevents a single corrupt JSON/Buggy logic point from blocking the entire main pipeline infinitely.
-*   **Required Action**: Establish automated alerts when DLQ size > 0. Support personnel must inspect and either Re-Drive (Retry) or Archive corrupted packets.
+### 3. Política Global: "Dead Letter Queues (DLQ)" y Defensa contra la Píldora Venenosa
+*   **Política**: OBLIGATORIA para cada cola del dominio de negocio.
+*   **Puntos de inflexión / Configuración**:
+    *   Todos los errores del consumidor disparan un **Mecanismo de Reintento** local con backoff exponencial (Máximo 3 Intentos).
+    *   Tras el 4º fallo consecutivo (Píldora Venenosa), el mensaje DEBE ser re-enrutado automáticamente a un contenedor de retención `.{nombre_de_cola}.dlq`.
+    *   Previene que un solo JSON corrupto / punto de lógica con bugs bloquee infinitamente toda la pipeline principal.
+*   **Acción Requerida**: Establecer alertas automatizadas cuando el tamaño de la DLQ > 0. El personal de soporte debe inspeccionar y re-lanzar (Re-Drive / Retry) o Archivar los paquetes corruptos.
 
-### 4. Mode: "Delayed / Scheduled Delivery"
-*   **Definition**: Messages pushed to the broker with a mandatory delay Header, rendering them invisible to consumers until the designated time.
-*   **Inflection Points**:
-    *   **Business Timeouts**: "If Order is not paid in 30 minutes, trigger cancellation check".
-    *   **Throttled Reminders**: Pushing a notification email intended for tomorrow at 8:00 AM without using system cronjobs.
-*   **Mechanism**: Relies on Broker-native delayed exchange plugins or TTL + DLX routing loops.
+### 4. Modo: "Entrega Retrasada / Programada"
+*   **Definición**: Mensajes empujados al bróker con una Cabecera de retraso obligatoria, haciéndolos invisibles para los consumidores hasta el momento designado.
+*   **Puntos de inflexión**:
+    *   **Timeouts de Negocio**: "Si el Pedido no se paga en 30 minutos, disparar la comprobación de cancelación".
+    *   **Recordatorios Estrangulados**: Empujar un email de notificación destinado para mañana a las 8:00 AM sin usar cronjobs del sistema.
+*   **Mecanismo**: Depende de plugins de exchanges retrasados nativos del Bróker o bucles de enrutamiento TTL + DLX.
 
-### 5. Performance Tiering: "Priority Queues"
-*   **Definition**: Numerical weighting of messages allowing high-priority packets to bypass non-critical packets sitting in the queue.
-*   **Inflection Points**:
-    *   **Customer Tier SLAs**: Fast-tracking VIP user requests during high traffic volume bursts.
-    *   **Emergency Signals**: Critical administrative revocations bypassing standard audit telemetry flow.
-*   **Rule**: Do not over-use (max 3-5 levels), as infinite low-level starvation can occur.
+### 5. Escalonamiento de Rendimiento: "Colas de Prioridad"
+*   **Definición**: Ponderación numérica de los mensajes que permite a los paquetes de alta prioridad saltarse los paquetes no críticos que esperan en la cola.
+*   **Puntos de inflexión**:
+    *   **SLAs de Nivel de Cliente**: Acelerar las peticiones de usuarios VIP durante ráfagas de alto volumen de tráfico.
+    *   **Señales de Emergencia**: Revocaciones administrativas críticas que se saltan el flujo estándar de telemetría de auditoría.
+*   **Regla**: No sobre-utilizar (máx. 3-5 niveles), ya que puede ocurrir una inanición infinita de bajo nivel.
 
-### 6. Architecture Rule: "Idempotent Consumer Mandate"
-*   **Rule**: ALL message consumption MUST assume "At-Least-Once Delivery" semantics.
-*   **Requirement**: The Consumer application must record processed `MessageId` keys (in Redis or DB) and check for existence BEFORE proceeding with internal logic. If `MessageId` was already processed, it MUST be instantly acknowledged and discarded as a duplicate WITHOUT side-effects.
+### 6. Regla de Arquitectura: "Mandato de Consumidor Idempotente"
+*   **Regla**: TODA consumición de mensajes DEBE asumir una semántica de "Entrega Al Menos Una Vez".
+*   **Requisito**: La aplicación Consumidora debe registrar las claves `MessageId` procesadas (en Redis o BD) y comprobar su existencia ANTES de proceder con la lógica interna. Si el `MessageId` ya fue procesado, DEBE ser instantáneamente confirmado (ACK) y descartado como un duplicado SIN efectos secundarios.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Eliminates the common bottleneck of excessive global queue locking.
-- Guarantees zero data loss for critical events through guaranteed DLQ quarantine.
-- Protects system throughput while maintaining strict consistency exactly where needed.
+### Positivas
+- Elimina el cuello de botella común del bloqueo excesivo de colas globales.
+- Garantiza cero pérdida de datos para eventos críticos a través de la cuarentena DLQ garantizada.
+- Protege el rendimiento del sistema manteniendo la consistencia estricta exactamente donde se necesita.
 
-### Negative
-- Teams must intentionally classify every new event type during design review.
-- FIFO requires partition-key design attention inside Producer adapters.
+### Negativas
+- Los equipos deben clasificar intencionalmente cada nuevo tipo de evento durante la revisión del diseño.
+- FIFO requiere atención al diseño de la clave de partición dentro de los adaptadores Productores.
 
-## References
+## Referencias
 - [RabbitMQ Dead Letter Exchanges](https://www.rabbitmq.com/dlx.html)
-- [ADR-0015: Injectable Event Bus Mechanism](./0015-event-driven-decoupled-architecture.md)
-- [ADR-0033: Transactional Outbox Pattern](./0033-transactional-outbox-pattern.md)
+- [ADR-0015: Mecanismo de Bus de Eventos Inyectable](./0015-event-driven-decoupled-architecture.md)
+- [ADR-0033: Patrón Transactional Outbox](../02-adrs/core/0033-transactional-outbox-pattern.md)

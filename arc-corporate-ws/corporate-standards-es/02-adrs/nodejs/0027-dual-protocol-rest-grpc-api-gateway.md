@@ -1,31 +1,31 @@
-# ADR 0027: Dual-Protocol API Strategy (REST & gRPC)
+# ADR 0027: Estrategia de API de Protocolo Dual (REST y gRPC)
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-09
 
-## Context
-Exposing internal inter-microservice chatter via standard JSON HTTP/1.1 REST APIs leads to massive performance degradation (verbose strings, text decoding cycles). However, absolute external exposure must remain standard REST to preserve third-party developer accessibility. One single protocol will not satisfy both internal efficiency and external compatibility.
+## Contexto
+Exponer la charla interna entre microservicios vía APIs REST estándar JSON HTTP/1.1 conduce a una degradación masiva del rendimiento (cadenas detalladas, ciclos de decodificación de texto). Sin embargo, la exposición externa absoluta debe permanecer como REST estándar para preservar la accesibilidad de desarrolladores externos. Un único protocolo no satisfará tanto la eficiencia interna como la compatibilidad externa.
 
-## Decision
-Orchestrate a strict **Dual-Protocol Runtime Edge** paired with Kong Gateway orchestration:
+## Decisión
+Orquestar un **Borde de Tiempo de Ejecución de Protocolo Dual** estricto emparejado con la orquestación del Gateway Kong:
 
-1. **Standard REST (Public)**: All browser agents, client portal apps, and B2B gateways consume secure, documented JSON REST APIs over standard HTTPS.
-2. **Binary gRPC (Internal)**: Any mission-critical internal authorization handshake, machine-to-machine token check, or cross-service stream transmits strictly over binary Google Remote Procedure Call (gRPC) leveraging dense Protocol Buffer payloads.
-3. **Unified Sourcing**: Drive internal contracts natively using master `.proto` definitions tracked central in the Nx monorepo `libs/contracts`, automatically compiling clean Typescript code-gen bindings.
+1. **REST Estándar (Público)**: Todos los agentes de navegador, aplicaciones de portales de clientes y gateways B2B consumen APIs REST JSON seguras y documentadas sobre HTTPS estándar.
+2. **gRPC Binario (Interno)**: Cualquier apretón de manos de autorización interno crítico para la misión, verificación de token de máquina a máquina o stream entre servicios se transmite estrictamente sobre llamada a procedimiento remoto de Google (gRPC) binaria, aprovechando cargas útiles densas de Protocol Buffers.
+3. **Abastecimiento Unificado**: Impulsar los contratos internos nativamente utilizando definiciones maestras `.proto` seguidas centralmente en el monorepo Nx en `libs/contracts`, compilando automáticamente enlaces (bindings) limpios de código generado en Typescript.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Collapses internal payload bandwidth footprint.
-- Drastically accelerates backend-to-backend validation latency using multiplexed HTTP/2 pipelines.
-- Preserves simple public swagger discoverability for global corporate developers.
+### Positivas
+- Colapsa la huella de ancho de banda de las cargas útiles internas.
+- Acelera drásticamente la latencia de validación de backend a backend utilizando pipelines HTTP/2 multiplexados.
+- Preserva la simplicidad del descubrimiento vía Swagger público para desarrolladores corporativos globales.
 
-### Negative
-- Developers must generate and compile Proto libraries locally, slightly complicating local developer workstation ramp-up time.
+### Negativas
+- Los desarrolladores deben generar y compilar librerías Proto localmente, complicando ligeramente el tiempo de rampa de las estaciones de trabajo de desarrollo locales.
 
-## References
-- [ADR-0002: Clean Architecture](./0002-clean-architecture-nestjs.md)
-- [gRPC Official Site](https://grpc.io/)
+## Referencias
+- [ADR-0002: Arquitectura Limpia](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)
+- [Sitio Oficial de gRPC](https://grpc.io/)

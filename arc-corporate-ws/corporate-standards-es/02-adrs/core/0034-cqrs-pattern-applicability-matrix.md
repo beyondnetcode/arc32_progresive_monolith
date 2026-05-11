@@ -1,42 +1,42 @@
-# ADR 0034: CQRS Pattern Application Matrix
+# ADR 0034: Matriz de Aplicación del Patrón CQRS
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-11
 
-## Context
-Implementing **Command Query Responsibility Segregation (CQRS)** introduces architectural complexity due to the separation of data models, distinct code paths, and eventual consistency mechanics. Applying full CQRS blindly to every simple entity results in massive unnecessary overhead. We require rigid corporate governance rules defining WHEN this pattern should be implemented.
+## Contexto
+Implementar la **Segregación de Responsabilidad de Comando y Consulta (CQRS)** introduce complejidad arquitectónica debido a la separación de los modelos de datos, rutas de código distintas y mecánicas de consistencia eventual. Aplicar CQRS completo ciegamente a cada entidad simple da como resultado una sobrecarga masiva innecesaria. Requerimos reglas rígidas de gobernanza corporativa que definan CUÁNDO debe implementarse este patrón.
 
-## Decision
-Adopt the following **Evaluation Matrix** to determine if a specific Use Case requires Full CQRS enforcement:
+## Decisión
+Adoptar la siguiente **Matriz de Evaluación** para determinar si un Caso de Uso específico requiere la imposición de CQRS Completo:
 
-### Tier 1: Standard Path (No CQRS Required)
-*   **Criteria**: Basic CRUD operations, simple state changes, low to medium concurrent access.
-*   **Approach**: Single model logic using Hexagonal Repository implementation reading and writing to the same Domain Entity.
+### Nivel 1: Ruta Estándar (No se requiere CQRS)
+*   **Criterios**: Operaciones CRUD básicas, cambios de estado simples, acceso concurrente de bajo a medio.
+*   **Enfoque**: Lógica de modelo único utilizando la implementación del Repositorio Hexagonal leyendo y escribiendo en la misma Entidad de Dominio.
 
-### Tier 2: Read-Model Aggregation (BFF level CQRS)
-*   **Criteria**: Domain models must be combined, joined, or refiltered for specialized UI Views.
-*   **Approach**: The BFF creates specialized "Read-Only Projections" of data using optimized SQL, while keeping commands directed to the core repository.
+### Nivel 2: Agregación de Modelo de Lectura (CQRS a nivel de BFF)
+*   **Criterios**: Los modelos de dominio deben combinarse, unirse o refiltrarse para Vistas de UI especializadas.
+*   **Enfoque**: El BFF crea "Proyecciones de Solo Lectura" especializadas de los datos utilizando SQL optimizado, mientras mantiene los comandos dirigidos al repositorio core.
 
-### Tier 3: Full CQRS Enforcement (Mandatory)
-Mandate complete physical code/logic separation ONLY if at least **TWO** of the following conditions are met:
-1.  **Volume Asymmetry**: The ratio of Read queries to Write updates exceeds **100:1**.
-2.  **High Contention**: Heavy analytical reads disrupt transaction performance and lock rows, requiring a separate "Read-Replica Projection".
-3.  **Complex View Projections**: Multiple distinct views of the same data exist that cannot be mathematically derived from the core Domain Aggregate without heavy compute overhead.
-4.  **State Reconstruction**: Business audit logic requires storing the stream of history (Event Sourcing prerequisite).
+### Nivel 3: Imposición de CQRS Completo (Obligatorio)
+Mandar la separación completa de código/lógica física ÚNICAMENTE si se cumplen al menos **DOS** de las siguientes condiciones:
+1.  **Asimetría de Volumen**: La relación entre las consultas de Lectura y las actualizaciones de Escritura excede **100:1**.
+2.  **Alta Contienda**: Las lecturas analíticas pesadas perturban el rendimiento de las transacciones y bloquean filas, requiriendo una "Proyección de Réplica de Lectura" separada.
+3.  **Proyecciones de Vista Complejas**: Existen múltiples vistas distintas de los mismos datos que no pueden ser derivadas matemáticamente del Agregado de Dominio central sin una pesada sobrecarga de cómputo.
+4.  **Reconstrucción de Estado**: La lógica de auditoría de negocio requiere almacenar el flujo del historial (prerrequisito de Event Sourcing).
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Defends against over-engineering in simple domains.
-- Directs resources to build CQRS ONLY for high-throughput contention zones.
-- Ensures clear segregation of scaling concerns.
+### Positivas
+- Defiende contra la sobre-ingeniería en dominios simples.
+- Dirige los recursos a construir CQRS ÚNICAMENTE para zonas de contienda de alto rendimiento.
+- Asegura una clara segregación de las preocupaciones de escalado.
 
-### Negative
-- Teams require training to differentiate between Tier 2 (BFF Read Aggregation) and Tier 3 (Full CQRS).
+### Negativas
+- Los equipos requieren capacitación para diferenciar entre el Nivel 2 (Agregación de Lectura en BFF) y el Nivel 3 (CQRS Completo).
 
-## References
-- [CQRS pattern (Martin Fowler)](https://martinfowler.com/bliki/CQRS.html)
-- [ADR-0002: Clean Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
+## Referencias
+- [Patrón CQRS (Martin Fowler)](https://martinfowler.com/bliki/CQRS.html)
+- [ADR-0002: Arquitectura Hexagonal Limpia](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)

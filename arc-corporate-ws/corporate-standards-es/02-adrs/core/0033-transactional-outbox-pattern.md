@@ -1,32 +1,32 @@
-# ADR 0033: Transactional Outbox Pattern for Async Messaging
+# ADR 0033: Patrón Transactional Outbox para Mensajería Asíncrona
 
-## Status
-Proposed (Approved via Maturity Roadmap)
+## Estado
+Propuesto (Aprobado vía Roadmap de Madurez)
 
-## Date
+## Fecha
 2026-05-11
 
-## Context
-Standard decoupled communication relies on updating a database and emitting an event to the message broker (RabbitMQ/Kafka). However, these are separate network operations. If the database commit succeeds but the broker falls offline before the event is sent, the system enters a ghost state (data persisted but downstream actions never trigger). Dual-write failure is a known data consistency risk.
+## Contexto
+La comunicación desacoplada estándar se basa en actualizar una base de datos y emitir un evento al bróker de mensajes (RabbitMQ/Kafka). Sin embargo, estas son operaciones de red separadas. Si el commit de la base de datos tiene éxito pero el bróker se cae antes de que se envíe el evento, el sistema entra en un estado fantasma (datos persistidos pero las acciones aguas abajo nunca se disparan). El fallo de escritura dual es un riesgo conocido de consistencia de datos.
 
-## Decision
-Formally adopt the **Transactional Outbox Pattern** to guarantee atomic state propagation between the relational store and async event channels:
+## Decisión
+Adoptar formalmente el **Patrón Transactional Outbox** para garantizar la propagación atómica del estado entre el almacén relacional y los canales de eventos asíncronos:
 
-1.  **Outbox Table**: Every bounded context includes an `outbox_events` table inside its isolated PostgreSQL schema.
-2.  **Atomic Transaction**: The Application layer writes the Business Entity mutation AND saves the intended `DomainEvent` into the `outbox_events` table within the exact same local ACID SQL transaction (governed via the Unit of Work pattern).
-3.  **Relay Processor**: An external, guaranteed message relay (e.g., Debezium for CDC or a dedicated background polling worker) reads the `outbox_events` and pushes them into the Message Bus.
-4.  **Acknowledge & Prune**: Once the Message Bus acknowledges receipt (ACK), the event is flagged as `sent` in the outbox or archived.
+1.  **Tabla Outbox**: Cada contexto delimitado incluye una tabla `outbox_events` dentro de su esquema aislado de PostgreSQL.
+2.  **Transacción Atómica**: La capa de Aplicación escribe la mutación de la Entidad de Negocio Y guarda el `DomainEvent` intencionado en la tabla `outbox_events` dentro de la misma transacción local ACID SQL exacta (gobernada vía el patrón Unit of Work).
+3.  **Procesador de Relevo (Relay)**: Un relevo de mensajes garantizado y externo (ej. Debezium para CDC o un trabajador dedicado de sondeo en segundo plano) lee los `outbox_events` y los empuja hacia el Bus de Mensajes.
+4.  **Confirmar y Podar (Acknowledge & Prune)**: Una vez que el Bus de Mensajes acusa recibo (ACK), el evento se marca como `enviado` en la outbox o se archiva.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- **Guaranteed At-Least-Once Delivery**: Eliminates dual-write inconsistency. If the system crashes, the event resides safely in PostgreSQL pending retry.
-- **100% Async Stability**: Protects operational flows from temporary RabbitMQ network drops.
+### Positivas
+- **Entrega Garantizada Al Menos Una Vez (At-Least-Once)**: Elimina la inconsistencia de escritura dual. Si el sistema cae, el evento reside seguro en PostgreSQL pendiente de reintento.
+- **Estabilidad 100% Asíncrona**: Protege los flujos operativos de caídas de red temporales de RabbitMQ.
 
-### Negative
-- Introduces marginal database write overhead (saving the event row).
-- Requires the operational deployment of a Relay worker/service to forward the queued events.
+### Negativas
+- Introduce una sobrecarga marginal de escritura en la base de datos (guardar la fila del evento).
+- Requiere el despliegue operativo de un trabajador/servicio de relevo (Relay) para reenviar los eventos encolados.
 
-## References
+## Referencias
 - [Transactional Outbox Pattern (Microservices.io)](https://microservices.io/patterns/data/transactional-outbox.html)
-- [ADR-0015: Injectable Event Bus](./0015-event-driven-decoupled-architecture.md)
+- [ADR-0015: Bus de Eventos Inyectable](./0015-event-driven-decoupled-architecture.md)

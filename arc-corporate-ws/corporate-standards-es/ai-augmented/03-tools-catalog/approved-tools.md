@@ -1,23 +1,19 @@
-# Catálogo de Tools Corporativas Aprobadas
+# Inventario de Herramientas Aprobadas en el Repositorio
 
-Este documento contiene el listado oficial de herramientas aprobadas por el comité de arquitectura para ser consumidas por agentes de IA.
+Esta es una línea base de herramientas genéricas aprobadas y actualmente utilizables dentro del ecosistema del monorepo para potenciar a nuestros agentes internos.
 
-## 📦 Dominio: Gestión de Proyectos y Workspace
-Herramientas estandarizadas para interactuar con el ecosistema de desarrollo.
+## 1. Interacción con Sistema de Archivos (Provistas por Host / Shell)
+*   **`read_file`**: Lee el contenido de un archivo de texto de forma segura.
+*   **`write_to_file`**: Sobrescribe o crea archivos de texto. Requiere hooks de verificación después de ejecutarse.
+*   **`ls / list_dir`**: Lista de forma recursiva la estructura de un directorio.
+*   **`grep_search`**: Búsqueda rápida de subcadenas a lo largo de la base de código.
 
-| Tool Name | Descripción Resumida | Estado |
-| :--- | :--- | :--- |
-| `workspace_search` | Busca patrones de texto en el codebase utilizando ripgrep. | Aprobada |
-| `workspace_read_file` | Lee el contenido completo de un archivo del workspace. | Aprobada |
-| `workspace_write_file` | Escribe o edita contenido en un archivo específico. | Aprobada (Requiere Sandbox) |
+## 2. Herramientas del Ciclo de Vida del Software (Ejecutadas vía Terminal Harness)
+*   **`run_command`**: Ejecuta comandos bash/ps1 arbitrarios. **CRÍTICO**: Altamente restringido. No se puede correr en CI/CD sin un sandbox estricto.
+*   **`npm_run`**: Acotado específicamente para ejecutar disparadores de scripts estándar del repositorio definidos en `package.json`.
+*   **`git_commit`**: Permite al agente hacer checkpoint de progreso automáticamente.
 
-## 🛒 Dominio: Inventario y Operaciones (Experimental)
-Herramientas conectadas a servicios de backend reales.
-
-| Tool Name | Descripción Resumida | Estado |
-| :--- | :--- | :--- |
-| `inventory_check_stock` | Consulta stock disponible vía MCP Server oficial. | En Evaluación |
-| `order_track_shipment` | Rastrea el estatus de envío usando el ID de seguimiento. | Aprobada |
-
----
-> Para añadir una nueva herramienta a esta lista, envíe un ADR tipo Pull Request utilizando la [Plantilla de Catálogo](./tool-catalog-template.md).
+## 3. Catálogo MCP Corporativo (Bajo Desarrollo Activo)
+*   *Próximamente*: `confluence_search` - Para proveer contexto de arquitectura centralizada.
+*   *Próximamente*: `jira_update_ticket` - Para sincronizar el progreso del desarrollo con los tickets administrativos.
+*   *Próximamente*: `sentry_fetch_issue` - Para alimentar a los debug-agents con logs de errores reales de producción.

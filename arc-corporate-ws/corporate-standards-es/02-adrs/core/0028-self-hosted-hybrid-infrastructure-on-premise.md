@@ -1,32 +1,32 @@
-# ADR 0028: Self-Hosted, Open-Source Hybrid Infrastructure
+# ADR 0028: Infraestructura Híbrida de Código Abierto Autohospedada
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-09
 
-## Context
-Relying solely on locked-in serverless cloud vendors (e.g., AWS SQS, DynamoDB, Cognito) kills ability to deploy to sovereign air-gapped corporate client networks on-premise. Cloud pricing curves expand wildly under high throughput. We require absolute tech sovereignty that seamlessly mirrors across public clouds AND disconnected hardware clusters.
+## Contexto
+Confiar únicamente en proveedores de nube serverless cautivos (ej., AWS SQS, DynamoDB, Cognito) mata la capacidad de desplegar en redes corporativas soberanas de clientes desconectados (air-gapped) localmente (on-premise). Las curvas de precios en la nube se expanden salvajemente bajo un alto rendimiento. Requerimos soberanía tecnológica absoluta que se refleje sin problemas en nubes públicas Y clústeres de hardware desconectados.
 
-## Decision
-Strictly govern internal tooling selection based on the **100% Open-Source, Self-Hostable, and Plug-and-Play Extensibility Principle**:
+## Decisión
+Gobernar estrictamente la selección de herramientas internas basándose en el **Principio del 100% de Código Abierto, Autohospedable y Extensibilidad Plug-and-Play**:
 
-1. **Infrastructure as a Port**: NO concrete infrastructure SDK/Library from the products listed below may ever cross into Domain/Application layers. They must be strictly encapsulated behind pure TypeScript `Ports`. Swapping MinIO for AWS S3 or RabbitMQ for Kafka requires editing ONLY a single Infrastructure Adapter file.
-2. **MinIO (Object Storage)**: Standardize on the S3-compatible engine. Run in local Kubernetes cluster directly.
-3. **RabbitMQ (Bus)**: Drive asynchronous communication via open source AMQP brokers instead of proprietary queues.
-4. **Vault & KeyCloak**: Handle native local secrets distribution and localized credentials pools using proven CNCF ecosystems.
-5. **Direct PostgreSQL/Redis**: Drive caching and state through native v16+ engines deployed via Helm, bypassing vendor-wrapped managed DB limitations.
+1. **Infraestructura como Puerto**: NINGÚN SDK/Librería de infraestructura concreta de los productos enumerados a continuación puede cruzar jamás a las capas de Dominio/Aplicación. Deben estar estrictamente encapsulados detrás de `Ports` de TypeScript puro. Cambiar MinIO por AWS S3 o RabbitMQ por Kafka requiere editar ÚNICAMENTE un solo archivo de Adaptador de Infraestructura.
+2. **MinIO (Almacenamiento de Objetos)**: Estandarizar en el motor compatible con S3. Ejecutar directamente en el clúster de Kubernetes local.
+3. **RabbitMQ (Bus)**: Impulsar la comunicación asíncrona vía brókers AMQP de código abierto en lugar de colas propietarias.
+4. **Vault y KeyCloak**: Manejar la distribución local nativa de secretos y pools de credenciales localizados usando ecosistemas CNCF probados.
+5. **PostgreSQL/Redis Directos**: Impulsar el almacenamiento en caché y el estado a través de motores v16+ nativos desplegados vía Helm, saltándose las limitaciones de BD gestionadas envueltas por el proveedor.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- 100% Cloud Neutral: Code deploys anywhere from an engineer's Mac to an isolated military cluster with zero refactoring.
-- Total cost transparency: Eliminates opaque transaction-based scaling bills.
+### Positivas
+- 100% Cloud Neutral: El código se despliega en cualquier lugar, desde el Mac de un ingeniero hasta un clúster militar aislado, con cero refactorización.
+- Transparencia total de costos: Elimina las opacas facturas de escalado basadas en transacciones.
 
-### Negative
-- Increases administrative overhead. Local DevOps must maintain replication, backups, and scale patching that major clouds typically handle automatically.
+### Negativas
+- Incrementa la sobrecarga administrativa. El DevOps local debe mantener la replicación, las copias de seguridad y los parches de escala que las principales nubes típicamente manejan automáticamente.
 
-## References
-- [ADR-0013: Cloud Topology](./0013-cloud-infrastructure-topology-dr.md)
-- [Stack Definition Reference](../../02-architecture/stack.md)
+## Referencias
+- [ADR-0013: Topología Cloud](../02-adrs/core/0013-cloud-infrastructure-topology-dr.md)
+- [Referencia de Definición de Stack](../../02-architecture/stack.md)

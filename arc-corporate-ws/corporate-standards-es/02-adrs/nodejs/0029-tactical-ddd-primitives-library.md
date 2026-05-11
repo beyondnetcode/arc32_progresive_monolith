@@ -1,34 +1,34 @@
-# ADR 0029: Adoption of Tactical DDD Primitives Library
+# ADR 0029: Adopción de Librería de Primitivas DDD Tácticas
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-09
 
-## Context
-Crafting robust Hexagonal core logic invites repetitive, boiler-heavy development. Creating base comparison methods for IDs, structural identity for Value Objects, and collecting in-memory Domain Events inside Aggregate Roots results in thousands of duplicated utility lines. We require standardized, pure-TypeScript primitives without breaking Hexagonal boundaries.
+## Contexto
+Elaborar una lógica core Hexagonal robusta invita al desarrollo repetitivo y cargado de código repetitivo (boilerplate). Crear métodos base de comparación para IDs, identidad estructural para Objetos de Valor, y recolectar Eventos de Dominio en memoria dentro de Raíces de Agregado resulta en miles de líneas de utilidades duplicadas. Requerimos primitivas estandarizadas de TypeScript puro sin romper los límites Hexagonales.
 
-## Decision
-Standardize on utilizing the **`@nestjslatam/ddd`** primitives ecosystem within core domains to accelerate velocity:
+## Decisión
+Estandarizar la utilización del ecosistema de primitivas **`@nestjslatam/ddd`** dentro de los dominios centrales para acelerar la velocidad:
 
-1. **Pure Typescript Only**: Adhering to core purity constraints, this specific package has 0 external NPM dependencies, making it totally safe for placement directly in the Domain innermost layer.
-2. **Tactical Classes**: Deploy standard base parent implementations of `AggregateRoot`, `Entity<T>`, `ValueObject`, and native `DomainEvent` definitions.
-3. **Local Barrel Barrier**: To prevent long-term library lock-in, developers import and re-export these types via a local shared library proxy file. The business code imports from local paths, permitting future drops-in replacement without widespread edits.
+1. **Solo Typescript Puro**: Adhiriéndose a las restricciones de pureza del core, este paquete específico tiene 0 dependencias NPM externas, haciéndolo totalmente seguro para su colocación directamente en la capa más interna del Dominio.
+2. **Clases Tácticas**: Desplegar implementaciones padre estándar de `AggregateRoot`, `Entity<T>`, `ValueObject`, y definiciones nativas de `DomainEvent`.
+3. **Barrera de Barrel Local**: Para prevenir el bloqueo a largo plazo de la librería, los desarrolladores importan y re-exportan estos tipos vía un archivo proxy de librería compartida local. El código de negocio importa desde rutas locales, permitiendo futuros reemplazos directos sin ediciones generalizadas.
 
-## Constraints
-- **Readonly Restriction**: All properties mapped to `ValueObject` extension classes MUST remain `readonly` immutable.
-- **Zero-ORM pollution**: Explicitly forbidden to utilize relational decorators (`@Entity`, `@Column`) inside code extending DDD primitives. Domain rules remain pure; SQL maps remain outside in Infrastructure.
+## Restricciones
+- **Restricción Readonly**: Todas las propiedades mapeadas a clases de extensión de `ValueObject` DEBEN permanecer inmutables con `readonly`.
+- **Cero contaminación de ORM**: Prohibido explícitamente utilizar decoradores relacionales (`@Entity`, `@Column`) dentro del código que extiende primitivas DDD. Las reglas de dominio permanecen puras; los mapas SQL permanecen fuera en Infraestructura.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Shreds heavy routine boilerplate.
-- Establishes uniform coding vernacular across multiple distributed backend teams instantly.
+### Positivas
+- Tritura el pesado código repetitivo de rutina.
+- Establece una vernácula de codificación uniforme a través de múltiples equipos de backend distribuidos instantáneamente.
 
-### Negative
-- Introduces another shallow internal dependency. (Mitigated cleanly via the Barrel abstraction).
+### Negativas
+- Introduce otra dependencia interna superficial. (Mitigado limpiamente vía la abstracción de Barrel).
 
-## References
-- [ADR-0002: Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
-- [@nestjslatam/ddd docs](https://github.com/nestjslatam/ddd)
+## Referencias
+- [ADR-0002: Arquitectura Hexagonal](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)
+- [documentación de @nestjslatam/ddd](https://github.com/nestjslatam/ddd)

@@ -1,33 +1,33 @@
-# ADR 0001: Monorepo Orchestration with Nx
+# ADR 0001: Orquestación de Monorepo con Nx
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Managing multiple related applications (API, Web, shared libraries) as isolated repositories causes friction: duplicated CI/CD configs, version drift between shared code, and complex local setups. A monorepo strategy is required to keep all artifacts in a single, coherent codebase.
+## Contexto
+Gestionar múltiples aplicaciones relacionadas (API, Web, librerías compartidas) como repositorios aislados causa fricción: configuraciones de CI/CD duplicadas, deriva de versiones entre el código compartido y configuraciones locales complejas. Se requiere una estrategia de monorepo para mantener todos los artefactos en una única base de código coherente.
 
-## Decision
-Adopt **Nx** as the monorepo orchestration tool, combined with **npm workspaces** for native package resolution.
+## Decisión
+Adoptar **Nx** como la herramienta de orquestación de monorepo, combinada con **espacios de trabajo npm (npm workspaces)** para la resolución nativa de paquetes.
 
-- All applications reside under `apps/`.
-- All shared libraries reside under `libs/`.
-- Nx task pipeline (`nx.json`) defines build, test, and lint dependency graphs for intelligent caching and parallel execution.
-- `eslint-plugin-boundaries` enforces strict import rules between layers and workspaces.
+- Todas las aplicaciones residen bajo `apps/`.
+- Todas las librerías compartidas residen bajo `libs/`.
+- La pipeline de tareas de Nx (`nx.json`) define los gráficos de dependencia de construcción, prueba y linting para una caché inteligente y ejecución en paralelo.
+- `eslint-plugin-boundaries` impone reglas estrictas de importación entre capas y espacios de trabajo.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Unified CI/CD pipeline — one lock file, one lint config, one test runner.
-- Nx Computation Cache keeps CI under 1 minute for unchanged projects.
-- `dependency-cruiser` enforces hexagonal layer rules globally across all packages.
+### Positivas
+- Pipeline de CI/CD unificada: un solo archivo de bloqueo (lockfile), una configuración de lint y un único ejecutor de pruebas.
+- La Caché de Computación de Nx mantiene el CI por debajo de 1 minuto para los proyectos sin cambios.
+- `dependency-cruiser` impone reglas de capas hexagonales globalmente a través de todos los paquetes.
 
-### Negative
-- Developers must learn Nx CLI conventions.
-- Large repositories can be slower to clone without sparse checkout configuration.
+### Negativas
+- Los desarrolladores deben aprender las convenciones de la CLI de Nx.
+- Los repositorios grandes pueden ser más lentos de clonar sin una configuración de sparse checkout.
 
-## References
-- [Nx Documentation](https://nx.dev)
-- [ADR-0003: Strict TypeScript Standards](./0003-strict-typescript-standards.md)
+## Referencias
+- [Documentación de Nx](https://nx.dev)
+- [ADR-0003: Estándares Estrictos de TypeScript](../02-adrs/nodejs/0003-strict-typescript-standards.md)

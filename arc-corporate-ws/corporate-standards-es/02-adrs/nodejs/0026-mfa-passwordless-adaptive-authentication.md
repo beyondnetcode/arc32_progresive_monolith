@@ -1,32 +1,32 @@
-# ADR 0026: Adaptive MFA and Passwordless Platform
+# ADR 0026: Plataforma Adaptativa de MFA y Passwordless
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-09
 
-## Context
-Conventional password validation and raw static SMS MFA is heavily vulnerable to aggressive social engineering and phishing vectors. Enterprise clients demand Zero-Trust compliance, requiring phishing-resistant cryptographic mechanisms alongside frictionless experiences that do not exhaust end-users.
+## Contexto
+La validación convencional de contraseñas y el MFA por SMS estático en bruto es fuertemente vulnerable a la ingeniería social agresiva y a los vectores de phishing. Los clientes corporativos demandan cumplimiento de Zero-Trust, requiriendo mecanismos criptográficos resistentes al phishing junto con experiencias sin fricción que no agoten a los usuarios finales.
 
-## Decision
-Rollout an **Adaptive Risk-Managed MFA Framework** driving the Core authentication pipeline:
+## Decisión
+Desplegar un **Marco de MFA Adaptativo Gestionado por Riesgo** que impulse la pipeline de autenticación Core:
 
-1. **Passwordless First**: Infuse native WebAuthn (Passkeys) into authentication flows, empowering end-users to bind high-security hardware (TouchID, FaceID, Yubikeys) natively to logins.
-2. **Adaptive Scoring**: Deploy stateless pipeline checkpoints inspecting metadata (IP vectors, fingerprint anomalies, location impossible-travel checks). Produce internal risk matrices.
-3. **Dynamic Step-Up**: Move away from "always on" frictions. Trigger multi-factor requests dynamically only upon risk score threshold violations or requests touching critical business critical transactional paths.
-4. **Tenant Governance**: Allow each enterprise Tenant profile to activate, configure, and mandate their exact preferred security posture threshold.
+1. **Primero Passwordless (Sin Contraseña)**: Infundir WebAuthn nativo (Passkeys) en los flujos de autenticación, empoderando a los usuarios finales para vincular hardware de alta seguridad (TouchID, FaceID, Yubikeys) nativamente a los inicios de sesión.
+2. **Puntuación Adaptativa**: Desplegar puntos de control en la pipeline sin estado que inspeccionen metadatos (vectores IP, anomalías de huella digital, verificaciones de viajes imposibles por ubicación). Producir matrices de riesgo internas.
+3. **Aumento Dinámico (Dynamic Step-Up)**: Alejarse de las fricciones de "siempre encendido". Disparar solicitudes de múltiples factores dinámicamente solo ante violaciones del umbral de puntuación de riesgo o peticiones que toquen rutas transaccionales críticas para el negocio.
+4. **Gobernanza por Inquilino**: Permitir que cada perfil de Inquilino (Tenant) empresarial active, configure y mande su umbral exacto de postura de seguridad preferida.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Establishes best-in-class Anti-Phishing defense matching strict NIST SP 800-63B standards.
-- Dramatically lifts operator throughput by reducing redundant validation fatigue on secure, established device vectors.
+### Positivas
+- Establece la mejor defensa en su clase contra el Phishing coincidiendo con los estrictos estándares NIST SP 800-63B.
+- Eleva dramáticamente el rendimiento de los operadores al reducir la fatiga de validación redundante en vectores de dispositivos seguros y establecidos.
 
-### Negative
-- Initial onboarding learning curvature for non-technical operator demographics.
-- Minimal cryptography processing overhead required per login.
+### Negativas
+- Curva de aprendizaje de incorporación inicial para perfiles de operadores no técnicos.
+- Mínima sobrecarga de procesamiento de criptografía requerida por cada inicio de sesión.
 
-## References
-- [ADR-0020: IdP Abstraction](./0020-identity-provider-abstraction-strategy.md)
-- [WebAuthn Official Guide](https://webauthn.guide/)
+## Referencias
+- [ADR-0020: Abstracción de IdP](../02-adrs/core/0020-identity-provider-abstraction-strategy.md)
+- [Guía Oficial de WebAuthn](https://webauthn.guide/)

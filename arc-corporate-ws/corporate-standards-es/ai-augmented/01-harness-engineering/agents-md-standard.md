@@ -2,45 +2,45 @@
 
 ## ¿Qué es AGENTS.md?
 
-El archivo `AGENTS.md` es el artefacto de harness de **menor esfuerzo y mayor impacto** en un repositorio. Actúa como la "sesión de inducción" (onboarding) para cualquier agente de inteligencia artificial (Claude Code, Cursor, Copilot, agentes personalizados) que acceda al workspace.
+El archivo `AGENTS.md` es el artefacto de harness de **menor esfuerzo y mayor impacto** en un repositorio. Sirve como la "sesión de inducción" (onboarding) para cualquier agente de inteligencia artificial (Claude Code, Cursor, Copilot, agentes personalizados) que acceda al espacio de trabajo.
 
-Un agente sin un `AGENTS.md` debe redescubrir el stack, adivinar los comandos de test y tropezar con antipatrones conocidos. Con `AGENTS.md`, el agente hereda instantáneamente el contexto experto acumulado por el equipo humano.
+Un agente sin un `AGENTS.md` debe redescubrir el stack, adivinar los comandos de prueba y tropezar con antipatrones conocidos. Con `AGENTS.md`, el agente hereda instantáneamente el contexto experto acumulado por el equipo humano.
 
 ## Estructura Estándar Obligatoria
 
-Todo repositorio que implemente IA-Aumentada Nivel 1 o superior debe poseer un archivo `AGENTS.md` en su raíz con la siguiente anatomía estricta:
+Cada repositorio que implemente Aumentación por IA de Nivel 1 o superior debe poseer un archivo `AGENTS.md` en su directorio raíz con la siguiente estricta anatomía:
 
 ```markdown
-## Project
-[Descripción concisa de 2 líneas que explique el propósito de negocio de este proyecto]
+## Project (Proyecto)
+[Descripción concisa de 2 líneas explicando el propósito de negocio de este proyecto]
 
-## Build & Run
-- Build: `[Comando exacto, ej: npm run build]`
-- Test: `[Comando para unit tests, ej: npx nx run test my-app]`
-- Lint: `[Comando de linting y fix, ej: npm run lint -- --fix]`
+## Build & Run (Construcción y Ejecución)
+- Build: `[Comando exacto, ej., npm run build]`
+- Test: `[Comando para pruebas unitarias, ej., npx nx run test my-app]`
+- Lint: `[Comando de lint y fix, ej., npm run lint -- --fix]`
 
-## Architecture
+## Architecture (Arquitectura)
 - Runtime: [Node.js vXX / .NET X.X / Android SDK XX]
-- DB: [Motor, ej: PostgreSQL 16 + Drizzle ORM]
-- Key modules: [Lista corta de los módulos o capas críticas de este repo]
+- DB: [Motor, ej., PostgreSQL 16 + Drizzle ORM]
+- Key modules: [Lista corta de módulos críticos o capas en este repo]
 
-## Conventions
-- [Convención crítica 1, ej: Usar Result Monad para retornos de servicios]
-- [Convención crítica 2, ej: Los componentes de UI deben ser Server Components por defecto]
+## Conventions (Convenciones)
+- [Convención crítica 1, ej., Usar la Mónada Result para retornos de servicio]
+- [Convención crítica 2, ej., Los componentes de UI deben ser Server Components por defecto]
 
-## Agent Rules
-- [Regla que previene error conocido 1, ej: NUNCA borres tests existentes para hacer pasar un fix]
-- [Regla que previene error conocido 2, ej: Si editas una entidad Drizzle, ejecuta 'npm run db:generate' inmediatamente]
+## Agent Rules (Reglas del Agente)
+- [Regla previniendo error conocido 1, ej., NUNCA borrar pruebas existentes para hacer pasar un fix]
+- [Regla previniendo error conocido 2, ej., Si se edita una entidad de Drizzle, ejecutar 'npm run db:generate' inmediatamente]
 
-## Out of Bounds
-- [Qué partes del repo NO DEBES TOCAR, ej: No modificar archivos en carpeta /legacy o workflows de CI/CD]
+## Out of Bounds (Fuera de Límites)
+- [Qué partes del repo NO DEBEN TOCARSE, ej., No modificar archivos en la carpeta /legacy ni flujos de CI/CD]
 ```
 
-## Principio de Hashimoto para Harness
+## Principio de Hashimoto para el Harness
 Adoptamos la regla evolutiva propuesta por el ecosistema de ingeniería agéntica:
 
-> **"Por cada error repetitivo que cometa el agente, se debe añadir una nueva regla explícita en la sección Agent Rules del AGENTS.md para evitar su recurrencia perpetua."**
+> **"Por cada error repetitivo que el agente cometa, se debe añadir una nueva regla explícita a la sección de Agent Rules de AGENTS.md para prevenir su recurrencia perpetua."**
 
 ## AGENTS.md vs CLAUDE.md
--   **`AGENTS.md`**: Es agnóstico a la herramienta. Funciona para cualquier agente que consuma el workspace (ej. GPT-4o con terminal access, Devin, etc.).
--   **`CLAUDE.md`**: Es un estándar específico reconocido nativamente por `claude-code`. Se recomienda que si usas Claude Code, tengas un `CLAUDE.md` que puede ser un link simbólico o una copia simplificada centrada estrictamente en los comandos que Claude consume mejor.
+-   **`AGENTS.md`**: Agnóstico a la herramienta. Funciona para cualquier agente que consuma el espacio de trabajo (ej., GPT-4o con acceso a terminal, Devin, etc.).
+-   **`CLAUDE.md`**: Estándar específico reconocido nativamente por `claude-code`. Se recomienda que si usas Claude Code, tengas un `CLAUDE.md` que puede ser un enlace simbólico o una copia simplificada estrictamente enfocada en los comandos que Claude consume mejor.

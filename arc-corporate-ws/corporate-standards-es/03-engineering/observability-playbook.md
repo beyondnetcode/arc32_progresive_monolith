@@ -1,38 +1,38 @@
-﻿# 📈 End-to-End Distributed Observability & Telemetry Strategy
+# 📈 Estrategia de Telemetría y Observabilidad Distribuida End-to-End
 
-This document details the telemetry architecture, trace propagation, logging standards, and cost-effective monitoring stack for the SCM/Reference Template under the **bMAD Method**.
+Este documento detalla la arquitectura de telemetría, propagación de trazas, estándares de registro y el stack de monitorización rentable para la Plantilla SCM/Referencia bajo el **Método bMAD**.
 
 ---
 
-## 🏛️ 1. The Three Pillars of Telemetry
+## 🏛️ 1. Los Tres Pilares de la Telemetría
 
-To ensure absolute visibility across our modular monolith and prepare for future microservices, we implement three synchronized pillars of observability as specified in **ADR 0007**:
+Para asegurar la visibilidad absoluta a través de nuestro monolito modular y prepararnos para futuros microservicios, implementamos tres pilares sincronizados de observabilidad según se especifica en el **ADR 0007**:
 
 ```mermaid
 graph TD
-    subgraph LGTMStack["Enterprise LGTM Observability Stack"]
-        Grafana["Grafana (Unified Visual Dashboard)"]
-        Loki["Grafana Loki (Structured Log Aggregator)"]
-        Tempo["Grafana Tempo (Distributed Trace Store)"]
-        Mimir["Grafana Mimir (Scalable Metrics Storage)"]
+    subgraph LGTMStack["Stack de Observabilidad LGTM Empresarial"]
+        Grafana["Grafana (Dashboard Visual Unificado)"]
+        Loki["Grafana Loki (Agregador de Logs Estructurados)"]
+        Tempo["Grafana Tempo (Almacén de Trazas Distribuidas)"]
+        Mimir["Grafana Mimir (Almacén de Métricas Escalable)"]
     end
 
-    App["NestJS SCM Application"] -.->|Structured JSON Logs| Loki
-    App -.->|OpenTelemetry Tracing| Tempo
-    App -.->|Prometheus RED Metrics| Mimir
+    App["Aplicación NestJS SCM"] -.->|Logs JSON Estructurados| Loki
+    App -.->|Trazado OpenTelemetry| Tempo
+    App -.->|Métricas RED de Prometheus| Mimir
 
-    Grafana -->|Queries| Loki
-    Grafana -->|Queries| Tempo
-    Grafana -->|Queries| Mimir
+    Grafana -->|Consultas| Loki
+    Grafana -->|Consultas| Tempo
+    Grafana -->|Consultas| Mimir
 ```
 
 ---
 
-## ⚙️ 2. Detailed Technical Strategy
+## ⚙️ 2. Estrategia Técnica Detallada
 
-### A. Structured Logging (Grafana Loki)
-*   **Standard**: All application logs are outputted to standard out (`stdout`) in high-performance **Structured JSON format** (using `pino` or NestJS `Winston`).
-*   **Format**: Every log entry **must** contain the following metadata:
+### A. Registro Estructurado (Grafana Loki)
+*   **Estándar**: Todos los registros de la aplicación se envían a la salida estándar (`stdout`) en **formato JSON Estructurado** de alto rendimiento (usando `pino` o NestJS `Winston`).
+*   **Formato**: Cada entrada de registro **debe** contener los siguientes metadatos:
     ```json
     {
       "timestamp": "2026-05-08T13:14:08.000Z",
@@ -46,30 +46,30 @@ graph TD
     }
     ```
 
-### B. Distributed Tracing (OpenTelemetry & Tempo)
-*   **Propagation**: OpenTelemetry (OTel) is initialized at application startup. Trace contexts are propagated automatically using standard **W3C Trace Context headers** (`traceparent`).
-*   **Intra-Domain Event Propagation**: When an event is published asynchronously via the Event Bus, the active `trace_id` is appended to the event payload. Downstream subscribers extract the context and start a child span, preserving the transaction timeline across modules.
+### B. Trazado Distribuido (OpenTelemetry & Tempo)
+*   **Propagación**: OpenTelemetry (OTel) se inicializa al arranque de la aplicación. Los contextos de traza se propagan automáticamente usando **cabeceras W3C Trace Context** estándar (`traceparent`).
+*   **Propagación de Eventos Intra-Dominio**: Cuando un evento se publica asíncronamente a través del Bus de Eventos, el `trace_id` activo se adjunta a la carga útil del evento. Los suscriptores aguas abajo extraen el contexto y comienzan un span hijo, preservando la línea de tiempo de la transacción a través de los módulos.
 
-### C. System & Business Metrics (Mimir)
-We monitor system health and business operations using two structured patterns:
-*   **RED Pattern (Services)**: **R**ate (requests/sec), **E**rrors (HTTP 5xx / database failures), **D**uration (latency p95/p99 targets < 200ms).
-*   **USE Pattern (Infrastructure)**: **U**tilization, **S**aturation, and **E**rrors for CPU, memory, and database connections.
-
----
-
-## 🗺️ 3. End-to-End Business Process Traceability
-
-To trace a single business transaction from start to finish (e.g., weighing a container and generating an invoice):
-
-1.  **Ingress**: The API Gateway/BFF generates a unique `trace_id` (if not provided by the client) and injects it into the request.
-2.  **Use Case**: The Inventory Module executes the weight transaction, logging the process with the associated `trace_id`.
-3.  **Database**: TypeORM traces SQL execution time using database telemetry spans.
-4.  **Asynchronous Handoff**: The `ContainerWeighedEvent` is published to the Outbox carrying the `trace_id` in its header.
-5.  **Downstream Subscriber**: The Customs Module consumes the event, extracts the `trace_id`, and validates the container weight against SUNAT, maintaining a single, continuous trace across all asynchronous operations.
+### C. Métricas de Sistema y Negocio (Mimir)
+Monitorizamos la salud del sistema y las operaciones de negocio utilizando dos patrones estructurados:
+*   **Patrón RED (Servicios)**: **R**ate (tasa de peticiones/seg), **E**rrors (errores HTTP 5xx / fallos de base de datos), **D**uration (objetivos de latencia p95/p99 < 200ms).
+*   **Patrón USE (Infraestructura)**: **U**tilization (utilización), **S**aturation (saturación), y **E**rrors (errores) para CPU, memoria y conexiones de base de datos.
 
 ---
 
-## 💰 4. Monitoring Tools & Cost Sizing
-By utilizing the open-source **Grafana LGTM Stack**, the enterprise minimizes licensing costs compared to proprietary tools (e.g., Datadog, Dynatrace) while guaranteeing industry-standard, high-scale telemetry:
-*   **Loki Storage**: Compact, index-free log storage dramatically reduces cloud disk storage costs.
-*   **Self-Hosted/Managed Hybrid**: Local development runs on Docker-compose LGTM; production deploys to managed Grafana Cloud or self-hosted Kubernetes setups for absolute data privacy and sovereign data compliance.
+## 🗺️ 3. Trazabilidad End-to-End del Proceso de Negocio
+
+Para trazar una sola transacción de negocio de principio a fin (ej. pesar un contenedor y generar una factura):
+
+1.  **Ingreso**: El API Gateway/BFF genera un `trace_id` único (si no lo proporciona el cliente) y lo inyecta en la petición.
+2.  **Caso de Uso**: El Módulo de Inventario ejecuta la transacción de pesaje, registrando el proceso con el `trace_id` asociado.
+3.  **Base de Datos**: TypeORM traza el tiempo de ejecución de SQL usando spans de telemetría de base de datos.
+4.  **Entrega Asíncrona**: El `ContainerWeighedEvent` se publica al Outbox llevando el `trace_id` en su cabecera.
+5.  **Suscriptor Aguas Abajo**: El Módulo de Aduanas consume el evento, extrae el `trace_id`, y valida el peso del contenedor contra SUNAT, manteniendo una traza única y continua a través de todas las operaciones asíncronas.
+
+---
+
+## 💰 4. Herramientas de Monitorización y Dimensionamiento de Costos
+Al utilizar el **Stack LGTM de Grafana** de código abierto, la empresa minimiza los costos de licencia en comparación con herramientas propietarias (ej. Datadog, Dynatrace) garantizando al mismo tiempo una telemetría de alta escala y estándar de la industria:
+*   **Almacenamiento Loki**: El almacenamiento de logs compacto y libre de índices reduce drásticamente los costos de almacenamiento de disco en la nube.
+*   **Híbrido Autohospedado/Gestionado**: El desarrollo local corre en Docker-compose LGTM; la producción se despliega en Grafana Cloud gestionado o configuraciones autohospedadas de Kubernetes para privacidad absoluta de datos y cumplimiento de datos soberanos.

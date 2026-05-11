@@ -1,23 +1,23 @@
-# ADR 0015: Event-Driven Architecture (EDA) for Intra-Domain Communication
+# ADR 0015: Arquitectura Dirigida por Eventos (EDA) para la Comunicación Intra-Dominio
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Updated
-2026-05-11 — Added reference to ADR-0031 Domain Event Catalog. Event definitions and the cross-context subscription map are now formally specified in that record.
+## Actualizado
+2026-05-11 — Se añadió referencia al Catálogo de Eventos de Dominio ADR-0031. Las definiciones de eventos y el mapa de suscripción entre contextos están ahora formalmente especificados en ese registro.
 
-## Context
-As the Modular Monolith grows, allowing bounded contexts to call each other synchronously creates tight coupling. If one context is slow or fails, it should not cascade failures into other contexts. Additionally, inter-context communication must be defined as explicit typed contracts to enable safe future microservices extraction (ADR-0006).
+## Contexto
+A medida que el Monolito Modular crece, permitir que los contextos delimitados se llamen entre sí de forma síncrona crea un acoplamiento estrecho. Si un contexto es lento o falla, no debería propagar fallos en cascada hacia otros contextos. Adicionalmente, la comunicación entre contextos debe definirse como contratos tipados explícitos para permitir una extracción futura segura a microservicios (ADR-0006).
 
-## Decision
+## Decisión
 
-We will adopt an asynchronous **Event-Driven Architecture (EDA)** for all cross-bounded-context communication:
+Adoptaremos una **Arquitectura Dirigida por Eventos (EDA)** asíncrona para toda la comunicación entre contextos delimitados:
 
-### 1. Injectable Event Bus (`IEventBusPort`)
-The domain will never import a concrete message broker. All async communication is routed through a pure TypeScript port:
+### 1. Bus de Eventos Inyectable (`IEventBusPort`)
+El dominio nunca importará un bróker de mensajes concreto. Toda la comunicación asíncrona se enruta a través de un puerto TypeScript puro:
 
 ```typescript
 export interface IEventBusPort {
@@ -29,33 +29,33 @@ export interface IEventBusPort {
 }
 ```
 
-The concrete implementation is injected by the NestJS DI container at startup via an environment variable:
+La implementación concreta se inyecta por el contenedor DI de NestJS en el arranque vía una variable de entorno:
 
-| `EVENT_BUS_IMPL` | Implementation | Usage |
+| `EVENT_BUS_IMPL` | Implementación | Uso |
 | :--- | :--- | :--- |
-| `in-memory` | NestJS `EventEmitter2` | Development / Testing |
-| `rabbitmq` | RabbitMQ via `@golevelup/nestjs-rabbitmq` | Production |
-| `kafka` | Kafka via `kafkajs` | High-scale scenarios |
+| `in-memory` | `EventEmitter2` de NestJS | Desarrollo / Pruebas |
+| `rabbitmq` | RabbitMQ vía `@golevelup/nestjs-rabbitmq` | Producción |
+| `kafka` | Kafka vía `kafkajs` | Escenarios de alta escala |
 
-### 2. Domain Events as Cross-Context Contracts
-Every event that crosses a bounded context boundary must be a typed class with an `eventId` (UUID for idempotency) and `occurredAt` timestamp. The complete approved catalog of cross-context events is defined in:
+### 2. Eventos de Dominio como Contratos entre Contextos
+Cada evento que cruza un límite de contexto delimitado debe ser una clase tipada con un `eventId` (UUID para idempotencia) y una marca de tiempo `occurredAt`. El catálogo completo aprobado de eventos entre contextos se define en:
 
-👉 **[ADR-0031: Domain Event Catalog](./0031-schema-per-context-domain-event-catalog.md)**
+📜 **[ADR-0031: Catálogo de Eventos de Dominio](../02-adrs/core/0031-schema-per-context-domain-event-catalog.md)**
 
-### 3. Intra-Context (Internal) vs Cross-Context Events
-- **Intra-context events** (within the same bounded context): May use synchronous NestJS event emitters with no schema constraints.
-- **Cross-context events** (crossing bounded context boundaries): MUST use `IEventBusPort` and MUST conform to the typed payload definitions in ADR-0031.
+### 3. Eventos Intra-Contexto (Internos) vs Eventos Entre-Contextos
+- **Eventos Intra-contexto** (dentro del mismo contexto delimitado): Pueden usar emisores de eventos de NestJS síncronos sin restricciones de esquema.
+- **Eventos Entre-contextos** (cruzando límites de contexto delimitado): DEBEN usar `IEventBusPort` y DEBEN ajustarse a las definiciones de carga útil tipada en el ADR-0031.
 
-### 4. Future Microservices Readiness (ADR-0006)
-When a bounded context is extracted into an independent microservice:
-- Replace the `in-memory` bus implementation with `rabbitmq` or `kafka` — **zero domain code changes required**.
-- The `IEventBusPort` abstraction guarantees the domain remains agnostic to the transport layer.
+### 4. Preparación para Futuros Microservicios (ADR-0006)
+Cuando un contexto delimitado sea extraído a un microservicio independiente:
+- Se reemplaza la implementación del bus `in-memory` con `rabbitmq` o `kafka` — **cero cambios de código en el dominio requeridos**.
+- La abstracción `IEventBusPort` garantiza que el dominio permanezca agnóstico a la capa de transporte.
 
-## Consequences
-* **Pros**: High decoupling, fault isolation, explicit integration contracts, smooth microservices transition path.
-* **Cons**: Eventual consistency across contexts must be embraced. Distributed tracing (ADR-0007) is required to follow event flows across context boundaries.
+## Consecuencias
+* **Positivas**: Alto desacoplamiento, aislamiento de fallos, contratos de integración explícitos, ruta fluida de transición a microservicios.
+* **Negativas**: Se debe abrazar la consistencia eventual a través de los contextos. Se requiere trazado distribuido (ADR-0007) para seguir los flujos de eventos a través de los límites de los contextos.
 
-## References
-- [ADR-0006: Future Microservices via Dapr](./0006-future-microservices-transition-dapr.md)
-- [ADR-0007: Observability with OpenTelemetry](./0007-observability-telemetry-loki-opentelemetry.md)
-- [ADR-0031: Schema-per-Context and Domain Event Catalog](./0031-schema-per-context-domain-event-catalog.md)
+## Referencias
+- [ADR-0006: Futuros Microservicios vía Dapr](../02-adrs/core/0006-future-microservices-transition-dapr.md)
+- [ADR-0007: Observabilidad con OpenTelemetry](../02-adrs/nodejs/0007-observability-telemetry-loki-opentelemetry.md)
+- [ADR-0031: Esquema por Contexto y Catálogo de Eventos de Dominio](../02-adrs/core/0031-schema-per-context-domain-event-catalog.md)

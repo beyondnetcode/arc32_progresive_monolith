@@ -1,41 +1,41 @@
-# ADR 0040: Multi-Runtime Selection Matrix & Inter-Runtime Contracts
+# ADR 0040: Matriz de Selección de Multi-Runtime y Contratos Entre Runtimes
 
-## 1. Status
-**Status**: Approved  
-**Date**: 2026-05-11  
-**Scope**: Corporate Governance (Mandatory)  
-
----
-
-## 2. Context
-To fulfill the **Políglota Corporate Vision**, our organization authorizes multiple execution runtimes. However, without a clear selection policy, teams may select technology based on subjective preference rather than performance suitability. Furthermore, communication between disparate runtimes requires explicit mechanisms to guarantee interoperability without leaking runtime implementation details.
+## 1. Estado
+**Estado**: Aprobado  
+**Fecha**: 2026-05-11  
+**Alcance**: Gobernanza Corporativa (Obligatorio)  
 
 ---
 
-## 3. Decision
+## 2. Contexto
+Para cumplir con la **Visión Corporativa Políglota**, nuestra organización autoriza múltiples runtimes de ejecución. Sin embargo, sin una política de selección clara, los equipos pueden seleccionar tecnología basándose en preferencias subjetivas en lugar de en la idoneidad del rendimiento. Además, la comunicación entre runtimes dispares requiere mecanismos explícitos para garantizar la interoperabilidad sin filtrar detalles de implementación del runtime.
 
-### A. Runtime Selection Matrix
-Teams MUST select the target runtime based exclusively on the specific workload profile:
+---
 
-| Metric | Target Runtime | Rationale |
+## 3. Decisión
+
+### A. Matriz de Selección de Runtime
+Los equipos DEBEN seleccionar el runtime objetivo basándose exclusivamente en el perfil de carga de trabajo específico:
+
+| Métrica | Runtime Objetivo | Razón Fundamental |
 | :--- | :--- | :--- |
-| **Web APIs, BFF, I/O Bound** | **Node.js / TypeScript** | High I/O concurrency, rapid delivery, extensive community ecosystem. |
-| **High Compute, ETL, Batch** | **.NET (C#)** | Superior multi-threading performance, typed raw compute, heavy math. |
-| **Operative Mobility** | **Android (Kotlin)** | Direct access to hardware peripherals (Scanners, GPS), strict offline mode. |
+| **APIs Web, BFF, Ligado a E/S** | **Node.js / TypeScript** | Alta concurrencia de E/S, entrega rápida, amplio ecosistema comunitario. |
+| **Alto Cómputo, ETL, Lotes (Batch)**| **.NET (C#)** | Rendimiento de multi-hilo superior, cómputo en bruto tipado, matemática pesada. |
+| **Movilidad Operativa** | **Android (Kotlin)** | Acceso directo a periféricos de hardware (Scanners, GPS), modo offline estricto. |
 
-### B. Inter-Runtime Communications Rule
-Direct runtime dependency is forbidden. Communication MUST travers explicitly defined boundaries:
-1.  **Synchronous Inter-Op**: Mandatorily utilizes **gRPC (Protocol Buffers)** for low-latency type-safe transmission between Node.js and .NET.
-2.  **Asynchronous Inter-Op**: Utilizes **RabbitMQ/Kafka** with contract validation via JSON-Schema or Protobuf.
-3.  **Contract Registry**: Contracts must be centrally stored and versioned using semantic versioning. Changes require **Pact JS/Net** backward compatibility verification.
+### B. Regla de Comunicaciones Entre Runtimes
+Se prohíbe la dependencia directa del runtime. La comunicación DEBE atravesar límites definidos explícitamente:
+1.  **Interoperabilidad Síncrona**: Utiliza obligatoriamente **gRPC (Protocol Buffers)** para transmisión segura de tipos y baja latencia entre Node.js y .NET.
+2.  **Interoperabilidad Asíncrona**: Utiliza **RabbitMQ/Kafka** con validación de contrato vía JSON-Schema o Protobuf.
+3.  **Registro de Contratos**: Los contratos deben almacenarse y versionarse centralmente utilizando versionado semántico. Los cambios requieren verificación de compatibilidad hacia atrás con **Pact JS/Net**.
 
 ---
 
-## 4. Consequences
+## 4. Consecuencias
 
-### 🟢 Positive
-*   **Optimized Cost/Performance**: Each workload runs on the engine most efficient for its memory/CPU profile.
-*   **Talent Agnostic**: Enables simultaneous hiring across TypeScript, C#, and Android pools.
+### ✅ Positivas
+*   **Costo/Rendimiento Optimizado**: Cada carga de trabajo corre en el motor más eficiente para su perfil de memoria/CPU.
+*   **Agnóstico al Talento**: Habilita la contratación simultánea a través de pools de TypeScript, C# y Android.
 
-### 🔴 Negative
-*   **Governance Overhead**: Requires maintaining standard templates for 3 distinct toolchains.
+### ⚠️ Negativas
+*   **Sobrecarga de Gobernanza**: Requiere mantener plantillas estándar para 3 cadenas de herramientas distintas.

@@ -1,30 +1,30 @@
 # Guía de Autoevaluación de Madurez Agéntica
 
-Este cuestionario permite a los Tech Leads diagnosticar instantáneamente en qué fase de integración de IA se encuentra su producto actual y qué deben resolver para escalar.
+Este cuestionario permite a los Tech Leads diagnosticar instantáneamente la fase de integración de IA de su producto actual y qué se requiere para escalar.
 
 ## Autotest Rápido
 
-Responde SÍ o NO a las siguientes sentencias:
+Responda SÍ o NO a las siguientes afirmaciones:
 
 ### Bloque A (Nivel 1)
-1. ¿Existe un `AGENTS.md` en el repositorio? `[ ]`
-2. ¿El equipo usa un Linter automático antes de commitear cambios sugeridos por IA? `[ ]`
-3. ¿Se ha configurado al menos una regla de `Agent Rules` para prevenir un bug repetitivo? `[ ]`
-> *Si marcaste todos SÍ, cumples el Nivel 1 (AI-Assisted).*
+1. ¿Existe el archivo `AGENTS.md` en el repositorio? `[ ]`
+2. ¿Utiliza el equipo un Linter automático antes de commitear cambios sugeridos por IA? `[ ]`
+3. ¿Se ha configurado al menos una `Agent Rule` para prevenir un bug repetitivo? `[ ]`
+> *Si marcó todas como SÍ, cumple con el Nivel 1 (IA Asistida).*
 
 ### Bloque B (Nivel 2)
-4. ¿El producto invoca directamente un LLM en tiempo de ejecución (ej. NestJS service llamando a GPT)? `[ ]`
-5. ¿Se han empaquetado endpoints internos bajo un conector MCP Server? `[ ]`
-6. ¿Las tools expuestas al modelo tienen validación Zod o JSON Schema estricta? `[ ]`
-> *Si marcaste todos SÍ, has escalado al Nivel 2 (AI-Integrated).*
+4. ¿El producto invoca directamente a un LLM durante el runtime (ej. servicio NestJS llamando a GPT)? `[ ]`
+5. ¿Se han empaquetado endpoints internos bajo un conector de Servidor MCP? `[ ]`
+6. ¿Las herramientas expuestas al modelo poseen validación estricta con Zod o JSON Schema? `[ ]`
+> *Si marcó todas como SÍ, ha escalado al Nivel 2 (IA Integrada).*
 
 ### Bloque C (Nivel 3)
-7. ¿Existe un flujo que detiene la ejecución de la IA para esperar una confirmación humana? `[ ]`
-8. ¿Están registradas el 100% de las tool calls en un log de auditoría inmutable? `[ ]`
-9. ¿Existe una cuota de gasto límite que detiene el consumo si el agente enloquece? `[ ]`
-> *Si marcaste todos SÍ, posees la madurez del Nivel 3 (AI-Orchestrated).*
+7. ¿Existe un flujo que detenga la ejecución de la IA para esperar confirmación humana explícita? `[ ]`
+8. ¿El 100% de las llamadas a herramientas se graban en un log de auditoría inmutable? `[ ]`
+9. ¿Existe una cuota límite de presupuesto que detenga el consumo si el agente enloquece? `[ ]`
+> *Si marcó todas como SÍ, posee la madurez del Nivel 3 (IA Orquestada).*
 
 ---
 
-## Siguientes Pasos
-Una vez determinado tu nivel actual, agenda una revisión de revisión con el CoE (Center of Excellence) de Inteligencia Artificial para autorizar el acceso a credenciales avanzadas de backend o clusters de modelos corporativos.
+## Próximos Pasos
+Una vez determinado su nivel actual, agende una revisión de alineación con el CoE (Centro de Excelencia) de IA para autorizar el acceso a credenciales de backend avanzadas o clústeres de modelos corporativos.

@@ -1,43 +1,43 @@
-# ADR 0014: Multi-Layer Distributed Caching Strategy
+# ADR 0014: Estrategia de Caché Distribuido Multi-Capa
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Repetitive, high-intensity read throughput during peak operational hours can completely starve physical PostgreSQL resources. Reading generic configuration catalogues, constant status lookups, or frequently access aggregates from raw disks leads to slow responses and unmanageable load scales.
+## Contexto
+El rendimiento de lectura repetitivo y de alta intensidad durante las horas pico de operación puede agotar completamente los recursos físicos de PostgreSQL. Leer catálogos de configuración genéricos, realizar búsquedas de estado constantes o acceder frecuentemente a agregados desde discos en bruto conduce a respuestas lentas y escalas de carga inmanejables.
 
-## Decision
-Evolve to a comprehensive **Multi-Layer Tiered Caching Strategy** utilizing CDN edge caching and distributed Redis nodes to intercept and resolve read requests as close to the user as possible:
+## Decisión
+Evolucionar hacia una **Estrategia de Caché Escalonado Multi-Capa** integral utilizando almacenamiento en caché en el borde de CDN y nodos Redis distribuidos para interceptar y resolver las peticiones de lectura lo más cerca posible del usuario:
 
-### Level 1: Public Edge (Optional & Configurable CDN)
-The system supports the integration of a Content Delivery Network (CDN) (e.g., Cloudflare, Akamai) deployed in front of the Kong Edge Gateway. This layer is **fully optional and dynamically configurable** in the infrastructure topology settings; small-scale deployments can disable this layer to route direct-to-origin, while Enterprise scaling can activate it via environment configuration.
-*   **Scope**: Static application assets (JS, CSS, images), multi-tenant branding files, and read-only public catalog APIs with low volatility.
-*   **Impact**: Zero server origin utilization for matching requests.
+### Nivel 1: Borde Público (CDN Opcional y Configurable)
+El sistema soporta la integración de una Red de Distribución de Contenidos (CDN) (ej. Cloudflare, Akamai) desplegada delante del Gateway Kong Edge. Esta capa es **totalmente opcional y configurable dinámicamente** en los ajustes de topología de infraestructura; los despliegues a pequeña escala pueden desactivar esta capa para enrutar directamente al origen, mientras que el escalado Enterprise puede activarla vía configuración de entorno.
+*   **Alcance**: Activos estáticos de la aplicación (JS, CSS, imágenes), archivos de branding multi-tenant, y APIs de catálogo público de solo lectura con baja volatilidad.
+*   **Impacto**: Cero utilización del origen del servidor para las peticiones que coincidan.
 
-### Level 2: Application Edge (BFF-Level Redis Cache)
-Deploy Redis caching namespaces directly bound to the Tier-2 NestJS BFF instances.
-*   **Scope**: Tailored View-Models, compiled dashboard JSON responses, and GraphQL aggregate segments.
-*   **Impact**: Intercepts repeat request cycles AT THE PERIMETER, preventing downstream synchronous gRPC traversals into the core API layer entirely.
+### Nivel 2: Borde de Aplicación (Caché Redis a Nivel de BFF)
+Desplegar namespaces de caché de Redis vinculados directamente a las instancias NestJS BFF del Tier-2.
+*   **Alcance**: Modelos de Vista a medida, respuestas JSON de tableros compilados y segmentos agregados de GraphQL.
+*   **Impacto**: Intercepta los ciclos de peticiones repetidas EN EL PERÍMETRO, evitando por completo los recorridos síncronos gRPC aguas abajo hacia la capa API central.
 
-### Level 3: Deep Core (Application Redis Cache)
-Retain dedicated shared Redis namespaces serving the Core API domain.
-*   **Scope**: Relational query sets, Authorization Graphs, active permission matrices, and dehydrated Domain aggregates.
-*   **Abstraction**: Access remains governed strictly via the `ICachePort` interface adhering to Hexagonal purity rules.
+### Nivel 3: Núcleo Profundo (Caché Redis de Aplicación)
+Retener namespaces Redis compartidos dedicados que sirvan al dominio de la API Core.
+*   **Alcance**: Conjuntos de consultas relacionales, Gráficos de Autorización, matrices de permisos activos y agregados de Dominio deshidratados.
+*   **Abstracción**: El acceso permanece gobernado estrictamente vía la interfaz `ICachePort` adhiriéndose a las reglas de pureza Hexagonal.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Offloads immense query volume from the relational SQL engine.
-- Achieves sustained API latency spikes frequently under <50ms for pre-warmed objects.
-- Boosts user engagement and experience smoothness for critical app zones.
+### Positivas
+- Descarga un inmenso volumen de consultas del motor SQL relacional.
+- Logra que los picos de latencia de la API se sitúen frecuentemente por debajo de <50ms para objetos pre-calentados.
+- Impulsa el compromiso del usuario y la fluidez de la experiencia para zonas críticas de la aplicación.
 
-### Negative
-- Cache Invalidation logic creates a non-trivial surface area for synchronization bugs ("Cache is hard" rule).
-- Introduces additional persistence-related hardware node setup in operation blueprints.
+### Negativas
+- La lógica de Invalidez de Caché crea un área de superficie no trivial para bugs de sincronización (regla de "El Caché es difícil").
+- Introduce la configuración de nodos de hardware adicionales relacionados con la persistencia en los blueprints de operación.
 
-## References
-- [Redis Cache-Aside Pattern](https://redis.io/docs/develop/cache/)
-- [ADR-0002: Clean Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
+## Referencias
+- [Patrón Redis Cache-Aside](https://redis.io/docs/develop/cache/)
+- [ADR-0002: Arquitectura Hexagonal Limpia](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)

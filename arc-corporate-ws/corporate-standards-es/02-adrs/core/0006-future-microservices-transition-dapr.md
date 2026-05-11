@@ -1,39 +1,39 @@
-# ADR 0006: Future Microservices Transition with Dapr Sidecars
+# ADR 0006: Transición Futura a Microservicios con Sidecars Dapr
 
-## Status
-Approved — Backlog (Phase 3 Milestone)
+## Estado
+Aprobado — Backlog (Hito de Fase 3)
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-The system is currently a Modular Monolith (single process, logically isolated bounded contexts). As business requirements scale — higher traffic, independent deployment cycles, or polyglot service integration — a clear and safe path to microservices is required. The transition must not require rewriting any domain logic.
+## Contexto
+El sistema es actualmente un Monolito Modular (un solo proceso, contextos delimitados lógicamente aislados). A medida que los requisitos de negocio escalen —mayor tráfico, ciclos de despliegue independientes o integración de servicios políglotas— se requiere un camino claro y seguro hacia los microservicios. La transición no debe requerir la reescritura de ninguna lógica de dominio.
 
-## Decision
-Adopt **Dapr (Distributed Application Runtime)** as the microservices sidecar runtime when splitting the monolith into independent services.
+## Decisión
+Adoptar **Dapr (Distributed Application Runtime)** como el runtime sidecar de microservicios cuando se divida el monolito en servicios independientes.
 
-**Migration milestones:**
+**Hitos de migración:**
 
-| Milestone | Description |
+| Hito | Descripción |
 | :--- | :--- |
-| **M1 — Modular Monolith** | Current state. Single process with isolated bounded context modules. |
-| **M2 — Service Extraction** | High-traffic or independently-deployable contexts extracted as Nx micro-projects. Each gets its own database schema (ADR-0031) and communicates via gRPC or Dapr. |
-| **M3 — Full Mesh** | All services run with Dapr Sidecars. Service-to-Service invocation, Pub/Sub, and State are managed by Dapr components (declarative YAML). |
+| **M1 — Monolito Modular** | Estado actual. Proceso único con módulos de contexto delimitado aislados. |
+| **M2 — Extracción de Servicios** | Contextos de alto tráfico o desplegables independientemente extraídos como microproyectos Nx. Cada uno obtiene su propio esquema de base de datos (ADR-0031) y se comunica vía gRPC o Dapr. |
+| **M3 — Malla Completa (Full Mesh)** | Todos los servicios corren con Sidecars de Dapr. La invocación de servicio a servicio, Pub/Sub y el Estado son gestionados por componentes Dapr (YAML declarativo). |
 
-**Key constraint:** The domain Core must change **zero lines** when Dapr is introduced. All Dapr SDK calls are wrapped behind existing `IEventBusPort` and `ICachePort` abstractions (ADR-0015, ADR-0014).
+**Restricción clave:** El Core de dominio debe cambiar **cero líneas** cuando se introduzca Dapr. Todas las llamadas al SDK de Dapr se envuelven detrás de las abstracciones existentes `IEventBusPort` e `ICachePort` (ADR-0015, ADR-0014).
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Polyglot architecture: other services can be written in Go or Python while sharing Dapr capabilities.
-- Swapping infrastructure (Redis → Kafka, PostgreSQL → Cosmos DB) requires only a Dapr component YAML change.
-- Native retry policies, circuit breakers, and distributed tracing built into Dapr sidecar.
+### Positivas
+- Arquitectura políglota: otros servicios pueden escribirse en Go o Python mientras comparten las capacidades de Dapr.
+- El intercambio de infraestructura (Redis -> Kafka, PostgreSQL -> Cosmos DB) solo requiere un cambio de YAML en el componente Dapr.
+- Políticas nativas de reintento, circuit breakers y trazado distribuido integrados en el sidecar de Dapr.
 
-### Negative
-- Adds Kubernetes/container orchestration as a prerequisite for the full mesh phase.
-- Local Dapr development adds sidecar process overhead per service.
+### Negativas
+- Añade Kubernetes/orquestación de contenedores como un prerrequisito para la fase de malla completa.
+- El desarrollo local con Dapr añade una sobrecarga de proceso sidecar por servicio.
 
-## References
-- [ADR-0015: Event-Driven Architecture](./0015-event-driven-architecture-intra-domain.md)
-- [ADR-0031: Schema-per-Context & Domain Event Catalog](./0031-schema-per-context-domain-event-catalog.md)
-- [Dapr Documentation](https://dapr.io)
+## Referencias
+- [ADR-0015: Arquitectura Dirigida por Eventos](../02-adrs/core/0015-event-driven-architecture-intra-domain.md)
+- [ADR-0031: Esquema por Contexto y Catálogo de Eventos de Dominio](../02-adrs/core/0031-schema-per-context-domain-event-catalog.md)
+- [Documentación de Dapr](https://dapr.io)

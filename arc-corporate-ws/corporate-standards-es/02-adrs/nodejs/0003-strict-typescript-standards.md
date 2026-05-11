@@ -1,18 +1,18 @@
-# ADR 0003: Strict TypeScript Standards
+# ADR 0003: Estándares Estrictos de TypeScript
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Loosely typed TypeScript (`any` usage, missing return types, implicit `any` from libraries) creates the same class of bugs as plain JavaScript while maintaining a false sense of type safety. This negates the primary value of TypeScript in enterprise development.
+## Contexto
+El TypeScript débilmente tipado (uso de `any`, falta de tipos de retorno, `any` implícito proveniente de librerías) crea la misma clase de bugs que el JavaScript plano mientras mantiene una falsa sensación de seguridad de tipos. Esto anula el valor principal de TypeScript en el desarrollo empresarial.
 
-## Decision
-Enforce strict TypeScript configuration and ESLint rules across the entire monorepo.
+## Decisión
+Imponer una configuración estricta de TypeScript y reglas de ESLint a través de todo el monorepo.
 
-**`tsconfig.json` mandatory flags:**
+**Banderas obligatorias en `tsconfig.json`:**
 ```json
 {
   "compilerOptions": {
@@ -25,25 +25,25 @@ Enforce strict TypeScript configuration and ESLint rules across the entire monor
 }
 ```
 
-**ESLint mandatory rules:**
+**Reglas obligatorias de ESLint:**
 - `@typescript-eslint/no-explicit-any`: error
 - `@typescript-eslint/explicit-function-return-type`: error
 - `@typescript-eslint/no-floating-promises`: error
-- `eslint-plugin-boundaries`: enforces layer import rules (Core cannot import Infrastructure)
+- `eslint-plugin-boundaries`: impone las reglas de importación de capas (Core no puede importar de Infraestructura)
 
-All rules are enforced in CI — PRs with TypeScript errors are blocked from merging.
+Todas las reglas se imponen en CI — los PRs con errores de TypeScript se bloquean impidiendo su fusión.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Eliminates an entire class of null/undefined runtime errors at compile time.
-- Enforces self-documenting code via explicit return types.
-- `eslint-plugin-boundaries` makes hexagonal layer violations a build error, not a code review finding.
+### Positivas
+- Elimina toda una clase de errores en tiempo de ejecución de nulo/indefinido en el momento de la compilación.
+- Impone código autodocumentado a través de tipos de retorno explícitos.
+- `eslint-plugin-boundaries` hace que las violaciones de capas hexagonales sean un error de construcción, no un hallazgo de revisión de código.
 
-### Negative
-- Higher initial development overhead — developers must be explicit about all types.
-- Third-party libraries with poor TypeScript definitions require careful wrapper typing.
+### Negativas
+- Mayor sobrecarga de desarrollo inicial — los desarrolladores deben ser explícitos con todos los tipos.
+- Las librerías de terceros con definiciones de TypeScript pobres requieren un envoltorio de tipado cuidadoso.
 
-## References
-- [ADR-0001: Monorepo Orchestration](./0001-monorepo-orchestration-nx.md)
-- [ADR-0002: Clean Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
+## Referencias
+- [ADR-0001: Orquestación de Monorepo](../02-adrs/core/0001-monorepo-orchestration-nx.md)
+- [ADR-0002: Arquitectura Hexagonal Limpia](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)

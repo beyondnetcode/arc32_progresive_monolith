@@ -1,45 +1,45 @@
-# Harness Recommendations by Runtime
+# Recomendaciones de Harness por Runtime
 
-Recomendaciones oficiales para implementar el harness según los runtimes aprobados en la matriz tecnológica corporativa.
+Recomendaciones oficiales para implementar el harness de acuerdo con los runtimes autorizados en la matriz tecnológica corporativa.
 
 ---
 
 ## 🟢 Node.js / TypeScript
 
-El ecosistema JavaScript es el más maduro en frameworks de soporte agéntico gracias a su asincronía y dinamismo natural.
+El ecosistema de JavaScript es el más maduro en frameworks de soporte agéntico gracias a su asincronía y dinamismo naturales.
 
 *   **Frameworks de Harness Recomendados:**
-    *   **Vercel AI SDK:** Estándar para streaming y structured output rápido.
-    *   **LangChain.js / LangGraph:** Para flujos complejos de State Graph.
-    *   **Mastra:** Recomendado para la construcción ligera de micro-agentes locales con tool-calling optimizado.
-*   **Tool Calling:** Utilizar JSON Schema vía Zod para definir las interfaces de entrada de las herramientas, garantizando tipado fuerte (Type-Safety) desde el modelo hasta la ejecución del código.
-*   **AGENTS.md Integraion:** Consumir vía Nx o NPM scripts nativos.
+    *   **Vercel AI SDK:** Estándar para streaming rápido y salida estructurada.
+    *   **LangChain.js / LangGraph:** Para flujos complejos de grafos de estado.
+    *   **Mastra:** Recomendado para construir micro-agentes locales ligeros con llamadas a herramientas optimizadas.
+*   **Llamadas a Herramientas (Tool Calling):** Usar JSON Schema vía Zod para definir las interfaces de entrada de las herramientas, garantizando un tipado fuerte (Type-Safety) desde el modelo hasta la ejecución del código.
+*   **Integración AGENTS.md:** Consumir vía Nx o scripts NPM nativos.
 *   **Gobernanza:** Integración nativa con Husky para verificaciones pre-commit instantáneas.
 
 ---
 
 ## 🔵 .NET / C#
 
-El entorno .NET destaca por su robustez tipada y rendimiento en procesos background de larga duración con supervisión agéntica.
+El entorno .NET sobresale en robustez tipada y rendimiento en procesos de fondo de larga duración con supervisión agéntica.
 
-*   **Framework de Harness Recomendado:** 
-    *   **Microsoft Semantic Kernel:** La opción canónica corporativa para integrar modelos con código nativo C#.
+*   **Frameworks de Harness Recomendados:** 
+    *   **Microsoft Semantic Kernel:** La elección corporativa canónica para integrar modelos con código C# nativo.
     *   **Microsoft AutoGen:** Para simulaciones multi-agente experimentales.
-*   **Tool Calling:** Utilización de Reflection nativo de C# y anotaciones/atributos (`[KernelFunction]`) para exponer métodos del dominio directamente al modelo sin wrappers pesados.
-*   **Casos de Uso Típicos:** Procesamiento Batch de archivos complejos, extracción de entidades en flujos legacy y validación inteligente de data.
-*   **Hooks:** Integración estricta con `dotnet test` y Roslyn Analyzers en tiempo de pre-commit.
+*   **Llamadas a Herramientas:** Utilizar Reflexión nativa de C# y anotaciones/atributos (`[KernelFunction]`) para exponer métodos de dominio directamente al modelo sin envoltorios pesados.
+*   **Casos de Uso Típicos:** Procesamiento de lotes de archivos complejos, extracción de entidades en flujos legacy y validación de datos inteligente.
+*   **Hooks:** Integración estricta con `dotnet test` y Roslyn Analyzers durante el pre-commit.
 
 ---
 
 ## 🟣 Android / Kotlin
 
-El rol de la IA en dispositivos móviles está acotado por el consumo de batería, memoria y latencia. 
+El rol de la IA en dispositivos móviles está acotado por el consumo de batería, la memoria y la latencia.
 
-*   **Alcance Acotado:** Los agentes en Android deben ser diseñados típicamente como **clientes** que solicitan orquestación a un agente robusto alojado en Backend. Se desaconseja la ejecución de loops agénticos recursivos complejos en local.
+*   **Alcance Acotado:** Los agentes de Android típicamente deberían diseñarse como **clientes** que solicitan orquestación de un agente robusto alojado en el backend. Se desaconsejan los bucles agénticos recursivos y complejos en el runtime local.
 *   **SDKs Recomendados:**
-    *   **Google AI SDK for Android:** Para inferencia directa con Gemini en tareas rápidas.
-    *   **Firebase Genkit:** Integración simplificada si ya se cuenta con ecosistema Firebase.
+    *   **Google AI SDK para Android:** Para inferencia directa con Gemini en tareas rápidas.
+    *   **Firebase Genkit:** Integración simplificada si el ecosistema Firebase ya está implementado.
 *   **Casos de Uso:**
-    *   Interfaces Generativas Dinámicas basadas en el estado actual de la app.
-    *   Asistentes de ayuda contextual offline (si se usa AICore o modelos on-device pequeños).
-    *   Extracción de datos estructurados desde imágenes locales (OCR Inteligente).
+    *   UI Generativa Dinámica basada en el estado actual de la app.
+    *   Asistentes de ayuda contextual con capacidad offline (si se usa AICore o modelos pequeños en el dispositivo).
+    *   Extracción de datos estructurados de imágenes locales (OCR Inteligente).

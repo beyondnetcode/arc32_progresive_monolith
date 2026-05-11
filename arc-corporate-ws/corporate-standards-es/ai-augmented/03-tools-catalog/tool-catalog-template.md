@@ -1,61 +1,39 @@
-# Plantilla: Documentación de Tool Corporativa
+# Plantilla de Documentación de Herramienta
 
-Utilice esta plantilla para dar de alta cualquier nueva herramienta aprobada dentro del catálogo de herramientas de la Arquitectura Corporativa.
+Cualquier herramienta personalizada expuesta al agente debe seguir este patrón de documentación interna canónico para habilitar una evaluación apropiada antes de pasar a producción.
 
 ---
 
-# Tool: {nombre_unico_en_snake_case}
+## [NOMBRE_SISTEMA_HERRAMIENTA]
+*(Ej., `order_management_cancel_order`)*
 
-## Metadata
-- **Dominio:** [Inventario / Logística / Autenticación / Finanzas / Soporte]
-- **Runtime Principal:** [Node.js / .NET / Python / MCP Server]
-- **Estado de Gobernanza:** [En Evaluación / Aprobada / Deprecada]
-- **Versión Actual:** X.Y.Z
+### Intento y Racional
+Explique brevemente **por qué** existe esta herramienta y en qué escenario el modelo debe invocarla.
 
-## Descripción para el Modelo
-> [!NOTE]
-> Copie y pegue exactamente el string que se pasa al LLM en el campo description del tool call.
-
-"ESTA HERRAMIENTA HACE [ACCIÓN] CUANDO [CONDICIÓN]. UTILÍZALA PARA [OBJETIVO]. NO LA UTILICES SI [RESTRICCIÓN]."
-
-## Parámetros de Entrada
-Definición JSON Schema o tabla de Zod/Type:
-
-| Nombre | Tipo | Requerido | Descripción Detallada para el Modelo |
+### Firma y Argumentos
+| Argumento | Tipo | ¿Requerido? | Descripción y Rango |
 | :--- | :--- | :--- | :--- |
-| `param1` | `string` | ✅ Sí | El identificador del recurso en formato UUID. |
-| `param2` | `number` | ❌ No | Valor de ajuste opcional. Valor por defecto: 1.0. |
+| `arg_uno` | `string` | Sí | Explicación del uso. |
+| `arg_two` | `enum` | No | Conjunto de valores permitidos `[A, B, C]`. |
 
-## Esquema de Respuesta (Salida)
-Qué espera recibir el agente para continuar razonando.
+### Estrategia de Verificación Determinista
+¿Cómo se valida la integridad de la salida?
+- [ ] Cobertura de pruebas unitarias (%)
+- [ ] Validación de Esquema JSON
+- [ ] Aserciones de precondición (Ej., No se puede cancelar una orden ya entregada)
 
-| Campo | Tipo | Descripción del Valor |
-| :--- | :--- | :--- |
-| `status` | `string` | Estado de la operación (`SUCCESS`, `ERROR_RETRY`, `ERROR_FATAL`). |
-| `data` | `object` | El payload de retorno necesario para la tarea. |
+### Tabla de Efectos Secundarios
+*   **¿Modifica Base de Datos?** [Sí/No]
+*   **¿Envía Notificación externa?** [Sí/No]
+*   **¿Costo financiero por uso?** [Costo aproximado en cómputo/llamadas a API]
 
-## Ejemplo Real de Uso
-
-**Request de la IA:**
+### Ejemplo de Uso para el Modelo
 ```json
 {
-  "tool_name": "nombre_tool",
-  "arguments": { "param1": "valor" }
+  "name": "order_management_cancel_order",
+  "arguments": {
+    "orderId": "TX-9812",
+    "reason": "CUSTOMER_REQUEST"
+  }
 }
 ```
-
-**Response del Backend:**
-```json
-{
-  "status": "SUCCESS",
-  "payload": { "result": "ok" }
-}
-```
-
-## Permisos & Roles Requeridos
-¿Qué identidades de agentes o APIs pueden invocar esta capacidad?
-*   Rol: `agent-customer-support-write`
-*   Sandbox activado: `Sí/No`
-
-## Notas de Seguridad y Rate Limits
-Efectos secundarios en sistemas externos, datos de PII que fluyen a través de la tool, límites de invocación por minuto, etc.

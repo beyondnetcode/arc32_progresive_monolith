@@ -1,31 +1,31 @@
-# ADR 0013: Cloud Infrastructure Topology and Disaster Recovery (DR)
+# ADR 0013: Topología de Infraestructura Cloud y Recuperación ante Desastres (DR)
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-The business operations handled by this architecture demand 24/7 continuous execution stability. A datacenter component failure or broad availability zone blackout cannot bring operational critical path processing offline for manual hours. Our distribution plan across target cloud topologies requires explicit policy definitions.
+## Contexto
+Las operaciones de negocio manejadas por esta arquitectura demandan una estabilidad de ejecución continua las 24 horas del día, los 7 días de la semana. El fallo de un componente del centro de datos o un apagón amplio de una zona de disponibilidad no pueden dejar fuera de línea el procesamiento de la ruta crítica operativa durante horas manuales. Nuestro plan de distribución a través de las topologías de nube objetivo requiere definiciones de política explícitas.
 
-## Decision
-Design infrastructure topology targeting Cloud-Native patterns enforcing high resilience and instant failover potential:
+## Decisión
+Diseñar la topología de infraestructura apuntando a patrones Cloud-Native que impongan alta resiliencia y potencial de failover instantáneo:
 
-1. **Automated Orchestration**: Containers are strictly deployed into managed cluster platforms (e.g., Kubernetes - AKS/EKS or Container Apps) capable of autonomous Horizontal Pod Autoscaling (HPA) to balance burst events.
-2. **Multi-AZ Strategy**: Standard operation occurs active-active across several explicit Availability Zones. A secondary backup region remains in warm-standby for immediate disaster pivot.
-3. **Global Network Entry**: Deploy a unified external point of ingress (e.g., Cloudflare/Azure Front Door) to analyze health and perform instant routing redirect across regions if local cluster degradation is detected.
+1. **Orquestación Automatizada**: Los contenedores se despliegan estrictamente en plataformas de clúster gestionadas (ej. Kubernetes - AKS/EKS o Container Apps) capaces de Autoscaling Horizontal de Pods (HPA) autónomo para balancear eventos de ráfaga.
+2. **Estrategia Multi-AZ**: La operación estándar ocurre de forma activo-activo a través de varias Zonas de Disponibilidad (Availability Zones) explícitas. Una región de respaldo secundaria permanece en warm-standby para un pivot de desastre inmediato.
+3. **Entrada de Red Global**: Desplegar un punto unificado de ingreso externo (ej. Cloudflare/Azure Front Door) para analizar la salud y realizar redirección de enrutamiento instantánea entre regiones si se detecta degradación del clúster local.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Preserves seamless uptime commitments to global corporate operational chains.
-- Mitigates damage potential from vendor or structural zone outages.
+### Positivas
+- Preserva los compromisos de tiempo de actividad (uptime) sin interrupciones para las cadenas operativas corporativas globales.
+- Mitiga el daño potencial de interrupciones estructurales o de zonas de proveedores.
 
-### Negative
-- Active-Active distribution mathematically doubles infrastructure run-costs.
-- Requires sophisticated CI/CD pipelines engineered for multi-target orchestration setups.
+### Negativas
+- La distribución Activo-Activo duplica matemáticamente los costos de ejecución de infraestructura.
+- Requiere pipelines CI/CD sofisticados diseñados para configuraciones de orquestación de múltiples objetivos.
 
-## References
-- [ADR-0011: Fault Tolerance](./0011-fault-tolerance-resiliency-patterns.md)
-- [ADR-0028: Self-Hosted Hybrid Strategy](./0028-self-hosted-hybrid-infrastructure-on-premise.md)
+## Referencias
+- [ADR-0011: Tolerancia a Fallos](../02-adrs/core/0011-fault-tolerance-resiliency-patterns.md)
+- [ADR-0028: Estrategia Híbrida Autohospedada](../02-adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md)

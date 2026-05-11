@@ -1,31 +1,31 @@
-# ADR 0019: Tactical Design Patterns for Future-Proofing
+# ADR 0019: Patrones de Diseño Táctico para Blindaje a Futuro
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Tight coupling between domain controllers and infrastructure (like throwing `HttpException` inside a database service) destroys code reusability. We need foundational idioms ensuring domain logic flows cleanly independent of network transports or failure handlers.
+## Contexto
+El acoplamiento estrecho entre controladores de dominio e infraestructura (como lanzar una `HttpException` dentro de un servicio de base de datos) destruye la reutilización del código. Necesitamos modismos fundacionales que aseguren que la lógica de dominio fluye limpiamente de forma independiente de los transportes de red o los manejadores de fallos.
 
-## Decision
-Mandate specific Functional and Structure patterns protecting core purity:
+## Decisión
+Imponer patrones Funcionales y de Estructura específicos que protejan la pureza core:
 
-1. **The Result Pattern**: Eliminate raw error throwing from inside application use cases. Methods strictly return a typed functional `Result<V, E>` wrapper. Outer adapters (e.g., HTTP Controller) interrogate `result.isFailure()` and map domain domain errors to transport errors (e.g., 404).
-2. **Null Object Avoidance**: Forbid standard `null` usage for common logical outcomes. Return strongly typed semantic empty objects or `Optional` representations to force client null-handling verification.
-3. **Decorator Boundary separation**: Offload global cross-cutting filters (metrics, tracing, logging) into transparent Typescript method Decorators at the entry gate, preventing telemetry poisoning of actual algorithm code.
-4. **Unit of Work Pattern**: All database state mutations within a single Application Use Case transaction must operate under an atomic `IUnitOfWork` context. This guarantees that multiple repository updates and secondary effects (like audit logging inserts) either commit successfully together as a single transaction or rollback totally upon any intermediary failure, preserving consistent aggregate states.
+1. **El Patrón Result**: Eliminar el lanzamiento de errores en bruto (raw error throwing) desde el interior de los casos de uso de la aplicación. Los métodos devuelven estrictamente un envoltorio funcional tipado `Result<V, E>`. Los adaptadores externos (ej. Controlador HTTP) interrogan `result.isFailure()` y mapean los errores de dominio a errores de transporte (ej. 404).
+2. **Evitación del Null Object**: Prohibir el uso estándar de `null` para resultados lógicos comunes. Devolver objetos vacíos semánticos fuertemente tipados o representaciones `Optional` para forzar la verificación del manejo de nulos por parte del cliente.
+3. **Separación de Límites mediante Decoradores**: Descargar filtros transversales globales (métricas, rastreo, registro) en Decoradores de métodos transparentes de Typescript en la puerta de entrada, previniendo el envenenamiento de telemetría del código del algoritmo real.
+4. **Patrón Unit of Work**: Todas las mutaciones de estado de la base de datos dentro de una sola transacción de Caso de Uso de Aplicación deben operar bajo un contexto atómico `IUnitOfWork`. Esto garantiza que múltiples actualizaciones de repositorio y efectos secundarios (como inserciones de registros de auditoría) se confirmen exitosamente juntos como una única transacción o se reviertan totalmente ante cualquier fallo intermediario, preservando estados agregados consistentes.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Guarantees flawless transitions to alternate transports (gRPC, MessageBus) requiring zero edits inside logic modules.
-- Strongly typed error vectors produce self-documenting safety trails.
+### Positivas
+- Garantiza transiciones impecables a transportes alternativos (gRPC, MessageBus) requiriendo cero ediciones dentro de los módulos de lógica.
+- Los vectores de error fuertemente tipados producen pistas de seguridad autodocumentadas.
 
-### Negative
-- Introduces verbal noise (checking success booleans) for developers habituated to unstructured try/catch cascades.
+### Negativas
+- Introduce ruido verbal (comprobar booleanos de éxito) para desarrolladores habituados a cascadas no estructuradas de try/catch.
 
-## References
-- [Result Pattern Guide](https://khalilstemmler.com/articles/enterprise-typescript-nodejs/functional-error-handling-design-patterns/)
-- [ADR-0029: Tactical DDD Primitives](./0029-tactical-ddd-primitives-library.md)
+## Referencias
+- [Guía del Patrón Result](https://khalilstemmler.com/articles/enterprise-typescript-nodejs/functional-error-handling-design-patterns/)
+- [ADR-0029: Primitivas DDD Tácticas](../02-adrs/nodejs/0029-tactical-ddd-primitives-library.md)

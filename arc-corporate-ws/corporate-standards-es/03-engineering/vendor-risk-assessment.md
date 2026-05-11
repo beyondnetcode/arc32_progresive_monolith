@@ -1,51 +1,51 @@
-﻿# Vendor Lock-In & Financial Risk Assessment
+# Evaluación de Bloqueo de Proveedor (Vendor Lock-In) y Riesgo Financiero
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-10
 
-## Context
-As the Reference System adopts various frameworks, databases, and third-party tools, we must continuously evaluate the **"Build vs. Buy"** decisions to prevent unexpected financial burdens, licensing conflicts, or vendor lock-in.
+## Contexto
+A medida que el Sistema de Referencia adopta varios frameworks, bases de datos y herramientas de terceros, debemos evaluar continuamente las decisiones de **"Construir vs. Comprar"** para prevenir cargas financieras inesperadas, conflictos de licencias o el bloqueo del proveedor.
 
-This document serves as the architectural baseline for evaluating the current technology stack against cost scalability, open-source compliance, and operational maintenance.
-
----
-
-## 1. Core Frameworks & Languages
-**Status:** 🟢 Zero Risk
-
-The application core is completely insulated from vendor lock-in thanks to strict adherence to Hexagonal Architecture (ADR-0002).
-* **TypeScript & Node.js**: Open Source (Apache 2.0 / MIT).
-* **NestJS**: Open Source (MIT), highly adopted enterprise framework.
-* **Nx Monorepo**: Open Source (MIT). *Note: Nx Cloud offers SaaS caching, but local caching is 100% free.*
+Este documento sirve como línea base arquitectónica para evaluar el stack tecnológico actual frente a la escalabilidad de costos, el cumplimiento de código abierto y el mantenimiento operativo.
 
 ---
 
-## 2. Identified Infrastructure Risks & Mitigations
+## 1. Frameworks Core y Lenguajes
+**Estado:** ✅ Riesgo Cero
 
-### 🔴 High Financial Risk: Identity Provider (IdP)
-* **Context**: [ADR-0020](../03-adrs/0020-identity-provider-abstraction-strategy.md) abstracts the Identity Provider, allowing integrations with SaaS solutions like Auth0 or Azure Entra ID.
-* **The Risk**: Commercial SaaS Identity platforms bill by Monthly Active Users (MAU) or M2M tokens. At a high B2C or B2B scale, operational costs can skyrocket exponentially.
-* **Mitigation Strategy**: If licensing costs become prohibitive, the infrastructure adapter must be swapped to **Keycloak** (100% Open Source and free). However, this shifts the financial cost from licensing to DevOps maintenance (Kubernetes scaling, database management).
-
-### 🟡 Medium Licensing Risk: Redis Distributed Caching
-* **Context**: [ADR-0014](../03-adrs/0014-distributed-caching-strategy-redis.md) mandates Redis for caching.
-* **The Risk**: Redis Inc. recently changed its licensing from BSD to RSALv2 (Source Available, not strictly OSI Open Source). While free for internal usage, it poses legal concerns for managed service hosting.
-* **Mitigation Strategy**: In case of strict open-source compliance requirements or self-hosted deployment (ADR-0028), the operations team is authorized to use **Valkey** (the Linux Foundation Open Source fork of Redis) as a drop-in replacement.
-
-### 🟡 Medium Maintenance Risk: Feature Flag Engine
-* **Context**: [ADR-0017](../03-adrs/0017-feature-flagging-strategy.md) utilizes Infrastructure adapters for Feature Flags (e.g., Unleash, ConfigCat).
-* **The Risk**: Commercial platforms like LaunchDarkly or Unleash Enterprise have high subscription fees. The free, open-source version of Unleash requires self-hosting.
-* **Mitigation Strategy**: The product team must determine if the DevOps bandwidth exists to host and maintain the open-source Unleash Server. If not, budget must be allocated for a cost-effective SaaS alternative like ConfigCat. The core codebase will remain unaffected due to the `IFeatureTogglePort`.
-
-### 🟢 Low Risk: Observability Stack
-* **Context**: [ADR-0007](../03-adrs/0007-observability-telemetry-loki-opentelemetry.md) uses the LGTM stack (Loki, Grafana, Tempo) and OpenTelemetry.
-* **The Risk**: Grafana uses an AGPLv3 license.
-* **Mitigation Strategy**: As long as the Reference Skeleton team only consumes Grafana internally for monitoring and does not distribute a modified version of the Grafana source code as a commercial product, there is zero legal or financial risk.
+El núcleo de la aplicación está completamente aislado del bloqueo de proveedor gracias a la estricta adherencia a la Arquitectura Hexagonal (ADR-0002).
+* **TypeScript & Node.js**: Código Abierto (Apache 2.0 / MIT).
+* **NestJS**: Código Abierto (MIT), framework empresarial altamente adoptado.
+* **Nx Monorepo**: Código Abierto (MIT). *Nota: Nx Cloud ofrece caché SaaS, pero el caché local es 100% gratuito.*
 
 ---
 
-## Conclusion
-The current Reference Skeleton architecture has been deliberately designed to minimize lock-in. Any commercial tool (IdP, Feature Flags, Database) is kept entirely outside the domain boundaries using ports and adapters, ensuring that the business can instantly pivot to open-source alternatives if vendor pricing models change.
+## 2. Riesgos de Infraestructura Identificados y Mitigaciones
+
+### 🛑 Riesgo Financiero Alto: Proveedor de Identidad (IdP)
+* **Contexto**: [ADR-0020](../02-adrs/core/0020-identity-provider-abstraction-strategy.md) abstrae el Proveedor de Identidad, permitiendo integraciones con soluciones SaaS como Auth0 o Azure Entra ID.
+* **El Riesgo**: Las plataformas comerciales SaaS de Identidad facturan por Usuarios Activos Mensuales (MAU) o tokens M2M. A una alta escala B2C o B2B, los costos operativos pueden dispararse exponencialmente.
+* **Estrategia de Mitigación**: Si los costos de licencia se vuelven prohibitivos, el adaptador de infraestructura debe cambiarse a **Keycloak** (100% Código Abierto y gratuito). Sin embargo, esto traslada el costo financiero de la licencia al mantenimiento de DevOps (escalado de Kubernetes, gestión de base de datos).
+
+### ⚠️ Riesgo de Licenciamiento Medio: Caché Distribuido Redis
+* **Contexto**: [ADR-0014](../02-adrs/core/0014-distributed-caching-strategy-redis.md) impone Redis para el almacenamiento en caché.
+* **El Riesgo**: Redis Inc. cambió recientemente su licencia de BSD a RSALv2 (Fuente Disponible, no estrictamente Código Abierto OSI). Aunque es gratuito para uso interno, plantea preocupaciones legales para el alojamiento de servicios gestionados.
+* **Estrategia de Mitigación**: En caso de requisitos estrictos de cumplimiento de código abierto o despliegue autohospedado (ADR-0028), el equipo de operaciones está autorizado a usar **Valkey** (el fork de Código Abierto de Redis de la Linux Foundation) como un reemplazo directo.
+
+### ⚠️ Riesgo de Mantenimiento Medio: Motor de Feature Flags
+* **Contexto**: [ADR-0017](../02-adrs/core/0017-feature-flagging-strategy.md) utiliza adaptadores de Infraestructura para Feature Flags (ej. Unleash, ConfigCat).
+* **El Riesgo**: Las plataformas comerciales como LaunchDarkly o Unleash Enterprise tienen altas cuotas de suscripción. La versión gratuita y de código abierto de Unleash requiere autohospedaje.
+* **Estrategia de Mitigación**: El equipo del producto debe determinar si existe el ancho de banda de DevOps para alojar y mantener el servidor Unleash de código abierto. Si no, se debe asignar presupuesto para una alternativa SaaS rentable como ConfigCat. La base de código central no se verá afectada debido al `IFeatureTogglePort`.
+
+### 🟢 Riesgo Bajo: Stack de Observabilidad
+* **Contexto**: [ADR-0007](../02-adrs/nodejs/0007-observability-telemetry-loki-opentelemetry.md) utiliza el stack LGTM (Loki, Grafana, Tempo) y OpenTelemetry.
+* **El Riesgo**: Grafana utiliza una licencia AGPLv3.
+* **Estrategia de Mitigación**: Mientras el equipo del Esqueleto de Referencia solo consuma Grafana internamente para monitorización y no distribuya una versión modificada del código fuente de Grafana como un producto comercial, el riesgo legal o financiero es cero.
+
+---
+
+## Conclusión
+La arquitectura actual del Esqueleto de Referencia ha sido diseñada deliberadamente para minimizar el bloqueo. Cualquier herramienta comercial (IdP, Feature Flags, Base de Datos) se mantiene completamente fuera de los límites del dominio utilizando puertos y adaptadores, asegurando que el negocio pueda pivotar instantáneamente a alternativas de código abierto si los modelos de precios de los proveedores cambian.

@@ -1,34 +1,34 @@
-# ADR 0004: Frontend Offline Resilience
+# ADR 0004: Resiliencia Offline del Frontend
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Web applications that depend entirely on server connectivity provide a poor user experience when network conditions are degraded (mobile connections, slow corporate VPNs). Users lose unsaved state and receive cryptic error messages instead of graceful degradation.
+## Contexto
+Las aplicaciones web que dependen enteramente de la conectividad con el servidor proporcionan una experiencia de usuario deficiente cuando las condiciones de la red se degradan (conexiones móviles, VPNs corporativas lentas). Los usuarios pierden el estado no guardado y reciben mensajes de error crípticos en lugar de una degradación elegante.
 
-## Decision
-Implement offline resilience in the frontend layer using **React Query** (TanStack Query) as the primary client-side state and cache management solution.
+## Decisión
+Implementar resiliencia offline en la capa del frontend utilizando **React Query** (TanStack Query) como la solución principal para la gestión del estado y la caché en el lado del cliente.
 
-Key strategies:
-- **Stale-While-Revalidate**: Serve cached data immediately while fetching updates in the background.
-- **Optimistic Updates**: Apply mutations to the UI instantly before the server confirms, with automatic rollback on failure.
-- **Background Sync**: Queue mutations made offline and replay them when connectivity is restored.
-- **Retry Logic**: Automatic exponential backoff for failed requests (configurable per query).
+Estrategias clave:
+- **Stale-While-Revalidate**: Servir datos cacheados inmediatamente mientras se obtienen actualizaciones en segundo plano.
+- **Optimistic Updates** (Actualizaciones Optimistas): Aplicar mutaciones a la UI instantáneamente antes de que el servidor las confirme, con rollback automático en caso de fallo.
+- **Background Sync** (Sincronización en Segundo Plano): Encolar mutaciones realizadas sin conexión y reproducirlas cuando se restaure la conectividad.
+- **Lógica de Reintento**: Backoff exponencial automático para peticiones fallidas (configurable por consulta).
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Users see data immediately on navigation — no loading spinners for cached content.
-- Forms and mutations feel instantaneous via optimistic updates.
-- Graceful offline mode: the app remains usable for read operations even without connectivity.
+### Positivas
+- Los usuarios ven los datos inmediatamente al navegar — sin indicadores de carga (spinners) para contenido cacheado.
+- Los formularios y mutaciones se sienten instantáneos vía actualizaciones optimistas.
+- Modo offline elegante: la aplicación sigue siendo utilizable para operaciones de lectura incluso sin conectividad.
 
-### Negative
-- Optimistic updates require careful rollback logic for complex, multi-step mutations.
-- Developers must understand the cache invalidation model to prevent stale data issues.
+### Negativas
+- Las actualizaciones optimistas requieren una lógica de rollback cuidadosa para mutaciones complejas de múltiples pasos.
+- Los desarrolladores deben entender el modelo de invalidación de caché para prevenir problemas de datos obsoletos.
 
-## References
-- [TanStack Query Documentation](https://tanstack.com/query)
-- [ADR-0011: Fault Tolerance & Resiliency Patterns](./0011-fault-tolerance-resiliency-patterns.md)
+## Referencias
+- [Documentación de TanStack Query](https://tanstack.com/query)
+- [ADR-0011: Patrones de Resiliencia y Tolerancia a Fallos](../02-adrs/core/0011-fault-tolerance-resiliency-patterns.md)

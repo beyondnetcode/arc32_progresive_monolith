@@ -1,235 +1,235 @@
-# 🔬 Corporate Stack Audit & Technology Dictamen — May 2026
+# 🔬 Auditoría Corporativa del Stack y Dictamen Tecnológico — Mayo 2026
 
-**Role**: bMAD Stack Audit Agent  
-**Mandate**: Authoritative lifecycle validation and verification of authorized production technologies.  
-**Baseline Period**: Simulated Environment May 11, 2026.
-
----
-
-# 🌐 EXECUTIVE SUMMARY & MASTER ALERTS
-
-### 🚨 TOP CRITICAL ALERTS (RED STATUS)
-1.  **Kong OSS Abandonment**: Kong OSS development halted after v3.9.1 with zero active Docker publishing. Immediate migration to **Traefik Proxy 3.7+** or **NGINX OSS** is required for ingress vectors.
-2.  **MassTransit v9 Commercial Pivot**: The new v9 iteration has transitioned to a purely commercial model. Retaining v8 (OSS supported until EOY 2026) requires migration to Alternative (Rebus) or direct driver injection planning.
-3.  **Terraform / Vault Licensing**: Absolute veto on HashiCorp commercial binaries. Mandatory adoption of **OpenTofu 1.11+** and **OpenBao 2.5+** enforced.
+**Rol**: Agente de Auditoría de Stack bMAD  
+**Mandato**: Validación autoritativa del ciclo de vida y verificación de tecnologías autorizadas para producción.  
+**Periodo de Línea Base**: Entorno Simulado 11 de Mayo de 2026.
 
 ---
 
-# 📦 BLOCK 1 — NODE.JS / TYPESCRIPT
+# 🌐 RESUMEN EJECUTIVO Y ALERTAS MAESTRAS
 
-**Executive Summary**: Total health score: 94/100. Stable transition to Node 24 LTS and Nx 22.7 ecosystems secures highest CI efficiency. Strong recommendation to transition from TypeORM to Drizzle for lightweight serverless-ready deployment densities.
-
-### Node.js — Runtime Base
-| Field | Detail |
-|-------|---------|
-| Recommended Version | 24.x Active LTS (Latest 24.5.0) |
-| License | MIT |
-| OSS Level | 1 (OpenJS Foundation) |
-| Status | ✅ Green |
-**Why**: Node 24 provides top-tier V8 performance baseline and is the designated Active LTS through October 2026.  
-**Rejected**: Node 26 (Too young, Current only), Deno/Bun (Niche, ecosystem compatibility gaps).
-
-### NestJS — Web Framework
-| Field | Detail |
-|-------|---------|
-| Recommended Version | 11.1.19 (Released April 2026) |
-| License | MIT |
-| OSS Level | 1 (Enterprise Sponsored) |
-| Status | ✅ Green |
-**Why**: Mandatory for enterprise BFF and API governance due to rigid DI architecture alignment.  
-**Alternatives**: Fastify (Preferred underlying engine), Express (Avoid entirely due to heavy maintenance weight).
-
-### Drizzle ORM — Data Access
-| Field | Detail |
-|-------|---------|
-| Recommended Version | v0.41.2 |
-| OSS Level | 2 (Active Community) |
-| Status | ✅ Green (Adopt) |
-**Why**: The optimal balance of total type-safety and zero abstraction overhead compared to heavy engines like TypeORM.  
-**Alternatives**: Prisma (Rejected: heavy rust binary overhead), TypeORM (Maintain only, do not start new projects).
-
-### Vitest — Testing Runner
-| Field | Detail |
-|-------|---------|
-| Recommended Version | 4.1.5 |
-| OSS Level | 1 (Vite Ecosystem) |
-| Status | ✅ Green |
-**Why**: 5x faster throughput compared to Jest in large monorepos with native ESM handling.
+### 🚨 PRINCIPALES ALERTAS CRÍTICAS (ESTADO ROJO)
+1.  **Abandono de Kong OSS**: El desarrollo de Kong OSS se detuvo tras la v3.9.1 con cero publicación activa en Docker. Se requiere migración inmediata a **Traefik Proxy 3.7+** o **NGINX OSS** para vectores de ingreso.
+2.  **Pivot Comercial de MassTransit v9**: La nueva iteración v9 ha transicionado a un modelo puramente comercial. Retener la v8 (con soporte OSS hasta finales de 2026) requiere la planificación de migración a una alternativa (Rebus) o inyección directa del driver.
+3.  **Licenciamiento de Terraform / Vault**: Veto absoluto a los binarios comerciales de HashiCorp. Se impone la adopción obligatoria de **OpenTofu 1.11+** y **OpenBao 2.5+**.
 
 ---
 
-# 📦 BLOCK 2 — .NET / C#
+# 📦 BLOQUE 1 — NODE.JS / TYPESCRIPT
 
-**Executive Summary**: High score: 92/100. Platform has successfully unified on **.NET 10.0** LTS. The primary technical risk lies in the commercialization of secondary ecosystem packages (MassTransit), requiring strategic containment.
+**Resumen Ejecutivo**: Puntuación total de salud: 94/100. La transición estable a los ecosistemas Node 24 LTS y Nx 22.7 asegura la máxima eficiencia CI. Recomendación fuerte de transición de TypeORM a Drizzle para densidades de despliegue ligeras listas para serverless.
 
-### .NET SDK — Runtime Base
-| Field | Detail |
+### Node.js — Base de Runtime
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 10.0.7 (LTS Active) |
-| OSS Level | 1 (Microsoft .NET Foundation) |
-| Status | ✅ Green |
-**Why**: Best in class compute throughput for heavy concurrency and worker workloads.  
-**Note**: .NET 11 in preview, scheduled Nov 2026. Stick to 10.0.x for production stability.
+| Versión Recomendada | 24.x Active LTS (Última 24.5.0) |
+| Licencia | MIT |
+| Nivel OSS | 1 (Fundación OpenJS) |
+| Estado | ✅ Verde |
+**Por qué**: Node 24 proporciona la línea base de rendimiento V8 de primer nivel y es la Active LTS designada hasta Octubre de 2026.  
+**Rechazados**: Node 26 (Demasiado joven, solo Current), Deno/Bun (Nicho, brechas de compatibilidad del ecosistema).
 
-### MassTransit — Messaging Abstraction
-| Field | Detail |
+### NestJS — Framework Web
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 8.3.x (Latest OSS tree) |
-| License | Apache 2.0 (v8) |
-| Status | ⚠️ Yellow (Evaluate Risk) |
-**Alert**: MassTransit v9 is Commercial. We MUST pin to v8 LTS or evaluate **Rebus** for pure open-source delivery continuity.
+| Versión Recomendada | 11.1.19 (Lanzada Abril 2026) |
+| Licencia | MIT |
+| Nivel OSS | 1 (Patrocinio Empresarial) |
+| Estado | ✅ Verde |
+**Por qué**: Obligatorio para la gobernanza de BFFs y APIs empresariales debido a su alineación rígida con la arquitectura de Inyección de Dependencias (DI).  
+**Alternativas**: Fastify (Motor subyacente preferido), Express (Evitar por completo debido a la pesada carga de mantenimiento).
 
-### Entity Framework Core — Data Access
-| Field | Detail |
+### Drizzle ORM — Acceso a Datos
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 10.0.x (Aligned with SDK) |
-| OSS Level | 1 |
-| Status | ✅ Green |
-**Decision Tree**: Use EF Core for transactional write patterns; integrate **Dapper** explicitly for batch read-heavy pipelines for performance caching.
+| Versión Recomendada | v0.41.2 |
+| Nivel OSS | 2 (Comunidad Activa) |
+| Estado | ✅ Verde (Adoptar) |
+**Por qué**: El equilibrio óptimo entre seguridad de tipos total y cero sobrecarga de abstracción en comparación con motores pesados como TypeORM.  
+**Alternativas**: Prisma (Rechazado: pesada sobrecarga de binario rust), TypeORM (Mantener solo, no iniciar nuevos proyectos).
 
-### xUnit v3 — Testing
-| Field | Detail |
+### Vitest — Corredor de Pruebas
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 3.2.2 |
-| OSS Level | 1 |
-| Status | ✅ Green |
-**Why**: Next-gen asynchronous execution support natively. Migrate away from 2.x trees.
+| Versión Recomendada | 4.1.5 |
+| Nivel OSS | 1 (Ecosistema Vite) |
+| Estado | ✅ Verde |
+**Por qué**: Rendimiento 5 veces más rápido comparado con Jest en monorepos grandes con manejo nativo de ESM.
 
 ---
 
-# 📦 BLOCK 3 — ANDROID / KOTLIN
+# 📦 BLOQUE 2 — .NET / C#
 
-**Executive Summary**: Total health score: 100/100. Perfect synergy attained using purely Jetpack ecosystem drivers. Mandatory Compose 1.11 rollout enables high-performance dynamic UI without legacy rendering lag.
+**Resumen Ejecutivo**: Puntuación alta: 92/100. La plataforma se ha unificado con éxito en **.NET 10.0** LTS. El principal riesgo técnico radica en la comercialización de paquetes secundarios del ecosistema (MassTransit), lo que requiere contención estratégica.
 
-### Jetpack Compose — UI Framework
-| Field | Detail |
+### .NET SDK — Base de Runtime
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 1.11.1 (Stable) |
-| OSS Level | 1 (Google Android) |
-| Status | ✅ Green |
-**Why**: Declarative UI is now the absolute enterprise standard. Veto on XML Views for any new operational interface.
+| Versión Recomendada | 10.0.7 (LTS Active) |
+| Nivel OSS | 1 (Microsoft .NET Foundation) |
+| Estado | ✅ Verde |
+**Por qué**: La mejor computación de su clase para alta concurrencia y cargas de trabajo de workers.  
+**Nota**: .NET 11 en preview, programado para Nov 2026. Mantenerse en 10.0.x para estabilidad en producción.
 
-### Kotlin — Language Base
-| Field | Detail |
+### MassTransit — Abstracción de Mensajería
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 2.3.20 |
-| OSS Level | 1 (JetBrains / Kotlin Foundation) |
-| Status | ✅ Green |
+| Versión Recomendada | 8.3.x (Último árbol OSS) |
+| Licencia | Apache 2.0 (v8) |
+| Estado | ⚠️ Amarillo (Evaluar Riesgo) |
+**Alerta**: MassTransit v9 es Comercial. DEBEMOS fijar la versión en la v8 LTS o evaluar **Rebus** para la continuidad de entrega puramente de código abierto.
+
+### Entity Framework Core — Acceso a Datos
+| Campo | Detalle |
+|-------|---------|
+| Versión Recomendada | 10.0.x (Alineado con el SDK) |
+| Nivel OSS | 1 |
+| Estado | ✅ Verde |
+**Árbol de Decisión**: Usar EF Core para patrones de escritura transaccionales; integrar **Dapper** explícitamente para pipelines de lectura por lotes pesados para caché de rendimiento.
+
+### xUnit v3 — Pruebas
+| Campo | Detalle |
+|-------|---------|
+| Versión Recomendada | 3.2.2 |
+| Nivel OSS | 1 |
+| Estado | ✅ Verde |
+**Por qué**: Soporte nativo de ejecución asíncrona de próxima generación. Migrar fuera de los árboles 2.x.
+
+---
+
+# 📦 BLOQUE 3 — ANDROID / KOTLIN
+
+**Resumen Ejecutivo**: Puntuación total de salud: 100/100. Perfecta sinergia lograda usando puramente los drivers del ecosistema Jetpack. El despliegue obligatorio de Compose 1.11 permite UIs dinámicas de alto rendimiento sin el retraso de renderizado legado.
+
+### Jetpack Compose — Framework de UI
+| Campo | Detalle |
+|-------|---------|
+| Versión Recomendada | 1.11.1 (Estable) |
+| Nivel OSS | 1 (Google Android) |
+| Estado | ✅ Verde |
+**Por qué**: La UI declarativa es ahora el estándar empresarial absoluto. Veto a XML Views para cualquier nueva interfaz operativa.
+
+### Kotlin — Base del Lenguaje
+| Campo | Detalle |
+|-------|---------|
+| Versión Recomendada | 2.3.20 |
+| Nivel OSS | 1 (JetBrains / Kotlin Foundation) |
+| Estado | ✅ Verde |
 
 ### Hilt (Dagger) — DI
-| Field | Detail |
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 2.59.2 |
-| OSS Level | 1 |
-| Status | ✅ Green |
-**Rejected**: Koin (Level 2, runtime reflection vs Hilt compile-time safe dependency graph).
+| Versión Recomendada | 2.59.2 |
+| Nivel OSS | 1 |
+| Estado | ✅ Verde |
+**Rechazado**: Koin (Nivel 2, reflexión en runtime vs grafo de dependencias seguro en tiempo de compilación de Hilt).
 
-### Room Database — Offline Persistence
-| Field | Detail |
+### Base de Datos Room — Persistencia Offline
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 2.8.4 (LTS) |
-| Status | ✅ Green |
-**Note**: Room 3.0 Alpha exists for Multiplatform. Stick to 2.8 branch for native single-platform stability.
+| Versión Recomendada | 2.8.4 (LTS) |
+| Estado | ✅ Verde |
+**Nota**: Existe Room 3.0 Alpha para Multiplataforma. Mantenerse en la rama 2.8 para estabilidad nativa en una sola plataforma.
 
 ---
 
-# 📦 BLOCK 4 — DATABASES
+# 📦 BLOQUE 4 — BASES DE DATOS
 
-**Executive Summary**: Total score: 98/100. PostgreSQL remains the supreme invariant. pgBouncer 1.25 ensures optimal container packing and zero-overhead connection state logic.
+**Resumen Ejecutivo**: Puntuación total: 98/100. PostgreSQL permanece como el invariante supremo. pgBouncer 1.25 asegura un empaquetamiento de contenedores óptimo y lógica de estado de conexión con cero sobrecarga.
 
-### PostgreSQL 16 — Primary DB
-| Field | Detail |
+### PostgreSQL 16 — BD Primaria
+| Campo | Detalle |
 |-------|---------|
-| EOL Community | Nov 9, 2028 |
-| OSS Level | 1 |
-| Status | ✅ Green |
-**Decision**: Retain v16 as it possesses mature RLS optimizations and has 2+ years of valid support window remaining.
+| EOL Comunidad | 9 Nov, 2028 |
+| Nivel OSS | 1 |
+| Estado | ✅ Verde |
+**Decisión**: Retener v16 ya que posee optimizaciones RLS maduras y le restan más de 2 años de ventana de soporte válido.
 
-### Flyway — Migrations
-| Field | Detail |
+### Flyway — Migraciones
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 12.6.0 |
-| License | OSS Community |
-| Status | ✅ Green |
-**Note**: Standardize across .NET and Node workflows to ensure single pipeline for SQL delivery.
+| Versión Recomendada | 12.6.0 |
+| Licencia | OSS Community |
+| Estado | ✅ Verde |
+**Nota**: Estandarizar a través de los flujos de trabajo de .NET y Node para asegurar una única pipeline para la entrega de SQL.
 
 ---
 
-# 📦 BLOCK 5 — INFRASTRUCTURE (CRITICAL)
+# 📦 BLOQUE 5 — INFRAESTRUCTURA (CRÍTICO)
 
-**Executive Summary**: Transformational epoch. Strategic decoupling from commercial drift (Redis -> Valkey, Terraform -> OpenTofu, Vault -> OpenBao) successfully validated.
+**Resumen Ejecutivo**: Época transformacional. Desacoplamiento estratégico del desvío comercial (Redis -> Valkey, Terraform -> OpenTofu, Vault -> OpenBao) validado con éxito.
 
-### Valkey 9.0 — Distributed Cache & Streams
-| Field | Detail |
+### Valkey 9.0 — Caché Distribuida y Streams
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 9.0.4 (Stable) |
-| License | BSD 3-Clause |
-| OSS Level | 1 (Linux Foundation) |
-| Status | ✅ Green (Mandatory Replacement) |
-**Redis Alert**: Redis SSPL 7.4+ is now strictly Forbidden for commercial infrastructure frameworks. Valkey is the mandated drop-in replacement supported by AWS, Google, Oracle.
+| Versión Recomendada | 9.0.4 (Estable) |
+| Licencia | BSD 3-Clause |
+| Nivel OSS | 1 (Linux Foundation) |
+| Estado | ✅ Verde (Reemplazo Obligatorio) |
+**Alerta de Redis**: Redis SSPL 7.4+ queda estrictamente Prohibido para frameworks de infraestructura comercial. Valkey es el reemplazo obligatorio soportado por AWS, Google, Oracle.
 
-### Traefik Proxy 3.7 — API Gateway
-| Field | Detail |
+### Traefik Proxy 3.7 — Gateway de API
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 3.7.0 |
-| License | MIT |
-| OSS Level | 1 |
-| Status | ✅ Green (Elevate to Primary) |
-**Reason**: Elevated from secondary to PRIMARY gateway vector due to Kong OSS retirement. Excels at native Kubernetes dynamics.
+| Versión Recomendada | 3.7.0 |
+| Licencia | MIT |
+| Nivel OSS | 1 |
+| Estado | ✅ Verde (Elevar a Primario) |
+**Razón**: Elevado de vector secundario a PRIMARIO debido al retiro de Kong OSS. Destaca en la dinámica nativa de Kubernetes.
 
 ### OpenTofu 1.11 — IaC
-| Field | Detail |
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 1.11.6 |
-| License | MPL 2.0 (Linux Foundation) |
-| Status | ✅ Green |
-**Reason**: Hard replacement for Terraform BSL to preserve commercial neutrality.
+| Versión Recomendada | 1.11.6 |
+| Licencia | MPL 2.0 (Linux Foundation) |
+| Estado | ✅ Verde |
+**Razón**: Reemplazo duro para Terraform BSL para preservar la neutralidad comercial.
 
-### Observability Stack (Grafana 13 + OTel 2.7)
-| Field | Detail |
+### Stack de Observabilidad (Grafana 13 + OTel 2.7)
+| Campo | Detalle |
 |-------|---------|
-| Recommendation | Grafana 13 + Prometheus + Loki + Tempo |
-| Status | ✅ Green |
-**Dictamen**: Total consolidation recommended. OpenTelemetry Collector 2.x is mandatory as the vendor-agnostic intake tier.
+| Recomendación | Grafana 13 + Prometheus + Loki + Tempo |
+| Estado | ✅ Verde |
+**Dictamen**: Se recomienda consolidación total. OpenTelemetry Collector 2.x es obligatorio como el nivel de ingesta agnóstico al proveedor.
 
 ---
 
-# 📦 BLOCK 6 — CROSS-CUTTING STANDARDS
+# 📦 BLOQUE 6 — ESTÁNDARES TRANSVERSALES
 
 ### Keycloak 26.6 — IAM
-| Field | Detail |
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 26.6.1 |
-| License | Apache 2.0 |
-| OSS Level | 1 (CNCF Graduated) |
-| Status | ✅ Green |
-**Alternatives**: Zitadel (Evaluate for smaller cloud-native footprint, but Keycloak is sovereign enterprise choice).
+| Versión Recomendada | 26.6.1 |
+| Licencia | Apache 2.0 |
+| Nivel OSS | 1 (CNCF Graduated) |
+| Estado | ✅ Verde |
+**Alternativas**: Zitadel (Evaluar para una huella nativa de la nube más pequeña, pero Keycloak es la elección empresarial soberana).
 
-### OpenBao 2.5 — Secrets
-| Field | Detail |
+### OpenBao 2.5 — Secretos
+| Campo | Detalle |
 |-------|---------|
-| Recommended Version | 2.5.3 |
-| OSS Level | 1 (Linux Foundation) |
-| Status | ✅ Green |
-**Reason**: Direct Fork ensuring OSS availability after HashiCorp Vault BSL transition.
+| Versión Recomendada | 2.5.3 |
+| Nivel OSS | 1 (Linux Foundation) |
+| Estado | ✅ Verde |
+**Razón**: Fork directo que asegura la disponibilidad OSS tras la transición a BSL de HashiCorp Vault.
 
 ---
 
-# 📊 RECOMMENDED STACK MASTER TABLE (FINAL MAY 2026)
+# 📊 TABLA MAESTRA DEL STACK RECOMENDADO (FINAL MAYO 2026)
 
-| Category | Recommended Tool | Version | OSS Level | Status | Radar |
+| Categoría | Herramienta Recomendada | Versión | Nivel OSS | Estado | Radar |
 | :--- | :--- | :--- | :---: | :---: | :--- |
-| **Node Runtime** | Node.js LTS | 24.x | 1 | ✅ | **Adopt** |
-| **.NET Runtime** | .NET SDK | 10.0.x | 1 | ✅ | **Adopt** |
-| **Mobile Runtime** | Kotlin / Compose | 2.3 / 1.11 | 1 | ✅ | **Adopt** |
-| **ORMs** | Drizzle / EF Core | v0.41 / 10.0 | 1/2 | ✅ | **Adopt** |
-| **Message Bus** | RabbitMQ | Latest | 1 | ✅ | **Adopt** |
-| **Cache** | **Valkey** | 9.0.4 | 1 | ✅ | **Adopt** |
-| **API Gateway** | **Traefik Proxy** | 3.7.0 | 1 | ✅ | **Adopt** |
-| **Legacy Gateway** | Kong OSS | 3.9.1 | 3 | 🔴 | **Avoid** |
-| **Secrets** | **OpenBao** | 2.5.3 | 1 | ✅ | **Adopt** |
-| **IaC** | **OpenTofu** | 1.11.6 | 1 | ✅ | **Adopt** |
-| **Testing Runner** | Vitest | 4.1.5 | 1 | ✅ | **Adopt** |
+| **Runtime Node** | Node.js LTS | 24.x | 1 | ✅ | **Adoptar** |
+| **Runtime .NET** | .NET SDK | 10.0.x | 1 | ✅ | **Adoptar** |
+| **Runtime Móvil** | Kotlin / Compose | 2.3 / 1.11 | 1 | ✅ | **Adoptar** |
+| **ORMs** | Drizzle / EF Core | v0.41 / 10.0 | 1/2 | ✅ | **Adoptar** |
+| **Bus de Mensajes** | RabbitMQ | Latest | 1 | ✅ | **Adoptar** |
+| **Caché** | **Valkey** | 9.0.4 | 1 | ✅ | **Adoptar** |
+| **Gateway de API** | **Traefik Proxy** | 3.7.0 | 1 | ✅ | **Adoptar** |
+| **Gateway Legado** | Kong OSS | 3.9.1 | 3 | 🔴 | **Evitar** |
+| **Secretos** | **OpenBao** | 2.5.3 | 1 | ✅ | **Adoptar** |
+| **IaC** | **OpenTofu** | 1.11.6 | 1 | ✅ | **Adoptar** |
+| **Corredor de Pruebas**| Vitest | 4.1.5 | 1 | ✅ | **Adoptar** |
 
 ---
-**Closing Dictamen**: Satisfactory Technical Audit. The stack has been cleaned of BSL/SSPL license deviations and is in optimal legal and technological compliance for its corporate consumption in the 2026-2028 horizon.
+**Dictamen Final**: Auditoría Técnica Satisfactoria. El stack ha sido limpiado de desviaciones de licencias BSL/SSPL y se encuentra en un cumplimiento legal y tecnológico óptimo para su consumo corporativo en el horizonte 2026-2028.

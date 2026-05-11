@@ -1,33 +1,33 @@
-# ADR 0011: Fault Tolerance and Resiliency Patterns
+# ADR 0011: Patrones de Resiliencia y Tolerancia a Fallos
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Mission-critical deployments must integrate with volatile third-party APIs (e.g., customs services, bank networks). Synchronous network failures, excessive latency, or transient timeouts at external API points frequently cascade backwards, eating local resource threads and crashing our system availability.
+## Contexto
+Los despliegues de misión crítica deben integrarse con APIs volátiles de terceros (ej. servicios de aduanas, redes bancarias). Los fallos de red síncronos, la latencia excesiva o los tiempos de espera transitorios en los puntos de API externos frecuentemente se propagan en cascada hacia atrás, consumiendo hilos de recursos locales y colapsando la disponibilidad de nuestro sistema.
 
-## Decision
-Implement explicit Resilience Patterns protecting all outbound system exits:
+## Decisión
+Implementar Patrones de Resiliencia explícitos protegiendo todas las salidas del sistema hacia el exterior:
 
-1. **Distributed Circuit Breaker (Opossum + Redis)**: Wrap outbound network calls in high-level infrastructure adapters. The operational state of the circuit (Open/Closed/Half-Open) MUST be stored in the shared **Redis Cluster** instead of local process memory. When a single application node trips the breaker, the state propels globally across the cluster instantly, preventing redundant failing calls from peer nodes.
-2. **Retry with Backoff**: Configure interceptors for non-fatal transient codes to execute transparent exponential backoff attempts natively within adapter logic before handing up an error result.
-3. **Decoupled Domain logic**: The core business domain must remain 100% agnostic to these patterns.
-4. **Ingress Edge Active Healthchecks**: Enable Kong Gateway upstream circuit-breaking logic. Kong monitors endpoint responsiveness and terminates upstream target assignments at the API gateway level if health metrics collapse, shielding backend nodes from direct wave hits.
+1. **Circuit Breaker Distribuido (Opossum + Redis)**: Envolver las llamadas de red salientes en adaptadores de infraestructura de alto nivel. El estado operativo del circuito (Abierto/Cerrado/Semi-Abierto) DEBE almacenarse en el **Clúster Redis** compartido en lugar de la memoria local del proceso. Cuando un único nodo de aplicación activa el breaker, el estado se propaga globalmente a través del clúster instantáneamente, previniendo llamadas fallidas redundantes de nodos pares.
+2. **Reintento con Backoff (Retry with Backoff)**: Configurar interceptores para códigos transitorios no fatales que ejecuten intentos de backoff exponencial transparentes nativamente dentro de la lógica del adaptador antes de entregar un resultado de error.
+3. **Lógica de Dominio Desacoplada**: El dominio de negocio central debe permanecer 100% agnóstico a estos patrones.
+4. **Comprobaciones Activas de Salud en el Borde de Ingreso**: Habilitar la lógica de circuit breaking upstream de Kong Gateway. Kong monitoriza la capacidad de respuesta de los endpoints y termina las asignaciones de objetivos aguas arriba a nivel del gateway de API si las métricas de salud colapsan, protegiendo los nodos de backend de impactos directos de olas de peticiones.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Prevents slow dependency outages from starving and drowning local CPU cycles.
-- Maintains overall local availability during peripheral remote crashes.
-- Delivers much safer user failure flows than infinite browser timeouts.
+### Positivas
+- Previene que las interrupciones lentas de dependencias maten de hambre y ahoguen los ciclos de CPU locales.
+- Mantiene la disponibilidad local general durante caídas remotas periféricas.
+- Ofrece flujos de fallo de usuario mucho más seguros que los tiempos de espera infinitos del navegador.
 
-### Negative
-- Adds extra operational logic when debugging integration points.
-- Requires sophisticated parameter calibration (how many errors before break, timeout limit, restore cooldown).
+### Negativas
+- Añade lógica operativa adicional al depurar puntos de integración.
+- Requiere una calibración sofisticada de parámetros (cuántos errores antes de la ruptura, límite de timeout, enfriamiento para restauración).
 
-## References
-- [Martin Fowler on Circuit Breakers](https://martinfowler.com/bliki/CircuitBreaker.html)
-- [ADR-0002: Clean Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
+## Referencias
+- [Martin Fowler sobre Circuit Breakers](https://martinfowler.com/bliki/CircuitBreaker.html)
+- [ADR-0002: Arquitectura Hexagonal Limpia](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)

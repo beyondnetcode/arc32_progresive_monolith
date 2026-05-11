@@ -1,55 +1,55 @@
-# ADR 0008: Progressive Multi-Module Evolution with API Gateway and BFF Patterns
+# ADR 0008: Evolución Progresiva Multi-Módulo con API Gateway y Patrones BFF
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-08
 
-## Context
-Currently, the Reference Platform repository operates as a modular monolith. However, the platform is intended to scale into a unified portal for multiple future corporate modules (Transport Management - TMS, Warehouse Management - WMS). These must be independent, decoupled services with isolated databases.
+## Contexto
+Actualmente, el repositorio de la Plataforma de Referencia opera como un monolito modular. Sin embargo, la plataforma está destinada a escalar hacia un portal unificado para múltiples módulos corporativos futuros (Gestión de Transporte - TMS, Gestión de Almacén - WMS). Estos deben ser servicios independientes y desacoplados con bases de datos aisladas.
 
-Without a Backend For Frontend (BFF) layer, diverse clients (rich web, low-bandwidth mobile, B2B) would force generic endpoints, leading to over-fetching and rigid client state management. We need a structure to support diverse client contracts without tightly coupling them to backend microservices.
+Sin una capa Backend For Frontend (BFF), los clientes diversos (web rica, móvil de bajo ancho de banda, B2B) forzarían endpoints genéricos, conduciendo al over-fetching y a una gestión rígida del estado del cliente. Necesitamos una estructura para soportar diversos contratos de cliente sin acoplarlos estrechamente a los microservicios del backend.
 
-## Decision
-Adopt a **Progressive Multi-Module and Distributed Backend For Frontend (BFF) Gateway Architecture**:
+## Decisión
+Adoptar una **Arquitectura de Gateway Backend For Frontend (BFF) Distribuida y Multi-Módulo Progresiva**:
 
-1. **Dedicated BFF Gateways**: Tailor dedicated gateways for each client type rather than sharing one generic entry point:
-   - **Web BFF**: Handles cookie-based sessions and aggregates payloads for rich desktop displays.
-   - **Mobile BFF**: Compresses data, combines roundtrips for high-latency networks, and translates to mobile-optimized payloads.
-   - **B2B API Gateway**: Handles rate-limiting and API Key authentication for external partners.
+1. **Gateways BFF Dedicados**: Adaptar gateways dedicados para cada tipo de cliente en lugar de compartir un único punto de entrada genérico:
+   - **Web BFF**: Maneja sesiones basadas en cookies y agrega cargas útiles para visualizaciones de escritorio ricas.
+   - **Mobile BFF**: Comprime datos, combina roundtrips para redes de alta latencia y traduce a cargas útiles optimizadas para móviles.
+   - **B2B API Gateway**: Maneja la limitación de tasa (rate-limiting) y la autenticación con Clave de API para socios externos.
 
-2. **Downstream Isolation**: Public clients NEVER communicate directly with internal services (TMS, WMS). All traffic flows through assigned BFFs acting as security and composition boundaries.
+2. **Aislamiento Aguas Abajo**: Los clientes públicos NUNCA se comunican directamente con los servicios internos (TMS, WMS). Todo el tráfico fluye a través de los BFFs asignados que actúan como fronteras de seguridad y composición.
 
-3. **Protocol Translation**: Allow internal microservice communication via high-speed gRPC while translating to standard HTTP/REST at the BFF edge.
+3. **Traducción de Protocolos**: Permitir la comunicación interna de microservicios vía gRPC de alta velocidad mientras se traduce a HTTP/REST estándar en el borde del BFF.
 
-### System Architecture Overview
+### Resumen de la Arquitectura del Sistema
 
 ```mermaid
 graph TD
-    Web["React Web App"] -->|HTTP/Cookies| WebBFF["Web BFF Gateway"]
-    Mobile["Mobile Client App"] -->|HTTP/JSON| MobileBFF["Mobile BFF Gateway"]
-    B2B["External B2B Integrations"] -->|HTTPS/API Key| B2BGateway["B2B API Gateway"]
+    Web["Aplicación Web React"] -->|HTTP/Cookies| WebBFF["Web BFF Gateway"]
+    Mobile["Aplicación Cliente Móvil"] -->|HTTP/JSON| MobileBFF["Mobile BFF Gateway"]
+    B2B["Integraciones B2B Externas"] -->|HTTPS/Clave API| B2BGateway["B2B API Gateway"]
 
-    subgraph InternalNetwork["Internal Trust Zone (gRPC)"]
-        WebBFF --> CoreAPI["Reference Platform API"]
-        WebBFF --> TMS["TMS Service"]
+    subgraph InternalNetwork["Zona de Confianza Interna (gRPC)"]
+        WebBFF --> CoreAPI["API Plataforma Referencia"]
+        WebBFF --> TMS["Servicio TMS"]
         MobileBFF --> CoreAPI
         MobileBFF --> TMS
-        B2BGateway --> WMS["WMS Service"]
+        B2BGateway --> WMS["Servicio WMS"]
     end
 ```
 
-## Consequences
+## Consecuencias
 
-### Positive
-- **Client Performance**: Mobile apps get exactly what they need, reducing data usage and network roundtrips.
-- **Independent Scalability**: Scale Mobile BFF independently from Web BFF based on real-time device traffic.
-- **Decoupled Contracts**: Modify downstream internal APIs without breaking existing frontend versions.
+### Positivas
+- **Rendimiento del Cliente**: Las aplicaciones móviles obtienen exactamente lo que necesitan, reduciendo el uso de datos y los recorridos de red (roundtrips).
+- **Escalabilidad Independiente**: Escalar el BFF Móvil independientemente del BFF Web basado en el tráfico de dispositivos en tiempo real.
+- **Contratos Desacoplados**: Modificar las APIs internas aguas abajo sin romper las versiones de frontend existentes.
 
-### Negative
-- **Gateway Proliferation**: Managing separate codebases for different BFFs increases CI/CD complexity.
-- Requires discipline to keep business logic out of the BFF (it should only orchestrate and compose).
+### Negativas
+- **Proliferación de Gateways**: Gestionar bases de código separadas para diferentes BFFs incrementa la complejidad de CI/CD.
+- Requiere disciplina para mantener la lógica de negocio fuera del BFF (solo debería orquestar y componer).
 
-## References
-- [ADR-0030: Kong Gateway vs NestJS BFF](./0030-api-gateway-kong-vs-nestjs.md)
+## Referencias
+- [ADR-0030: Kong Gateway vs NestJS BFF](../02-adrs/core/0030-api-gateway-kong-vs-nestjs.md)

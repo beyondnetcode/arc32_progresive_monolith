@@ -1,229 +1,229 @@
-# 🏛️ Corporate Reference Architecture (Multi-Runtime / arc42)
+# 🏛️ Arquitectura de Referencia Corporativa (Multi-Runtime / arc42)
 
 > [!IMPORTANT]
-> **Unified Corporate Reference Blueprint**: This document defines the global standard for software architecture across the organization. While the canonical physical implementation uses Node.js, the architectural constraints and design principles are agnostic and applicable to approved runtimes (.NET / Android) for diverse workloads.
+> **Blueprint de Referencia Corporativo Unificado**: Este documento define el estándar global para la arquitectura de software en toda la organización. Si bien la implementación física canónica utiliza Node.js, las restricciones arquitectónicas y los principios de diseño son agnósticos y aplicables a los entornos de ejecución aprobados (.NET / Android) para diversas cargas de trabajo.
 
 ---
 
-## 1. Introduction and Goals
+## 1. Introducción y Metas
 
-This reference architecture provides a standardized blueprint for building modern, highly scalable systems.
+Esta arquitectura de referencia proporciona un plano estandarizado para construir sistemas modernos y altamente escalables.
 
-### 1.1 Purpose and Applicability
-This pattern is designed specifically for systems that:
-*   Have a strong orientation towards **intensive API utilization** with multi-channel clients (Web, Mobile, B2B).
-*   Require native **SaaS multi-tenant isolation** at the database engine level.
-*   Must support **progressive evolution** from Modular Monolith to Distributed Microservices.
+### 1.1 Propósito y Aplicabilidad
+Este patrón está diseñado específicamente para sistemas que:
+*   Tienen una fuerte orientación hacia la **utilización intensiva de APIs** con clientes multi-canal (Web, Móvil, B2B).
+*   Requieren **aislamiento SaaS multi-tenant** nativo a nivel del motor de base de datos.
+*   Deben soportar una **evolución progresiva** desde un Monolito Modular hacia Microservicios Distribuidos.
 
-### 1.2 Corporate Multi-Runtime Strategy (Políglota)
-The organization promotes a deliberate polyglot architecture where runtimes are chosen strictly based on workload suitability, validated via ADR:
+### 1.2 Estrategia Corporativa Multi-Runtime (Políglota)
+La organización promueve una arquitectura políglota deliberada donde los entornos de ejecución se eligen estrictamente en función de la idoneidad para la carga de trabajo, validados vía ADR:
 
-| Runtime | Canonical Role | Typical Use Case |
+| Runtime | Rol Canónico | Caso de Uso Típico |
 | :--- | :--- | :--- |
-| **Node.js / TypeScript** | Principal Runtime | REST/gRPC APIs, BFF Orchestration, Transacional Web Services, Frontend SSR. |
-| **.NET (C#)** | High Processing | Batch compute, ETL pipelines, Heavy computational tasks, Legacy interoperability. |
-| **Android (Kotlin/Java)** | Native Mobile Client | Industrial operative apps, offline capture, hardware scan/GPS integration. |
+| **Node.js / TypeScript** | Runtime Principal | APIs REST/gRPC, Orquestación BFF, Servicios Web Transaccionales, Frontend SSR. |
+| **.NET (C#)** | Alto Procesamiento | Computación por lotes, pipelines ETL, Tareas computacionales pesadas, interoperabilidad Legada. |
+| **Android (Kotlin/Java)** | Cliente Móvil Nativo | Apps operativas industriales, captura offline, integración de hardware de escaneo/GPS. |
 
-> **Rule of Contracts**: Communication between distinct runtimes MUST strictly utilize explicit, versioned contract definitions (OpenAPI for HTTP, Protobuf for gRPC, AsyncAPI for Messaging) guaranteeing absolute implementation opacity.
+> **Regla de Contratos**: La comunicación entre distintos runtimes DEBE utilizar estrictamente definiciones de contrato explícitas y versionadas (OpenAPI para HTTP, Protobuf para gRPC, AsyncAPI para Mensajería) garantizando absoluta opacidad de la implementación.
 
-### 1.3 Mandatory Quality Attributes
-| Quality Attribute | Source ADR | Target |
+### 1.3 Atributos de Calidad Obligatorios
+| Atributo de Calidad | Origen ADR | Objetivo |
 | :--- | :--- | :--- |
-| **Progressive Evolution** | ADR-0006, ADR-0008 | Zero-refactoring path to microservices via Dapr |
-| **SaaS Multi-Tenancy** | ADR-0010 | Dual-Layer Isolation (ORM + PostgreSQL RLS) |
-| **Strict Decoupling** | ADR-0002, ADR-0003 | ESLint boundary enforcement |
-| **Resilience** | ADR-0011 | Distributed Circuit Breakers (Redis + Kong) |
-| **Security** | ADR-0005, ADR-0012, ADR-0020, ADR-0026 | Zero-trust perimeter + RBAC/ABAC |
-| **Internal API Latency** | ADR-0014, ADR-0021 | 4-Tier Cache (Client + CDN + BFF + Core) |
-| **Observability** | ADR-0007 | OTel + Loki + distributed tracing |
-| **Immutable Auditing** | ADR-0016 | Append-only audit ledger |
-| **Tech Sovereignty** | ADR-0002, ADR-0028 | 100% Swappable Infra/AOP without logic impact |
+| **Evolución Progresiva** | ADR-0006, ADR-0008 | Camino de cero refactorización hacia microservicios vía Dapr |
+| **Multi-Tenancy SaaS** | ADR-0010 | Aislamiento de Doble Capa (ORM + PostgreSQL RLS) |
+| **Desacoplamiento Estricto** | ADR-0002, ADR-0003 | Aplicación de límites vía ESLint |
+| **Resiliencia** | ADR-0011 | Circuit Breakers Distribuidos (Redis + Kong) |
+| **Seguridad** | ADR-0005, ADR-0012, ADR-0020, ADR-0026 | Perímetro Zero-trust + RBAC/ABAC |
+| **Latencia de API Interna** | ADR-0014, ADR-0021 | Caché de 4 Niveles (Cliente + CDN + BFF + Core) |
+| **Observabilidad** | ADR-0007 | OTel + Loki + trazado distribuido |
+| **Auditoría Inmutable** | ADR-0016 | Registro de auditoría de solo adición |
+| **Soberanía Tecnológica** | ADR-0002, ADR-0028 | Infra/AOP 100% intercambiable sin impacto en la lógica |
 
-#### 🔍 Supplemental Strategic Frameworks
-To deeply understand the mathematical and risk posture of this architecture, consult:
-*   👉 **[Design Maturity & Patterns Evaluation](../00-vision/maturity-evaluation.md)**
-*   👉 **[CAP Theorem Strategic Analysis](./cap-strategic-analysis.md)**
-
----
-
-## 2. Architecture Constraints and Baseline Pillars
-
-Any system based on this blueprint must adhere to the following non-negotiable pillars:
-
-*   **Stack Governance (ADR-0001)**: Nx Monorepo + npm Workspaces for centralized dependency governance.
-*   **bMAD Engineering Mandate (ADR-0002, ADR-0003)**: SOLID, Clean Code, Hexagonal Architecture, strict TypeScript.
-*   **Dependency Safety (ADR-0009)**: All dependency versions pinned. No `^` or `~` ranges. Automated vulnerability scanning in CI.
-*   **Quality Gates (ADR-0018)**: Automated testing pyramid. Minimum 70% coverage enforced in CI.
-*   **Infrastructure Portability (ADR-0028)**: Self-hosted OSS (MinIO, RabbitMQ, Vault) prioritized over cloud lock-in.
+#### 🔍 Marcos Estratégicos Complementarios
+Para comprender profundamente la postura matemática y de riesgo de esta arquitectura, consulte:
+*   👉 **[Evaluación de Madurez y Patrones de Diseño](../00-vision/maturity-evaluation.md)**
+*   👉 **[Análisis Estratégico del Teorema CAP](./cap-strategic-analysis.md)**
 
 ---
 
-## 3. Context and Scope (Operational Model)
+## 2. Restricciones de Arquitectura y Pilares Base
 
-### 3.1 General Context Pattern — Full Stack with Gateway Tiers and Injectable Event Bus
+Cualquier sistema basado en este blueprint debe adherirse a los siguientes pilares no negociables:
 
-This diagram captures the complete system context. It reflects:
-- **ADR-0030**: Two-Tier Gateway (Kong Edge + NestJS BFF)
-- **ADR-0008**: Progressive Multi-Module evolution with dedicated BFF per client channel
-- **ADR-0015**: Injectable `IEventBusPort` abstraction (In-Memory → RabbitMQ → Kafka)
-- **ADR-0020**: Pluggable Identity Provider via Strategy Pattern
-- **ADR-0007**: OpenTelemetry tracing across all tiers
+*   **Gobernanza del Stack (ADR-0001)**: Nx Monorepo + npm Workspaces para una gobernanza centralizada de dependencias.
+*   **Mandato de Ingeniería bMAD (ADR-0002, ADR-0003)**: SOLID, Código Limpio, Arquitectura Hexagonal, TypeScript estricto.
+*   **Seguridad de Dependencias (ADR-0009)**: Todas las versiones de dependencias fijadas. Sin rangos `^` o `~`. Escaneo automatizado de vulnerabilidades en CI.
+*   **Puertas de Calidad (ADR-0018)**: Pirámide de pruebas automatizada. Mínimo 70% de cobertura obligatoria en CI.
+*   **Portabilidad de Infraestructura (ADR-0028)**: Prioridad de OSS autohospedado (MinIO, RabbitMQ, Vault) sobre el bloqueo de nube.
+
+---
+
+## 3. Contexto y Alcance (Modelo Operativo)
+
+### 3.1 Patrón de Contexto General — Stack Completo con Niveles de Gateway y Bus de Eventos Inyectable
+
+Este diagrama captura el contexto completo del sistema. Refleja:
+- **ADR-0030**: Gateway de Dos Niveles (Kong Edge + NestJS BFF)
+- **ADR-0008**: Evolución Progresiva Multi-Módulo con BFF dedicado por canal de cliente
+- **ADR-0015**: Abstracción Inyectable `IEventBusPort` (En Memoria → RabbitMQ → Kafka)
+- **ADR-0020**: Proveedor de Identidad Conectable vía Patrón Strategy
+- **ADR-0007**: Trazado OpenTelemetry en todos los niveles
 
 ```mermaid
 graph TD
-    subgraph Clients["Channel Layer — Client Applications"]
-        WebApp["Web App\n[React Query Cache · ADR-0004]"]
-        MobileApp["Mobile App\n[Offline Persistence · ADR-0004]"]
-        B2B["B2B Partner (gRPC / REST API Key)"]
+    subgraph Clients["Capa de Canales — Aplicaciones Cliente"]
+        WebApp["Web App\n[Caché React Query · ADR-0004]"]
+        MobileApp["Mobile App\n[Persistencia Offline · ADR-0004]"]
+        B2B["Socio B2B (gRPC / Clave API REST)"]
     end
 
-    subgraph NetEdge["Network Edge (Optional)"]
-        CDN["CDN (Content Delivery Network)\n[Multi-Layer Cache · ADR-0014]"]
+    subgraph NetEdge["Borde de Red (Opcional)"]
+        CDN["CDN (Content Delivery Network)\n[Caché Multi-Capa · ADR-0014]"]
     end
 
     subgraph Tier1["Tier 1 — Edge API Gateway (ADR-0030)"]
-        Kong["Kong OSS\n[Rate Limiting · JWT Validation · CORS · Routing]"]
+        Kong["Kong OSS\n[Límites de Tasa · Validación JWT · CORS · Enrutamiento]"]
     end
 
-    subgraph Tier2["Tier 2 — BFF Orchestration Layer (ADR-0008)"]
-        WebBFF["NestJS Web BFF\n[Aggregation · BFF Cache]"]
-        MobileBFF["NestJS Mobile BFF\n[Compact Responses · BFF Cache]"]
-        CoreAPI["NestJS Core API\n[Hexagonal Domain · RBAC/ABAC]"]
+    subgraph Tier2["Tier 2 — Capa de Orquestación BFF (ADR-0008)"]
+        WebBFF["NestJS Web BFF\n[Agregación · Caché BFF]"]
+        MobileBFF["NestJS Mobile BFF\n[Respuestas Compactas · Caché BFF]"]
+        CoreAPI["NestJS Core API\n[Dominio Hexagonal · RBAC/ABAC]"]
     end
 
-    subgraph ExternalIntegrations["External Integration Layer"]
-        IdP["Federated IdP (Auth0 / Entra ID)\n[ADR-0020, ADR-0026]"]
+    subgraph ExternalIntegrations["Capa de Integración Externa"]
+        IdP["IdP Federado (Auth0 / Entra ID)\n[ADR-0020, ADR-0026]"]
         
-        subgraph EventBusAbstraction["Injectable Event Bus (ADR-0015, ADR-0031)"]
+        subgraph EventBusAbstraction["Bus de Eventos Inyectable (ADR-0015, ADR-0031)"]
             IBusPort["«Port» IEventBusPort"]
-            InMemory["In-Memory (Dev/Test)"]
-            RabbitMQ["RabbitMQ (Production)"]
-            Kafka["Kafka (High-Scale)"]
+            InMemory["En-Memoria (Dev/Test)"]
+            RabbitMQ["RabbitMQ (Producción)"]
+            Kafka["Kafka (Alta Escala)"]
             IBusPort -.->|Impl| InMemory
             IBusPort -.->|Impl| RabbitMQ
             IBusPort -.->|Impl| Kafka
         end
     end
 
-    subgraph ObsLayer["Observability (ADR-0007)"]
-        OTel["OpenTelemetry Collector"]
+    subgraph ObsLayer["Observabilidad (ADR-0007)"]
+        OTel["Coleccionista OpenTelemetry"]
         Loki["Grafana Loki (Logs)"]
-        Jaeger["Jaeger (Traces)"]
+        Jaeger["Jaeger (Trazas)"]
         OTel --> Loki
         OTel --> Jaeger
     end
 
     WebApp & MobileApp & B2B -->|TLS/HTTP| CDN
-    CDN -->|Dynamic Forward| Kong
+    CDN -->|Reenvío Dinámico| Kong
 
-    Kong -->|Route| WebBFF
-    Kong -->|Route| MobileBFF
-    Kong -->|Route B2B| CoreAPI
+    Kong -->|Ruta| WebBFF
+    Kong -->|Ruta| MobileBFF
+    Kong -->|Ruta B2B| CoreAPI
 
-    WebBFF -->|Internal gRPC| CoreAPI
-    MobileBFF -->|Internal gRPC| CoreAPI
+    WebBFF -->|gRPC Interno| CoreAPI
+    MobileBFF -->|gRPC Interno| CoreAPI
 
-    CoreAPI -->|Validate Claims| IdP
-    CoreAPI -->|Publish Events| IBusPort
+    CoreAPI -->|Validar Claims| IdP
+    CoreAPI -->|Publicar Eventos| IBusPort
 
-    CoreAPI -.->|Traces + Logs| OTel
-    WebBFF -.->|Traces + Logs| OTel
-    Kong -.->|Access Logs| OTel
+    CoreAPI -.->|Trazas + Logs| OTel
+    WebBFF -.->|Trazas + Logs| OTel
+    Kong -.->|Logs de Acceso| OTel
 ```
 
 ---
 
-## 4. Solution Strategy
+## 4. Estrategia de Solución
 
-### 4.1 Hexagonal Architecture — Ports & Adapters (ADR-0002)
-All business logic in the Domain and Application layers has **zero runtime dependencies** on frameworks, ORMs, or cloud services. The infrastructure layer implements pure TypeScript Ports.
+### 4.1 Arquitectura Hexagonal — Puertos y Adaptadores (ADR-0002)
+Toda la lógica de negocio en las capas de Dominio y Aplicación tiene **cero dependencias en tiempo de ejecución** de frameworks, ORMs o servicios en la nube. La capa de infraestructura implementa Puertos de TypeScript puros.
 
-### 4.2 SaaS Multi-Tenancy Strategy (ADR-0010)
-Employs **Dual-Layer Isolation Defense**. (Layer 1) Persistence adapters automatically append `tenant_id` filtering to generic queries. (Layer 2) Shared PostgreSQL **Row-Level Security (RLS)** policies enforce strict session containment at the SQL engine level as an absolute failsafe.
+### 4.2 Estrategia de Multi-Tenancy SaaS (ADR-0010)
+Emplea **Defensa de Aislamiento de Doble Capa**. (Capa 1) Los adaptadores de persistencia añaden automáticamente el filtro `tenant_id` a las consultas genéricas. (Capa 2) Las políticas de **Row-Level Security (RLS)** de PostgreSQL compartido imponen una contención estricta de la sesión a nivel del motor SQL como mecanismo infalible absoluto.
 
-### 4.3 Two-Tier Gateway Pattern (ADR-0030)
-| Tier | Technology | Responsibility |
+### 4.3 Patrón de Gateway de Dos Niveles (ADR-0030)
+| Nivel | Tecnología | Responsabilidad |
 | :--- | :--- | :--- |
-| **Tier 1 — Edge** | Kong OSS (NGINX/OpenResty) | Rate Limiting, JWT validation, SSL termination, Routing |
-| **Tier 2 — BFF** | NestJS | Data aggregation, payload shaping, client-specific logic |
+| **Tier 1 — Edge** | Kong OSS (NGINX/OpenResty) | Rate Limiting, validación JWT, terminación SSL, Enrutamiento |
+| **Tier 2 — BFF** | NestJS | Agregación de datos, formateo de cargas útiles, lógica específica del cliente |
 
-### 4.4 Injectable Event Bus (ADR-0015)
-The domain never imports a concrete message broker. All async communication is routed through `IEventBusPort`. The concrete implementation (In-Memory / RabbitMQ / Kafka) is injected by the NestJS DI container at startup, controlled by an environment variable.
+### 4.4 Bus de Eventos Inyectable (ADR-0015)
+El dominio nunca importa un bróker de mensajes concreto. Toda la comunicación asíncrona se enruta a través de `IEventBusPort`. La implementación concreta (En Memoria / RabbitMQ / Kafka) es inyectada por el contenedor DI de NestJS al inicio, controlada por una variable de entorno.
 
-### 4.5 Progressive Evolution Route (ADR-0006)
-1.  **Milestone 1 — Modular Monolith**: Single process, logically isolated domain modules.
-2.  **Milestone 2 — Service Extraction**: Critical domains extracted as Nx micro-projects with isolated DBs, consumed via gRPC/Dapr.
-3.  **Milestone 3 — Full Microservices Mesh**: Dapr Sidecars, Service Mesh, Kong as unified API surface.
+### 4.5 Ruta de Evolución Progresiva (ADR-0006)
+1.  **Hito 1 — Monolito Modular**: Proceso único, módulos de dominio lógicamente aislados.
+2.  **Hito 2 — Extracción de Servicios**: Dominios críticos extraídos como microproyectos Nx con BDs aisladas, consumidos vía gRPC/Dapr.
+3.  **Hito 3 — Malla Completa de Microservicios**: Dapr Sidecars, Malla de Servicios, Kong como superficie de API unificada.
 
 ---
 
-## 5. Technical Building Blocks — Full Container View
+## 5. Bloques de Construcción Técnica — Vista Completa de Contenedores
 
-This C4 Level-2 Container diagram reflects **all active ADRs** in their physical runtime positions.
+Este diagrama de Contenedor Nivel-2 de C4 refleja **todos los ADRs activos** en sus posiciones físicas de tiempo de ejecución.
 
 ```mermaid
 graph TD
-    subgraph ClientLayer["Client Channel Layer (ADR-0004)"]
+    subgraph ClientLayer["Capa de Canales de Cliente (ADR-0004)"]
         WebApp["Web App\n[React Query / Stale-While-Revalidate]"]
-        MobileApp["Mobile App\n[Native Offline Storage]"]
-        B2BClient["B2B Client (API Key)"]
+        MobileApp["Mobile App\n[Almacenamiento Offline Nativo]"]
+        B2BClient["Cliente B2B (Clave API)"]
     end
 
-    subgraph EdgeNet["Network Level 0: Static Cache"]
-        CDN["CDN (Content Delivery Network)\n[Cloudflare / Akamai / Optional]"]
+    subgraph EdgeNet["Red Nivel 0: Caché Estática"]
+        CDN["CDN (Content Delivery Network)\n[Cloudflare / Akamai / Opcional]"]
     end
 
-    subgraph GatewayTier["Gateway Tiers (ADR-0030, ADR-0008, ADR-0027, ADR-0032)"]
-        Kong["Kong OSS Edge Gateway\n[Rate Limiting · SSL · JWT · CORS]"]
-        WebBFF["NestJS Web BFF\n[REST/GraphQL + Multi-Layer Cache]"]
-        MobileBFF["NestJS Mobile BFF\n[Compact Payloads + Multi-Layer Cache]"]
+    subgraph GatewayTier["Niveles de Gateway (ADR-0030, ADR-0008, ADR-0027, ADR-0032)"]
+        Kong["Gateway Edge Kong OSS\n[Rate Limiting · SSL · JWT · CORS]"]
+        WebBFF["NestJS Web BFF\n[REST/GraphQL + Caché Multi-Capa]"]
+        MobileBFF["NestJS Mobile BFF\n[Cargas Compactas + Caché Multi-Capa]"]
     end
 
-    subgraph CoreTier["Core Application Tier (ADR-0002, ADR-0012, ADR-0016, ADR-0019, ADR-0029)"]
-        CoreAPI["NestJS Core API\nHexagonal + Audit + UnitOfWork"]
-        FeatureFlags["Feature Flag Engine\n[ADR-0017, ADR-0025]"]
-        ConfigPlatform["Config Platform\n[ADR-0024]"]
+    subgraph CoreTier["Nivel de Aplicación Core (ADR-0002, ADR-0012, ADR-0016, ADR-0019, ADR-0029)"]
+        CoreAPI["NestJS Core API\nHexagonal + Auditoría + UnitOfWork"]
+        FeatureFlags["Motor de Feature Flags\n[ADR-0017, ADR-0025]"]
+        ConfigPlatform["Plataforma de Configuración\n[ADR-0024]"]
     end
 
-    subgraph PersistenceTier["Persistence Tier (ADR-0014, ADR-0022)"]
+    subgraph PersistenceTier["Nivel de Persistencia (ADR-0014, ADR-0022)"]
         PgSQL[("PostgreSQL 16\n[Dual-Layer RLS · ADR-0010]")]
-        Redis[("Redis Distributed Cluster\n[Multi-Layer Tiered Cache · ADR-0014]")]
-        AuditLog[("Audit Log (Append-Only)\n[ADR-0016]")]
+        Redis[("Clúster Distribuido Redis\n[Caché Escalonada Multi-Capa · ADR-0014]")]
+        AuditLog[("Registro Auditoría (Append-Only)\n[ADR-0016]")]
     end
 
-    subgraph MessagingTier["Async Messaging Tier (ADR-0015, ADR-0031)"]
+    subgraph MessagingTier["Nivel Mensajería Asíncrona (ADR-0015, ADR-0031)"]
         IBusPort["«Port» IEventBusPort"]
-        InMemoryBus["In-Memory Bus\n(Dev/Test)"]
-        RabbitMQBus["RabbitMQ\n(Production)"]
+        InMemoryBus["Bus En-Memoria\n(Dev/Test)"]
+        RabbitMQBus["RabbitMQ\n(Producción)"]
         IBusPort -.->|Impl| InMemoryBus
         IBusPort -.->|Impl| RabbitMQBus
     end
 
-    subgraph SecurityTier["Security Tier (ADR-0020, ADR-0026, ADR-0021)"]
-        IdP["Pluggable IdP Adapter\n[Auth0 / Entra / Zitadel]"]
-        AuthGraph["Auth Graph Engine\n[RBAC/ABAC < 5ms · ADR-0021]"]
-        MFA["MFA / Passkeys Engine\n[WebAuthn · ADR-0026]"]
+    subgraph SecurityTier["Nivel de Seguridad (ADR-0020, ADR-0026, ADR-0021)"]
+        IdP["Adaptador IdP Conectable\n[Auth0 / Entra / Zitadel]"]
+        AuthGraph["Motor Gráfico de Autorización\n[RBAC/ABAC < 5ms · ADR-0021]"]
+        MFA["Motor MFA / Passkeys\n[WebAuthn · ADR-0026]"]
     end
 
-    subgraph ObservabilityTier["Observability Tier (ADR-0007)"]
-        OTel["OTel Collector"]
+    subgraph ObservabilityTier["Nivel de Observabilidad (ADR-0007)"]
+        OTel["Coleccionista OTel"]
         Loki["Grafana Loki"]
-        Jaeger["Jaeger Tracing"]
+        Jaeger["Trazado Jaeger"]
         OTel --> Loki & Jaeger
     end
 
-    subgraph InfraTier["Self-Hosted OSS Infrastructure (ADR-0028)"]
-        Vault["HashiCorp Vault\n[Secrets Management]"]
-        MinIO["MinIO\n[Object Storage]"]
+    subgraph InfraTier["Infraestructura OSS Autohospedada (ADR-0028)"]
+        Vault["HashiCorp Vault\n[Gestión de Secretos]"]
+        MinIO["MinIO\n[Almacenamiento de Objetos]"]
     end
 
     WebApp & MobileApp & B2BClient -->|TLS/HTTP| CDN
-    CDN -->|Origin Requests| Kong
-    Kong -->|Route| WebBFF & MobileBFF & CoreAPI
+    CDN -->|Peticiones de Origen| Kong
+    Kong -->|Ruta| WebBFF & MobileBFF & CoreAPI
 
     WebBFF & MobileBFF -->|gRPC| CoreAPI
-    WebBFF & MobileBFF <-->|BFF Cache Reads| Redis
-    CoreAPI <-->|Core Cache Reads| Redis
+    WebBFF & MobileBFF <-->|Lecturas Caché BFF| Redis
+    CoreAPI <-->|Lecturas Caché Core| Redis
 
     CoreAPI -->|SQL/Dual-Layer RLS| PgSQL
     CoreAPI --> PgSQL & AuditLog
@@ -246,124 +246,124 @@ graph TD
 
 ---
 
-## 6. Runtime View — Request Flow Patterns
+## 6. Vista de Tiempo de Ejecución — Patrones de Flujo de Petición
 
-### 6.1 Authenticated Request Flow (ADR-0030, ADR-0008, ADR-0021, ADR-0014)
+### 6.1 Flujo de Petición Autenticada (ADR-0030, ADR-0008, ADR-0021, ADR-0014)
 
 ```mermaid
 sequenceDiagram
     autonumber
     participant C as Web App
-    participant CL as Client Cache (ADR-0004)
-    participant CDN as CDN (Layer 1)
-    participant B as NestJS BFF (Layer 2)
-    participant R as Redis Distributed
-    participant A as Core API (Layer 3)
+    participant CL as Caché Cliente (ADR-0004)
+    participant CDN as CDN (Capa 1)
+    participant B as NestJS BFF (Capa 2)
+    participant R as Redis Distribuido
+    participant A as Core API (Capa 3)
     participant D as PostgreSQL (RLS)
 
-    C->>CL: Query State (React Query)
-    alt Cache Hit (Immediate Render)
-        CL-->>C: Data (Stale-While-Revalidate)
+    C->>CL: Consultar Estado (React Query)
+    alt Acierto de Caché (Renderizado Inmediato)
+        CL-->>C: Datos (Stale-While-Revalidate)
     end
-    C->>CDN: HTTPS Request (Fetch/Background Update)
-    alt CDN Hit
-        CDN-->>C: Return Static Content
-    else CDN Miss
-        CDN->>B: Forward Request to Origin
-        B->>R: BFF Cache Lookup (View-Models)
-        alt BFF Cache Hit
-            R-->>B: Return Composite Response
-            B-->>CDN: Cacheable Response
-            CDN-->>C: Delivered Content
-            C->>CL: Sync Client Cache
-        else BFF Cache Miss
-            B->>A: gRPC Call (ADR-0032)
-            A->>R: Core Cache Lookup (Perms/Data)
-            alt Core Hit
-                R-->>A: Domain Object
-            else Core Miss
-                A->>D: SQL Query (Dual-Layer Isolation)
-                D-->>A: Filtered Results
-                A->>R: Populate Core Cache
+    C->>CDN: Petición HTTPS (Fetch/Actualización en Segundo Plano)
+    alt Acierto CDN
+        CDN-->>C: Devolver Contenido Estático
+    else Fallo CDN
+        CDN->>B: Reenviar Petición a Origen
+        B->>R: Búsqueda en Caché BFF (Modelos de Vista)
+        alt Acierto Caché BFF
+            R-->>B: Devolver Respuesta Compuesta
+            B-->>CDN: Respuesta Cacheable
+            CDN-->>C: Contenido Entregado
+            C->>CL: Sincronizar Caché del Cliente
+        else Fallo Caché BFF
+            B->>A: Llamada gRPC (ADR-0032)
+            A->>R: Búsqueda Caché Core (Permisos/Datos)
+            alt Acierto Core
+                R-->>A: Objeto de Dominio
+            else Fallo Core
+                A->>D: Consulta SQL (Aislamiento Doble Capa)
+                D-->>A: Resultados Filtrados
+                A->>R: Poblar Caché Core
             end
-            A-->>B: gRPC Response
-            B->>R: Populate BFF Cache
-            B-->>CDN: Fully Composed Body
-            CDN-->>C: Deliver Response
-            C->>CL: Populate/Sync Client Cache
+            A-->>B: Respuesta gRPC
+            B->>R: Poblar Caché BFF
+            B-->>CDN: Cuerpo Completamente Compuesto
+            CDN-->>C: Entregar Respuesta
+            C->>CL: Poblar/Sincronizar Caché Cliente
         end
     end
 ```
 
-### 6.2 Asynchronous Event Flow — Injectable Bus (ADR-0015, ADR-0016)
+### 6.2 Flujo de Eventos Asíncronos — Bus Inyectable (ADR-0015, ADR-0016)
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant UC as Use Case
+    participant UC as Caso de Uso
     participant Port as IEventBusPort
-    participant Bus as Concrete Impl (RabbitMQ / In-Memory)
-    participant AuditSvc as Audit Service
-    participant AuditDB as Audit Log (Append-Only)
+    participant Bus as Impl Concreta (RabbitMQ / En-Memoria)
+    participant AuditSvc as Servicio de Auditoría
+    participant AuditDB as Registro Auditoría (Append-Only)
 
     UC->>Port: publish(DomainEvent)
-    Port->>Bus: Dispatch (via injected impl)
-    Bus-->>AuditSvc: Deliver event async
-    AuditSvc->>AuditDB: INSERT immutable delta (ADR-0016)
-    Note over AuditDB: UPDATE/DELETE blocked by DB trigger
+    Port->>Bus: Despachar (vía impl inyectada)
+    Bus-->>AuditSvc: Entregar evento asíncronamente
+    AuditSvc->>AuditDB: INSERT delta inmutable (ADR-0016)
+    Note over AuditDB: UPDATE/DELETE bloqueados por trigger de BD
 ```
 
-### 6.3 Resilience Flow — Circuit Breaker (ADR-0011)
+### 6.3 Flujo de Resiliencia — Circuit Breaker (ADR-0011)
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant A as Core API
+    participant A as API Core
     participant CB as Circuit Breaker (opossum)
-    participant Ext as External Service
+    participant Ext as Servicio Externo
 
-    A->>CB: execute(call)
-    alt Circuit CLOSED
-        CB->>Ext: Forward call
-        Ext-->>CB: Success
-        CB-->>A: Result
-    else Circuit OPEN (threshold exceeded)
-        CB-->>A: Fallback Response (no call made)
-        Note over CB: Prevents cascade failure (ADR-0011)
+    A->>CB: execute(llamada)
+    alt Circuito CERRADO
+        CB->>Ext: Reenviar llamada
+        Ext-->>CB: Éxito
+        CB-->>A: Resultado
+    else Circuito ABIERTO (umbral excedido)
+        CB-->>A: Respuesta Alternativa (sin llamada ejecutada)
+        Note over CB: Previene fallo en cascada (ADR-0011)
     end
 ```
 
 ---
 
-## 7. Deployment View — Target Cloud Infrastructure (ADR-0013, ADR-0028)
+## 7. Vista de Despliegue — Infraestructura Cloud Objetivo (ADR-0013, ADR-0028)
 
 ```mermaid
 graph TD
-    subgraph CloudZoneA["Availability Zone A"]
-        KongA["Kong Node"]
-        BFFA["NestJS BFF Pod"]
-        APIA["Core API Pod"]
-        PgPrimary[("PostgreSQL Primary")]
+    subgraph CloudZoneA["Zona de Disponibilidad A"]
+        KongA["Nodo Kong"]
+        BFFA["Pod NestJS BFF"]
+        APIA["Pod Core API"]
+        PgPrimary[("PostgreSQL Primario")]
     end
 
-    subgraph CloudZoneB["Availability Zone B (DR — ADR-0013)"]
-        KongB["Kong Node"]
-        BFFB["NestJS BFF Pod"]
-        APIB["Core API Pod"]
-        PgReplica[("PostgreSQL Replica")]
+    subgraph CloudZoneB["Zona de Disponibilidad B (DR — ADR-0013)"]
+        KongB["Nodo Kong"]
+        BFFB["Pod NestJS BFF"]
+        APIB["Pod Core API"]
+        PgReplica[("PostgreSQL Réplica")]
     end
 
-    subgraph SharedInfra["Shared Self-Hosted OSS (ADR-0028)"]
-        Redis[("Redis Cluster")]
-        RabbitMQ["RabbitMQ Cluster"]
+    subgraph SharedInfra["OSS Autohospedado Compartido (ADR-0028)"]
+        Redis[("Clúster Redis")]
+        RabbitMQ["Clúster RabbitMQ"]
         Vault["HashiCorp Vault"]
-        MinIO["MinIO Storage"]
+        MinIO["Almacenamiento MinIO"]
     end
 
     Internet -->|DNS Failover| KongA & KongB
     KongA --> BFFA --> APIA --> PgPrimary
     KongB --> BFFB --> APIB --> PgReplica
-    PgPrimary -.->|Streaming Replication| PgReplica
+    PgPrimary -.->|Replicación en Streaming| PgReplica
     APIA & APIB <--> Redis
     APIA & APIB --> RabbitMQ
     APIA & APIB --> Vault
@@ -371,108 +371,108 @@ graph TD
 
 ---
 
-## 8. Transversal Corporate Concepts — Full ADR Matrix
+## 8. Conceptos Corporativos Transversales — Matriz ADR Completa
 
-| Architectural Concern | Implementing ADR(s) | Pattern / Technology | Diagram Section |
+| Preocupación Arquitectónica | ADR(s) Implementado(s) | Patrón / Tecnología | Sección del Diagrama |
 | :--- | :--- | :--- | :--- |
-| **Monorepo Governance** | ADR-0001 | Nx + npm workspaces | §2 |
-| **Hexagonal Architecture** | ADR-0002 | Ports & Adapters | §4.1, §5 |
-| **TypeScript Standards** | ADR-0003 | Strict mode + ESLint Boundaries | §2 |
-| **Frontend Resilience** | ADR-0004 | React Query offline cache | §3.1 |
-| **CI/CD Security** | ADR-0005 | CodeQL + GitHub Actions | §2 |
-| **Microservices Path** | ADR-0006 | Dapr Sidecar migration triggers | §4.5 |
-| **Observability** | ADR-0007 | OpenTelemetry + Loki + Jaeger | §3.1, §5, §6 |
-| **BFF Gateway Pattern** | ADR-0008 | NestJS BFF per client channel | §3.1, §4.3, §5 |
-| **Dependency Pinning** | ADR-0009 | Exact versions + `npm audit` | §2 |
+| **Gobernanza de Monorepo** | ADR-0001 | Nx + npm workspaces | §2 |
+| **Arquitectura Hexagonal** | ADR-0002 | Puertos y Adaptadores | §4.1, §5 |
+| **Estándares de TypeScript** | ADR-0003 | Modo estricto + ESLint Boundaries | §2 |
+| **Resiliencia en Frontend** | ADR-0004 | Caché offline de React Query | §3.1 |
+| **Seguridad CI/CD** | ADR-0005 | CodeQL + GitHub Actions | §2 |
+| **Camino a Microservicios** | ADR-0006 | Triggers de migración Dapr Sidecar | §4.5 |
+| **Observabilidad** | ADR-0007 | OpenTelemetry + Loki + Jaeger | §3.1, §5, §6 |
+| **Patrón de Gateway BFF** | ADR-0008 | NestJS BFF por canal de cliente | §3.1, §4.3, §5 |
+| **Fijación de Dependencias** | ADR-0009 | Versiones exactas + `npm audit` | §2 |
 | **Multi-Tenancy (SaaS)** | ADR-0010 | PostgreSQL RLS + AsyncLocalStorage | §4.2, §5, §6.1 |
 | **Circuit Breakers** | ADR-0011 | `opossum` + Exponential Backoff | §5, §6.3 |
-| **RBAC/ABAC Authorization** | ADR-0012 | JWT Claims + NestJS Guards | §5 |
-| **Cloud DR Topology** | ADR-0013 | Multi-AZ + Streaming Replication | §7 |
-| **Distributed Caching** | ADR-0014 | Multi-Layer Tiered Cache behind `ICachePort` | §5, §6.1 |
-| **Event-Driven (Injectable Bus)** | ADR-0015 | `IEventBusPort` → In-Mem / RabbitMQ | §3.1, §4.4, §5, §6.2 |
-| **Immutable Audit Trail** | ADR-0016 | Append-only table + DB trigger | §5, §6.2 |
+| **Autorización RBAC/ABAC** | ADR-0012 | JWT Claims + NestJS Guards | §5 |
+| **Topología Cloud DR** | ADR-0013 | Multi-AZ + Replicación en Streaming | §7 |
+| **Caché Distribuida** | ADR-0014 | Caché Escalonada Multi-Capa tras `ICachePort` | §5, §6.1 |
+| **Orientado a Eventos (Bus Inyectable)** | ADR-0015 | `IEventBusPort` → En-Mem / RabbitMQ | §3.1, §4.4, §5, §6.2 |
+| **Pista de Auditoría Inmutable** | ADR-0016 | Tabla append-only + trigger de BD | §5, §6.2 |
 | **Feature Flagging** | ADR-0017 | `IFeatureFlagPort` (Unleash/ConfigCat) | §5 |
-| **Testing Pyramid** | ADR-0018 | Unit + Contract (Pact) + E2E | §2 |
-| **Result / Functional Patterns** | ADR-0019 | `Result<T,E>` instead of exceptions | §4.1 |
-| **Identity Provider Abstraction** | ADR-0020 | Strategy Pattern → Auth0/Entra/Zitadel | §3.1, §5 |
-| **Auth Graph Compilation** | ADR-0021 | Redis-cached permission graph < 5ms | §5 |
-| **Pluggable Projections** | ADR-0022 | Context-aware read projections | §5 |
-| **Centralized Auth Kernel** | ADR-0023 | Shared authorization core kernel | §5 |
-| **Config & Feature Platform** | ADR-0024 | Multi-IdP parameter engine | §5 |
-| **Feature Flag Abstraction** | ADR-0025 | `IFeatureFlagPort` pluggable providers | §5 |
-| **MFA & Passkeys** | ADR-0026 | WebAuthn + Passkeys + TOTP + Adaptive | §5 |
-| **Dual Protocol REST/gRPC** | ADR-0027 | REST (external) + gRPC (internal) | §3.1 |
-| **Self-Hosted OSS Infra** | ADR-0028 | MinIO + RabbitMQ + Vault OSS | §5, §7 |
-| **Tactical DDD Primitives** | ADR-0029 | `@nestjslatam/ddd` via barrel re-exports | §4.1 |
-| **Two-Tier Gateway** | ADR-0030 | Kong (Edge) + NestJS BFF (Aggregation) | §3.1, §4.3, §5, §6.1 |
-| **Domain Event Catalog** | ADR-0031 | Multi-schema extraction + Async Contracts | §5, §6.2 |
-| **Protocol Selection** | ADR-0032 | gRPC (Int) vs REST (Ext) vs GraphQL | §3.1, §5, §6.1 |
-| **Transactional Outbox** | ADR-0033 | Atomic DB + Event atomic guarantee | §6.2 |
-| **CQRS Separation** | ADR-0034 | Evaluation Matrix for Read/Write Models | §5, §6.1 |
-| **Distributed Sagas** | ADR-0035 | Compensating Transaction Strategy | §6.2 |
-| **Messaging Strategy** | ADR-0036 | FIFO vs Fire & Forget vs DLQ Policies | §6.2 |
-| **Performance Testing** | ADR-0037 | K6 Load + Pact Contract Verification | §5, §6.3 |
-| **Error Management** | ADR-0038 | Result Pattern + Unified Boundaries | §5, §6.3 |
-| **Deployment Switcher** | ADR-0039 | Factory-based Topology Abstraction | §7 |
-| **Polyglot Selection** | ADR-0040 | Workload Matrix & Type-Safe Contracts | §1.2 |
-| **.NET Arch Canonical** | ADR-0041 | Clean Arch C# / Minimal APIs | §1.2 |
-| **Android Arch Canonical** | ADR-0042 | Native Kotlin / Compose / Offline | §1.2 |
+| **Pirámide de Pruebas** | ADR-0018 | Unitarias + Contrato (Pact) + E2E | §2 |
+| **Patrones Funcionales / Result** | ADR-0019 | `Result<T,E>` en lugar de excepciones | §4.1 |
+| **Abstracción de Proveedor Identidad** | ADR-0020 | Strategy Pattern → Auth0/Entra/Zitadel | §3.1, §5 |
+| **Compilación de Gráfico de Auth** | ADR-0021 | Gráfico de permisos en caché Redis < 5ms | §5 |
+| **Proyecciones Conectables** | ADR-0022 | Proyecciones de lectura conscientes del contexto | §5 |
+| **Núcleo de Autenticación Centralizado** | ADR-0023 | Núcleo compartido de autorización | §5 |
+| **Plataforma de Config & Features** | ADR-0024 | Motor de parámetros multi-IdP | §5 |
+| **Abstracción de Feature Flags** | ADR-0025 | Proveedores conectables de `IFeatureFlagPort` | §5 |
+| **MFA y Passkeys** | ADR-0026 | WebAuthn + Passkeys + TOTP + Adaptativo | §5 |
+| **Protocolo Dual REST/gRPC** | ADR-0027 | REST (externo) + gRPC (interno) | §3.1 |
+| **Infraestructura OSS Autohospedada** | ADR-0028 | MinIO + RabbitMQ + Vault OSS | §5, §7 |
+| **Primitivas DDD Tácticas** | ADR-0029 | `@nestjslatam/ddd` vía re-exportaciones | §4.1 |
+| **Gateway de Dos Niveles** | ADR-0030 | Kong (Edge) + NestJS BFF (Agregación) | §3.1, §4.3, §5, §6.1 |
+| **Catálogo de Eventos de Dominio** | ADR-0031 | Extracción multi-esquema + Contratos Asíncronos | §5, §6.2 |
+| **Selección de Protocolo** | ADR-0032 | gRPC (Int) vs REST (Ext) vs GraphQL | §3.1, §5, §6.1 |
+| **Transactional Outbox** | ADR-0033 | DB Atómica + Garantía atómica de eventos | §6.2 |
+| **Separación CQRS** | ADR-0034 | Matriz de Evaluación para Modelos de Lectura/Escritura | §5, §6.1 |
+| **Sagas Distribuidas** | ADR-0035 | Estrategia de Transacción Compensatoria | §6.2 |
+| **Estrategia de Mensajería** | ADR-0036 | Políticas FIFO vs Disparar y Olvidar vs DLQ | §6.2 |
+| **Pruebas de Rendimiento** | ADR-0037 | Carga K6 + Verificación de Contratos Pact | §5, §6.3 |
+| **Gestión de Errores** | ADR-0038 | Patrón Result + Límites Unificados | §5, §6.3 |
+| **Selector de Despliegue** | ADR-0039 | Abstracción de Topología basada en Factory | §7 |
+| **Selección Políglota** | ADR-0040 | Matriz de Carga de Trabajo y Contratos Type-Safe | §1.2 |
+| **Arquitectura Canónica .NET** | ADR-0041 | Clean Arch C# / Minimal APIs | §1.2 |
+| **Arquitectura Canónica Android** | ADR-0042 | Kotlin Nativo / Compose / Offline | §1.2 |
 
 ---
 
-## 9. Quality Requirements (NFR Benchmark)
+## 9. Requisitos de Calidad (NFR Benchmark)
 
-| Metric | Target | Enforcing ADR(s) |
+| Métrica | Objetivo | ADR(s) Aplicables |
 | :--- | :--- | :--- |
-| **API Latency (P95)** | < 50ms | ADR-0014, ADR-0021 |
-| **Auth Graph Resolution** | < 5ms | ADR-0021 |
-| **SAST Vulnerabilities** | 0 High/Critical | ADR-0005, ADR-0009 |
-| **Test Coverage** | ≥ 70% | ADR-0018 |
-| **Memory Footprint** | Low idle (microservice density) | ADR-0002, ADR-0006 |
-| **Tenant Data Bleed** | Zero tolerance | ADR-0010 (Dual-Layer Isolation) |
+| **Latencia de API (P95)** | < 50ms | ADR-0014, ADR-0021 |
+| **Resolución de Gráfico de Auth** | < 5ms | ADR-0021 |
+| **Vulnerabilidades SAST** | 0 Altas/Críticas | ADR-0005, ADR-0009 |
+| **Cobertura de Pruebas** | ≥ 70% | ADR-0018 |
+| **Huella de Memoria** | Baja inactividad (densidad de microservicios) | ADR-0002, ADR-0006 |
+| **Filtración de Datos de Tenencia** | Tolerancia cero | ADR-0010 (Aislamiento Doble Capa) |
 
 ---
 
-## 10. Canonical Reference Implementation
+## 10. Implementación de Referencia Canónica
 
-👉 **[Back to Project Root & Quick Start](../../README.md)**
+👉 **[Volver a la Raíz del Proyecto y Guía de Inicio](../../README.md)**
 
-Implemented using:
-- **Framework**: NestJS (v10) with strict Hexagonal boundaries.
-- **ORM**: TypeORM with native PostgreSQL RLS support.
-- **Gateway**: Kong OSS (DB-less YAML) + NestJS BFF layers.
-- **Event Bus**: `IEventBusPort` defaulting to In-Memory, injectable with RabbitMQ.
-- **Testing**: Jest (unit/integration) + Pact (contract tests).
+Implementado usando:
+- **Framework**: NestJS (v10) con límites estrictamente hexagonales.
+- **ORM**: TypeORM con soporte nativo de PostgreSQL RLS.
+- **Gateway**: Kong OSS (YAML sin BD) + capas de NestJS BFF.
+- **Bus de Eventos**: `IEventBusPort` por defecto en Memoria, inyectable con RabbitMQ.
+- **Pruebas**: Jest (unitarias/integración) + Pact (pruebas de contrato).
 
 ---
 
-## 11. Risks and Technical Debt
+## 11. Riesgos y Deuda Técnica
 
-Strategic tracking of current design limitations and acknowledged system risks.
+Seguimiento estratégico de las limitaciones actuales del diseño y riesgos del sistema reconocidos.
 
-### 11.1 Inherent Risks
-| Risk ID | Description | Mitigation Strategy | Severity |
+### 11.1 Riesgos Inherentes
+| ID del Riesgo | Descripción | Estrategia de Mitigación | Severidad |
 | :--- | :--- | :--- | :--- |
-| **R-01** | **Shared DB Performance** | Physical DB packing creates single failure domain. | Enforce strict read replication and query timeout ceilings. | Medium |
-| **R-02** | **RabbitMQ Overflow** | In-memory message spikes during outage. | Mandatory **ADR-0036** Flow Control / Quotas. | High |
-| **R-03** | **gRPC Polyglot Coupling** | Non-backward compatible proto changes. | Mandatory **Pact JS** Contract verification in CI. | High |
+| **R-01** | **Rendimiento de BD Compartida** | El empaquetamiento físico de la BD crea un dominio de fallo único. | Imponer replicación de lectura estricta y techos de tiempo de espera de consulta. | Media |
+| **R-02** | **Desbordamiento de RabbitMQ** | Picos de mensajes en memoria durante interrupciones. | Control de Flujo / Cuotas obligatorias según **ADR-0036**. | Alta |
+| **R-03** | **Acoplamiento Políglota gRPC** | Cambios de protocolo no compatibles con versiones anteriores. | Verificación obligatoria de contratos **Pact JS** en CI. | Alta |
 
-### 11.2 Known Technical Debt
-*   **Monorepo Bloat**: As library counts exceed 200+, Nx cache management will require migration from Local to Cloud caching.
-*   **Zero-Day Library Vulnerability**: Fast update cycles imposed by strict dependency pinning (ADR-0009) may consume 5-10% dev bandwidth monthly.
+### 11.2 Deuda Técnica Conocida
+*   **Hinchazón de Monorepo**: A medida que el conteo de librerías supere las 200+, la gestión de caché Nx requerirá la migración de almacenamiento en caché local a la nube.
+*   **Vulnerabilidad de Librería de Día Cero**: Los ciclos de actualización rápidos impuestos por la fijación estricta de dependencias (ADR-0009) pueden consumir entre el 5% y 10% del ancho de banda de desarrollo mensual.
 
 ---
 
-## 12. Glossary of Architectural Concepts
+## 12. Glosario de Conceptos Arquitectónicos
 
-Reference nomenclature used by this blueprint.
+Nomenclatura de referencia utilizada por este blueprint.
 
-*   **ACL (Anti-Corruption Layer)**: Isolates internal domain model from foreign schemas/contracts.
-*   **BFF (Backend for Frontend)**: Single-purpose edge API optimizing payloads for a specific client.
-*   **Bounded Context**: Strategic logic boundary owning its private database schema.
-*   **Clean Architecture**: Design paradigm where control flow always points inward toward dependencies.
-*   **Distributed Circuit Breaker**: Mechanism to halt request delivery to failing upstreams sharing state across pods via Redis.
-*   **Hexagonal Architecture**: See *Ports & Adapters*.
-*   **Port**: Explicit contract (Interface) that the application requires to talk to external systems.
-*   **RLS (Row-Level Security)**: Native DB engine security constraining table rows to active session user.
-*   **Saga Pattern**: Managing distributed transactional consistency via compensating events.
+*   **ACL (Anti-Corruption Layer)**: Aísla el modelo de dominio interno de esquemas/contratos externos.
+*   **BFF (Backend for Frontend)**: API de borde de un solo propósito que optimiza las cargas útiles para un cliente específico.
+*   **Bounded Context**: Límite estratégico de lógica propietario de su propio esquema de base de datos privado.
+*   **Arquitectura Limpia**: Paradigma de diseño donde el flujo de control siempre apunta hacia adentro, hacia las dependencias.
+*   **Circuit Breaker Distribuido**: Mecanismo para detener la entrega de peticiones a servicios aguas arriba con fallas compartiendo el estado entre pods vía Redis.
+*   **Arquitectura Hexagonal**: Ver *Puertos y Adaptadores*.
+*   **Puerto**: Contrato explícito (Interfaz) que requiere la aplicación para comunicarse con sistemas externos.
+*   **RLS (Row-Level Security)**: Seguridad nativa del motor de BD que restringe las filas de la tabla al usuario de la sesión activa.
+*   **Patrón Saga**: Gestión de la consistencia transaccional distribuida a través de eventos de compensación.

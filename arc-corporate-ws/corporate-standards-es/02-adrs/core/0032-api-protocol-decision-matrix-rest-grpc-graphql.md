@@ -1,58 +1,58 @@
-# ADR 0032: API Protocol Selection Matrix (REST vs gRPC vs GraphQL)
+# ADR 0032: Matriz de Selección de Protocolo de API (REST vs gRPC vs GraphQL)
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-11
 
-## Context
-As the modular monolith evolves into a multi-module ecosystem with multiple BFFs (Backend For Frontends), mobile apps, and external corporate integrations, selecting the correct communication protocol for each interaction path is critical. Employing a "one-size-fits-all" strategy leads to either underperforming internal traffic (REST) or overly complex browser clients (gRPC/Protobuf). We need a decisive framework guiding developers on exactly which protocol to adopt based on the interaction boundary and consumer type.
+## Contexto
+A medida que el monolito modular evoluciona hacia un ecosistema multi-módulo con múltiples BFFs (Backend For Frontends), apps móviles e integraciones corporativas externas, la selección del protocolo de comunicación correcto para cada ruta de interacción es crítica. Emplear una estrategia de "talla única" conduce a un tráfico interno con bajo rendimiento (REST) o a clientes de navegador excesivamente complejos (gRPC/Protobuf). Necesitamos un marco decisivo que guíe a los desarrolladores sobre qué protocolo exacto adoptar en función del límite de interacción y del tipo de consumidor.
 
-## Decision
-We establish a **Strict Protocol Fit Matrix** tailored to specific architectural tiers:
+## Decisión
+Establecemos una **Matriz de Ajuste de Protocolo Estricta** adaptada a niveles arquitectónicos específicos:
 
-### 1. Internal Service-to-Service communication
-👉 **MANDATE: gRPC (Protocol Buffers over HTTP/2)**
-*   **Scope**: Synchronous calls between internal bounded contexts (e.g., Order context validating user authorization with Identity context).
-*   **Rationale**: High performance, binary serialization collapses bandwidth usage, and strict Type-safety through unified `.proto` contracts.
+### 1. Comunicación Interna Servicio-a-Servicio
+📜 **MANDATO: gRPC (Protocol Buffers sobre HTTP/2)**
+*   **Alcance**: Llamadas síncronas entre contextos delimitados internos (ej., el contexto de Pedidos validando la autorización del usuario con el contexto de Identidad).
+*   **Razón fundamental**: Alto rendimiento, la serialización binaria colapsa el uso del ancho de banda, y seguridad de tipos estricta a través de contratos `.proto` unificados.
 
-### 2. Public Third-Party & External Integration
-👉 **MANDATE: REST (JSON over HTTPS)**
-*   **Scope**: External customer integrations, legacy corporate gateway connections, and global developer public APIs.
-*   **Rationale**: Industry universality, trivial consumption via standard HTTP libraries, easiest debugging/testing, and broad interactive documentation (OpenAPI/Swagger).
+### 2. Integración Externa y Terceros Públicos
+📜 **MANDATO: REST (JSON sobre HTTPS)**
+*   **Alcance**: Integraciones de clientes externos, conexiones de gateways corporativos legacy, y APIs públicas globales para desarrolladores.
+*   **Razón fundamental**: Universalidad en la industria, consumo trivial vía librerías HTTP estándar, depuración/pruebas más sencillas, y documentación interactiva amplia (OpenAPI/Swagger).
 
-### 3. Frontend Portals & Dynamic BFF Orchestration
-👉 **MANDATE: REST (Primary) / GraphQL (Targeted Enrichment)**
-*   **Standard Flows**: Default to conventional REST APIs for transactional commands (Create/Update).
-*   **Rich/Nested Read Scenarios**: Adopt **GraphQL** strictly at the NestJS BFF level when a screen requires complex data aggregation (fetching Entities, associated Taxonomies, Audits, and relations simultaneously) to prevent mobile/web over-fetching and multiple sequential roundtrips.
+### 3. Portales Frontend y Orquestación de BFF Dinámica
+📜 **MANDATO: REST (Primario) / GraphQL (Enriquecimiento Dirigido)**
+*   **Flujos Estándar**: Por defecto a APIs REST convencionales para comandos transaccionales (Crear/Actualizar).
+*   **Escenarios de Lectura Ricos/Anidados**: Adoptar **GraphQL** estrictamente al nivel de BFF NestJS cuando una pantalla requiera agregación de datos compleja (obtener Entidades, Taxonomías asociadas, Auditorías y relaciones simultáneamente) para prevenir el over-fetching móvil/web y los múltiples roundtrips secuenciales.
 
-### Selection Decision Tree
+### Árbol de Decisión de Selección
 
-| Scenario | Preferred Protocol | Justification |
+| Escenario | Protocolo Preferido | Justificación |
 | :--- | :--- | :--- |
-| **Machine-to-Machine (Internal)** | **gRPC** | Low latency, binary compaction, strongly typed. |
-| **File Uploads/Streams** | **gRPC / REST** | Native streaming capability or simple multipart. |
-| **Public Open API / Developer Docs** | **REST** | Absolute standard, easiest vendor adoption. |
-| **High-Density Aggregate Dashboards** | **GraphQL** | Resolves under-fetching / recursive lookups. |
-| **Low-Power Mobile Data Retrieval** | **GraphQL** | Client strictly defines data shape down to the bit. |
-| **Standard CRUD (Save User, Delete Task)** | **REST** | Predictable cacheability, native HTTP semantics. |
+| **Máquina-a-Máquina (Interno)** | **gRPC** | Baja latencia, compactación binaria, fuertemente tipado. |
+| **Cargas/Streams de Archivos** | **gRPC / REST** | Capacidad de streaming nativa o multipart simple. |
+| **Open API Pública / Docs Desarrollador** | **REST** | Estándar absoluto, adopción de proveedores más fácil. |
+| **Tableros Agregados de Alta Densidad** | **GraphQL** | Resuelve el under-fetching / búsquedas recursivas. |
+| **Recuperación de Datos Móviles Bajo Consumo**| **GraphQL** | El cliente define estrictamente la forma de los datos hasta el bit. |
+| **CRUD Estándar (Guardar Usuario, Borrar Tarea)**| **REST** | Cacheabilidad predecible, semántica HTTP nativa. |
 
-## Architecture Guidelines
-- **GraphQL Isolation**: GraphQL runtime logic MUST exist only within Tier-2 BFF application nodes. Core domain API definitions never natively support GraphQL resolvers to avoid leaking view-specific constraints into domain business logic.
-- **Protobuf Centralization**: All internal gRPC service schemas (.proto) are hosted and versioned in a unified `libs/contracts` workspace to prevent drifted interface models.
+## Directrices de Arquitectura
+- **Aislamiento de GraphQL**: La lógica de tiempo de ejecución de GraphQL DEBE existir solo dentro de los nodos de aplicación BFF del Tier-2. Las definiciones de API de dominio core nunca soportan nativamente resolutores de GraphQL para evitar la fuga de restricciones específicas de la vista hacia la lógica de negocio del dominio.
+- **Centralización de Protobuf**: Todos los esquemas de servicios gRPC internos (.proto) se alojan y versionan en un espacio de trabajo unificado `libs/contracts` para evitar modelos de interfaz con deriva (drift).
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Correct application of tools optimizes overall network footprint.
-- Empowers frontend velocity by permitting dynamic view query updates without forcing backend deployment cycles (via GraphQL).
-- Ensures maximum scalability for microservice interconnects via multiplexed binary pipes.
+### Positivas
+- La aplicación correcta de herramientas optimiza la huella de red general.
+- Empodera la velocidad del frontend permitiendo actualizaciones dinámicas de consultas de vista sin forzar ciclos de despliegue del backend (vía GraphQL).
+- Asegura la máxima escalabilidad para interconexiones de microservicios vía conductos binarios multiplexados.
 
-### Negative
-- Developers must navigate three concurrent protocol ecosystems.
-- Introduces setup costs for GraphQL execution layers and schema governance tools within BFF stacks.
+### Negativas
+- Los desarrolladores deben navegar por tres ecosistemas de protocolos concurrentes.
+- Introduce costos de configuración para capas de ejecución GraphQL y herramientas de gobernanza de esquemas dentro de los stacks BFF.
 
-## References
-- [ADR-0027: Dual Protocol Strategy](./0027-dual-protocol-rest-grpc-api-gateway.md)
-- [ADR-0030: Two-Tier Gateway Patterns](./0030-api-gateway-kong-vs-nestjs.md)
+## Referencias
+- [ADR-0027: Estrategia de Protocolo Dual](../02-adrs/nodejs/0027-dual-protocol-rest-grpc-api-gateway.md)
+- [ADR-0030: Patrones de Gateway de Dos Capas](../02-adrs/core/0030-api-gateway-kong-vs-nestjs.md)

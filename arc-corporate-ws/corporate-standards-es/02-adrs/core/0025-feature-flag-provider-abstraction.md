@@ -1,30 +1,30 @@
-# ADR 0025: Feature Flag Provider Abstraction Strategy
+# ADR 0025: Estrategia de Abstracción de Proveedor de Feature Flags
 
-## Status
-Approved
+## Estado
+Aprobado
 
-## Date
+## Fecha
 2026-05-09
 
-## Context
-Incorporating Feature Flags introduces vendor lock-in risks. Directly hardcoding SDK logic from proprietary platforms (Unleash, ConfigCat, LaunchDarkly) violates core principles by embedding non-standard behaviors directly inside business use cases. We require complete provider hot-swappability.
+## Contexto
+Incorporar Feature Flags introduce riesgos de bloqueo de proveedor. Codificar rígidamente la lógica del SDK directamente desde plataformas propietarias (Unleash, ConfigCat, LaunchDarkly) viola principios core al incrustar comportamientos no estándar directamente dentro de los casos de uso de negocio. Requerimos intercambiabilidad total de proveedores en caliente.
 
-## Decision
-Subsume feature toggle invocation under classic Hexagonal Port principles:
+## Decisión
+Subsumir la invocación de selectores de características (feature toggles) bajo los principios clásicos de Puerto Hexagonal:
 
-1. **Canonical Port**: The core repository defines `IFeatureFlagPort`, detailing universal execution contracts (`evaluate()`, `isHealthy()`) entirely isolated from commercial library syntax.
-2. **Pluggable Infrastructure**: Confine all concrete third-party SDKs into explicit outer Adapter layers. We support internal Postgres fallback strategies alongside native LaunchDarkly, ConfigCat, or Azure modules simultaneously.
-3. **Dynamic Resolution**: Instantiate the correct provider adapter via runtime NestJS dependency injectors looking at specific active configuration keys.
+1. **Puerto Canónico**: El repositorio central define `IFeatureFlagPort`, detallando contratos de ejecución universales (`evaluate()`, `isHealthy()`) enteramente aislados de la sintaxis de librerías comerciales.
+2. **Infraestructura Enchufable**: Confinar todos los SDKs concretos de terceros en capas de Adaptador externas explícitas. Soportamos estrategias de respaldo internas de Postgres junto con módulos nativos de LaunchDarkly, ConfigCat o Azure simultáneamente.
+3. **Resolución Dinámica**: Instanciar el adaptador del proveedor correcto vía inyectores de dependencia NestJS en tiempo de ejecución que miren claves de configuración activas específicas.
 
-## Consequences
+## Consecuencias
 
-### Positive
-- Complete immunity to external pricing spikes or platform stability problems (immediate local fallback).
-- High future-compatibility regarding eventual standardization on CNCF openFeature schemas.
+### Positivas
+- Inmunidad completa a picos de precios externos o problemas de estabilidad de la plataforma (respaldo local inmediato).
+- Alta compatibilidad futura con respecto a la eventual estandarización en los esquemas openFeature de la CNCF.
 
-### Negative
-- Maintenance cost associated with sustaining multiple specialized adaptor classes targeting diverse provider formats.
+### Negativas
+- Costo de mantenimiento asociado al sostenimiento de múltiples clases de adaptadores especializados orientados a diversos formatos de proveedores.
 
-## References
-- [ADR-0024: Configuration Platform](./0024-configuration-feature-management-platform.md)
-- [ADR-0002: Hexagonal Architecture](./0002-clean-architecture-nestjs.md)
+## Referencias
+- [ADR-0024: Plataforma de Configuración](../02-adrs/core/0024-configuration-feature-management-platform.md)
+- [ADR-0002: Arquitectura Hexagonal](../02-adrs/nodejs/0002-clean-architecture-nestjs.md)
