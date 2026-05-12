@@ -1,66 +1,68 @@
-# 📋 Backlog de Épicas e Historias (Scrum Artifacts)
+# 📋 Epics & Backlog Registry (Scrum Artifacts)
 
-**Fecha:** 2026-05-12  
-**Autor:** Product Owner [BMAD Role]  
-**Auditor de Calidad (INVEST):** Scrum Master
+> 🌍 **Bilingual Navigation:** [🇪🇸 Versión en Español](./02-backlog-and-epics-es.md)
+
+**Date:** 2026-05-12  
+**Author:** Product Owner [BMAD Role]  
+**Quality Auditor (INVEST):** Scrum Master
 
 ---
 
-## 🏆 1. Resumen de Épicas por Fase
+## 🏆 1. Epics Summary by Phase
 
-| Épica | Nombre | Objetivo | Fase |
+| Epic | Name | Objective | Phase |
 | :--- | :--- | :--- | :--- |
-| **EPIC-01** | Core Multi-Tenant Isolation | Establecer la base de datos aislada y el middleware de identidad. | **MVP (Fase 1)** |
-| **EPIC-02** | Hexagonal Task Lifecycles | CRUD de dominio puro sin acoplamiento a infraestructura. | **MVP (Fase 1)** |
-| **EPIC-03** | Observability Boost | Integración de OpenTelemetry y logs estructurados. | **Fase 2 (Scale)** |
-| **EPIC-04** | Distribute & Extract | Migración de contextos hacia Microservicios y Dapr sidecars. | **Fase 3 (North Star)** |
+| **EPIC-01** | Core Multi-Tenant Isolation | Establish the secure persistence layer and identity context middleware. | **MVP (Phase 1)** |
+| **EPIC-02** | Hexagonal Task Lifecycles | Pure domain CRUD without external infrastructure bleeding. | **MVP (Phase 1)** |
+| **EPIC-03** | Observability Boost | Integration of OpenTelemetry telemetry traces and structured logging. | **Phase 2 (Scale)** |
+| **EPIC-04** | Distribute & Extract | Evolution roadmap leading towards Microservices and Dapr Sidecars. | **Phase 3 (North Star)** |
 
 ---
 
-## 📑 2. Detalle del Backlog (Historias de Usuario & Técnicas)
+## 📑 2. Backlog Detailed View (User Stories & Technical)
 
-### 🟢 Épica 1: Core Multi-Tenant Isolation
+### 🟢 Epic 1: Core Multi-Tenant Isolation
 
-#### **US-101: Login con emisión de JWT**
-*   **Descripción:** Como usuario del sandbox, quiero autenticarme con mis credenciales para recibir un Bearer Token seguro.
-*   **Tipo:** Funcional
-*   **Criterios de Aceptación:**
-    *   El payload debe contener obligatoriamente `sub` (userId) y `tenantId`.
-    *   Retorna 401 ante credenciales inválidas.
-*   **Prioridad:** Must Have
+#### **US-101: Login & JWT Issuance**
+*   **Description:** As a sandbox user, I want to authenticate myself to obtain a secured Bearer Token.
+*   **Type:** Functional
+*   **Acceptance Criteria:**
+    *   Payload MUST explicitly host `sub` (userId) and `tenantId`.
+    *   Returns 401 Unauthorized upon credential mismatches.
+*   **Priority:** Must Have
 
-#### **TS-103: [Técnica] Row-Level Security (RLS)**
-*   **Descripción:** Como arquitecto, quiero que la base de datos aplique la política `USING (tenant_id = current_setting('app.current_tenant'))` para blindar la data.
-*   **Tipo:** [Técnica]
-*   **Criterios de Aceptación:**
-    *   Una consulta sin clausula `WHERE` devuelve exclusivamente los registros pertenecientes al contexto del usuario actual.
-*   **Prioridad:** Must Have
-
----
-
-### 🟢 Épica 2: Hexagonal Task Lifecycles
-
-#### **US-201: Registro de Tareas Validadas**
-*   **Descripción:** Como usuario, quiero registrar un nuevo pendiente para darle seguimiento.
-*   **Tipo:** Funcional
-*   **Criterios de Aceptación:**
-    *   El dominio arroja error de validación si el título excede los 150 caracteres antes de tocar la base de datos.
-*   **Prioridad:** Must Have
-
-#### **TS-203: [Técnica] Domain Events Pub/Sub (In-Memory)**
-*   **Descripción:** Como desarrollador, quiero que la creación de tareas dispare el evento `TaskCreated` a través de un Bus inyectado.
-*   **Tipo:** [Técnica]
-*   **Criterios de Aceptación:**
-    *   El caso de uso dispara el evento, pero no conoce quién escucha el evento.
-*   **Prioridad:** Should Have
+#### **TS-103: [Technical] Row-Level Security (RLS)**
+*   **Description:** As an Architect, I demand the DB layer executes `USING (tenant_id = current_setting('app.current_tenant'))` policy to safeguard data.
+*   **Type:** [Technical]
+*   **Acceptance Criteria:**
+    *   A naked Query executed without explicit `WHERE` clauses returns exclusively context-relevant rows.
+*   **Priority:** Must Have
 
 ---
 
-## 🚦 3. Roadmap y Deuda Técnica Planificada (Roadmap View)
+### 🟢 Epic 2: Hexagonal Task Lifecycles
 
-Las siguientes historias técnicas se encuentran bloqueadas hasta alcanzar la Fase 2 o 3 según la evolución natural de carga del sistema ([ADR-0045](../../corporate-standards/02-adrs/core/0045-microservice-extraction-readiness-criteria.md)):
+#### **US-201: Validated Task Registration**
+*   **Description:** As a user, I want to log a new to-do task to maintain tracking.
+*   **Type:** Functional
+*   **Acceptance Criteria:**
+    *   Domain rules trigger a validation error BEFORE DB interaction if title length exceeds 150 chars.
+*   **Priority:** Must Have
 
-*   `TS-302 [Fase 2]` - **Transactional Outbox:** Garantizar entrega de eventos en fallos de red.
-*   `TS-401 [Fase 3]` - **Extracción Sidecar Dapr:** Integración de malla de servicios.
+#### **TS-203: [Technical] Domain Events Pub/Sub (In-Memory)**
+*   **Description:** As a Developer, I want the creation flow to broadcast a `TaskCreated` message via injected event bus.
+*   **Type:** [Technical]
+*   **Acceptance Criteria:**
+    *   The transactional application use case emits the event without static awareness of the handlers.
+*   **Priority:** Should Have
 
-> **Nota del Scrum Master:** Todas las historias aquí listadas cumplen con los criterios **INVEST** y han sido validadas para su ejecución inmediata en el primer Sprint de desarrollo del Sandbox.
+---
+
+## 🚦 3. Evolution Roadmap & Planned Technical Debt
+
+Subsequent Technical Tickets are locked until execution parameters scale based on [ADR-0045](../../corporate-standards/02-adrs/core/0045-microservice-extraction-readiness-criteria.md):
+
+*   `TS-302 [Phase 2]` - **Transactional Outbox:** Guaranteeing delivery consistency amid downstream outages.
+*   `TS-401 [Phase 3]` - **Dapr Sidecar Extraction:** Orchestrating the service mesh transition.
+
+> **Scrum Master Note:** All listed stories satisfy **INVEST** hygiene norms and are cleared for direct execution in the very first sprint cycle of the Sandbox.

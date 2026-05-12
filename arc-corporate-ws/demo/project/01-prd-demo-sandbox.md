@@ -1,31 +1,33 @@
-# 📄 Documento de Requisitos del Producto (PRD)
+# 📄 Product Requirements Document (PRD)
 
-**Producto:** ARC32 Reference Sandbox ("To-Do Labs")  
-**Dueño del Producto:** Product Manager [BMAD Role]  
-**Fase Actual:** MVP (Fase 1)
+> 🌍 **Bilingual Navigation:** [🇪🇸 Versión en Español](./01-prd-demo-sandbox-es.md)
+
+**Product:** ARC32 Reference Sandbox ("To-Do Labs")  
+**Product Owner:** Product Manager [BMAD Role]  
+**Current Phase:** MVP (Phase 1)
 
 ---
 
-## 🎯 1. Resumen Ejecutivo (Executive Summary)
-Este producto no es un sistema comercial final. Es un **Laboratorio de Patrones Específico** diseñado para validar físicamente que los estándares de arquitectura corporativa definidos en los ADRs operan armoniosamente en un ciclo de vida de desarrollo real. Su éxito se mide por la limpieza de sus fronteras arquitectónicas y no por la cantidad de funcionalidades de usuario.
+## 🎯 1. Executive Summary
+This product is not a commercial end-user application. It is a **Pattern Laboratory** specifically engineered to physically validate that the corporate architectural standards defined in the ADRs operate harmoniously within a real software lifecycle. Its success is measured by the rigidity and cleanliness of its architectural boundaries, not by user-facing feature bloat.
 
-## 🚀 2. Visión y Valor Diferenciador
-Demostrar mediante código ejecutable que se puede construir un sistema reactivo con **Seguridad de Nivel de Fila (RLS)** y **Arquitectura Hexagonal**, manteniendo la lógica de negocio blindada contra cambios en el motor de base de datos o en el framework de ejecución.
+## 🚀 2. Vision and Key Value Proposition
+Demonstrate via executable live code the deployment of a highly reactive ecosystem enforcing **Row-Level Security (RLS)** and **Hexagonal Architecture**, maintaining the core business logic fully shielded from persistence engine iterations or framework transitions.
 
-## 📋 3. Requisitos Funcionales (Functional Requirements)
-| ID | Requisito | Descripción Crítica |
+## 📋 3. Functional Requirements
+| ID | Requirement | Critical Description |
 | :--- | :--- | :--- |
-| **REQ-01** | Gestión de Identidad | Registro, Login y generación de JWT conteniendo obligatoriamente el `tenantId`. |
-| **REQ-02** | CRUD de Tareas | Creación, Listado, Filtrado y Actualización del estado de un pendiente por usuario. |
-| **REQ-03** | Categorización | Asignación de carpetas o buckets de organización para tareas agrupadas. |
+| **REQ-01** | Identity Management | User registration, login, and mandatory `tenantId`-injected JWT issuance. |
+| **REQ-02** | Task CRUD | Creation, Listing, Filtering, and state updating for atomic per-user items. |
+| **REQ-03** | Categorization | Dedicated folder assignment for organization grouping buckets. |
 
-## 🏗️ 4. Requisitos No Funcionales y Deuda Técnica Aceptada
-1.  **Blindaje de Dominio:** Prohibición de librerías `@nestjs` o de persistencia en el módulo core del dominio.
-2.  **Aislamiento SQL Nativo:** El sandbox debe forzar que el pooling de base de datos configure el contexto del tenant antes de cada Query.
-3.  **Consistencia Eventual:** Aceptada y planificada para la Fase 2 mediante el patrón Outbox. En Fase 1, se tolera la comunicación síncrona inter-módulo.
+## 🏗️ 4. Non-Functional Requirements & Accepted Technical Debt
+1.  **Domain Isolation:** Strict ban on `@nestjs` or native database library imports inside the `/domain` core module.
+2.  **Native SQL Isolation:** The sandbox must force backend pooling middleware to preset the session local `app.current_tenant` context context before executing ANY query.
+3.  **Eventual Consistency:** Explicitly deferred to Phase 2 via Outbox implementations. Phase 1 safely tolerates synchronous intra-module communication.
 
 ---
 
-## ⚖️ 5. Criterios de Éxito de la Demo
-1.  **Seguridad:** Ejecutar un `SELECT` crudo con el contexto de Usuario A y demostrar que los datos del Usuario B son invisibles.
-2.  **Agnosticismo:** Reemplazar el adaptador del repositorio de base de datos por una implementación `InMemory` para tests sin cambiar un solo caracter en la capa de aplicación o dominio.
+## ⚖️ 5. Demo Success Criteria
+1.  **Security:** Run a raw `SELECT` in the Context of User A and prove User B data is completely invisible at the wire level.
+2.  **Agnosticism:** Hot-swap database infrastructure adapters to `InMemory` test harness iterations without modifying a single character inside Domain or Application logic layers.

@@ -1,35 +1,37 @@
-# 📁 Gestión de Proyecto (Scrum Ecosystem)
+# 📁 Project Management Hub (Scrum Ecosystem)
 
-Este directorio contiene los artefactos oficiales de planificación, priorización y gobernanza del ciclo de vida del software bajo el método bMAD.
+> 🌍 **Bilingual Navigation:** [🇪🇸 Versión en Español](./README.es.md)
 
----
-
-## 🏛️ Taxonomía de Entregables Recomendada (bMAD-Method)
-
-Para garantizar trazabilidad y visibilidad entre el negocio y la ingeniería, la documentación de proyecto en el ecosistema ARC se organiza bajo la siguiente estructura jerárquica:
-
-### 📑 Distribución Estratégica:
-
-1.  **`01-inception/` (Fase de Descubrimiento)**
-    *   Documentos de Requisitos de Producto (PRD).
-    *   Definición de OKRs y KPIs del negocio.
-    *   Análisis de competencia y valor diferencial.
-2.  **`02-planning/` (Gobernanza Técnica)**
-    *   Definición de Épicas y Priorización (MoSCoW).
-    *   Historias de Usuario y Especificaciones Técnicas In-Sprint.
-    *   Acuerdos de Definición de Terminado (DoD) y Preparado (DoR).
-3.  **`03-design/` (Detalle de Solución)**
-    *   Esquemas de Datos Conceptuales y Relacionales.
-    *   UX/UI Wireframes (enlaces externos o SVG embed).
-    *   Contratos de API (OpenAPI/AsyncAPI).
+This directory contains the official planning, prioritization, and governance artifacts for the software development lifecycle following the bMAD method.
 
 ---
 
-## 🧭 Índice de Entregables del Sandbox Actual
+## 🏛️ Recommended Deliverables Taxonomy (bMAD-Method)
 
-Actualmente ejecutados y vigentes en esta carpeta:
+To guarantee seamless traceability between business and engineering, ARC ecosystem project documentation should be organized under the following hierarchical structure:
 
-*   📄 **[01 - PRD Demo Sandbox](./01-prd-demo-sandbox.md)**: La visión estratégica de alto nivel de la demo.
-*   📋 **[02 - Epics & Backlog](./02-backlog-and-epics.md)**: El desglose de historias de usuario, técnicas y mapa MoSCoW.
+### 📑 Strategic Distribution:
 
-> Para navegar por el scope funcional de la demo (Ubiquitous Language, Glosarios, Casos de Uso Atómicos), dirígete a la carpeta madre [../functional](../README.md).
+1.  **`01-inception/` (Discovery Phase)**
+    *   Product Requirement Documents (PRD).
+    *   Business OKRs and KPIs definition.
+    *   Competitor analysis and differentiating value proposition.
+2.  **`02-planning/` (Technical Governance)**
+    *   Epic definitions and Prioritization (MoSCoW).
+    *   In-Sprint User Stories and Technical Specifications.
+    *   Definition of Done (DoD) and Ready (DoR) agreements.
+3.  **`03-design/` (Solution Detail)**
+    *   Conceptual and Relational Data Schemas.
+    *   UX/UI Wireframes.
+    *   API Contracts (OpenAPI/AsyncAPI).
+
+---
+
+## 🧭 Sandbox Project Deliverables Index
+
+Currently executed and active in this folder:
+
+*   📄 **[01 - Sandbox PRD](./01-prd-demo-sandbox.md)**: The high-level strategic vision for the demo.
+*   📋 **[02 - Epics & Backlog](./02-backlog-and-epics.md)**: User stories, technical tickets, and MoSCoW map breakdown.
+
+> To explore the functional scope of the demo (Ubiquitous Language, Glossaries, Atomic Use Cases), please navigate to the parent folder [../functional](../README.md).
