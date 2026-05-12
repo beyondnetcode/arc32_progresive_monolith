@@ -46,13 +46,13 @@ export const TaskDataSource = new DataSource({
 });
 ```
 
-#### Microservices Extraction Path
+#### Database Migration Path (3-Phase Progression)
 
-When the `TaskService` is extracted as an independent microservice:
-1. Create a dedicated PostgreSQL user with access only to the `tasks` schema.
-2. Point `TaskService` `DATABASE_URL` to the same PostgreSQL instance, schema `tasks`.
-3. No data migration required — the schema boundary was already enforced.
-4. At scale: move `tasks` schema to its own PostgreSQL instance with a one-time `pg_dump --schema=tasks`.
+To avert the "Shared Database with Microservices" antipattern, transitions must strictly follow:
+
+- **Phase 1 (Monolith):** Shared physical engine, distinct schema-per-context. NO cross-schema JOINs. Inter-schema cohesion only via API or published domain events.
+- **Phase 2 (Extraction):** Separate logical users per extracted service. Transition to physical migration using the Transactional Outbox ([ADR-0033](../core/0033-transactional-outbox-pattern.md)) for reliable event replication. Synchronize state via events, NEVER via cross-schema DB access.
+- **Phase 3 (Full Mesh):** Total Data Ownership. Each microservice owns its exclusive database engine instance. Inter-service data dependencies are fulfilled entirely via API/gRPC calls or Materialized Views hydrated by events.
 
 ---
 

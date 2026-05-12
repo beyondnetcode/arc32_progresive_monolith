@@ -37,6 +37,7 @@ Decisiones aplicables a cualquier producto construido sobre el framework, indepe
 *   [ADR 0039: Conmutador de Topología de Despliegue](./core/0039-deployment-topology-abstraction-switcher.md)
 *   **[ADR 0040: Matriz Multi-Runtime & Contratos](./core/0040-multi-runtime-selection-contracts.md)** *(Gobernanza Raíz)*
 *   [ADR 0044: Estrategia de Persistencia de Seguridad Configurable](./core/0044-configurable-security-persistence-strategy.md)
+*   [ADR 0045: Criterios de Aceptación para Extracción de Microservicios](./core/0045-microservice-extraction-readiness-criteria.md)
 
 ---
 

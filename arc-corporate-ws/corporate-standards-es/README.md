@@ -31,6 +31,7 @@ La historia consolidada y clasificada de las 44 decisiones técnicas activas.
 ### 🛠️ Fase 03: Estándares de Ingeniería y Auditoría de Stack
 Playbooks de implementación táctica, seguridad defensiva y validación de mercado.
 *   **[🔬 Opinión de Auditoría de Stack 2026](./03-engineering/detailed-stack-audit-2026.md)** *(Crítico - Evaluación de Licencias)*
+*   **[🧠 Análisis Técnico Senior y Evaluación de Madurez](./03-engineering/senior-architectural-assessment.md)** *(Nuevo Roadmap)*
 *   [Manifiesto de Ingeniería Global (SOLID/OWASP)](./03-engineering/engineering-manifesto.md)
 *   [Guía Táctica de Pruebas de Contrato (Pact)](./03-engineering/contract-testing-guideline.md)
 *   [Playbook de Estrategia de Observabilidad](./03-engineering/observability-playbook.md)

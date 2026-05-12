@@ -17,8 +17,28 @@ Adoptar **Dapr (Distributed Application Runtime)** como el runtime sidecar de mi
 | Hito | Descripción |
 | :--- | :--- |
 | **M1 — Monolito Modular** | Estado actual. Proceso único con módulos de contexto delimitado aislados. |
-| **M2 — Extracción de Servicios** | Contextos de alto tráfico o desplegables independientemente extraídos como microproyectos Nx. Cada uno obtiene su propio esquema de base de datos ([ADR-0031](0031-schema-per-context-domain-event-catalog.md)) y se comunica vía gRPC o Dapr. |
-| **M3 — Malla Completa (Full Mesh)** | Todos los servicios corren con Sidecars de Dapr. La invocación de servicio a servicio, Pub/Sub y el Estado son gestionados por componentes Dapr (YAML declarativo). |
+| **M2 — Extracción de Servicios** | Contextos de alto tráfico o desplegables independientemente extraídos como microproyectos Nx. Se activa bajo las reglas en [ADR-0045](../core/0045-microservice-extraction-readiness-criteria.md). |
+| **M3 — Malla Completa (Full Mesh)** | Estado avanzado del ecosistema donde la interacción a nivel de infraestructura utiliza la abstracción de Sidecar. |
+
+### 🚦 Puerta de Decisión de Dapr (Activation Gate)
+Para prevenir el over-engineering prematuro, los Sidecars de Dapr **NO** están activos por defecto en el Hito 2. La organización operará inicialmente mediante despliegues Kubernetes puros utilizando comunicación gRPC explícita entre servicios. La activación de Dapr está condicionada a:
+- El conjunto total de servicios extraídos supera los cinco (5).
+- O BIEN: Se exige reintento automático / circuit breaking transparente avanzado que exceda la capacidad del cliente estándar.
+- O BIEN: Integración políglota que requiere abstracción Pub/Sub uniforme (cargas Go/Python).
+
+### 🪢 Mecánica del Patrón Strangler Fig vía Kong
+La evolución utiliza el **Patrón Strangler Fig** aprovechando el API Gateway de borde existente (Kong) para gobernar el desvío gradual de tráfico desde endpoints legados hacia micro-unidades extraídas sin modificar el monolito:
+
+```yaml
+# Ejemplo de Enrutamiento Strangler Estándar en Kong
+routes:
+  - name: facturacion-nuevo-servicio
+    paths: ["/api/v2/billing"]      # Versión de servicio nuevo objetivo
+    service: billing-service
+  - name: facturacion-legado
+    paths: ["/api/billing"]         # Ruta retirada gradualmente en monolito
+    service: core-monolith
+```
 
 **Restricción clave:** El Core de dominio debe cambiar **cero líneas** cuando se introduzca Dapr. Todas las llamadas al SDK de Dapr se envuelven detrás de las abstracciones existentes `IEventBusPort` e `ICachePort` ([ADR-0015](0015-event-driven-architecture-intra-domain.md), [ADR-0014](0014-distributed-caching-strategy-redis.md)).
 

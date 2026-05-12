@@ -46,13 +46,13 @@ export const TaskDataSource = new DataSource({
 });
 ```
 
-#### Ruta de Extracción a Microservicios
+#### Ruta de Migración de Base de Datos (Progresión en 3 Fases)
 
-Cuando el `TaskService` sea extraído como un microservicio independiente:
-1. Crear un usuario de PostgreSQL dedicado con acceso solo al esquema `tasks`.
-2. Apuntar el `DATABASE_URL` del `TaskService` a la misma instancia de PostgreSQL, esquema `tasks`.
-3. No se requiere migración de datos — el límite del esquema ya estaba impuesto.
-4. A escala: mover el esquema `tasks` a su propia instancia de PostgreSQL con un único `pg_dump --schema=tasks`.
+Para prevenir el antipatrón de "Base de Datos Compartida con Microservicios", la transición debe seguir estrictamente:
+
+- **Fase 1 (Monolito):** Motor físico compartido, esquemas lógicamente distintos por contexto. PROHIBIDOS los JOINs entre esquemas. La cohesión entre esquemas solo se da vía API o eventos de dominio.
+- **Fase 2 (Extracción):** Usuarios lógicos separados por servicio extraído. Transición hacia migración física utilizando el Transactional Outbox ([ADR-0033](../core/0033-transactional-outbox-pattern.md)) para replicación fiable. Se sincroniza el estado vía eventos, NUNCA vía acceso DB directo inter-esquema.
+- **Fase 3 (Malla Completa):** Propiedad Total de Datos. Cada microservicio posee su propia instancia de motor de base de datos exclusiva. Las dependencias se resuelven vía API/gRPC o Vistas Materializadas hidratadas por eventos.
 
 ---
 

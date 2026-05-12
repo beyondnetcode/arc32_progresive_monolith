@@ -17,8 +17,28 @@ Adopt **Dapr (Distributed Application Runtime)** as the microservices sidecar ru
 | Milestone | Description |
 | :--- | :--- |
 | **M1 — Modular Monolith** | Current state. Single process with isolated bounded context modules. |
-| **M2 — Service Extraction** | High-traffic or independently-deployable contexts extracted as Nx micro-projects. Each gets its own database schema ([ADR-0031](0031-schema-per-context-domain-event-catalog.md)) and communicates via gRPC or Dapr. |
-| **M3 — Full Mesh** | All services run with Dapr Sidecars. Service-to-Service invocation, Pub/Sub, and State are managed by Dapr components (declarative YAML). |
+| **M2 — Service Extraction** | High-traffic or independently-deployable contexts extracted as Nx micro-projects. Activates via rules in [ADR-0045](../core/0045-microservice-extraction-readiness-criteria.md). |
+| **M3 — Full Mesh** | Advanced ecosystem state where infrastructure-level interaction uses Sidecar abstraction. |
+
+### 🚦 Dapr Activation Gate
+To prevent premature over-engineering, Dapr Sidecars are **NOT** active by default at Milestone 2. The organization will operate via pure Kubernetes deployment using explicit gRPC communication between services. Dapr activation is gated by the following conditions:
+- The total pool of extracted services exceeds five (5).
+- OR: Advanced automatic retry / transparent circuit breaking between services is demanded beyond standard client implementation capacity.
+- OR: Polyglot integration requiring uniform Pub/Sub abstraction (Go/Python workloads).
+
+### 🪢 Strangler Fig Mechanics via Kong
+The evolution involves the **Strangler Fig Pattern** utilizing the existing edge API Gateway (Kong) to govern gradual traffic diversion from legacy endpoints to extracted micro-units without monolith modifications:
+
+```yaml
+# Standard Strangler Routing Sample in Kong
+routes:
+  - name: billing-new-service
+    paths: ["/api/v2/billing"]      # Targeted new service version
+    service: billing-service
+  - name: billing-legacy
+    paths: ["/api/billing"]         # Gracefully retired route on monolith
+    service: core-monolith
+```
 
 **Key constraint:** The domain Core must change **zero lines** when Dapr is introduced. All Dapr SDK calls are wrapped behind existing `IEventBusPort` and `ICachePort` abstractions ([ADR-0015](0015-event-driven-architecture-intra-domain.md), [ADR-0014](0014-distributed-caching-strategy-redis.md)).
 
