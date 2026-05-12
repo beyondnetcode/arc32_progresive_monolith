@@ -19,6 +19,7 @@ El diseño estructural del sistema detallado en vistas C4 y CAP.
 *   **[🏛️ Blueprint Corporativo Multi-Runtime](./01-architecture/reference-blueprint.md)** *(Lectura Obligatoria)*
 *   [Especificación C4 Topología de Contenedores](./01-architecture/c4-topology-spec.md)
 *   [Análisis Estratégico del Teorema CAP](./01-architecture/cap-strategic-analysis.md)
+*   [Escenarios de Despliegue Multi-Cloud](./01-architecture/multi-cloud-deployment-scenarios.md)
 *   [Stack Tecnológico Autoritativo](./01-architecture/authoritative-tech-stack.md)
 *   [Resumen Rápido del Stack](./01-architecture/tech-stack-summary.md)
 

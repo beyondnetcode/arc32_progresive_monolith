@@ -43,6 +43,7 @@ La organización promueve una arquitectura políglota deliberada donde los entor
 Para comprender profundamente la postura matemática y de riesgo de esta arquitectura, consulte:
 *   👉 **[Evaluación de Madurez y Patrones de Diseño](../00-vision/maturity-evaluation.md)**
 *   👉 **[Análisis Estratégico del Teorema CAP](./cap-strategic-analysis.md)**
+*   👉 **[Escenarios de Despliegue Multi-Cloud](./multi-cloud-deployment-scenarios.md)**
 
 ---
 

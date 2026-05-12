@@ -43,6 +43,7 @@ The organization promotes a deliberate polyglot architecture where runtimes are 
 To deeply understand the mathematical and risk posture of this architecture, consult:
 *   👉 **[Design Maturity & Patterns Evaluation](../00-vision/maturity-evaluation.md)**
 *   👉 **[CAP Theorem Strategic Analysis](./cap-strategic-analysis.md)**
+*   👉 **[Multi-Cloud Deployment Scenarios](./multi-cloud-deployment-scenarios.md)**
 
 ---
 
