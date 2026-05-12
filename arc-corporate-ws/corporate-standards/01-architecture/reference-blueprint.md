@@ -15,6 +15,9 @@ This pattern is designed specifically for systems that:
 *   Require native **SaaS multi-tenant isolation** at the database engine level ([ADR-0010](../02-adrs/core/0010-multi-tenancy-architecture-strategy.md)).
 *   Must support **progressive evolution** from Modular Monolith to Distributed Microservices.
 
+> [!IMPORTANT]
+> **Canon of Progressive Evolution**: Architecture evolves via incremental complexity. Phase 1 is deliberately simple and does not mandate technologies, patterns, or processes that exceed the core needs of a modular monolith. Every additional requirement is introduced precisely at the phase where system architecture objectively warrants it, never before.
+
 ### 1.2 Corporate Multi-Runtime Strategy (Políglota)
 The organization promotes a deliberate polyglot architecture where runtimes are chosen strictly based on workload suitability, validated via ADR:
 
@@ -52,7 +55,7 @@ To deeply understand the mathematical and risk posture of this architecture, con
 Any system based on this blueprint must adhere to the following non-negotiable pillars:
 
 *   **Stack Governance ([ADR-0001](../02-adrs/core/0001-monorepo-orchestration-nx.md))**: Nx Monorepo + npm Workspaces for centralized dependency governance.
-*   **bMAD Engineering Mandate ([ADR-0002](../02-adrs/nodejs/0002-clean-architecture-nestjs.md), [ADR-0003](../02-adrs/nodejs/0003-strict-typescript-standards.md))**: SOLID, Clean Code, Hexagonal Architecture, strict TypeScript.
+*   **bMAD Engineering Mandate ([ADR-0002](../02-adrs/nodejs/0002-clean-architecture-nestjs.md), [ADR-0003](../02-adrs/nodejs/0003-strict-typescript-standards.md))**: SOLID, Clean Code, Evolution towards Hexagonal (mandated starting Phase 2), strict TypeScript.
 *   **Dependency Safety ([ADR-0009](../02-adrs/core/0009-strict-dependency-pinning-vulnerability-management.md))**: All dependency versions pinned. No `^` or `~` ranges. Automated vulnerability scanning in CI.
 *   **Quality Gates ([ADR-0018](../02-adrs/core/0018-testing-pyramid-quality-gates.md))**: Automated testing pyramid. Minimum 70% coverage enforced in CI.
 *   **Infrastructure Portability ([ADR-0028](../02-adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md))**: Self-hosted OSS (MinIO, RabbitMQ, Vault) prioritized over cloud lock-in.

@@ -27,6 +27,7 @@ All ecosystem participants—regardless of role seniority—MUST adhere to and e
 *   📄 **[Target Runtime Appendices](./arc-corporate-ws/corporate-standards/01-architecture/authoritative-tech-stack.md)**: Framework mappings for Node.js, .NET, and Android.
 *   📄 **[Reference Architectural Blueprint](./arc-corporate-ws/corporate-standards/01-architecture/reference-blueprint.md)**: Conceptual grounding for Hexagonal boundaries and Ports/Adapters logic.
 *   📄 **[SDLC Governance Definition of Done](./arc-corporate-ws/corporate-sdlc/02-engineering/construction-focused-sdlc-framework.md#✅-4-engineering-definition-of-done-dod-checklist)**: Final quality gate blocking production integration.
+*   📄 **[Phase 1 Simplicity Checklist](./arc-corporate-ws/corporate-standards/01-architecture/simplicity-checklist-phase-01.md)**: Normative safeguard against premature over-engineering.
 
 ---
 

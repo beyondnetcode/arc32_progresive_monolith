@@ -27,6 +27,7 @@ Todos los participantes del ecosistema, independientemente de su antigüedad o r
 *   📄 **[Anexos de Runtime Autorizado](./arc-corporate-ws/corporate-standards-es/01-architecture/authoritative-tech-stack.md)**: Mapeo de frameworks para Node.js, .NET y Android.
 *   📄 **[Blueprint Arquitectónico de Referencia](./arc-corporate-ws/corporate-standards-es/01-architecture/reference-blueprint.md)**: Fundamentación conceptual para las fronteras hexagonales y lógica de Puertos/Adaptadores.
 *   📄 **[Definición de Hecho (DoD) Gobernanza SDLC](./arc-corporate-ws/corporate-sdlc-es/02-engineering/construction-focused-sdlc-framework.md#✅-4-checklist-de-definición-de-hecho-dod-de-ingeniería)**: Puerta de calidad final que bloquea la integración a producción.
+*   📄 **[Checklist de Simplicidad Fase 1](./arc-corporate-ws/corporate-standards-es/01-architecture/simplicity-checklist-phase-01.md)**: Salvaguarda normativa contra la sobre-ingeniería prematura.
 
 ---
 

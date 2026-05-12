@@ -14,9 +14,9 @@ This matrix rates our current infrastructure and design readiness against standa
 | **Composition** | **BFF (Backend for Frontend)** | **Core Mandatory** | 🟢 100% Adopted | Officially implemented via specialized NestJS layers per device ([ADR-0008](../02-adrs/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md)). Prevents cross-channel pollution. |
 | **Reliability** | **Circuit Breaker** | **Operational** | 🟢 100% Adopted | Implemented via **Distributed Circuit Breakers** sharing state via Redis ([ADR-0011](../02-adrs/core/0011-fault-tolerance-resiliency-patterns.md)) combined with active upstream healthcheck monitoring at Kong Ingress Edge. |
 | **Database** | **Schema Per Context** | **Core Mandatory** | 🟢 100% Adopted | Solves coupling from day one. Prevents raw SQL join poisoning across domains ([ADR-0031](../02-adrs/core/0031-schema-per-context-domain-event-catalog.md)). Zero-refactor DB portability. |
-| **Scalability** | **CQRS (Basic)** | **High Value** | 🟢 100% Adopted | Formally governed via Matrix ([ADR-0034](../02-adrs/core/0034-cqrs-pattern-applicability-matrix.md)). Applied as aggregate Read-Models at BFF and isolated storage for high contention. |
-| **Consistency** | **Saga Pattern** | **Distributed Future** | 🟢 100% Adopted | Formal Strategy established ([ADR-0035](../02-adrs/core/0035-distributed-saga-pattern-strategy.md)) utilizing Choreography/Orchestration mechanics tailored to workflow size. |
-| **Messaging** | **Transactional Outbox** | **High Criticality** | 🟢 100% Adopted | Mandated via [ADR-0033](../02-adrs/core/0033-transactional-outbox-pattern.md). Guarantees absolute atomic consistency between DB state and RabbitMQ event forwarding via outbox relay table. |
+| **Scalability** | **CQRS (Basic)** | **Optional** | 🟡 Roadmap | Enabled for implementation as read-models only when database write contention explicitly demands it. |
+| **Consistency** | **Saga Pattern** | **Distributed Future** | 🟡 Roadmap | Formal strategy established for exclusive use from Phase 3 onwards, handling transactions across distributed microservices. |
+| **Messaging** | **Transactional Outbox** | **Phase 2+** | 🟡 Roadmap | Ensures atomic consistency between DB state and event forwarding when asynchronous integration scale is achieved. |
 
 **Score Legend:**
 *   🟢 **Adopted**: Fully designed, verified in specs, zero configuration changes required.

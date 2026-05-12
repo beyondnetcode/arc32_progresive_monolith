@@ -30,7 +30,7 @@ timeline
 | Phase Name | Key Activities | Primary Artifacts | Exit Gate (Milestone) |
 | :--- | :--- | :--- | :--- |
 | **1. Conception & Discovery** | Market fit validation, user Persona profiling, scope bounding. | Product Requirements (PRD), OKRs Map. | **Business Sign-Off** (Scope Frozen). |
-| **2. Design & Architecture** | Pattern selection, database schematic definition, API contract wiring. | System Blueprint (arc42), ADR Registry. | **Architecture Approval** (Design Baseline). |
+| **2. Design & Architecture** | Pattern selection, database schema, API contracts. | Design Notes (P1) / Full Blueprint (P2+). | **Design Baseline Approved**. |
 | **3. Construction** | Coding, sub-component composition, internal integration. | Source Code, Automated Tests, Code Docs. | **Successful Build** (PR Merge Authorized). |
 | **4. Validation & QA** | Regression verification, penetration testing, UAT workflows. | Test Summary Report, QA Acceptance Sign-Off. | **Release Candidate** (RC) Stamped. |
 | **5. Delivery & Ops** | Deployment to target environment, performance monitoring. | Release Notes, Observability Dashboard. | **Production Live** (Monitoring Nominal). |

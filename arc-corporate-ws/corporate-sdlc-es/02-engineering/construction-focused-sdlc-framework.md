@@ -30,7 +30,7 @@ timeline
 | Nombre de la Fase | Actividades Clave | Artefactos Principales | Hito de Salida |
 | :--- | :--- | :--- | :--- |
 | **1. Concepción y Descubrimiento** | Validación de mercado, perfilado de Personas, acotación del alcance. | Requisitos del Producto (PRD), Mapa de OKRs. | **Business Sign-Off** (Alcance Congelado). |
-| **2. Diseño y Arquitectura** | Selección de patrones, definición de esquemas DB, contratos de API. | Blueprint del Sistema (arc42), Registro de ADRs. | **Aprobación de Arquitectura** (Línea Base). |
+| **2. Diseño y Arquitectura** | Selección de patrones, esquemas DB, contratos de API. | Notas de Diseño (F1) / Blueprint (arc42) completo (F2+). | **Línea Base de Diseño**. |
 | **3. Construcción** | Codificación, composición de subcomponentes, integración interna. | Código Fuente, Pruebas Automatizadas, Docs de Código. | **Build Exitoso** (Merge de PR Autorizado). |
 | **4. Validación y QA** | Verificación de regresiones, pruebas de penetración, flujos de UAT. | Reporte de Pruebas, Aceptación de QA. | **Release Candidate** (RC) Sellado. |
 | **5. Entrega y Operaciones** | Despliegue en entorno destino, monitoreo de rendimiento. | Notas de Lanzamiento, Dashboard de Observabilidad. | **Producción Viva** (Monitoreo Nominal). |

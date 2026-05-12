@@ -12,7 +12,7 @@
 
 Independientemente del stack tecnológico concreto elegido (Node.js, .NET o Kotlin), cada componente que se integre en el ecosistema DEBE cumplir estrictamente con estos invariantes arquitectónicos sistémicos. La violación de estas restricciones fallará automáticamente la validación de Puertas de Arquitectura.
 
-*   **Núcleo Arquitectónico:** Arquitectura Hexagonal ESTRICTA (Puertos y Adaptadores).
+*   **Núcleo Arquitectónico:** Arquitectura Modular (Evolución hacia Hexagonal). En la Fase 1 se admite un diseño estándar de capas (Controller-Service-Repository); la Arquitectura Hexagonal con Puertos y Adaptadores se exige obligatoriamente a partir de la Fase 2 (Extracción).
 *   **Política de Cero SDKs:** La capa de Dominio absoluto DEBE contener CERO referencias, importaciones o dependencias de SDKs de proveedores cloud (AWS, Azure), librerías ORM o frameworks HTTP específicos.
 *   **Infraestructura como Detalle:** Las capas de persistencia, buses de mensajería y almacenes de caché SOLO DEBEN interactuarse a través de Puertos de Dominio abstractos.
 *   **Garantía de Despliegue Progresivo:** Todos los componentes backend DEBEN ser empaquetados como contenedores estándar (OCI). La complejidad de la infraestructura evoluciona con la madurez del sistema: la Fase 1 admite despliegue sobre cómputo mínimo (VM, App Service o Docker Compose); Kubernetes se exige a partir del desacoplamiento de servicios (Fase 3+). La compatibilidad air-gapped se planifica desde el inicio pero su ejecución completa escala con la plataforma.
@@ -25,7 +25,7 @@ La integración entre servicios sigue la doctrina "Primero el Contrato" (*Contra
 
 | Dominio del Estándar | Definición Requerida | Justificación |
 | :--- | :--- | :--- |
-| **Comunicación Síncrona Interna** | **gRPC (Protocol Buffers)** | Multiplexación binaria de alto rendimiento que garantiza invocaciones seguras entre runtimes en menos de 5ms. |
+| **Comunicación Síncrona Interna** | **gRPC (Protocol Buffers)** | Obligatorio desde Fase 2 para invocaciones entre servicios remotos. En Fase 1, la invocación es nativa intra-proceso. |
 | **Estándar API Web Pública** | **RESTful (OpenAPI v3)** | Interoperabilidad canónica para integradores de terceros y SDKs Frontend. |
 | **Arquitectura de Bus de Eventos** | **AMQP / CloudEvents** | Estructura de eventos autodescriptiva que sigue patrones de Transactional Outbox para una propagación segura. |
 
@@ -56,7 +56,7 @@ Primitivas centralizadas aprobadas que sirven a la red políglota. Los adaptador
 ### 4.1 Identidad y Autorización
 *   **Protocolo:** Federación OpenID Connect (OIDC) / OAuth 2.0 / SAML 2.0.
 *   **Tipo de Token:** Verificación estadística de JWTs firmados con RS256.
-*   **Cumplimiento:** Red Zero Trust. Se requiere TLS mutuo (mTLS) para todo el tráfico interno de la malla.
+*   **Cumplimiento:** Red Zero Trust. Se requiere TLS mutuo (mTLS) obligatorio solo al activar la malla de red distribuida (Fase 3+).
 
 ### 4.2 Higiene de Secretos
 *   **Motor:** HashiCorp Vault (Empresarial o Comunitario Autohospedado).

@@ -8,7 +8,7 @@ Todo código, wrappers y diseños arquitectónicos dentro de este monorepo **DEB
 *   **KISS (Keep It Simple, Stupid)**: Evitar la sobre-ingeniería. Escribir código que sea fácil de leer, entender y depurar.
 *   **YAGNI (You Aren't Gonna Need It)**: No añadir funcionalidad, abstracciones o herramientas hasta que sean estrictamente necesarias.
 *   **SoC (Separation of Concerns)**: Mantener las capas completamente aisladas. Un controlador no debe escribir lógica de negocio; un caso de uso no debe ejecutar SQL puro.
-*   **Clean Code y Arquitectura Limpia**: Mantener límites estrictos (Adaptadores vs. Core). Asegurar la legibilidad del código y nombres que revelen la intención.
+*   **Clean Code y Arquitectura Limpia**: Respetar límites lógicos. Se permite y recomienda el patrón clásico de 3 capas (Controller-Service-Repository) para prototipos de Fase 1; la Arquitectura Hexagonal es mandatoria al avanzar a la Fase 2.
 *   **Seguro por Diseño & OWASP**: Validar todas las entradas (DTOs), sanear las salidas, imponer RBAC de forma nativa y prevenir inyecciones SQL/NoSQL por defecto.
 
 ---
@@ -64,6 +64,9 @@ Cada vez que se toma una decisión técnica (ej. escribir un nuevo ADR, elegir u
 ---
 
 ## 6. 📉 Complejidad de Plataforma Progresiva
+> [!IMPORTANT]
+> **Canon de Evolución Progresiva**: La arquitectura evoluciona en complejidad incremental. La Fase 1 es deliberadamente simple y no exige tecnologías, patrones o procesos que excedan las necesidades de un monolito modular. Cada requisito adicional se introduce en la fase donde la arquitectura lo justifica objetivamente, no antes.
+
 La infraestructura nunca debe sobrecargar los ciclos de desarrollo tempranos. La carga operativa debe escalar simétricamente con la madurez de la arquitectura, tal como define el [Reference Blueprint](../../corporate-standards-es/01-architecture/reference-blueprint.md):
 - **Fase 1 (Monolito Modular):** Despliegue ligero en contenedores estándar (OCI) sobre máquinas virtuales, App Services o Docker Compose. No se requiere clúster de orquestación.
 - **Fase 2 (Módulos Desacoplables):** Instrumentación de telemetría y manifiestos listos para orquestación, manteniendo el despliegue simplificado.

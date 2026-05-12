@@ -12,7 +12,7 @@
 
 Regardless of the concrete technology stack chosen (Node.js, .NET, or Kotlin), every component integrating into the ecosystem MUST strictly adhere to these systemic architectural invariants. Violation of these constraints will automatically fail Architecture Gate validation.
 
-*   **Architectural Core:** STRICT Hexagonal Architecture (Ports & Adapters). 
+*   **Architectural Core:** Modular Architecture (Evolution towards Hexagonal). Phase 1 permits a standard layered design (Controller-Service-Repository); Hexagonal Architecture with Ports & Adapters is strictly mandated starting from Phase 2 (Extraction). 
 *   **Zero SDK Policy:** The absolute Domain layer MUST contain ZERO references, imports, or dependencies to Cloud-Provider SDKs (AWS, Azure), ORM libraries, or specific HTTP Frameworks.
 *   **Infrastructure as Detail:** Persistence layers, message buses, and caching stores MUST only be interacted with via abstract Domain Ports.
 *   **Progressive Deployment Guarantee:** All backend components MUST be packaged as standard containers (OCI). Infrastructure complexity evolves alongside system maturity: Phase 1 allows deployment on minimum compute (VM, App Service, or Docker Compose); Kubernetes is mandatory from decoupled service architectures onward (Phase 3+). Air-gapped compatibility is planned from onset but scales into full execution later.
@@ -25,7 +25,7 @@ Inter-service integration follows the "Contract First" doctrine to guarantee pol
 
 | Standard Domain | Required Definition | Rationale |
 | :--- | :--- | :--- |
-| **Internal Sync Communication** | **gRPC (Protocol Buffers)** | High-performance binary multiplexing ensuring type-safe cross-runtime invocations under 5ms. |
+| **Internal Sync Communication** | **gRPC (Protocol Buffers)** | Mandated from Phase 2 for cross-service invocations. Phase 1 operations are natively intra-process. |
 | **Public Web API Standard** | **RESTful (OpenAPI v3)** | Canonical interoperability for third-party Integrators and downstream Frontend SDKs. |
 | **Async Event Bus Architecture** | **AMQP / CloudEvents** | Self-describing event structure following Transactional Outbox patterns for safe propagation. |
 
@@ -56,7 +56,7 @@ Approved centralized primitives serving the polyglot mesh. Concrete Runtime Adap
 ### 4.1 Identity & Authorization
 *   **Protocol:** OpenID Connect (OIDC) / OAuth 2.0 / SAML 2.0 Federation.
 *   **Token Type:** Statistically verify RS256 signed JWTs.
-*   **Enforcement:** Zero Trust networking. Mutual TLS (mTLS) requested for all internal mesh traffic.
+*   **Enforcement:** Zero Trust networking. Mutual TLS (mTLS) only mandatory upon activating the distributed network mesh (Phase 3+).
 
 ### 4.2 Secret Hygiene
 *   **Engine:** HashiCorp Vault (Enterprise or Community Self-hosted).

@@ -8,7 +8,7 @@ All code, wrappers, and architectural designs within this monorepo **MUST** stri
 *   **KISS (Keep It Simple, Stupid)**: Avoid over-engineering. Write code that is easy to read, understand, and debug.
 *   **YAGNI (You Aren't Gonna Need It)**: Do not add functionality, abstractions, or tools until they are strictly necessary.
 *   **SoC (Separation of Concerns)**: Keep layers completely isolated. A controller must not write business logic; a use case must not execute raw SQL.
-*   **Clean Code & Clean Architecture**: Maintain strict boundaries (Adapters vs. Core). Ensure code readability and intent-revealing names.
+*   **Clean Code & Clean Architecture**: Respect logical boundaries. The classic 3-tier pattern (Controller-Service-Repository) is permitted and recommended for Phase 1 prototypes; Hexagonal Architecture becomes mandatory when advancing to Phase 2.
 *   **Secure by Design & OWASP**: Validate all inputs (DTOs), sanitize outputs, enforce RBAC natively, and prevent SQL/NoSQL injections by default.
 
 ---
@@ -64,6 +64,9 @@ Whenever a technical decision is made (e.g., writing a new ADR, choosing a libra
 ---
 
 ## 6. 📉 Progressive Platform Complexity
+> [!IMPORTANT]
+> **Canon of Progressive Evolution**: Architecture evolves via incremental complexity. Phase 1 is deliberately simple and does not mandate technologies, patterns, or processes that exceed the core needs of a modular monolith. Every additional requirement is introduced precisely at the phase where system architecture objectively warrants it, never before.
+
 Infrastructure burdens should never cripple early development lifecycles. Operational load MUST scale symmetrically with architectural maturity as defined in the [Reference Blueprint](../../corporate-standards/01-architecture/reference-blueprint.md):
 - **Phase 1 (Modular Monolith):** Lightweight deployment as standard containers (OCI) hosted on VMs, App Services, or Docker Compose. Orchestration clusters are not required.
 - **Phase 2 (Extractable Modules):** Instrumentation and readiness for orchestration is established, while retaining simplified production environments.
