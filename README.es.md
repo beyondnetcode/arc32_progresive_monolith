@@ -46,7 +46,9 @@ Navegue directamente al conjunto completo de estándares, blueprints y registros
 
 ### 🧠 Directivas Arquitectónicas
 *   **[🏛️ Blueprint Corporativo Multi-Runtime](./arc-corporate-ws/corporate-standards-es/01-architecture/reference-blueprint.md)**: La especificación maestra del sistema (arc42).
-*   **[📜 Historial de Decisiones (ADRs)](./arc-corporate-ws/corporate-standards-es/02-adrs/README.md)**: Registro de las 44 decisiones tecnológicas definitivas.
+*   **[🚀 Estrategia Evolutiva y Tablero](./arc-corporate-ws/corporate-standards-es/00-vision/evolutionary-strategy-roadmap.md)**: Visión a largo plazo y KPIs ($PI$, $RTD$).
+*   **[☁️ Escenarios de Despliegue Multi-Cloud](./arc-corporate-ws/corporate-standards-es/01-architecture/multi-cloud-deployment-scenarios.md)**: Blueprints para Azure, AWS, On-Prem e Híbrido.
+*   **[📜 Historial de Decisiones (ADRs)](./arc-corporate-ws/corporate-standards-es/02-adrs/README.md)**: Registro de las 45 decisiones tecnológicas definitivas.
     *   *Acceso Rápido por Dominio:* [🌐 Core](./arc-corporate-ws/corporate-standards-es/02-adrs/README.md#universal-core) | [🟢 Node.js](./arc-corporate-ws/corporate-standards-es/02-adrs/README.md#nodejs-typescript) | [🔵 .NET](./arc-corporate-ws/corporate-standards-es/02-adrs/README.md#net-c) | [🟣 Móvil](./arc-corporate-ws/corporate-standards-es/02-adrs/README.md#android-native)
 
 ### 🛠️ Estándares y Blindaje

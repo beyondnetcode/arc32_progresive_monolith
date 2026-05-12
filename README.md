@@ -46,7 +46,9 @@ Navigate directly to the comprehensive set of standards, blueprints, and archite
 
 ### 🧠 Architectural Directives
 *   **[🏛️ Corporate Multi-Runtime Blueprint](./arc-corporate-ws/corporate-standards/01-architecture/reference-blueprint.md)**: The master system specification (arc42).
-*   **[📜 Decision History (ADRs)](./arc-corporate-ws/corporate-standards/02-adrs/README.md)**: Register of the 44 definitive technology decisions.
+*   **[🚀 Evolutionary Strategy & Roadmap](./arc-corporate-ws/corporate-standards/00-vision/evolutionary-strategy-roadmap.md)**: Long-term vision and KPI dashboard ($PI$, $RTD$).
+*   **[☁️ Multi-Cloud Deployment Scenarios](./arc-corporate-ws/corporate-standards/01-architecture/multi-cloud-deployment-scenarios.md)**: Azure, AWS, On-Prem, and Hybrid blueprints.
+*   **[📜 Decision History (ADRs)](./arc-corporate-ws/corporate-standards/02-adrs/README.md)**: Register of the 45 definitive technology decisions.
     *   *Quick Access By Domain:* [🌐 Core](./arc-corporate-ws/corporate-standards/02-adrs/README.md#universal-core) | [🟢 Node.js](./arc-corporate-ws/corporate-standards/02-adrs/README.md#nodejs-typescript) | [🔵 .NET](./arc-corporate-ws/corporate-standards/02-adrs/README.md#net-c) | [🟣 Mobile](./arc-corporate-ws/corporate-standards/02-adrs/README.md#android-native)
 
 ### 🛠️ Standards and Shielding
