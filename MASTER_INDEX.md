@@ -1,0 +1,51 @@
+# 🗺️ Global Master Index (Enterprise Entry Point)
+
+> 🌍 **Bilingual Navigation:** [🇪🇸 Versión en Español (Índice Maestro)](./MASTER_INDEX.es.md)
+
+Welcome to the **arc32** central nervous system. This master index serves as the canonical routing gate for all actors interacting with this repository. Locate your designated profile below to access the accelerated read-path ensuring technical and procedural compliance.
+
+---
+
+## 🚀 1. Accelerated Paths by Role (Role-Based Navigation)
+
+Identify your current relationship with the project to unlock the tailored compulsory reading hierarchy.
+
+| Enterprise Role | Recommended Reading Path | Compliance Expected |
+| :--- | :--- | :--- |
+| **External Software Vendor** | 1. [Product Quick Start](./arc-corporate-ws/corporate-standards/05-onboarding/product-quick-start.md)<br>2. [Authoritative Tech Stack](./arc-corporate-ws/corporate-standards/01-architecture/authoritative-tech-stack.md)<br>3. [Reference Blueprint (Deep Dive)](./arc-corporate-ws/corporate-standards/01-architecture/reference-blueprint.md) | Validate local stack matching and boundary isolation before initiating work order. |
+| **Backend Developer / QA** | 1. [Authoritative Tech Stack](./arc-corporate-ws/corporate-standards/01-architecture/authoritative-tech-stack.md)<br>2. [Construction-Focused SDLC Framework](./arc-corporate-ws/corporate-sdlc/02-engineering/construction-focused-sdlc-framework.md)<br>3. [Best Practices for SDLC Docs](./arc-corporate-ws/corporate-sdlc/03-documentation/sdlc-documentation-best-practices.md) | Guarantee Unit Test thresholds, DoD alignment, and zero logic-leaks in PRs. |
+| **Solutions Architect** | 1. [Reference Blueprint](./arc-corporate-ws/corporate-standards/01-architecture/reference-blueprint.md)<br>2. [Evolutionary Strategy Roadmap](./arc-corporate-ws/corporate-standards/00-vision/evolutionary-strategy-roadmap.md)<br>3. [Architecture Decision Records (ADR Hub)](./arc-corporate-ws/corporate-standards/02-adrs/README.md) | Uphold pattern integrity and assess alignment of new extraction triggers. |
+| **Team Lead / Product Manager** | 1. [Evolutionary Strategy Roadmap](./arc-corporate-ws/corporate-standards/00-vision/evolutionary-strategy-roadmap.md)<br>2. [Corporate SDLC Governance Hub](./arc-corporate-ws/corporate-sdlc/README.md)<br>3. [Product Quick Start](./arc-corporate-ws/corporate-standards/05-onboarding/product-quick-start.md) | Synchronize delivery milestones with architecture phase transitions. |
+
+---
+
+## 🛡️ 2. Mandatory Compliance Path (Global Baseline)
+
+All ecosystem participants—regardless of role seniority—MUST adhere to and enforce the foundational pillars hosted below. Failure to respect these anchors nullifies artifact acceptance into the codebase.
+
+*   📄 **[Authoritative Technology Stack](./arc-corporate-ws/corporate-standards/01-architecture/authoritative-tech-stack.md)**: Hard restriction governing approved runtimes, databases, and frameworks.
+*   📄 **[Reference Architectural Blueprint](./arc-corporate-ws/corporate-standards/01-architecture/reference-blueprint.md)**: Conceptual grounding for Hexagonal boundaries and Ports/Adapters logic.
+*   📄 **[SDLC Governance Definition of Done](./arc-corporate-ws/corporate-sdlc/02-engineering/construction-focused-sdlc-framework.md#✅-4-engineering-definition-of-done-dod-checklist)**: Final quality gate blocking production integration.
+
+---
+
+## 🏢 3. Enterprise Hub Structural Map
+
+Below represents the physical grouping layout of high-level governance modules within this corporate workspace.
+
+```mermaid
+graph TD
+    ROOT[Repository Root] --> CS[Corporate Standards Hub]
+    ROOT --> SDLC[Corporate SDLC Hub]
+    
+    CS --> Architecture["01-Architecture"]
+    CS --> ADRs["02-ADR Registry"]
+    CS --> Onboard["05-Onboarding"]
+    
+    SDLC --> Engineering["02-Engineering"]
+    SDLC --> Docs["03-Documentation"]
+```
+
+*   👉 **[English Documentation Center Root](./arc-corporate-ws/corporate-standards/README.md)**
+*   👉 **[English SDLC Governance Center Root](./arc-corporate-ws/corporate-sdlc/README.md)**
+*   👉 **[Central Navigation Map (Back to Main README)](./README.md#⚡-4-central-navigation-quick-map-english-context)**
