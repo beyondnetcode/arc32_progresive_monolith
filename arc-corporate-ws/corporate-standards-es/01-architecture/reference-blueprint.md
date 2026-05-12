@@ -337,6 +337,8 @@ sequenceDiagram
 ---
 
 ## 7. Vista de Despliegue — Infraestructura Cloud Objetivo ([ADR-0013](../02-adrs/core/0013-cloud-infrastructure-topology-dr.md), [ADR-0028](../02-adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md))
+> [!IMPORTANT]
+> **Estrategia de Despliegue Progresivo**: El diagrama siguiente representa la arquitectura de despliegue objetivo en estado maduro (**Fase 3+**). De acuerdo con el principio de Complejidad Progresiva, en la **Fase 1 (Monolito)** se permite la ejecución directa de los contenedores en hosts de cómputo mínimo (VMs, Container Apps o Docker Compose), escalando hacia clústeres gestionados únicamente cuando la descomposición modular lo requiera.
 
 ```mermaid
 graph TD

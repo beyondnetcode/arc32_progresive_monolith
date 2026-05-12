@@ -63,7 +63,16 @@ Cada vez que se toma una decisión técnica (ej. escribir un nuevo ADR, elegir u
 
 ---
 
-## 6. 📝 Checklist de Calidad de Pull Request
+## 6. 📉 Complejidad de Plataforma Progresiva
+La infraestructura nunca debe sobrecargar los ciclos de desarrollo tempranos. La carga operativa debe escalar simétricamente con la madurez de la arquitectura, tal como define el [Reference Blueprint](../../corporate-standards-es/01-architecture/reference-blueprint.md):
+- **Fase 1 (Monolito Modular):** Despliegue ligero en contenedores estándar (OCI) sobre máquinas virtuales, App Services o Docker Compose. No se requiere clúster de orquestación.
+- **Fase 2 (Módulos Desacoplables):** Instrumentación de telemetría y manifiestos listos para orquestación, manteniendo el despliegue simplificado.
+- **Fase 3+ (Servicios Distribuidos):** Se activa obligatoriamente la orquestación mediante **Kubernetes** gestionado o autohospedado.
+La preparación para escenarios físicamente desconectados (Air-Gapped) se garantiza mediante la abstracción de SDKs desde el inicio, pero su ejecución física avanza con la madurez del producto.
+
+---
+
+## 7. 📝 Checklist de Calidad de Pull Request
 Antes de enviar un PR, los desarrolladores deben verificar:
 - [ ] No se filtra lógica de capa externa en el Dominio.
 - [ ] Los intereses transversales (Registro, Caché) usan Decoradores o Puertos (No hay lógica de herramientas a fuego en el core).

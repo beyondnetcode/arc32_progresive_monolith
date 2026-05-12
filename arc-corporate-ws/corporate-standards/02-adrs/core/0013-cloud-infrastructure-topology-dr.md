@@ -12,7 +12,7 @@ The business operations handled by this architecture demand 24/7 continuous exec
 ## Decision
 Design infrastructure topology targeting Cloud-Native patterns enforcing high resilience and instant failover potential:
 
-1. **Automated Orchestration**: Containers are strictly deployed into managed cluster platforms (e.g., Kubernetes - AKS/EKS or Container Apps) capable of autonomous Horizontal Pod Autoscaling (HPA) to balance burst events.
+1. **Automated Orchestration**: Deployment evolves by architectural phase. While Phase 1 mandates only standard OCI containers on simple compute (VMs, Compose), deployment into managed cluster platforms capable of autonomous Horizontal Pod Autoscaling (HPA) is strictly activated from Phase 3 onwards.
 2. **Multi-AZ Strategy**: Standard operation occurs active-active across several explicit Availability Zones. A secondary backup region remains in warm-standby for immediate disaster pivot.
 3. **Global Network Entry**: Deploy a unified external point of ingress (e.g., Cloudflare/Azure Front Door) to analyze health and perform instant routing redirect across regions if local cluster degradation is detected.
 

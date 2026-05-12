@@ -15,7 +15,7 @@ Regardless of the concrete technology stack chosen (Node.js, .NET, or Kotlin), e
 *   **Architectural Core:** STRICT Hexagonal Architecture (Ports & Adapters). 
 *   **Zero SDK Policy:** The absolute Domain layer MUST contain ZERO references, imports, or dependencies to Cloud-Provider SDKs (AWS, Azure), ORM libraries, or specific HTTP Frameworks.
 *   **Infrastructure as Detail:** Persistence layers, message buses, and caching stores MUST only be interacted with via abstract Domain Ports.
-*   **Deployment Guarantee:** All backend components MUST be deployable both on managed Kubernetes (EKS/AKS) AND physically disconnected air-gapped On-Premise environments.
+*   **Progressive Deployment Guarantee:** All backend components MUST be packaged as standard containers (OCI). Infrastructure complexity evolves alongside system maturity: Phase 1 allows deployment on minimum compute (VM, App Service, or Docker Compose); Kubernetes is mandatory from decoupled service architectures onward (Phase 3+). Air-gapped compatibility is planned from onset but scales into full execution later.
 
 ---
 
@@ -79,7 +79,7 @@ Runtime-agnostic telemetry is mandatory. Teams are forbidden from locking their 
 Standardization of packaging and execution to guarantee cloud and on-premise parity.
 
 *   **Container Engine:** **Docker v25+** utilizing multi-stage builds with **Distroless** (Google Container Tools) base images to minimize production attack surface.
-*   **Orchestration:** **Kubernetes (K8s v1.28+)**. Manifests must be agnostic to distribution flavor (function on EKS/AKS as well as MicroK8s/Rancher).
+*   **Progressive Orchestration:** In Phase 1, **Docker Compose** or standard container hosts (VM, Container Apps) suffice. **Kubernetes (K8s v1.28+)** is mandated starting Phase 3+ to manage decoupled topologies. Chart manifests MUST remain agnostic to flavors (EKS/AKS/MicroK8s).
 *   **Package Management:** **Helm v3**. Charts MUST fully parameterize resources, allowing easy swap-outs between real cloud infrastructure and local simulators.
 
 ---

@@ -15,7 +15,7 @@ Independientemente del stack tecnológico concreto elegido (Node.js, .NET o Kotl
 *   **Núcleo Arquitectónico:** Arquitectura Hexagonal ESTRICTA (Puertos y Adaptadores).
 *   **Política de Cero SDKs:** La capa de Dominio absoluto DEBE contener CERO referencias, importaciones o dependencias de SDKs de proveedores cloud (AWS, Azure), librerías ORM o frameworks HTTP específicos.
 *   **Infraestructura como Detalle:** Las capas de persistencia, buses de mensajería y almacenes de caché SOLO DEBEN interactuarse a través de Puertos de Dominio abstractos.
-*   **Garantía de Despliegue:** Todos los componentes backend DEBEN ser desplegables tanto en Kubernetes gestionado (EKS/AKS) COMO en entornos On-Premise físicamente desconectados (Air-Gapped).
+*   **Garantía de Despliegue Progresivo:** Todos los componentes backend DEBEN ser empaquetados como contenedores estándar (OCI). La complejidad de la infraestructura evoluciona con la madurez del sistema: la Fase 1 admite despliegue sobre cómputo mínimo (VM, App Service o Docker Compose); Kubernetes se exige a partir del desacoplamiento de servicios (Fase 3+). La compatibilidad air-gapped se planifica desde el inicio pero su ejecución completa escala con la plataforma.
 
 ---
 
@@ -79,7 +79,7 @@ La telemetría agnóstica al entorno de ejecución es obligatoria. Se prohíbe a
 Estandarización del empaquetado y ejecución para garantizar paridad entre nube y on-premise.
 
 *   **Motor de Contenedores:** **Docker v25+** utilizando compilaciones multi-etapa (multi-stage) con imágenes base **Distroless** (Google Container Tools) para minimizar la superficie de ataque en producción.
-*   **Orquestación:** **Kubernetes (K8s v1.28+)**. Los manifiestos deben ser agnósticos al sabor de distribución (funcionar en EKS/AKS tanto como en MicroK8s/Rancher).
+*   **Orquestación Progresiva:** En la Fase 1, basta con **Docker Compose** o servicios de contenedor directos (VM, Container Apps). **Kubernetes (K8s v1.28+)** se impone a partir de la Fase 3+ para gestionar servicios desacoplados. Los manifiestos de charts deben ser agnósticos al sabor de distribución (funcionar en EKS/AKS tanto como en MicroK8s/Rancher).
 *   **Gestor de Paquetes:** **Helm v3**. Los charts deben parametrizar completamente los recursos, permitiendo intercambios fáciles entre infraestructura real de nube y simuladores locales.
 
 ---

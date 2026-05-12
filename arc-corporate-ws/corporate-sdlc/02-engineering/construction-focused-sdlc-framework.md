@@ -24,7 +24,7 @@ timeline
     Phase 2: Design : Architecture Blueprint : Design Baseline
     Phase 3: Construction : Source Code Composition : Build Successful
     Phase 4: Validation : QA Regression / UAT : RC Signed
-    Phase 5: Delivery : Cluster Deployment : Production Live
+    Phase 5: Delivery : Target Environment Deployment : Production Live
 ```
 
 | Phase Name | Key Activities | Primary Artifacts | Exit Gate (Milestone) |
@@ -33,7 +33,7 @@ timeline
 | **2. Design & Architecture** | Pattern selection, database schematic definition, API contract wiring. | System Blueprint (arc42), ADR Registry. | **Architecture Approval** (Design Baseline). |
 | **3. Construction** | Coding, sub-component composition, internal integration. | Source Code, Automated Tests, Code Docs. | **Successful Build** (PR Merge Authorized). |
 | **4. Validation & QA** | Regression verification, penetration testing, UAT workflows. | Test Summary Report, QA Acceptance Sign-Off. | **Release Candidate** (RC) Stamped. |
-| **5. Delivery & Ops** | Cluster orchestration deployment, performance monitoring. | Release Notes, Observability Dashboard. | **Production Live** (Monitoring Nominal). |
+| **5. Delivery & Ops** | Deployment to target environment, performance monitoring. | Release Notes, Observability Dashboard. | **Production Live** (Monitoring Nominal). |
 
 ---
 

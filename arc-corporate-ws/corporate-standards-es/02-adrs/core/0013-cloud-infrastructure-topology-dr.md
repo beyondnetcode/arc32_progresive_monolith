@@ -12,7 +12,7 @@ Las operaciones de negocio manejadas por esta arquitectura demandan una estabili
 ## Decisión
 Diseñar la topología de infraestructura apuntando a patrones Cloud-Native que impongan alta resiliencia y potencial de failover instantáneo:
 
-1. **Orquestación Automatizada**: Los contenedores se despliegan estrictamente en plataformas de clúster gestionadas (ej. Kubernetes - AKS/EKS o Container Apps) capaces de Autoscaling Horizontal de Pods (HPA) autónomo para balancear eventos de ráfaga.
+1. **Orquestación Automatizada**: El despliegue evoluciona por fase arquitectónica. Mientras que la Fase 1 exige solo contenedores OCI estándar sobre cómputo simple (VMs, Compose), el despliegue en plataformas de clúster gestionadas capaces de HPA se activa estrictamente a partir de la Fase 3.
 2. **Estrategia Multi-AZ**: La operación estándar ocurre de forma activo-activo a través de varias Zonas de Disponibilidad (Availability Zones) explícitas. Una región de respaldo secundaria permanece en warm-standby para un pivot de desastre inmediato.
 3. **Entrada de Red Global**: Desplegar un punto unificado de ingreso externo (ej. Cloudflare/Azure Front Door) para analizar la salud y realizar redirección de enrutamiento instantánea entre regiones si se detecta degradación del clúster local.
 

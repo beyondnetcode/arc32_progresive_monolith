@@ -337,6 +337,8 @@ sequenceDiagram
 ---
 
 ## 7. Deployment View — Target Cloud Infrastructure ([ADR-0013](../02-adrs/core/0013-cloud-infrastructure-topology-dr.md), [ADR-0028](../02-adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md))
+> [!IMPORTANT]
+> **Progressive Deployment Strategy**: The following diagram reflects the target deployment architecture in its mature state (**Phase 3+**). Following the Progressive Complexity principle, **Phase 1 (Monolith)** supports direct container hosting on minimal compute assets (VMs, Container Apps, or Docker Compose), scaling into fully managed clusters only as modular extraction demands increase.
 
 ```mermaid
 graph TD

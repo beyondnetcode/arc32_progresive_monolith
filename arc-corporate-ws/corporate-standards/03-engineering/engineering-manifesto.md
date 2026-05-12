@@ -63,7 +63,16 @@ Whenever a technical decision is made (e.g., writing a new ADR, choosing a libra
 
 ---
 
-## 6. 📝 Pull Request Quality Checklist
+## 6. 📉 Progressive Platform Complexity
+Infrastructure burdens should never cripple early development lifecycles. Operational load MUST scale symmetrically with architectural maturity as defined in the [Reference Blueprint](../../corporate-standards/01-architecture/reference-blueprint.md):
+- **Phase 1 (Modular Monolith):** Lightweight deployment as standard containers (OCI) hosted on VMs, App Services, or Docker Compose. Orchestration clusters are not required.
+- **Phase 2 (Extractable Modules):** Instrumentation and readiness for orchestration is established, while retaining simplified production environments.
+- **Phase 3+ (Distributed Services):** Managed or self-hosted **Kubernetes** orchestration becomes mandatory.
+Air-gapped compliance is guaranteed starting Phase 1 via strict provider abstraction (Ports), while physical runtime implementation iterates alongside product reach.
+
+---
+
+## 7. 📝 Pull Request Quality Checklist
 Before submitting a PR, developers must verify:
 - [ ] No outer-layer logic is leaked into the Domain.
 - [ ] Cross-cutting concerns (Logging, Caching) use Decorators or Ports (No hardcoded tool logic in the core).

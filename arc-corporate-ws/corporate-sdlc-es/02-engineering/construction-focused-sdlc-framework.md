@@ -24,7 +24,7 @@ timeline
     Fase 2: Diseño : Blueprint Arquitectónico : Línea Base de Diseño
     Fase 3: Construcción : Composición de Código Fuente : Build Exitoso
     Fase 4: Validación : Regresión QA / UAT : RC Firmado
-    Fase 5: Entrega : Despliegue de Clúster : Producción Viva
+    Fase 5: Entrega : Despliegue en Entorno : Producción Viva
 ```
 
 | Nombre de la Fase | Actividades Clave | Artefactos Principales | Hito de Salida |
@@ -33,7 +33,7 @@ timeline
 | **2. Diseño y Arquitectura** | Selección de patrones, definición de esquemas DB, contratos de API. | Blueprint del Sistema (arc42), Registro de ADRs. | **Aprobación de Arquitectura** (Línea Base). |
 | **3. Construcción** | Codificación, composición de subcomponentes, integración interna. | Código Fuente, Pruebas Automatizadas, Docs de Código. | **Build Exitoso** (Merge de PR Autorizado). |
 | **4. Validación y QA** | Verificación de regresiones, pruebas de penetración, flujos de UAT. | Reporte de Pruebas, Aceptación de QA. | **Release Candidate** (RC) Sellado. |
-| **5. Entrega y Operaciones** | Despliegue en clústeres, monitoreo de rendimiento. | Notas de Lanzamiento, Dashboard de Observabilidad. | **Producción Viva** (Monitoreo Nominal). |
+| **5. Entrega y Operaciones** | Despliegue en entorno destino, monitoreo de rendimiento. | Notas de Lanzamiento, Dashboard de Observabilidad. | **Producción Viva** (Monitoreo Nominal). |
 
 ---
 
