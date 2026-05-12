@@ -44,7 +44,7 @@ Los equipos DEBEN utilizar el **Patrón Result** para propagar fallos de lógica
 ## 💾 3. Detalles de Persistencia (Entity Framework Core)
 
 ### 3.1 Aislamiento Multi-Tenancy (RLS)
-Al implementar PostgreSQL Row-Level Security en .NET:
+Al utilizar la estrategia `INFRA_NATIVE` implementando PostgreSQL Row-Level Security en .NET:
 *   La capa de Infraestructura DEBE implementar un `TenantResolver` extrayendo el `tenant_id` de las `ClaimsPrincipal`.
 *   El `DbContext` DEBE utilizar `connection.CreateCommand()` dentro de los eventos de apertura del contexto para ejecutar:
     ```sql

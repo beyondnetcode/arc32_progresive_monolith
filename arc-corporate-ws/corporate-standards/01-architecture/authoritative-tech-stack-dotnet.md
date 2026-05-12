@@ -44,7 +44,7 @@ Teams MUST utilize the **Result Pattern** to propagate business logic failures s
 ## 💾 3. Persistence Details (Entity Framework Core)
 
 ### 3.1 Multi-Tenancy Isolation (RLS)
-When implementing PostgreSQL Row-Level Security in .NET:
+When utilizing the `INFRA_NATIVE` strategy via PostgreSQL Row-Level Security in .NET:
 *   The Infrastructure layer MUST implement a `TenantResolver` extracting `tenant_id` from `ClaimsPrincipal`.
 *   The `DbContext` MUST utilize `connection.CreateCommand()` inside the context opening events to execute:
     ```sql

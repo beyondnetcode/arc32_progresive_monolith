@@ -38,15 +38,16 @@ Primitivas centralizadas aprobadas que sirven a la red políglota. Los adaptador
 ### 3.1 Persistencia Relacional (SQL)
 *   **Motor Homologado:** PostgreSQL v16+
 *   **Restricción de Madurez:** REQUERIDO aislamiento de Esquema por Contexto. ESTÁN PROHIBIDOS los SQL Joins directos a través de las fronteras de esquemas de contextos delimitados.
-*   **Patrón de Aislamiento:** Seguridad a Nivel de Fila (RLS) obligatoria para la protección de densidad multi-tenant.
+*   **Patrón de Aislamiento:** Estrategia de Seguridad Configurable ([ADR-0044](../02-adrs/core/0044-configurable-security-persistence-strategy.md)). La Seguridad a Nivel de Fila (RLS) nativa es OPCIONAL/RECOMENDADA para densidades multi-tenant, gobernada por el flag `SECURITY_STRATEGY_MODE`.
 
 ### 3.2 Caché Distribuida
 *   **Motor Homologado:** Redis v7.2+ (Cluster o Sentinel Autohospedado)
 *   **Rol:** Aceleración de grafos efímeros sub-3ms, estado de limitación de tasa de ventana deslizante.
 
 ### 3.3 Almacenamiento de Objetos
-*   **Contrato Homologado:** **API compatible con S3** vía MinIO autohospedado.
-*   **Regla:** Prohibidos los SDKs nativos de blobs directos. Solo se permiten clientes verificados con S3-API.
+*   **Contrato Homologado:** **Protocolo Compatible con S3** (Estándar de facto de la industria) vía MinIO autohospedado.
+*   **Justificación:** El S3-API actúa como protocolo de cable universal, facilitando la soberanía e independencia de la nube.
+*   **Regla:** Prohibido el uso directo de SDKs propietarios de proveedores cloud. La lógica de almacenamiento DEBE interactuar exclusivamente vía Puertos de Dominio apuntando a endpoints que cumplan con la especificación S3.
 
 ---
 

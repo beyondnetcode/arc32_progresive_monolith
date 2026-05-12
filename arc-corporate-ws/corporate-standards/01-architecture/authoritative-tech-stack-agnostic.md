@@ -38,15 +38,16 @@ Approved centralized primitives serving the polyglot mesh. Concrete Runtime Adap
 ### 3.1 Relational Persistence (SQL)
 *   **Homologated Engine:** PostgreSQL v16+
 *   **Maturity Constraint:** Schema-per-Context isolation REQUIRED. Direct SQL Joins across bounded context schema boundaries are FORBIDDEN.
-*   **Isolation Pattern:** Row-Level Security (RLS) mandatory for multi-tenant density protection.
+*   **Isolation Pattern:** Configurable Security Strategy ([ADR-0044](../02-adrs/core/0044-configurable-security-persistence-strategy.md)). Native Row-Level Security (RLS) is OPTIONAL/RECOMMENDED for dense multi-tenant scenarios, managed via the structural `SECURITY_STRATEGY_MODE` flag.
 
 ### 3.2 Distributed Caching
 *   **Homologated Engine:** Redis v7.2+ (Self-hosted Cluster or Sentinel)
 *   **Role:** Sub-3ms ephemeral graph acceleration, sliding-window rate limiting state.
 
 ### 3.3 Object Storage
-*   **Homologated Contract:** **S3-Compatible API** via self-hostable MinIO.
-*   **Rule:** Direct native blob SDKs are prohibited. Only S3-API verified clients are permitted.
+*   **Homologated Contract:** **S3-Compatible Protocol** (Industry de-facto open standard) via self-hosted MinIO.
+*   **Rationale:** The S3-API acts as a universal wire protocol, enabling vendor-neutrality.
+*   **Rule:** Direct usage of proprietary provider binary SDKs is prohibited. Storage logic MUST be accessed exclusively via Domain Ports, targeting S3-compliant endpoints.
 
 ---
 
