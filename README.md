@@ -1,71 +1,62 @@
 # 🌐 Corporate Polyglot Reference Architecture (bMAD)
 
-> 🌍 **Language / Idioma:** [🇺🇸 English](./README.md) | [🇪🇸 Español](./README.es.md)
+> 🌍 **Language Selector:** [🇺🇸 English](./README.md) | [🇪🇸 Español](./README.es.md)
 
 ---
 
-## 🗺️ 0. Master Entry Point (Mandatory Initial Step)
-🚀 **New to this repository?** Do not explore randomly. Visit the 🧭 **[Global Master Index](./MASTER_INDEX.md)** to immediately identify the compulsory reading path tailored specifically for your enterprise role (Vendor, Dev, Architect, or PM).
+## 💡 1. Introduction & Key Objectives
+
+Welcome to the **Unified Corporate Reference Architecture**. This ecosystem serves as the canonical blueprint for enterprise digital systems designed to scale dynamically from Modular Monoliths into fully distributed cloud ecosystems.
+
+### 🎯 Primary Mission Objectives:
+*   **Decoupling Absolute:** Ensure business logic remains 100% agnostic of frameworks and database dialects via the **bMAD Method** (Hexagonal boundaries).
+*   **Security First:** Enforce inherent Isolation through native Row-Level Security (RLS) and strict tenant separation at the root level.
+*   **Standardized Delivery:** Dictate clear, gated software development lifecycles (SDLC) ensuring 100% reproducible quality across polyglot workloads.
 
 ---
 
-## 💡 1. Introduction
+## 🧭 2. Unified Master Navigation Hub
 
-Welcome to the **Unified Corporate Reference Architecture**. This repository serves as the authorized foundation and canonical blueprint for constructing enterprise polyglot digital ecosystems that dynamically evolve from Modular Monoliths into distributed Microservices.
+🚀 **Do not explore the directories randomly.** All compliance and workflow execution routes are governed explicitly by persona:
 
-The architecture implements the **bMAD Method**, ensuring strict adherence to hexagonal boundaries, decoupling by bounded contexts, and cloud-agnostic technology governance.
+1.  👉 **[Global Master Index](./MASTER_INDEX.md)**: The canonical starting line. Identify your role (Vendor, Dev, Architect, PM) and find your exact compulsory reading hierarchy immediately.
+2.  🇺🇸 **[Corporate Standards Center](./arc-corporate-ws/corporate-standards/README.md)**: Comprehensive architectural specifications and governance pillars.
+3.  ⚙️ **[SDLC Governance Center](./arc-corporate-ws/corporate-sdlc/README.md)**: Detailed lifecycle engineering requirements and quality Gates.
 
 ---
 
-## 🔗 2. Cross-Documentation Frameworks & Global References
+## ⚠️ 3. Critical Disclaimers & Usage Recommendations
 
-These core frameworks govern the entire architecture regardless of the implementation language or locale.
+To interact safely with this asset federation, all members MUST respect the following systemic limitations and usage rules:
 
-### 🚀 Authorized Polyglot Ecosystem (Horizon 2026)
-The architecture is not exclusive to Node.js; it is a polyglot federation that distributes workloads according to technical suitability ([ADR-0040](./arc-corporate-ws/corporate-standards/02-adrs/core/0040-multi-runtime-selection-contracts.md)):
+### 🛑 Important Disclaimers:
+*   **Pattern Laboratory Only:** The sandbox implementation is a high-fidelity validation vehicle designed to stress-test architectural boundaries. It is NOT an off-the-shelf commercial product intended for instant white-label production.
+*   **Educational Intent:** The code prioritizes demonstrative cleanliness over dense, optimized micro-efficiencies.
+*   **License Integrity:** All open-source choices have been vetted (Post-BSL era sanitization), however, final organizational legal compliance resides with the adopting vendor.
 
-| Runtime | Canonical Role | Validated Tech Stack |
+### ✅ Crucial Usage Recommendations:
+1.  **Never Bypass Ports:** Do not inject external framework logic into the `/domain` folders.
+2.  **Sync with ADRs:** Every deviation from these standards demands the consultation of the existing **45 Architectural Decisions** before proposal.
+3.  **Adopt Docs-as-Code:** No pull requests will be evaluated if corresponding documentation mappings are missing.
+
+---
+
+## ⚡ 4. High-Level Architecture & Ecosystem Quick Map
+
+### 🚀 Authorized Polyglot Federation (Horizon 2026)
+ Workloads distribute globally according to validated runtime constraints ([ADR-0040](./arc-corporate-ws/corporate-standards/02-adrs/core/0040-multi-runtime-selection-contracts.md)):
+
+| Runtime | Canonical Role | Authorized Baseline Stack |
 | :--- | :--- | :--- |
-| **🟢 Node.js / TS** | Transactional APIs and BFF | NestJS 11.1 / Node 24 LTS / Drizzle |
-| **🔵 .NET (C#)** | High Compute / Workers / Batch | ASP.NET Core / .NET 10.0 LTS / EF Core |
-| **🟣 Android** | Offline Mobile Applications | Kotlin 2.3 / Jetpack Compose 1.11 / Room |
+| **🟢 Node.js / TS** | Transactional APIs & BFFs | NestJS 11.1 / Node 24 LTS / Drizzle |
+| **🔵 .NET (C#)** | High Compute / Heavy Async | ASP.NET Core / .NET 10.0 LTS / EF Core |
+| **🟣 Android** | Offline Native Mobile | Kotlin 2.3 / Jetpack Compose 1.11 / Room |
 
-### 🧪 Implementation Sandbox (Executable Codebase)
-**For Software Engineers and QA.** Contains the executable reference implementation validating Clean Architecture, Row-Level Security (RLS), and Observability.
-👉 **[Explore Sandbox Application (Demo)](./arc-corporate-ws/demo/README.md)**
-
-**🔒 Legal Status:** 100% Sanitized. Apache 2.0 / MIT / BSD-3 licenses (Valkey, OpenTofu, OpenBao validated).
-
----
-
-## 🗺️ 3. Official Documentation Index (Choose Language)
-
-Navigate directly to the comprehensive set of standards, blueprints, and architecture decision records in your preferred language:
-
-*   🇺🇸 **[English Documentation Center](./arc-corporate-ws/corporate-standards/README.md)**: Comprehensive standards and governance in English.
-*   ⚙️ **[English SDLC Governance Center](./arc-corporate-ws/corporate-sdlc/README.md)**: Lifecycle and delivery standards in English.
-*   🇪🇸 **[Centro de Documentación en Español](./arc-corporate-ws/corporate-standards-es/README.md)**: Estándares integrales y gobernanza en Español.
-*   ⚙️ **[Centro de Gobernanza SDLC en Español](./arc-corporate-ws/corporate-sdlc-es/README.md)**: Estándares de ciclo de vida y entrega en Español.
+### 🛠️ Fast Shortcuts Directory
+*   🏛️ **[Reference Blueprint](./arc-corporate-ws/corporate-standards/01-architecture/reference-blueprint.md)**: Master system specification.
+*   🚀 **[Evolutionary Strategy](./arc-corporate-ws/corporate-standards/00-vision/evolutionary-strategy-roadmap.md)**: KPI dashboard and scale horizons.
+*   📜 **[ADR Registry Hub](./arc-corporate-ws/corporate-standards/02-adrs/README.md)**: Fast-track lookup for universal decisions.
+*   🧪 **[Executable Sandbox Demo](./arc-corporate-ws/demo/README.md)**: Test architecture patterns in live running code.
 
 ---
-
-## ⚡ 4. Central Navigation Quick Map (English Context)
-
-### 🧠 Architectural Directives
-*   **[🏛️ Corporate Multi-Runtime Blueprint](./arc-corporate-ws/corporate-standards/01-architecture/reference-blueprint.md)**: The master system specification (arc42).
-*   **[🚀 Evolutionary Strategy & Roadmap](./arc-corporate-ws/corporate-standards/00-vision/evolutionary-strategy-roadmap.md)**: Long-term vision and KPI dashboard ($PI$, $RTD$).
-*   **[☁️ Multi-Cloud Deployment Scenarios](./arc-corporate-ws/corporate-standards/01-architecture/multi-cloud-deployment-scenarios.md)**: Azure, AWS, On-Prem, and Hybrid blueprints.
-*   **[📜 Decision History (ADRs)](./arc-corporate-ws/corporate-standards/02-adrs/README.md)**: Register of the 45 definitive technology decisions.
-    *   *Quick Access By Domain:* [🌐 Core](./arc-corporate-ws/corporate-standards/02-adrs/README.md#universal-core) | [🟢 Node.js](./arc-corporate-ws/corporate-standards/02-adrs/README.md#nodejs-typescript) | [🔵 .NET](./arc-corporate-ws/corporate-standards/02-adrs/README.md#net-c) | [🟣 Mobile](./arc-corporate-ws/corporate-standards/02-adrs/README.md#android-native)
-
-### 🛠️ Standards and Shielding
-*   **[🔬 2026 Stack Audit Opinion](./arc-corporate-ws/corporate-standards/03-engineering/detailed-stack-audit-2026.md)**: Critical verification of licenses (Post-BSL/SSPL) and active versions.
-*   **[🛡️ Global Engineering Manifesto](./arc-corporate-ws/corporate-standards/03-engineering/engineering-manifesto.md)**: Normative policy for SOLID, Clean Code, and OWASP.
-
-### 🚦 Release Governance & Adoption
-*   **[📈 Nx Versioning Strategy](./arc-corporate-ws/corporate-standards/04-governance/release-audit-strategy.md)**: Automated mechanism for releases and SemVer.
-*   **[🚀 Product Quick-Start Manual](./arc-corporate-ws/corporate-standards/05-onboarding/product-quick-start.md)**: The official scaffolding and environment guide.
-
-### 🤖 AI-Augmented Architecture (Optional)
-Optional extension for teams incorporating AI agents and MCP into their architecture.
-→ [Explore AI-Augmented section](./arc-corporate-ws/corporate-standards/ai-augmented/README.md)
+🤖 **AI-Augmented Enablement:** Seeking MCP and LLM agent architectures? → [Explore AI Module](./arc-corporate-ws/corporate-standards/ai-augmented/README.md)
