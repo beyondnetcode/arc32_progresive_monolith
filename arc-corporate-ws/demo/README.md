@@ -6,6 +6,10 @@ This section documents the physical implementation provided in this repository. 
 
 ## 🎯 Demo Navigation Map (Exhaustive)
 
+### 📁 0. Project Lifecycle & Backlog
+Official planning, Scrum artifacts, and taxonomy of deliverables.
+*   👉 **[Project Hub (PRD & Backlog)](./project/README.md)**
+
 ### 📋 1. Functional & Business Layer of the Sandbox
 Domain description to trigger the demonstrative technical flows.
 *   [Demo Product Vision](./functional/product-vision.md)
