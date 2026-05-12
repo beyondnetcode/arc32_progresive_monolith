@@ -4,6 +4,11 @@
 
 ---
 
+## 🗺️ 0. Master Entry Point (Mandatory Initial Step)
+🚀 **New to this repository?** Do not explore randomly. Visit the 🧭 **[Global Master Index](./MASTER_INDEX.md)** to immediately identify the compulsory reading path tailored specifically for your enterprise role (Vendor, Dev, Architect, or PM).
+
+---
+
 ## 💡 1. Introduction
 
 Welcome to the **Unified Corporate Reference Architecture**. This repository serves as the authorized foundation and canonical blueprint for constructing enterprise polyglot digital ecosystems that dynamically evolve from Modular Monoliths into distributed Microservices.

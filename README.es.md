@@ -4,6 +4,11 @@
 
 ---
 
+## 🗺️ 0. Punto de Entrada Maestro (Paso Inicial Obligatorio)
+🚀 **¿Nuevo en este repositorio?** No explores al azar. Visita el 🧭 **[Índice Maestro Global](./MASTER_INDEX.es.md)** para identificar inmediatamente la ruta de lectura obligatoria adaptada específicamente para tu rol empresarial (Proveedor, Dev, Arquitecto o PM).
+
+---
+
 ## 💡 1. Introducción
 
 Bienvenido a la **Arquitectura de Referencia Corporativa Unificada**. Este repositorio sirve como la base autorizada y el plano canónico para la construcción de ecosistemas digitales empresariales políglotas que evolucionan dinámicamente desde Monolitos Modulares hacia Microservicios distribuidos.
