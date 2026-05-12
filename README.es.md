@@ -37,7 +37,7 @@ Para interactuar de manera segura con esta federación de activos, todos los mie
 
 ### ✅ Recomendaciones de Uso Cruciales:
 1.  **Nunca Saltarse los Puertos:** No inyectar lógica de frameworks externos dentro de las carpetas `/domain`.
-2.  **Sincronización con ADRs:** Cada desviación de estos estándares exige la consulta de las **45 Decisiones Arquitectónicas** existentes antes de realizar cualquier propuesta.
+2.  **Sincronización con ADRs:** Cada desviación de estos estándares exige la consulta de las **46 Decisiones Arquitectónicas** existentes antes de realizar cualquier propuesta.
 3.  **Adoptar Docs-as-Code:** No se evaluará ninguna pull request si faltan los mapeos de documentación correspondientes.
 
 ---

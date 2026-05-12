@@ -12,7 +12,7 @@ This reference architecture provides a standardized blueprint for building moder
 ### 1.1 Purpose and Applicability
 This pattern is designed specifically for systems that:
 *   Have a strong orientation towards **intensive API utilization** with multi-channel clients (Web, Mobile, B2B).
-*   Require native **SaaS multi-tenant isolation** at the database engine level.
+*   Require native **SaaS multi-tenant isolation** at the database engine level ([ADR-0010](../02-adrs/core/0010-multi-tenancy-architecture-strategy.md)).
 *   Must support **progressive evolution** from Modular Monolith to Distributed Microservices.
 
 ### 1.2 Corporate Multi-Runtime Strategy (Políglota)
@@ -35,7 +35,7 @@ The organization promotes a deliberate polyglot architecture where runtimes are 
 | **Resilience** | [ADR-0011](../02-adrs/core/0011-fault-tolerance-resiliency-patterns.md) | Distributed Circuit Breakers (Redis + Kong) |
 | **Security** | [ADR-0005](../02-adrs/core/0005-ci-cd-quality-codeql.md), [ADR-0012](../02-adrs/nodejs/0012-advanced-authorization-rbac-abac.md), [ADR-0020](../02-adrs/core/0020-identity-provider-abstraction-strategy.md), [ADR-0026](../02-adrs/nodejs/0026-mfa-passwordless-adaptive-authentication.md) | Zero-trust perimeter + RBAC/ABAC |
 | **Internal API Latency** | [ADR-0014](../02-adrs/core/0014-distributed-caching-strategy-redis.md), [ADR-0021](../02-adrs/nodejs/0021-high-performance-auth-and-graph-compilation.md) | 4-Tier Cache (Client + CDN + BFF + Core) |
-| **Observability** | [ADR-0007](../02-adrs/nodejs/0007-observability-telemetry-loki-opentelemetry.md) | OTel + Loki + distributed tracing |
+| **Observability** | [ADR-0007](../02-adrs/nodejs/0007-observability-telemetry-loki-opentelemetry.md), [ADR-0046](../02-adrs/core/0046-dapr-unified-observability.md) | OTel + Loki + distributed tracing |
 | **Immutable Auditing** | [ADR-0016](../02-adrs/core/0016-immutable-business-audit-trail.md) | Append-only audit ledger |
 | **Tech Sovereignty** | [ADR-0002](../02-adrs/nodejs/0002-clean-architecture-nestjs.md), [ADR-0028](../02-adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md) | 100% Swappable Infra/AOP without logic impact |
 

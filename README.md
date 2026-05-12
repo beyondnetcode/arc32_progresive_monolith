@@ -37,7 +37,7 @@ To interact safely with this asset federation, all members MUST respect the foll
 
 ### ✅ Crucial Usage Recommendations:
 1.  **Never Bypass Ports:** Do not inject external framework logic into the `/domain` folders.
-2.  **Sync with ADRs:** Every deviation from these standards demands the consultation of the existing **45 Architectural Decisions** before proposal.
+2.  **Sync with ADRs:** Every deviation from these standards demands the consultation of the existing **46 Architectural Decisions** before proposal.
 3.  **Adopt Docs-as-Code:** No pull requests will be evaluated if corresponding documentation mappings are missing.
 
 ---

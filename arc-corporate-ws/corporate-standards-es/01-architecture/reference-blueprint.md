@@ -12,7 +12,7 @@ Esta arquitectura de referencia proporciona un plano estandarizado para construi
 ### 1.1 Propósito y Aplicabilidad
 Este patrón está diseñado específicamente para sistemas que:
 *   Tienen una fuerte orientación hacia la **utilización intensiva de APIs** con clientes multi-canal (Web, Móvil, B2B).
-*   Requieren **aislamiento SaaS multi-tenant** nativo a nivel del motor de base de datos.
+*   Requieren **aislamiento SaaS multi-tenant** nativo a nivel del motor de base de datos ([ADR-0010](../02-adrs/core/0010-multi-tenancy-architecture-strategy.md)).
 *   Deben soportar una **evolución progresiva** desde un Monolito Modular hacia Microservicios Distribuidos.
 
 ### 1.2 Estrategia Corporativa Multi-Runtime (Políglota)
@@ -35,7 +35,7 @@ La organización promueve una arquitectura políglota deliberada donde los entor
 | **Resiliencia** | [ADR-0011](../02-adrs/core/0011-fault-tolerance-resiliency-patterns.md) | Circuit Breakers Distribuidos (Redis + Kong) |
 | **Seguridad** | [ADR-0005](../02-adrs/core/0005-ci-cd-quality-codeql.md), [ADR-0012](../02-adrs/nodejs/0012-advanced-authorization-rbac-abac.md), [ADR-0020](../02-adrs/core/0020-identity-provider-abstraction-strategy.md), [ADR-0026](../02-adrs/nodejs/0026-mfa-passwordless-adaptive-authentication.md) | Perímetro Zero-trust + RBAC/ABAC |
 | **Latencia de API Interna** | [ADR-0014](../02-adrs/core/0014-distributed-caching-strategy-redis.md), [ADR-0021](../02-adrs/nodejs/0021-high-performance-auth-and-graph-compilation.md) | Caché de 4 Niveles (Cliente + CDN + BFF + Core) |
-| **Observabilidad** | [ADR-0007](../02-adrs/nodejs/0007-observability-telemetry-loki-opentelemetry.md) | OTel + Loki + trazado distribuido |
+| **Observabilidad** | [ADR-0007](../02-adrs/nodejs/0007-observability-telemetry-loki-opentelemetry.md), [ADR-0046](../02-adrs/core/0046-dapr-observabilidad-unificada.md) | OTel + Loki + trazado distribuido |
 | **Auditoría Inmutable** | [ADR-0016](../02-adrs/core/0016-immutable-business-audit-trail.md) | Registro de auditoría de solo adición |
 | **Soberanía Tecnológica** | [ADR-0002](../02-adrs/nodejs/0002-clean-architecture-nestjs.md), [ADR-0028](../02-adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md) | Infra/AOP 100% intercambiable sin impacto en la lógica |
 
