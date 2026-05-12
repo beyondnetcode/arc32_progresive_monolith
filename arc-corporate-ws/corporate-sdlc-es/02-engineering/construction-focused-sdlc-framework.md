@@ -17,6 +17,16 @@ Este estándar normativo consolida la gobernanza que controla la progresión del
 
 ## 🗺️ 2. Ciclo de Vida SDLC de Alto Nivel (Matriz Corporativa)
 
+```mermaid
+timeline
+    title Línea de Tiempo del Ciclo de Vida SDLC
+    Fase 1: Concepción : Enmarcado PRD : Alcance Congelado
+    Fase 2: Diseño : Blueprint Arquitectónico : Línea Base de Diseño
+    Fase 3: Construcción : Composición de Código Fuente : Build Exitoso
+    Fase 4: Validación : Regresión QA / UAT : RC Firmado
+    Fase 5: Entrega : Despliegue de Clúster : Producción Viva
+```
+
 | Nombre de la Fase | Actividades Clave | Artefactos Principales | Hito de Salida |
 | :--- | :--- | :--- | :--- |
 | **1. Concepción y Descubrimiento** | Validación de mercado, perfilado de Personas, acotación del alcance. | Requisitos del Producto (PRD), Mapa de OKRs. | **Business Sign-Off** (Alcance Congelado). |
@@ -31,7 +41,19 @@ Este estándar normativo consolida la gobernanza que controla la progresión del
 
 La etapa de construcción es el latido del corazón de la ingeniería. Para evitar la regresión estructural, exige el cumplimiento de los siguientes sub-ciclos de retroalimentación continua.
 
-### 🔄 3.1 Sub-fases de Construcción
+### 🔄 3.1 Sub-fases de Construcción (Ciclo Interno)
+
+```mermaid
+graph LR
+    A[1. Prep Entorno] --> B[2. Código Dominio]
+    B --> C[3. Tests Unitarios]
+    C --> D[4. Integración]
+    D --> E[5. Scan CI]
+    E --> F[6. Peer Review]
+    F --> G((Definición de Hecho))
+    
+    style G fill:#28a745,color:#fff
+```
 
 1.  **Preparación del Entorno:** Establecimiento de estrategias de ramificación (GitFlow/Trunk), aseguramiento de secretos locales y finalización de servidores Mock de API.
 2.  **Composición de Dominio:** Codificación de entidades de negocio puras y aplicación de validaciones estrictas antes de conectar la infraestructura.

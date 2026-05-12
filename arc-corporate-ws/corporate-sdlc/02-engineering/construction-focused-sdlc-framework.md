@@ -17,6 +17,16 @@ This normative standard solidifies the governance controlling Software Developme
 
 ## 🗺️ 2. High-Level SDLC Lifecycle (Enterprise Matrix)
 
+```mermaid
+timeline
+    title Enterprise SDLC Lifecycle Timeline
+    Phase 1: Conception : PRD Framing : Scope Frozen
+    Phase 2: Design : Architecture Blueprint : Design Baseline
+    Phase 3: Construction : Source Code Composition : Build Successful
+    Phase 4: Validation : QA Regression / UAT : RC Signed
+    Phase 5: Delivery : Cluster Deployment : Production Live
+```
+
 | Phase Name | Key Activities | Primary Artifacts | Exit Gate (Milestone) |
 | :--- | :--- | :--- | :--- |
 | **1. Conception & Discovery** | Market fit validation, user Persona profiling, scope bounding. | Product Requirements (PRD), OKRs Map. | **Business Sign-Off** (Scope Frozen). |
@@ -31,7 +41,19 @@ This normative standard solidifies the governance controlling Software Developme
 
 The construction stage is the absolute engineering heartbeat. To avoid structural regression, it mandates compliance with continuous feedback sub-loops.
 
-### 🔄 3.1 Construction Sub-Phases
+### 🔄 3.1 Construction Sub-Phases (Inner Loop)
+
+```mermaid
+graph LR
+    A[1. Env Prep] --> B[2. Domain Code]
+    B --> C[3. Unit Tests]
+    C --> D[4. Integration]
+    D --> E[5. CI Scan]
+    E --> F[6. Peer Review]
+    F --> G((Definition of Done))
+    
+    style G fill:#28a745,color:#fff
+```
 
 1.  **Environment Preparation:** Establishing branch strategies (GitFlow/Trunk), securing local environment secrets, and finalizing Mock API servers.
 2.  **Domain Composition:** Encoding pure business entities and enforcing strict validation before connecting infrastructure.
