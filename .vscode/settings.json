@@ -5,8 +5,8 @@
   "files.insertFinalNewline": true,
   "markdown.preview.breaks": true,
   "editor.rulers": [80, 100],
-  "bmad.rules.path": "bmad-core/rules/global-rules.md",
-  "bmad.rules.schema": ".bmad/rules/project-rules.json",
+  "bmad.rules.path": "ai-harness/rules/global-rules.md",
+  "bmad.rules.index": "ai-harness/gemini.md",
   "search.exclude": {
     "**/.git": true,
     "**/node_modules": true,

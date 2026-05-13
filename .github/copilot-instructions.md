@@ -4,8 +4,8 @@ As an AI assistant (including GitHub Copilot, Antigravity, and other VS Code AI 
 
 ## 🚨 MANDATORY REFERENCE RULES
 Before generating code, documentation, or processing architectural decisions, you must ALWAYS load and reference the enforceable instructions defined in the following local paths:
-- **Primary Enforceable Rules:** `./bmad-core/rules/global-rules.md`
-- **Declarative System Config:** `./.bmad/rules/project-rules.yaml`
+- **Primary Enforceable Rules:** `./ai-harness/rules/global-rules.md`
+- **Declarative System Index:** `./ai-harness/gemini.md`
 
 ## 🔑 KEY BEHAVIORS ENFORCED
 1. **Bilingual Documentation Sync (R-01):** Simultaneously update both English (`docs/en/...`) and Spanish (`docs/es/...`) documents and diagrams. Never allow them to drift.
