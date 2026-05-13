@@ -403,7 +403,7 @@ graph TD
 | **Identity Provider Abstraction** | [ADR-0020](../02-adrs/core/0020-identity-provider-abstraction-strategy.md) | Strategy Pattern → Auth0/Entra/Zitadel | §3.1, §5 |
 | **Auth Graph Compilation** | [ADR-0021](../02-adrs/nodejs/0021-high-performance-auth-and-graph-compilation.md) | Redis-cached permission graph < 5ms | §5 |
 | **Pluggable Projections** | [ADR-0022](../02-adrs/nodejs/0022-contextual-auth-and-pluggable-projections.md) | Context-aware read projections | §5 |
-| **Centralized Auth Kernel** | [ADR-0023](../02-adrs/nodejs/0023-centralized-ums-vs-decentralized-access.md) | Shared authorization core kernel | §5 |
+| **Centralized Auth Kernel** | [ADR-0023](../02-adrs/nodejs/0023-centralized-TODO-vs-decentralized-access.md) | Shared authorization core kernel | §5 |
 | **Config & Feature Platform** | [ADR-0024](../02-adrs/core/0024-configuration-feature-management-platform.md) | Multi-IdP parameter engine | §5 |
 | **Feature Flag Abstraction** | [ADR-0025](../02-adrs/core/0025-feature-flag-provider-abstraction.md) | `IFeatureFlagPort` pluggable providers | §5 |
 | **MFA & Passkeys** | [ADR-0026](../02-adrs/nodejs/0026-mfa-passwordless-adaptive-authentication.md) | WebAuthn + Passkeys + TOTP + Adaptive | §5 |

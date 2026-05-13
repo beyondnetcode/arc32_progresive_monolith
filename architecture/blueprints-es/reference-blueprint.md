@@ -403,7 +403,7 @@ graph TD
 | **Abstracción de Proveedor Identidad** | [ADR-0020](../02-adrs/core/0020-identity-provider-abstraction-strategy.md) | Strategy Pattern → Auth0/Entra/Zitadel | §3.1, §5 |
 | **Compilación de Gráfico de Auth** | [ADR-0021](../02-adrs/nodejs/0021-high-performance-auth-and-graph-compilation.md) | Gráfico de permisos en caché Redis < 5ms | §5 |
 | **Proyecciones Conectables** | [ADR-0022](../02-adrs/nodejs/0022-contextual-auth-and-pluggable-projections.md) | Proyecciones de lectura conscientes del contexto | §5 |
-| **Núcleo de Autenticación Centralizado** | [ADR-0023](../02-adrs/nodejs/0023-centralized-ums-vs-decentralized-access.md) | Núcleo compartido de autorización | §5 |
+| **Núcleo de Autenticación Centralizado** | [ADR-0023](../02-adrs/nodejs/0023-centralized-TODO-vs-decentralized-access.md) | Núcleo compartido de autorización | §5 |
 | **Plataforma de Config & Features** | [ADR-0024](../02-adrs/core/0024-configuration-feature-management-platform.md) | Motor de parámetros multi-IdP | §5 |
 | **Abstracción de Feature Flags** | [ADR-0025](../02-adrs/core/0025-feature-flag-provider-abstraction.md) | Proveedores conectables de `IFeatureFlagPort` | §5 |
 | **MFA y Passkeys** | [ADR-0026](../02-adrs/nodejs/0026-mfa-passwordless-adaptive-authentication.md) | WebAuthn + Passkeys + TOTP + Adaptativo | §5 |

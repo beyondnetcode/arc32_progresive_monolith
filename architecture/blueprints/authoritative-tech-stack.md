@@ -1,7 +1,7 @@
 # 📐 Authoritative Technology Stack
 
 > [!IMPORTANT]
-> **Structural Update Notification:** This document has been partitioned to support the **Polyglot Ecosystem Initiative**. All standard definitions are now organized into Universal Constraints and Runtime-Specific addendums.
+> **Structural Update Notification:** This document has been partitioned to support the **Polyglot Ecosystem Initiative**. All standard definitions are now organized into Universal Constraints and Runtime-Specific addendTODO.
 
 Please proceed to the new authoritative mapping:
 

@@ -20,7 +20,7 @@ Una descripción no es para un humano, es para un motor de búsqueda de espacio 
 *   ✅ `"Recupera el catálogo detallado de productos activos. REQUERIDO cuando el usuario pregunta por disponibilidad, precios, o niveles de stock. NO usar esto para consultas de facturación."`
 
 ## 3. Esquemas Estrictos (Zod / JSON Schema)
-Nunca defina un argumento como un simple `string`. Use `enums` y restricciones siempre que sea posible para restringir la "creatividad" del modelo.
+Nunca defina un argumento como un simple `string`. Use `enTODO` y restricciones siempre que sea posible para restringir la "creatividad" del modelo.
 *   **Argumento Vago:** `status: string`
 *   **Argumento Estricto:** `status: "PENDING" | "SHIPPED" | "DELIVERED"`
 

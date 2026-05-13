@@ -17,7 +17,7 @@ Las reglas inmutables son:
     *   `infrastructure/`: Configuraciones de plataforma e IaC.
     *   `operations/`: Observabilidad y monitoreo.
     *   `knowledge/`: Onboarding y POCs.
-2.  **Source Root (`src/`)**: Único contenedor de la implementación técnica. No debe contener carpetas redundantes de dominio intermedio (ej. NO usar `src/ums/`).
+2.  **Source Root (`src/`)**: Único contenedor de la implementación técnica. No debe contener carpetas redundantes de dominio intermedio (ej. NO usar `src/TODO/`).
 3.  **Monorepo Standard (Nx)**: Dentro de `src/`, el código se organiza siguiendo las mejores prácticas de Nx:
     *   `src/apps/`: Aplicaciones desplegables.
     *   `src/libs/`: Librerías compartidas.

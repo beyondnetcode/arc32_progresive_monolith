@@ -33,7 +33,7 @@ Se impone el cumplimiento de los estándares de **Clean Code** para toda la nome
 
 ### 3.1. Convenciones Técnicas de Casing
 -   **`lowerCamelCase`**: Variables, instancias de objetos, funciones y miembros de interfaces.
--   **`PascalCase`**: Clases, interfaces, tipos, enums y componentes de UI.
+-   **`PascalCase`**: Clases, interfaces, tipos, enTODO y componentes de UI.
 -   **`UPPER_SNAKE_CASE`**: Constantes globales inmutables y variables de entorno.
 -   **`kebab-case`**: Nombres de archivos, selectores CSS y rutas de API (endpoint segments).
 
