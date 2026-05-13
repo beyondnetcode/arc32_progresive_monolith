@@ -1,6 +1,6 @@
-# 🏷️ Automated Versioning & Continuous Audit Strategy (bMAD)
+# 🏷️ Automated Versioning & Continuous Audit Strategy (BMAD-METHOD)
 
-To maintain a strict, traceable audit log synchronized with GitHub, the [bMAD](https://github.com/bmad-code-org/BMAD-METHOD) Method does not rely on manual document drafting. Instead, we leverage the ecosystem we have already built (**Conventional Commits**) combined with the native power of our orchestrator: **Nx Release**.
+To maintain a strict, traceable audit log synchronized with GitHub, the Spec-driven AI strategy [BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) does not rely on manual document drafting. Instead, we leverage the ecosystem we have already built (**Conventional Commits**) combined with the native power of our orchestrator: **Nx Release**.
 
 ## 1. The Pillar: Conventional Commits
 Since we have already implemented `commitlint`, the repository knows exactly what type of change occurred.

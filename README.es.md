@@ -1,4 +1,4 @@
-# 🌐 Arquitectura de Referencia Políglota Corporativa (bMAD)
+# 🌐 Arquitectura de Referencia Políglota Corporativa (BMAD-METHOD)
 
 > 🌍 **Selector de Idioma:** [🇪🇸 Español](./README.es.md) | [🇺🇸 English](./README.md)
 

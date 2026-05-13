@@ -1,6 +1,6 @@
 # 🧪 Plan de Pruebas de Contrato de Integración (Especificación Pact)
 
-Este documento establece el plan estratégico y las directrices de integración continua para las **Pruebas de Contrato Dirigidas por el Consumidor** (Consumer-Driven Contract Testing) a través de los dominios de SCM/Esqueleto de Referencia bajo el **Método bMAD**.
+Este documento establece el plan estratégico y las directrices de integración continua para las **Pruebas de Contrato Dirigidas por el Consumidor** (Consumer-Driven Contract Testing) a través de los dominios de SCM/Esqueleto de Referencia bajo la **estrategia BMAD-METHOD**.
 
 ---
 

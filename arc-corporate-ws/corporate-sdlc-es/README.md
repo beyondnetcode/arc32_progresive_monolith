@@ -6,7 +6,7 @@ Bienvenido al mapa de control oficial del Ciclo de Vida de Desarrollo de Softwar
 
 ---
 
-## 🗺️ Ciclo de Madurez SDLC (Taxonomía bMAD)
+## 🗺️ Ciclo de Madurez SDLC (Taxonomía BMAD-METHOD)
 
 ### 💡 Fase 01: Ideación y Planificación
 Procedimientos que dictan cómo las peticiones de funcionalidades entran al ecosistema.

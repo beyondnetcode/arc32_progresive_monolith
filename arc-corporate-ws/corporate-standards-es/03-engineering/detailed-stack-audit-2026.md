@@ -1,6 +1,6 @@
 # 🔬 Auditoría Corporativa del Stack y Dictamen Tecnológico — Mayo 2026
 
-**Rol**: Agente de Auditoría de Stack bMAD  
+**Rol**: Agente de Auditoría de Stack BMAD-METHOD  
 **Mandato**: Validación autoritativa del ciclo de vida y verificación de tecnologías autorizadas para producción.  
 **Periodo de Línea Base**: Entorno Simulado 11 de Mayo de 2026.
 

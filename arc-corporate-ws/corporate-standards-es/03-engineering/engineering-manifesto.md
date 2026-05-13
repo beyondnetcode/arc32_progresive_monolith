@@ -45,7 +45,7 @@ Para evitar deuda estructural técnica y garantizar que el núcleo de dominio nu
 ---
 
 ## 5. ⚙️ Gobernanza Técnica y Mecanismos de Aplicación
-La revisión humana es imperfecta. Confiamos en la **Aplicación Automatizada** para asegurar que estos principios sean sostenibles a lo largo del tiempo dentro del marco bMAD:
+La revisión humana es imperfecta. Confiamos en la **Aplicación Automatizada** para asegurar que estos principios sean sostenibles a lo largo del tiempo dentro de la estrategia BMAD-METHOD:
 
 1.  **Linters y Reglas Arquitectónicas**:
     *   `eslint-plugin-boundaries` fallará automáticamente la construcción si un desarrollador importa una capa exterior (infraestructura) en una capa interior (core).

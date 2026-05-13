@@ -45,7 +45,7 @@ To avoid structural technical debt and guarantee the domain core is never contam
 ---
 
 ## 5. ⚙️ Technical Governance & Enforcement Mechanisms
-Human review is flawed. We rely on **Automated Enforcement** to ensure these principles are sustainable over time within the bMAD framework:
+Human review is flawed. We rely on **Automated Enforcement** to ensure these principles are sustainable over time within the BMAD-METHOD strategy:
 
 1.  **Linters & Architectural Rules**: 
     *   `eslint-plugin-boundaries` will automatically fail the build if a developer imports an outer layer (infrastructure) into an inner layer (core).

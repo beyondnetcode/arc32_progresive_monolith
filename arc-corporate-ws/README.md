@@ -1,4 +1,4 @@
-# 🌐 Corporate Reference Platform Architecture (bMAD)
+# 🌐 Corporate Reference Platform Architecture (BMAD-METHOD)
 
 ## 🎯 Repository Purpose
 This is the authorized canonical base for constructing scalable, multi-tenant, and polyglot digital products within the organization. The system implements a Progressive Modular Monolith mathematically designed to evolve surgically toward microservices without domain rewriting.

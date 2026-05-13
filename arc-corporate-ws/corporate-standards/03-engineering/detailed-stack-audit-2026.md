@@ -1,6 +1,6 @@
 # 🔬 Corporate Stack Audit & Technology Dictamen — May 2026
 
-**Role**: bMAD Stack Audit Agent  
+**Role**: BMAD-METHOD Stack Audit Agent  
 **Mandate**: Authoritative lifecycle validation and verification of authorized production technologies.  
 **Baseline Period**: Simulated Environment May 11, 2026.
 

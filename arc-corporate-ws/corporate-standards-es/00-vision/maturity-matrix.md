@@ -78,7 +78,7 @@ Evaluamos la arquitectura del Esqueleto de Referencia frente a los 5 pilares cr�
 
 ## 3. Resumen Ejecutivo y Calificación
 
-Basado en los criterios TOGAF ACMM aplicados a nuestra arquitectura actual impulsada por bMAD:
+Basado en los criterios TOGAF ACMM aplicados a nuestra arquitectura actual impulsada por BMAD-METHOD:
 
 **Puntuación Global de Madurez Arquitectónica del Esqueleto de Referencia: 3.8 / 5.0 (De Definido a Gestionado)**
 
