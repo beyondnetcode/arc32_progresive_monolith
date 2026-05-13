@@ -20,7 +20,7 @@ A description is not for a human, it's for a vector space search engine.
 *   ✅ `"Retrieves the detailed catalog of active products. REQUIRED when the user asks for availability, prices, or stock levels. Do NOT use this for billing queries."`
 
 ## 3. Strict Schemas (Zod / JSON Schema)
-Never define an argument as a loose `string`. Use `enums` and constraints whenever possible to restrict the model's "creativity."
+Never define an argument as a loose `string`. Use `enTODO` and constraints whenever possible to restrict the model's "creativity."
 *   **Vague Argument:** `status: string`
 *   **Strict Argument:** `status: "PENDING" | "SHIPPED" | "DELIVERED"`
 

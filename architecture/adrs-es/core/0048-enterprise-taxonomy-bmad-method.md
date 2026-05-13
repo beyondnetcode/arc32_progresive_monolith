@@ -1,21 +1,29 @@
-# ADR-0048: Estandarización de Taxonomía Empresarial y Layout (BMAD-METHOD)
+# ADR-0048: Estandarización de Taxonomía Empresarial y Layout (Enterprise Standards)
 
 ## Estado
 Aceptado
 
 ## Contexto
-A medida que el ecosistema evoluciona hacia un Monolito Progresivo, la proliferación de carpetas anidadas y la falta de convenciones estrictas de nombres han generado confusión cognitiva ("Cognitive Load") para los desarrolladores y dificultades para el enrutamiento de agentes de Inteligencia Artificial (BMAD-Method).
-Se requería una política inmutable que unificara la estructura de directorios, la separación por dominios y la ubicación de los artefactos de gobernanza en la raíz del repositorio, garantizando el principio de Single Source of Truth (SSoT) en la documentación (Docs-as-Code).
+A medida que el ecosistema evoluciona hacia un Monolito Progresivo, la proliferación de carpetas anidadas y la falta de convenciones estrictas de nombres han generado una alta carga cognitiva para los equipos de ingeniería. Se requería una política inmutable que unificara la estructura de directorios, la separación por dominios y la ubicación de los artefactos de gobernanza en la raíz del repositorio, garantizando el principio de **Docs-as-Code**.
+
+Esta estandarización también optimiza la interacción con agentes de Inteligencia Artificial mediante el soporte de la metodología **BMAD-METHOD**, pero el driver principal es la mantenibilidad y la arquitectura enterprise.
 
 ## Decisión
-Se ha decidido evolucionar el estándar hacia el modelo **Source-Centric Monorepo (v2.0)**. Esta política impone la segregación absoluta entre la gobernanza humana (Raíz) y la maquinaria técnica (Src).
+Se ha decidido adoptar la **Taxonomía Enterprise v3.0 (Separated Governance & Source)** como el estándar arquitectónico oficial. Esta política impone la segregación absoluta entre la gobernanza documental (Raíz) y la implementación técnica (`src/`).
 
-Las reglas clave obligatorias son:
-1.  **The Blue-Map Layout (v2.0)**: La raíz del proyecto es un **Portal de Gobernanza** que solo contiene documentación ejecutiva (`README`, `MASTER_INDEX`) y carpetas de alto nivel (`governance/`, `architecture/`).
-2.  **Centralización Técnica (`src/.workspace/`)**: Todo artefacto relacionado con build, dependencias, tooling o configuración técnica del monorepo (`package.json`, `nx.json`, `node_modules`, etc.) debe vivir exclusivamente dentro de `src/.workspace/`.
-3.  **Encapsulamiento DDD**: El código y su lógica de dominio residen en `src/[dominio]/`, siendo unidades autónomas que contienen su propio código, gobernanza local y arquitectura.
-4.  **Naming Conventions**: Uso estricto de `kebab-case` y prefijos `app-` / `lib-`.
-5.  **Directivas de Plataforma**: Solo se permiten en la raíz archivos requeridos por el host (ej. `.github/`, `.gitignore`) o el contexto de IA (`.harness/`).
+Las reglas inmutables son:
+1.  **Portal de Gobernanza (Raíz)**: Los dominios transversales de gobernanza deben vivir exclusivamente en la raíz del repositorio:
+    *   `governance/`: Visión, requisitos (BMAD Phase 00-01) y roadmap (Phase 05).
+    *   `architecture/`: ADRs (Phase 03) y Blueprints (Phase 02).
+    *   `infrastructure/`: Configuraciones de plataforma e IaC.
+    *   `operations/`: Observabilidad y monitoreo.
+    *   `knowledge/`: Onboarding y POCs.
+2.  **Source Root (`src/`)**: Único contenedor de la implementación técnica. No debe contener carpetas redundantes de dominio intermedio (ej. NO usar `src/TODO/`).
+3.  **Monorepo Standard (Nx)**: Dentro de `src/`, el código se organiza siguiendo las mejores prácticas de Nx:
+    *   `src/apps/`: Aplicaciones desplegables.
+    *   `src/libs/`: Librerías compartidas.
+    *   `src/package.json` & `src/nx.json`: El motor técnico reside en la raíz de `src/`.
+4.  **Límites de Responsabilidad**: El código fuente debe ser agnóstico a la documentación de negocio, permitiendo que la gobernanza evolucione sin afectar el build path.
 
 ## Consecuencias
 ### Positivas:

@@ -55,7 +55,7 @@ Decisions tied to the primary runtime for APIs and BFFs.
 *   [ADR 0012: Auth RBAC/ABAC Guards](../02-adrs/nodejs/0012-advanced-authorization-rbac-abac.md)
 *   [ADR 0021: Auth Graph Compilation](../02-adrs/nodejs/0021-high-performance-auth-and-graph-compilation.md)
 *   [ADR 0022: Contextual Projections](../02-adrs/nodejs/0022-contextual-auth-and-pluggable-projections.md)
-*   [ADR 0023: Centralized Kernel Boundary](../02-adrs/nodejs/0023-centralized-ums-vs-decentralized-access.md)
+*   [ADR 0023: Centralized Kernel Boundary](../02-adrs/nodejs/0023-centralized-TODO-vs-decentralized-access.md)
 *   [ADR 0026: MFA Adaptive Implementation](../02-adrs/nodejs/0026-mfa-passwordless-adaptive-authentication.md)
 *   [ADR 0027: Dual-Protocol Node Setup](../02-adrs/nodejs/0027-dual-protocol-rest-grpc-api-gateway.md)
 *   [ADR 0029: Tactical DDD Primitives](../02-adrs/nodejs/0029-tactical-ddd-primitives-library.md)
