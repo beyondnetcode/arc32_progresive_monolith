@@ -40,6 +40,7 @@ Decisiones aplicables a cualquier producto construido sobre el framework, indepe
 *   [ADR 0045: Criterios de Aceptación para Extracción de Microservicios](./core/0045-microservice-extraction-readiness-criteria.md)
 *   [ADR 0046: Adopción de Dapr y Observabilidad Unificada](./core/0046-dapr-observabilidad-unificada.md)
 *   [ADR 0047: Marco de Selección: Monolito vs SOA vs Microservicios](./core/0047-architectural-patterns-monolith-soa-microservices.md)
+*   [ADR 0049: Estándares de Semántica y Nomenclatura Clean Code](./core/0049-naming-semantics-clean-code-policy.md)
 
 ---
 
