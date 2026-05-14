@@ -19,6 +19,12 @@
 | **Validación** | **class-validator** | íšltima | **NO** | Zod (excepto para contratos de API externos) |
 | **Motor de Pruebas** | **Jest** | 29.x | **Sí** | Mocha, Ava |
 | **Orquestador Monorepo**| **Nx** | 18.x+ | **Sí** | Turborepo, Lerna |
+> [!TIP]
+> **Aislamiento de Pruebas:** Los desarrolladores DEBEN seguir la estrategia de aislamiento definida en el [ADR-0052](../adrs-es/core/0052-estrategia-aislamiento-pruebas-unitarias.md) al utilizar Mocks (verificación de interacción) o Stubs (configuración de estado).
+
+>
+> **Pruebas de Infraestructura:** Las pruebas de Integración y E2E DEBEN utilizar **Testcontainers** como se define en el [ADR-0053](../adrs-es/core/0053-estrategia-pruebas-integracion-e2e.md) para garantizar la paridad con producción.
+
 
 ---
 

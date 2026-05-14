@@ -23,6 +23,11 @@ All engineering squads developing within the .NET ecosystem MUST strictly enforc
 | **Formatting** | **CSharpier** | Latest | **NO** | dotnet format (Standard) |
 | **Observability** | **OpenTelemetry.Extensions.Hosting** | 1.7+ | **YES** | Application Insights native SDK (Vendor Lock-in) |
 
+> [!TIP]
+> **Testing Isolation:** Developers MUST follow the isolation strategy defined in [ADR-0052](../adrs/core/0052-unit-testing-isolation-strategy.md) when using Mocks (interaction verification) or Stubs (state setup).
+>
+> **Infrastructure Testing:** Integration and E2E tests MUST utilize **Testcontainers** as defined in [ADR-0053](../adrs/core/0053-integration-e2e-testing-strategy.md) to guarantee production parity.
+
 ---
 
 ## ðŸ—ï¸ 2. Architecture Implementation (.NET Mapping)
