@@ -1,77 +1,77 @@
-# âš¡ Cheat Sheet del Stack Tecnológico de Node.js Progresivo (Referencia Rápida)
+# Jump to: Cheat Sheet del Stack Tecnológico de Node.js Progresivo (Referencia Rápida)
 
 Esta hoja de trucos sirve como referencia autoritativa y de alta densidad de herramientas por capa arquitectónica para desarrolladores y agentes autónomos que trabajan en la Arquitectura de Referencia Progresiva de Node.js.
 
 ---
 
 ### 1. Runtime y Lenguaje
-*   **Entorno de Ejecución:** Node.js v20 LTS
-*   **Lenguaje:** TypeScript v5.4+ (Modo Estricto)
-*   **Motor Compilador:** SWC (`@swc/core`) dentro de Nx Monorepo
-*   **Calidad de Código:** ESLint v8 + Prettier v3
-*   **Puertas de Calidad Git:** Husky + lint-staged
+* **Entorno de Ejecución:** Node.js v20 LTS
+* **Lenguaje:** TypeScript v5.4+ (Modo Estricto)
+* **Motor Compilador:** SWC (`@swc/core`) dentro de Nx Monorepo
+* **Calidad de Código:** ESLint v8 + Prettier v3
+* **Puertas de Calidad Git:** Husky + lint-staged
 
 ### 2. Capa de API
-*   **Protocolos Internos:** gRPC (NestJS Microservices)
-*   **Protocolos Externos:** API REST (NestJS Express)
-*   **Estándar de Validación:** `class-validator` + `class-transformer`
-*   **Documentación de API:** OpenAPI v3 (Swagger) ví­a decoradores NestJS
+* **Protocolos Internos:** gRPC (NestJS Microservices)
+* **Protocolos Externos:** API REST (NestJS Express)
+* **Estándar de Validación:** `class-validator` + `class-transformer`
+* **Documentación de API:** OpenAPI v3 (Swagger) vía decoradores NestJS
 
 ### 3. Capa de Gateway
-*   **API Gateway:** Kong Gateway (Edición de Código Abierto)
-*   **Gestión de Sesión:** JSON Web Tokens (JWT) firmados con RS256
-*   **Seguridad Interna:** TLS mutuo (mTLS) ví­a Malla de Servicios Istio
-*   **Limitación de Tasa:** Limitador de Tasa de Ventana Deslizante (plugin Kong Redis)
+* **API Gateway:** Kong Gateway (Edición de Código Abierto)
+* **Gestión de Sesión:** JSON Web Tokens (JWT) firmados con RS256
+* **Seguridad Interna:** TLS mutuo (mTLS) vía Malla de Servicios Istio
+* **Limitación de Tasa:** Limitador de Tasa de Ventana Deslizante (plugin Kong Redis)
 
 ### 4. Capa de Dominio y Aplicación
-*   **Patrón Arquitectónico:** Arquitectura Hexagonal (Puertos y Adaptadores)
-*   **Estrategia de Monorepo:** Nx Monorepo
-*   **Patrón de Ejecución:** Monolito Modular (Listo para Dapr)
-*   **Patrón de Segregación:** CQRS Hí­brido (Regulado por Matriz [ADR-0034](../adrs-es/core/0034-cqrs-pattern-applicability-matrix.md))
-*   **Inyección de Dependencias:** Contenedor DI nativo de NestJS
+* **Patrón Arquitectónico:** Arquitectura Hexagonal (Puertos y Adaptadores)
+* **Estrategia de Monorepo:** Nx Monorepo
+* **Patrón de Ejecución:** Monolito Modular (Listo para Dapr)
+* **Patrón de Segregación:** CQRS Híbrido (Regulado por Matriz [ADR-0034](../adrs-es/core/0034-cqrs-pattern-applicability-matrix.md))
+* **Inyección de Dependencias:** Contenedor DI nativo de NestJS
 
 ### 5. Capa de Datos
-*   **Base de Datos Relacional Principal:** PostgreSQL v16 (Aislamiento Esquema Por Contexto, [ADR-0031](../adrs-es/core/0031-schema-per-context-domain-event-catalog.md))
-*   **Mapeo Relacional (ORM):** TypeORM (TypeScript)
-*   **Consultas de Alto Rendimiento:** Driver nativo `pg`
-*   **Motor de Migración de Esquema:** Migraciones TypeORM ví­a Init-Containers de Kubernetes
-*   **Caché en Memoria:** Redis v7.2 (Replicaciones Sentinel / Cluster)
-*   **Almacén de Objetos y Activos:** MinIO (Compatible con S3, Autohospedado)
-*   **Bróker de Mensajes Así­ncrono:** RabbitMQ gobernado por control de flujo ([ADR-0036](../adrs-es/core/0036-message-bus-delivery-strategy-fifo-dlq.md)) y Outbox ([ADR-0033](../adrs-es/core/0033-transactional-outbox-pattern.md))
+* **Base de Datos Relacional Principal:** PostgreSQL v16 (Aislamiento Esquema Por Contexto, [ADR-0031](../adrs-es/core/0031-schema-per-context-domain-event-catalog.md))
+* **Mapeo Relacional (ORM):** TypeORM (TypeScript)
+* **Consultas de Alto Rendimiento:** Driver nativo `pg`
+* **Motor de Migración de Esquema:** Migraciones TypeORM vía Init-Containers de Kubernetes
+* **Caché en Memoria:** Redis v7.2 (Replicaciones Sentinel / Cluster)
+* **Almacén de Objetos y Activos:** MinIO (Compatible con S3, Autohospedado)
+* **Bróker de Mensajes Asíncrono:** RabbitMQ gobernado por control de flujo ([ADR-0036](../adrs-es/core/0036-message-bus-delivery-strategy-fifo-dlq.md)) y Outbox ([ADR-0033](../adrs-es/core/0033-transactional-outbox-pattern.md))
 
 ### 6. Estrategia de Multi-tenancy
-*   **Modelo de Aislamiento de Datos:** Base de Datos Compartida con Row-Level Security (RLS)
-*   **Contexto de Resolución de Inquilino:** Extracción de claims de JWT ví­a Guards de NestJS
-*   **Imposición de Aislamiento:** Inyección dinámica de sesión de transacción de base de datos (`SET LOCAL app.current_tenant`)
+* **Modelo de Aislamiento de Datos:** Base de Datos Compartida con Row-Level Security (RLS)
+* **Contexto de Resolución de Inquilino:** Extracción de claims de JWT vía Guards de NestJS
+* **Imposición de Aislamiento:** Inyección dinámica de sesión de transacción de base de datos (`SET LOCAL app.current_tenant`)
 
 ### 7. Infraestructura y Despliegue
-*   **Motor de Contenedores:** Docker v25 (Imágenes node distroless multi-etapa)
-*   **Plataforma Orquestadora:** Kubernetes (K8s v1.28+)
-*   **Gestión de Secretos y Claves:** HashiCorp Vault (OSS, Autohospedado)
-*   **Empaquetador de Despliegue:** Charts parametrizados de Helm v3
+* **Motor de Contenedores:** Docker v25 (Imágenes node distroless multi-etapa)
+* **Plataforma Orquestadora:** Kubernetes (K8s v1.28+)
+* **Gestión de Secretos y Claves:** HashiCorp Vault (OSS, Autohospedado)
+* **Empaquetador de Despliegue:** Charts parametrizados de Helm v3
 
 ### 8. Observabilidad
-*   **Estándar de Instrumentación:** OpenTelemetry (SDKs Neutrales al Proveedor)
-*   **Agregador de Logs:** Grafana Loki (OSS)
-*   **Trazas Distribuidas:** Jaeger (OSS)
-*   **Servidor de Métricas:** Motor de Extracción Prometheus (Pulling)
+* **Estándar de Instrumentación:** OpenTelemetry (SDKs Neutrales al Proveedor)
+* **Agregador de Logs:** Grafana Loki (OSS)
+* **Trazas Distribuidas:** Jaeger (OSS)
+* **Servidor de Métricas:** Motor de Extracción Prometheus (Pulling)
 
 ### 9. Seguridad
-*   **Registros de Auth:** OIDC y SAML Federados + Almacén BCrypt Nativo del Esqueleto de Referencia
-*   **Control de Acceso:** RBAC Jerárquico + Control de Acceso Basado en Atributos (ABAC)
-*   **Auditorí­a de Dependencias:** CLI de Snyk + `npm audit` dentro de las pipelines de CI/CD
+* **Registros de Auth:** OIDC y SAML Federados + Almacén BCrypt Nativo del Esqueleto de Referencia
+* **Control de Acceso:** RBAC Jerárquico + Control de Acceso Basado en Atributos (ABAC)
+* **Auditoría de Dependencias:** CLI de Snyk + `npm audit` dentro de las pipelines de CI/CD
 
 ### 10. Estrategia de Gestión de Errores
-*   **Estándar de Patrón:** Patrón Result Funcional (`neverthrow`) segíºn [ADR-0038](../adrs-es/nodejs/0038-error-handling-result-pattern-strategy.md)
-*   **Barrera Global:** NestJS ExceptionFilter capturando IDs de traza interna opacos.
+* **Estándar de Patrón:** Patrón Result Funcional (`neverthrow`) según [ADR-0038](../adrs-es/nodejs/0038-error-handling-result-pattern-strategy.md)
+* **Barrera Global:** NestJS ExceptionFilter capturando IDs de traza interna opacos.
 
 ### 11. Experiencia del Desarrollador (DevEx)
-*   **Servicios Locales:** Especificación de Docker Compose
-*   **Framework de Pruebas Unitarias:** Jest
-*   **Pruebas de Integración:** Jest + Supertest con **Testcontainers**
-*   **Verificación de Contratos:** Pact JS (Impulsado por el consumidor de microservicios)
-*   **Inyección de Rendimiento:** Scripts dinámicos de TypeScript de **k6** (Grafana)
-*   **Pruebas End-to-End (E2E):** Playwright
+* **Servicios Locales:** Especificación de Docker Compose
+* **Framework de Pruebas Unitarias:** Jest
+* **Pruebas de Integración:** Jest + Supertest con **Testcontainers**
+* **Verificación de Contratos:** Pact JS (Impulsado por el consumidor de microservicios)
+* **Inyección de Rendimiento:** Scripts dinámicos de TypeScript de **k6** (Grafana)
+* **Pruebas End-to-End (E2E):** Playwright
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

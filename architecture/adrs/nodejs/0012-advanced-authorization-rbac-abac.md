@@ -31,4 +31,4 @@ Implement a Hybrid Architecture bridging Role-Based (RBAC) and Attribute-Based (
 - [ADR-0010: Multi-Tenancy (RLS)](../adrs/core/0010-multi-tenancy-architecture-strategy.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

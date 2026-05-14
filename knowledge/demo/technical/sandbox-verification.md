@@ -1,4 +1,4 @@
-# ðŸ§ª Architectural Sandbox & Demo Verification Scope
+# Architectural Sandbox & Demo Verification Scope
 
 **Objective:** Define the precise scope of the canonical implementation (To-Do Product) and catalogue which architectural patterns it exercises in a running environment.
 
@@ -24,18 +24,18 @@ The following system directives (ADRs) are physically instantiated and verifiabl
 ---
 
 ## 3. Non-Functional Gates Under Exercise
-*   **Contract Testing**: Running `nx test pact` performs bidirectional check ensuring the React Web-BFF agrees with the Core API gRPC payload.
-*   **Performance Load**: Local k6 runners exercise high-concurrency insertion of 10,000 tasks in < 5 seconds to verify RLS performance overhead.
+* **Contract Testing**: Running `nx test pact` performs bidirectional check ensuring the React Web-BFF agrees with the Core API gRPC payload.
+* **Performance Load**: Local k6 runners exercise high-concurrency insertion of 10,000 tasks in < 5 seconds to verify RLS performance overhead.
 
 ---
 
 ## 4. Intentional Limitations (Out-of-Sandbox)
 To keep the codebase lightweight, the following are NOT implemented in the code, but documented in architecture:
-1.  **Cloud Distribution**: Cloud specific DNS/Route53 setups.
-2.  **Complex Sagas**: Distributed sagas traversing 3+ external networks.
+1. **Cloud Distribution**: Cloud specific DNS/Route53 setups.
+2. **Complex Sagas**: Distributed sagas traversing 3+ external networks.
 
 ---
 **Verification Status**: All Critical Patterns Checked & Passed in local Sandbox environment.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

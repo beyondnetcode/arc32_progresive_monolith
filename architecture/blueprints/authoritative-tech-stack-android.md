@@ -1,13 +1,13 @@
-# ðŸ“ Authoritative Tech Stack: Android & Kotlin Ecosystem
+# Authoritative Tech Stack: Android & Kotlin Ecosystem
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](./authoritative-tech-stack-android.es.md)
+> **Bilingual Navigation:** [Versión en Español](./authoritative-tech-stack-android.es.md)
 
-**Document Type:** Runtime Addendum  
-**Prerequisite:** MUST be read after the **[Agnostic Baseline](./authoritative-tech-stack-agnostic.md)**.  
+**Document Type:** Runtime Addendum 
+**Prerequisite:** MUST be read after the **[Agnostic Baseline](./authoritative-tech-stack-agnostic.md)**. 
 
 ---
 
-## ðŸ“‹ 1. Executive Compliance Matrix (Vendor Mandates)
+## 1. Executive Compliance Matrix (Vendor Mandates)
 
 | Category | Approved Tool / Framework | Validated Version | ADR Required to Swap? | Explicitly Rejected Alternatives |
 | :--- | :--- | :--- | :--- | :--- |
@@ -17,7 +17,7 @@
 | **Async / Streams** | **Kotlin Coroutines + Flow** | Latest | **YES** | RxJava 2/3 |
 
 ---
-ðŸ‘‰ Back to **[Global Master Index](../../../MASTER_INDEX.md)**
+-> Back to **[Global Master Index](../../../MASTER_INDEX.md)**
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

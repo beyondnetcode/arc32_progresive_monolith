@@ -21,7 +21,7 @@ Key strategies:
 ## Consequences
 
 ### Positive
-- Users see data immediately on navigation ”” no loading spinners for cached content.
+- Users see data immediately on navigation - no loading spinners for cached content.
 - Forms and mutations feel instantaneous via optimistic updates.
 - Graceful offline mode: the app remains usable for read operations even without connectivity.
 
@@ -34,4 +34,4 @@ Key strategies:
 - [ADR-0011: Fault Tolerance & Resiliency Patterns](../adrs/core/0011-fault-tolerance-resiliency-patterns.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

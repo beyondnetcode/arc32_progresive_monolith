@@ -14,11 +14,11 @@ Integrar **GitHub CodeQL** y **npm audit** como puertas de calidad obligatorias 
 
 **Puertas de la pipeline:**
 
-1. **Análisis Estático CodeQL** ”” Se ejecuta en cada pull request. Escanea patrones de vulnerabilidad OWASP Top 10 en el código fuente de TypeScript. Los PRs con hallazgos `High` (Altos) o `Critical` (Crí­ticos) se bloquean para su fusión.
+1. **Análisis Estático CodeQL** - Se ejecuta en cada pull request. Escanea patrones de vulnerabilidad OWASP Top 10 en el código fuente de TypeScript. Los PRs con hallazgos `High` (Altos) o `Critical` (Críticos) se bloquean para su fusión.
 
-2. **Escaneo de Vulnerabilidades de Dependencias** ”” `npm audit --audit-level=high` se ejecuta en CI. Cualquier dependencia con un CVE `High` o `Critical` bloquea la pipeline.
+2. **Escaneo de Vulnerabilidades de Dependencias** - `npm audit --audit-level=high` se ejecuta en CI. Cualquier dependencia con un CVE `High` o `Critical` bloquea la pipeline.
 
-3. **Detección de Secretos** ”” El escaneo de secretos integrado de GitHub se habilita en el repositorio para detectar claves de API o credenciales comprometidas accidentalmente.
+3. **Detección de Secretos** - El escaneo de secretos integrado de GitHub se habilita en el repositorio para detectar claves de API o credenciales comprometidas accidentalmente.
 
 **SLA:** Todos los hallazgos `Critical` deben resolverse dentro de 24 horas. Hallazgos `High` dentro de 72 horas.
 
@@ -26,11 +26,11 @@ Integrar **GitHub CodeQL** y **npm audit** como puertas de calidad obligatorias 
 
 ### Positivas
 - Las vulnerabilidades de seguridad se capturan en el momento del PR, antes de llegar a cualquier entorno.
-- Cero costo de infraestructura adicional ”” CodeQL es gratuito para repositorios píºblicos y de GitHub Team.
-- Crea una pista de auditorí­a documentada de decisiones de seguridad para requisitos de cumplimiento.
+- Cero costo de infraestructura adicional - CodeQL es gratuito para repositorios públicos y de GitHub Team.
+- Crea una pista de auditoría documentada de decisiones de seguridad para requisitos de cumplimiento.
 
 ### Negativas
-- Los escaneos de CodeQL aí±aden aproximadamente entre 2-5 minutos a la duración de la pipeline de CI.
+- Los escaneos de CodeQL añaden aproximadamente entre 2-5 minutos a la duración de la pipeline de CI.
 - Los falsos positivos requieren supresión manual con comentarios de justificación documentados.
 
 ## Referencias
@@ -38,4 +38,4 @@ Integrar **GitHub CodeQL** y **npm audit** como puertas de calidad obligatorias 
 - [ADR-0009: Fijación Estricta de Dependencias](../adrs/core/0009-strict-dependency-pinning-vulnerability-management.md)
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

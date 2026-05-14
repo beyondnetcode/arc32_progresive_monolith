@@ -6,4 +6,4 @@
 * [mcp-server-guide](./mcp-server-guide.md)
 
 ---
-[? Back to Upper Level](../README.md)
+[Back to Upper Level](../README.md)

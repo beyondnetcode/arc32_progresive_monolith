@@ -8,4 +8,4 @@ Divide and conquer. This pattern utilizes a network of specialized agents, where
 - Facilitates granular testing of each specialist in isolation.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

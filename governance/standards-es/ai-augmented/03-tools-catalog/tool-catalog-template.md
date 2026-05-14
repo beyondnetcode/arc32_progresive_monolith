@@ -11,32 +11,32 @@ Cualquier herramienta personalizada expuesta al agente debe seguir este patrón 
 Explique brevemente **por qué** existe esta herramienta y en qué escenario el modelo debe invocarla.
 
 ### Firma y Argumentos
-| Argumento | Tipo | Â¿Requerido? | Descripción y Rango |
+| Argumento | Tipo | ¿Requerido? | Descripción y Rango |
 | :--- | :--- | :--- | :--- |
-| `arg_uno` | `string` | Sí­ | Explicación del uso. |
+| `arg_uno` | `string` | Sí | Explicación del uso. |
 | `arg_two` | `enum` | No | Conjunto de valores permitidos `[A, B, C]`. |
 
 ### Estrategia de Verificación Determinista
-Â¿Cómo se valida la integridad de la salida?
-- [ ] Cobertura de pruebas unitarias (%)
-- [ ] Validación de Esquema JSON
-- [ ] Aserciones de precondición (Ej., No se puede cancelar una orden ya entregada)
+¿Cómo se valida la integridad de la salida?
+- [] Cobertura de pruebas unitarias (%)
+- [] Validación de Esquema JSON
+- [] Aserciones de precondición (Ej., No se puede cancelar una orden ya entregada)
 
 ### Tabla de Efectos Secundarios
-*   **Â¿Modifica Base de Datos?** [Sí­/No]
-*   **Â¿Enví­a Notificación externa?** [Sí­/No]
-*   **Â¿Costo financiero por uso?** [Costo aproximado en cómputo/llamadas a API]
+* **¿Modifica Base de Datos?** [Sí/No]
+* **¿Envía Notificación externa?** [Sí/No]
+* **¿Costo financiero por uso?** [Costo aproximado en cómputo/llamadas a API]
 
 ### Ejemplo de Uso para el Modelo
 ```json
 {
-  "name": "order_management_cancel_order",
-  "arguments": {
-    "orderId": "TX-9812",
-    "reason": "CUSTOMER_REQUEST"
-  }
+ "name": "order_management_cancel_order",
+ "arguments": {
+ "orderId": "TX-9812",
+ "reason": "CUSTOMER_REQUEST"
+ }
 }
 ```
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

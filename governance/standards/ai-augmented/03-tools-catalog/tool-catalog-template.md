@@ -18,25 +18,25 @@ Briefly explain **why** this tool exists and in what scenario the model must inv
 
 ### Deterministic Verification Strategy
 How is output integrity validated?
-- [ ] Unit test coverage (%)
-- [ ] JSON Schema validation
-- [ ] Pre-condition assertions (E.g., Can't cancel an already delivered order)
+- [] Unit test coverage (%)
+- [] JSON Schema validation
+- [] Pre-condition assertions (E.g., Can't cancel an already delivered order)
 
 ### Side Effects Table
-*   **Modifies Database?** [Yes/No]
-*   **Sends external Notification?** [Yes/No]
-*   **Financial cost per use?** [Approx cost in computing/API calls]
+* **Modifies Database?** [Yes/No]
+* **Sends external Notification?** [Yes/No]
+* **Financial cost per use?** [Approx cost in computing/API calls]
 
 ### Usage Example for Model
 ```json
 {
-  "name": "order_management_cancel_order",
-  "arguments": {
-    "orderId": "TX-9812",
-    "reason": "CUSTOMER_REQUEST"
-  }
+ "name": "order_management_cancel_order",
+ "arguments": {
+ "orderId": "TX-9812",
+ "reason": "CUSTOMER_REQUEST"
+ }
 }
 ```
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

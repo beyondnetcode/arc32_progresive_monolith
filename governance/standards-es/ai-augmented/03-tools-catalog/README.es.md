@@ -5,4 +5,4 @@
 * [tool-design-principles](./tool-design-principles.md)
 
 ---
-[? Volver al Nivel Superior](../README.es.md)
+[Volver al Nivel Superior](../README.es.md)

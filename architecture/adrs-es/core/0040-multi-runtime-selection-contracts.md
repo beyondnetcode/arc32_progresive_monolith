@@ -1,21 +1,21 @@
 # [ADR 0040](0040-multi-runtime-selection-contracts.md): Matriz de Selección de Multi-Runtime y Contratos Entre Runtimes
 
 ## 1. Estado
-**Estado**: Aprobado  
-**Fecha**: 2026-05-11  
-**Alcance**: Gobernanza Corporativa (Obligatorio)  
+**Estado**: Aprobado 
+**Fecha**: 2026-05-11 
+**Alcance**: Gobernanza Corporativa (Obligatorio) 
 
 ---
 
 ## 2. Contexto
-Para cumplir con la **Visión Corporativa Polí­glota**, nuestra organización autoriza míºltiples runtimes de ejecución. Sin embargo, sin una polí­tica de selección clara, los equipos pueden seleccionar tecnologí­a basándose en preferencias subjetivas en lugar de en la idoneidad del rendimiento. Además, la comunicación entre runtimes dispares requiere mecanismos explí­citos para garantizar la interoperabilidad sin filtrar detalles de implementación del runtime.
+Para cumplir con la **Visión Corporativa Políglota**, nuestra organización autoriza múltiples runtimes de ejecución. Sin embargo, sin una política de selección clara, los equipos pueden seleccionar tecnología basándose en preferencias subjetivas en lugar de en la idoneidad del rendimiento. Además, la comunicación entre runtimes dispares requiere mecanismos explícitos para garantizar la interoperabilidad sin filtrar detalles de implementación del runtime.
 
 ---
 
 ## 3. Decisión
 
 ### A. Matriz de Selección de Runtime
-Los equipos DEBEN seleccionar el runtime objetivo basándose exclusivamente en el perfil de carga de trabajo especí­fico:
+Los equipos DEBEN seleccionar el runtime objetivo basándose exclusivamente en el perfil de carga de trabajo específico:
 
 | Métrica | Runtime Objetivo | Razón Fundamental |
 | :--- | :--- | :--- |
@@ -24,21 +24,21 @@ Los equipos DEBEN seleccionar el runtime objetivo basándose exclusivamente en e
 | **Movilidad Operativa** | **Android (Kotlin)** | Acceso directo a periféricos de hardware (Scanners, GPS), modo offline estricto. |
 
 ### B. Regla de Comunicaciones Entre Runtimes
-Se prohí­be la dependencia directa del runtime. La comunicación DEBE atravesar lí­mites definidos explí­citamente:
-1.  **Interoperabilidad Sí­ncrona**: Utiliza obligatoriamente **gRPC (Protocol Buffers)** para transmisión segura de tipos y baja latencia entre Node.js y .NET.
-2.  **Interoperabilidad Así­ncrona**: Utiliza **RabbitMQ/Kafka** con validación de contrato ví­a JSON-Schema o Protobuf.
-3.  **Registro de Contratos**: Los contratos deben almacenarse y versionarse centralmente utilizando versionado semántico. Los cambios requieren verificación de compatibilidad hacia atrás con **Pact JS/Net**.
+Se prohíbe la dependencia directa del runtime. La comunicación DEBE atravesar límites definidos explícitamente:
+1. **Interoperabilidad Síncrona**: Utiliza obligatoriamente **gRPC (Protocol Buffers)** para transmisión segura de tipos y baja latencia entre Node.js y .NET.
+2. **Interoperabilidad Asíncrona**: Utiliza **RabbitMQ/Kafka** con validación de contrato vía JSON-Schema o Protobuf.
+3. **Registro de Contratos**: Los contratos deben almacenarse y versionarse centralmente utilizando versionado semántico. Los cambios requieren verificación de compatibilidad hacia atrás con **Pact JS/Net**.
 
 ---
 
 ## 4. Consecuencias
 
-### âœ… Positivas
-*   **Costo/Rendimiento Optimizado**: Cada carga de trabajo corre en el motor más eficiente para su perfil de memoria/CPU.
-*   **Agnóstico al Talento**: Habilita la contratación simultánea a través de pools de TypeScript, C# y Android.
+### Positivas
+* **Costo/Rendimiento Optimizado**: Cada carga de trabajo corre en el motor más eficiente para su perfil de memoria/CPU.
+* **Agnóstico al Talento**: Habilita la contratación simultánea a través de pools de TypeScript, C# y Android.
 
-### âš ï¸ Negativas
-*   **Sobrecarga de Gobernanza**: Requiere mantener plantillas estándar para 3 cadenas de herramientas distintas.
+### Negativas
+* **Sobrecarga de Gobernanza**: Requiere mantener plantillas estándar para 3 cadenas de herramientas distintas.
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

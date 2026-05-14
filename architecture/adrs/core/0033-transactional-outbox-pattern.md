@@ -12,10 +12,10 @@ Standard decoupled communication relies on updating a database and emitting an e
 ## Decision
 Formally adopt the **Transactional Outbox Pattern** to guarantee atomic state propagation between the relational store and async event channels:
 
-1.  **Outbox Table**: Every bounded context includes an `outbox_events` table inside its isolated PostgreSQL schema.
-2.  **Atomic Transaction**: The Application layer writes the Business Entity mutation AND saves the intended `DomainEvent` into the `outbox_events` table within the exact same local ACID SQL transaction (governed via the Unit of Work pattern).
-3.  **Relay Processor**: An external, guaranteed message relay (e.g., Debezium for CDC or a dedicated background polling worker) reads the `outbox_events` and pushes them into the Message Bus.
-4.  **Acknowledge & Prune**: Once the Message Bus acknowledges receipt (ACK), the event is flagged as `sent` in the outbox or archived.
+1. **Outbox Table**: Every bounded context includes an `outbox_events` table inside its isolated PostgreSQL schema.
+2. **Atomic Transaction**: The Application layer writes the Business Entity mutation AND saves the intended `DomainEvent` into the `outbox_events` table within the exact same local ACID SQL transaction (governed via the Unit of Work pattern).
+3. **Relay Processor**: An external, guaranteed message relay (e.g., Debezium for CDC or a dedicated background polling worker) reads the `outbox_events` and pushes them into the Message Bus.
+4. **Acknowledge & Prune**: Once the Message Bus acknowledges receipt (ACK), the event is flagged as `sent` in the outbox or archived.
 
 ## Consequences
 
@@ -32,4 +32,4 @@ Formally adopt the **Transactional Outbox Pattern** to guarantee atomic state pr
 - [ADR-0015: Injectable Event Bus](./0015-event-driven-decoupled-architecture.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

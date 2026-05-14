@@ -7,23 +7,23 @@ Aprobado
 2026-05-11
 
 ## Contexto
-A medida que la plataforma evoluciona de un Monolito Modular hacia servicios distribuidos, las transacciones ACID distribuidas tradicionales **2PC (Two-Phase Commit)** se vuelven imposibles o degradan gravemente el rendimiento. Para garantizar la consistencia eventual de los datos a través de los lí­mites de servicios desacoplados sin bloquear recursos, se requiere el **Patrón Saga**. Sin embargo, las Sagas introducen una sobrecarga de lógica de compensación que solo debe desplegarse cuando sea estrictamente necesario.
+A medida que la plataforma evoluciona de un Monolito Modular hacia servicios distribuidos, las transacciones ACID distribuidas tradicionales **2PC (Two-Phase Commit)** se vuelven imposibles o degradan gravemente el rendimiento. Para garantizar la consistencia eventual de los datos a través de los límites de servicios desacoplados sin bloquear recursos, se requiere el **Patrón Saga**. Sin embargo, las Sagas introducen una sobrecarga de lógica de compensación que solo debe desplegarse cuando sea estrictamente necesario.
 
 ## Decisión
 Adoptar la siguiente matriz corporativa para definir la estrategia de implementación para transacciones de larga duración o multi-servicio:
 
 ### 1. La Regla de Local Primero
-Antes de desplegar una Saga, verifica si el proceso de negocio puede ser contenido dentro de un **íšnico Contexto Delimitado**. Si es así­, IMPONER el uso del **Patrón Unit of Work** ([ADR-0019](0019-tactical-design-patterns-future-proofing.md)) para ejecutar una transacción ACID estándar localmente. Esto se prefiere el 100% de las veces.
+Antes de desplegar una Saga, verifica si el proceso de negocio puede ser contenido dentro de un **ínico Contexto Delimitado**. Si es así, IMPONER el uso del **Patrón Unit of Work** ([ADR-0019](0019-tactical-design-patterns-future-proofing.md)) para ejecutar una transacción ACID estándar localmente. Esto se prefiere el 100% de las veces.
 
 ### 2. Paso de Evolución: La Condición de Aplicabilidad de la Saga
-Mandar una implementación de Saga íšNICAMENTE cuando:
-1.  La transacción deba abarcar **dos o más bases de datos de microservicios separadas** (Particionadas fí­sicamente segíºn [ADR-0031](0031-schema-per-context-domain-event-catalog.md)).
-2.  No se requiera consistencia inmediata, pero la **Consistencia Eventual Garantizada** sea obligatoria.
-3.  Un fallo en el paso N requiera una **Acción de Rollback/Compensación** explí­cita en el paso N-1.
+Mandar una implementación de Saga íNICAMENTE cuando:
+1. La transacción deba abarcar **dos o más bases de datos de microservicios separadas** (Particionadas físicamente según [ADR-0031](0031-schema-per-context-domain-event-catalog.md)).
+2. No se requiera consistencia inmediata, pero la **Consistencia Eventual Garantizada** sea obligatoria.
+3. Un fallo en el paso N requiera una **Acción de Rollback/Compensación** explícita en el paso N-1.
 
 ### 3. Gobernanza del Estilo de Implementación
-*   **Coreografí­a (Saga Dirigida por Eventos)**: Recomendación estándar para cadenas cortas (2 a 3 pasos). Los servicios escuchan el Bus de Eventos ([ADR-0015](0015-event-driven-architecture-intra-domain.md)) y reaccionan directamente a los eventos de finalización/fallo. Sin controlador central.
-*   **Orquestación (Saga Dirigida por Comandos)**: Recomendación obligatoria para flujos de trabajo complejos (> 3 pasos). Requiere un componente Orquestador de Saga dedicado que gestione la ejecución del flujo de trabajo centralizado y emita comandos de compensación explí­citamente.
+* **Coreografía (Saga Dirigida por Eventos)**: Recomendación estándar para cadenas cortas (2 a 3 pasos). Los servicios escuchan el Bus de Eventos ([ADR-0015](0015-event-driven-architecture-intra-domain.md)) y reaccionan directamente a los eventos de finalización/fallo. Sin controlador central.
+* **Orquestación (Saga Dirigida por Comandos)**: Recomendación obligatoria para flujos de trabajo complejos (> 3 pasos). Requiere un componente Orquestador de Saga dedicado que gestione la ejecución del flujo de trabajo centralizado y emita comandos de compensación explícitamente.
 
 ### 4. Mecánicas Obligatorias
 Cualquier implementación de Saga DEBE implementar:
@@ -46,4 +46,4 @@ Cualquier implementación de Saga DEBE implementar:
 - [ADR-0033: Patrón Transactional Outbox](../adrs/core/0033-transactional-outbox-pattern.md)
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

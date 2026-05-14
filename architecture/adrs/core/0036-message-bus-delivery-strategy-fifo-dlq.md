@@ -13,46 +13,46 @@ Event-driven asynchronous architectures require diverse communication guarantees
 Adopt the following **Event Delivery Decision Framework** mapping business context to infrastructure queue behaviors:
 
 ### 1. Mode: "Fire & Forget" (Standard Fan-out / Topic)
-*   **Definition**: Asynchronous processing with no guarantee of order, maximum horizontal consumer parallelism.
-*   **Inflection Points / When to Use**:
-    *   High-volume metrics, tracing, and logs.
-    *   Secondary side-effects that do not impact immediate core business flow (e.g., sending email notifications, warm-cache invalidation).
-    *   Data synchronization where newer messages natively contain total state overrides.
-*   **Trade-off**: Maximum performance. Potential out-of-order execution.
+* **Definition**: Asynchronous processing with no guarantee of order, maximum horizontal consumer parallelism.
+* **Inflection Points / When to Use**:
+ * High-volume metrics, tracing, and logs.
+ * Secondary side-effects that do not impact immediate core business flow (e.g., sending email notifications, warm-cache invalidation).
+ * Data synchronization where newer messages natively contain total state overrides.
+* **Trade-off**: Maximum performance. Potential out-of-order execution.
 
 ### 2. Mode: "Strict FIFO Ordering" (Guaranteed Sequence)
-*   **Definition**: Processing strictly in the order received, tied to a partition key (e.g., `AggregateId`).
-*   **Inflection Points / When to Use**:
-    *   **Transactional Accounting**: Ledger entry sequences (debit must complete before balance check logic).
-    *   **Inventory Locking**: Consecutive stock decrement/increment operations.
-    *   **State Machine Transitions**: Sequential multi-step business workflows where Step 3 crashes if Step 2 hasn't committed.
-*   **Implementation Guardrail**: FIFO queues restrict concurrency to a single consumer per shard/partition. Used surgically only where data corruption would occur without it.
+* **Definition**: Processing strictly in the order received, tied to a partition key (e.g., `AggregateId`).
+* **Inflection Points / When to Use**:
+ * **Transactional Accounting**: Ledger entry sequences (debit must complete before balance check logic).
+ * **Inventory Locking**: Consecutive stock decrement/increment operations.
+ * **State Machine Transitions**: Sequential multi-step business workflows where Step 3 crashes if Step 2 hasn't committed.
+* **Implementation Guardrail**: FIFO queues restrict concurrency to a single consumer per shard/partition. Used surgically only where data corruption would occur without it.
 
 ### 3. Global Policy: "Dead Letter Queues (DLQ)" & Poison Pill Defense
-*   **Policy**: MANDATORY for every business-domain queue.
-*   **Inflection Points / Configuration**:
-    *   All consumer errors trigger a local **Retry Mechanism** with exponential backoff (Maximum 3 Attempts).
-    *   Upon 4th consecutive failure (Poison Pill), the message MUST be auto-rerouted to a `.{queue_name}.dlq` holding container.
-    *   Prevents a single corrupt JSON/Buggy logic point from blocking the entire main pipeline infinitely.
-*   **Required Action**: Establish automated alerts when DLQ size > 0. Support personnel must inspect and either Re-Drive (Retry) or Archive corrupted packets.
+* **Policy**: MANDATORY for every business-domain queue.
+* **Inflection Points / Configuration**:
+ * All consumer errors trigger a local **Retry Mechanism** with exponential backoff (Maximum 3 Attempts).
+ * Upon 4th consecutive failure (Poison Pill), the message MUST be auto-rerouted to a `.{queue_name}.dlq` holding container.
+ * Prevents a single corrupt JSON/Buggy logic point from blocking the entire main pipeline infinitely.
+* **Required Action**: Establish automated alerts when DLQ size > 0. Support personnel must inspect and either Re-Drive (Retry) or Archive corrupted packets.
 
 ### 4. Mode: "Delayed / Scheduled Delivery"
-*   **Definition**: Messages pushed to the broker with a mandatory delay Header, rendering them invisible to consumers until the designated time.
-*   **Inflection Points**:
-    *   **Business Timeouts**: "If Order is not paid in 30 minutes, trigger cancellation check".
-    *   **Throttled Reminders**: Pushing a notification email intended for tomorrow at 8:00 AM without using system cronjobs.
-*   **Mechanism**: Relies on Broker-native delayed exchange plugins or TTL + DLX routing loops.
+* **Definition**: Messages pushed to the broker with a mandatory delay Header, rendering them invisible to consumers until the designated time.
+* **Inflection Points**:
+ * **Business Timeouts**: "If Order is not paid in 30 minutes, trigger cancellation check".
+ * **Throttled Reminders**: Pushing a notification email intended for tomorrow at 8:00 AM without using system cronjobs.
+* **Mechanism**: Relies on Broker-native delayed exchange plugins or TTL + DLX routing loops.
 
 ### 5. Performance Tiering: "Priority Queues"
-*   **Definition**: Numerical weighting of messages allowing high-priority packets to bypass non-critical packets sitting in the queue.
-*   **Inflection Points**:
-    *   **Customer Tier SLAs**: Fast-tracking VIP user requests during high traffic volume bursts.
-    *   **Emergency Signals**: Critical administrative revocations bypassing standard audit telemetry flow.
-*   **Rule**: Do not over-use (max 3-5 levels), as infinite low-level starvation can occur.
+* **Definition**: Numerical weighting of messages allowing high-priority packets to bypass non-critical packets sitting in the queue.
+* **Inflection Points**:
+ * **Customer Tier SLAs**: Fast-tracking VIP user requests during high traffic volume bursts.
+ * **Emergency Signals**: Critical administrative revocations bypassing standard audit telemetry flow.
+* **Rule**: Do not over-use (max 3-5 levels), as infinite low-level starvation can occur.
 
 ### 6. Architecture Rule: "Idempotent Consumer Mandate"
-*   **Rule**: ALL message consumption MUST assume "At-Least-Once Delivery" semantics.
-*   **Requirement**: The Consumer application must record processed `MessageId` keys (in Redis or DB) and check for existence BEFORE proceeding with internal logic. If `MessageId` was already processed, it MUST be instantly acknowledged and discarded as a duplicate WITHOUT side-effects.
+* **Rule**: ALL message consumption MUST assume "At-Least-Once Delivery" semantics.
+* **Requirement**: The Consumer application must record processed `MessageId` keys (in Redis or DB) and check for existence BEFORE proceeding with internal logic. If `MessageId` was already processed, it MUST be instantly acknowledged and discarded as a duplicate WITHOUT side-effects.
 
 ## Consequences
 
@@ -71,4 +71,4 @@ Adopt the following **Event Delivery Decision Framework** mapping business conte
 - [ADR-0033: Transactional Outbox Pattern](../adrs/core/0033-transactional-outbox-pattern.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

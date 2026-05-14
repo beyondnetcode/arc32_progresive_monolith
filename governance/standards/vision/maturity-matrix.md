@@ -19,11 +19,11 @@ This assessment document leverages a hybrid framework combining the **TOGAF Arch
 
 We evaluate the Reference Skeleton across 5 standard levels of maturity:
 
-*   **Level 1: Initial (Ad-Hoc)** - No formal architecture. IT processes are chaotic, undocumented, and reactive.
-*   **Level 2: Under Development** - Basic architecture process is in place. Some standards exist but are not consistently enforced.
-*   **Level 3: Defined** - Architecture is well-defined, documented (C4 Model, ADRs), and integrated into the SDLC.
-*   **Level 4: Managed** - Architecture is quantitatively measured (CodeQL, Sonar, Coverage) and governed automatically.
-*   **Level 5: Optimizing** - Continuous architectural improvement (Dapr evolution, progressive decoupling, auto-scaling).
+* **Level 1: Initial (Ad-Hoc)** - No formal architecture. IT processes are chaotic, undocumented, and reactive.
+* **Level 2: Under Development** - Basic architecture process is in place. Some standards exist but are not consistently enforced.
+* **Level 3: Defined** - Architecture is well-defined, documented (C4 Model, ADRs), and integrated into the SDLC.
+* **Level 4: Managed** - Architecture is quantitatively measured (CodeQL, Sonar, Coverage) and governed automatically.
+* **Level 5: Optimizing** - Continuous architectural improvement (Dapr evolution, progressive decoupling, auto-scaling).
 
 ---
 
@@ -31,48 +31,48 @@ We evaluate the Reference Skeleton across 5 standard levels of maturity:
 
 We evaluate the Reference Skeleton architecture against the 5 critical pillars of the Well-Architected Framework.
 
-### ðŸ›¡ï¸ Pillar 1: Security & Compliance
+### ¡ Pillar 1: Security & Compliance
 **Current Maturity Level: 4 (Managed)**
-*   **Evidence**: 
-    *   Zero-Cost Security Pipeline implemented via CodeQL ([ADR-0005](../../../architecture/adrs/core/0005-ci-cd-quality-codeql.md)).
-    *   Strict Dependency Pinning prevents Supply Chain attacks ([ADR-0009](../../../architecture/adrs/core/0009-strict-dependency-pinning-vulnerability-management.md)).
-    *   Data Isolation enforced at the DB level using Row-Level Security (RLS) for multi-tenancy ([ADR-0010](../../../architecture/adrs/core/0010-multi-tenancy-architecture-strategy.md)).
-    *   Immutable Audit Trails via CDC ([ADR-0016](../../../architecture/adrs/core/0016-immutable-business-audit-trail.md)).
-*   **Path to Level 5**: Implement automated penetration testing in CI and dynamic secrets rotation via HashiCorp Vault.
+* **Evidence**: 
+ * Zero-Cost Security Pipeline implemented via CodeQL ([ADR-0005](../../../architecture/adrs/core/0005-ci-cd-quality-codeql.md)).
+ * Strict Dependency Pinning prevents Supply Chain attacks ([ADR-0009](../../../architecture/adrs/core/0009-strict-dependency-pinning-vulnerability-management.md)).
+ * Data Isolation enforced at the DB level using Row-Level Security (RLS) for multi-tenancy ([ADR-0010](../../../architecture/adrs/core/0010-multi-tenancy-architecture-strategy.md)).
+ * Immutable Audit Trails via CDC ([ADR-0016](../../../architecture/adrs/core/0016-immutable-business-audit-trail.md)).
+* **Path to Level 5**: Implement automated penetration testing in CI and dynamic secrets rotation via HashiCorp Vault.
 
-### âš¡ Pillar 2: Performance Efficiency
+### Jump to: Pillar 2: Performance Efficiency
 **Current Maturity Level: 4 (Managed)**
-*   **Evidence**: 
-    *   High-Performance Auth Graph compilation under <5ms using Redis ([ADR-0021](../../../architecture/adrs/nodejs/0021-high-performance-auth-and-graph-compilation.md)).
-    *   Dual-Protocol Strategy (REST for public, gRPC for internal speed) ([ADR-0027](../../../architecture/adrs/nodejs/0027-dual-protocol-rest-grpc-api-gateway.md)).
-    *   Frontend optimized payloads via BFF Gateway ([ADR-0008](../../../architecture/adrs/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md)).
-*   **Path to Level 5**: Implement serverless auto-scaling and predictive caching algorithms.
+* **Evidence**: 
+ * High-Performance Auth Graph compilation under <5ms using Redis ([ADR-0021](../../../architecture/adrs/nodejs/0021-high-performance-auth-and-graph-compilation.md)).
+ * Dual-Protocol Strategy (REST for public, gRPC for internal speed) ([ADR-0027](../../../architecture/adrs/nodejs/0027-dual-protocol-rest-grpc-api-gateway.md)).
+ * Frontend optimized payloads via BFF Gateway ([ADR-0008](../../../architecture/adrs/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md)).
+* **Path to Level 5**: Implement serverless auto-scaling and predictive caching algorithms.
 
-### ðŸ”„ Pillar 3: Reliability & Resiliency
+### Pillar 3: Reliability & Resiliency
 **Current Maturity Level: 3 (Defined) -> Moving to 4**
-*   **Evidence**: 
-    *   Frontend Offline Resilience via React Query ([ADR-0004](../../../architecture/adrs/nodejs/0004-frontend-offline-resilience.md)).
-    *   Fault Tolerance via Circuit Breakers (`opossum`) and Retries ([ADR-0011](../../../architecture/adrs/core/0011-fault-tolerance-resiliency-patterns.md)).
-    *   Cloud Infrastructure Multi-Region DR limits proposed ([ADR-0013](../../../architecture/adrs/core/0013-cloud-infrastructure-topology-dr.md)).
-*   **Path to Level 5**: Execute regular Chaos Engineering drills (Chaos Monkey) and fully active-active multi-region deployment.
+* **Evidence**: 
+ * Frontend Offline Resilience via React Query ([ADR-0004](../../../architecture/adrs/nodejs/0004-frontend-offline-resilience.md)).
+ * Fault Tolerance via Circuit Breakers (`opossum`) and Retries ([ADR-0011](../../../architecture/adrs/core/0011-fault-tolerance-resiliency-patterns.md)).
+ * Cloud Infrastructure Multi-Region DR limits proposed ([ADR-0013](../../../architecture/adrs/core/0013-cloud-infrastructure-topology-dr.md)).
+* **Path to Level 5**: Execute regular Chaos Engineering drills (Chaos Monkey) and fully active-active multi-region deployment.
 
-### ðŸ› ï¸ Pillar 4: Operational Excellence
+### Pillar 4: Operational Excellence
 **Current Maturity Level: 4 (Managed)**
-*   **Evidence**: 
-    *   Monorepo Orchestration via Nx ensures deterministic builds ([ADR-0001](../../../architecture/adrs/core/0001-monorepo-orchestration-nx.md)).
-    *   Comprehensive Telemetry using LGTM and OpenTelemetry ([ADR-0007](../../../architecture/adrs/nodejs/0007-observability-telemetry-loki-opentelemetry.md)).
-    *   Feature Flagging allows decoupling deployment from release ([ADR-0017](../../../architecture/adrs/core/0017-feature-flagging-strategy.md)).
-    *   Quality Gates enforce >70% test coverage strictly via CI ([ADR-0018](../../../architecture/adrs/core/0018-testing-pyramid-quality-gates.md)).
-*   **Path to Level 5**: Achieve fully autonomous, zero-downtime Blue/Green automated deployments with AI-driven anomaly detection in logs.
+* **Evidence**: 
+ * Monorepo Orchestration via Nx ensures deterministic builds ([ADR-0001](../../../architecture/adrs/core/0001-monorepo-orchestration-nx.md)).
+ * Comprehensive Telemetry using LGTM and OpenTelemetry ([ADR-0007](../../../architecture/adrs/nodejs/0007-observability-telemetry-loki-opentelemetry.md)).
+ * Feature Flagging allows decoupling deployment from release ([ADR-0017](../../../architecture/adrs/core/0017-feature-flagging-strategy.md)).
+ * Quality Gates enforce >70% test coverage strictly via CI ([ADR-0018](../../../architecture/adrs/core/0018-testing-pyramid-quality-gates.md)).
+* **Path to Level 5**: Achieve fully autonomous, zero-downtime Blue/Green automated deployments with AI-driven anomaly detection in logs.
 
-### ðŸ—ï¸ Pillar 5: Maintainability & Extensibility (Clean Architecture)
+### Pillar 5: Maintainability & Extensibility (Clean Architecture)
 **Current Maturity Level: 4 (Managed)**
-*   **Evidence**: 
-    *   Strict Hexagonal Boundaries decoupling core from infra ([ADR-0002](../../../architecture/adrs/nodejs/0002-clean-architecture-nestjs.md)).
-    *   Tactical Design Patterns (Result Monad) future-proofing the core ([ADR-0019](../../../architecture/adrs/core/0019-tactical-design-patterns-future-proofing.md)).
-    *   Event-Driven Architecture decoupling domain modules ([ADR-0015](../../../architecture/adrs/core/0015-event-driven-architecture-intra-domain.md)).
-    *   Vendor Lock-In mitigation strategies clearly defined (Feature Flags, IdPs).
-*   **Path to Level 5**: Seamless transition from Modular Monolith to Dapr Microservices with zero domain code changes ([ADR-0006](../../../architecture/adrs/core/0006-future-microservices-transition-dapr.md)).
+* **Evidence**: 
+ * Strict Hexagonal Boundaries decoupling core from infra ([ADR-0002](../../../architecture/adrs/nodejs/0002-clean-architecture-nestjs.md)).
+ * Tactical Design Patterns (Result Monad) future-proofing the core ([ADR-0019](../../../architecture/adrs/core/0019-tactical-design-patterns-future-proofing.md)).
+ * Event-Driven Architecture decoupling domain modules ([ADR-0015](../../../architecture/adrs/core/0015-event-driven-architecture-intra-domain.md)).
+ * Vendor Lock-In mitigation strategies clearly defined (Feature Flags, IdPs).
+* **Path to Level 5**: Seamless transition from Modular Monolith to Dapr Microservices with zero domain code changes ([ADR-0006](../../../architecture/adrs/core/0006-future-microservices-transition-dapr.md)).
 
 ---
 
@@ -93,8 +93,8 @@ To reach **Level 5 (Optimizing)**, the engineering organization must focus on Ch
 Para productos que adoptan la sección AI-Augmented, existe una matriz de madurez
 complementaria con 3 niveles: AI-Assisted, AI-Integrated, AI-Orchestrated.
 
-â†’ [Ver matriz de madurez AI](../ai-augmented/07-maturity-model/ai-maturity-matrix.md)
+-> [Ver matriz de madurez AI](../ai-augmented/07-maturity-model/ai-maturity-matrix.md)
 
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

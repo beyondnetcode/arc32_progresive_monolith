@@ -1,4 +1,4 @@
-# ðŸ·ï¸ Automated Versioning & Continuous Audit Strategy (BMAD-METHOD)
+# · Automated Versioning & Continuous Audit Strategy (BMAD-METHOD)
 
 To maintain a strict, traceable audit log synchronized with GitHub, the Spec-driven AI strategy [BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) does not rely on manual document drafting. Instead, we leverage the ecosystem we have already built (**Conventional Commits**) combined with the native power of our orchestrator: **Nx Release**.
 
@@ -13,9 +13,9 @@ Nx includes a native versioning suite for monorepos that executes the following 
 
 1. **Automatic Versioning**: Nx analyzes all commits since the last deployment and calculates the new SemVer (Semantic Versioning) for the API and Web applications.
 2. **`CHANGELOG.md` Generation**: Nx creates (or updates) a physical `CHANGELOG.md` file in the project's root. This file serves as your **Official Audit Document**, detailing:
-   - Newly added features.
-   - Resolved bug fixes.
-   - Hypertext links pointing directly to the commit hashes on GitHub for absolute traceability.
+ - Newly added features.
+ - Resolved bug fixes.
+ - Hypertext links pointing directly to the commit hashes on GitHub for absolute traceability.
 3. **Git Tagging**: Creates a tag in Git (e.g., `v1.1.0`) pointing exactly to the state of the codebase at that specific moment.
 4. **GitHub Releases Synchronization**: When configured with GitHub Actions, this `CHANGELOG` is automatically published under the "Releases" tab of your cloud repository.
 
@@ -34,4 +34,4 @@ To activate this, we only need to:
 2. Test generating our first `v1.0.0` version and our first foundational `CHANGELOG.md`.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

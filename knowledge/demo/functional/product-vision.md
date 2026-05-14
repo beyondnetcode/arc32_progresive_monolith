@@ -1,4 +1,4 @@
-# ðŸŽ¯ Product Vision ”” Enterprise SaaS Reference Architecture Skeleton
+# Product Vision - Enterprise SaaS Reference Architecture Skeleton
 
 ## 1. Executive Summary
 
@@ -9,7 +9,7 @@ The **ARC32 Reference Skeleton** is a developer-facing **instructional architect
 > | Layer | What it IS | Why it matters |
 > | :--- | :--- | :--- |
 > | **The Skeleton** | An architectural instructional framework | Teaches enterprise patterns (Hexagonal, BFF, SaaS) with zero business domain noise |
-> | **The Demo App** | A fully-featured SaaS multi-tenant To-Do system | Proves the skeleton is not theoretical ”” every pattern is physically implemented and runnable |
+> | **The Demo App** | A fully-featured SaaS multi-tenant To-Do system | Proves the skeleton is not theoretical - every pattern is physically implemented and runnable |
 
 By choosing the universally-understood "To-Do" domain, all cognitive load is directed toward **mastering the architecture**, not learning the business rules. A developer who studies this repository will know exactly how to build any enterprise-grade SaaS system on Node.js.
 
@@ -24,11 +24,11 @@ By choosing the universally-understood "To-Do" domain, all cognitive load is dir
 
 ### B. Enterprise SaaS Demo Application
 - The demo application is **not** a toy. It implements the full enterprise SaaS capability set:
-  - **Multi-Tenancy** via PostgreSQL Row-Level Security (RLS).
-  - **Two-Tier API Gateway** (Kong Edge + NestJS BFF) per [ADR-0030](../../standards/02-adrs/core/0030-api-gateway-kong-vs-nestjs.md), [ADR-0008](../../standards/02-adrs/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md).
-  - **Injectable Event Bus** (In-Memory â†’ RabbitMQ) per [ADR-0015](../../standards/02-adrs/core/0015-event-driven-architecture-intra-domain.md).
-  - **Immutable Audit Trail** per [ADR-0016](../../standards/02-adrs/core/0016-immutable-business-audit-trail.md).
-  - **Distributed Caching** per [ADR-0014](../../standards/02-adrs/core/0014-distributed-caching-strategy-redis.md).
+ - **Multi-Tenancy** via PostgreSQL Row-Level Security (RLS).
+ - **Two-Tier API Gateway** (Kong Edge + NestJS BFF) per [ADR-0030](../../standards/02-adrs/core/0030-api-gateway-kong-vs-nestjs.md), [ADR-0008](../../standards/02-adrs/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md).
+ - **Injectable Event Bus** (In-Memory -> RabbitMQ) per [ADR-0015](../../standards/02-adrs/core/0015-event-driven-architecture-intra-domain.md).
+ - **Immutable Audit Trail** per [ADR-0016](../../standards/02-adrs/core/0016-immutable-business-audit-trail.md).
+ - **Distributed Caching** per [ADR-0014](../../standards/02-adrs/core/0014-distributed-caching-strategy-redis.md).
 - Any of these capabilities can be replicated as-is into a production system simply by replacing the `Task` domain with the target business domain.
 
 ### C. Observability & Resilience by Default
@@ -37,9 +37,9 @@ By choosing the universally-understood "To-Do" domain, all cognitive load is dir
 
 ### D. Testing Pyramid Pre-configured
 - The skeleton eliminates setup paralysis. It ships with 100% pre-configured setups for:
-  - **Unit Testing** ”” Pure domain logic (zero infrastructure mocks).
-  - **Integration Testing** ”” Adapter-level wiring with real Postgres/Redis.
-  - **Contract Testing** ”” Pact consumer/provider contracts.
+ - **Unit Testing** - Pure domain logic (zero infrastructure mocks).
+ - **Integration Testing** - Adapter-level wiring with real Postgres/Redis.
+ - **Contract Testing** - Pact consumer/provider contracts.
 - Per [ADR-0018](../../standards/02-adrs/core/0018-testing-pyramid-quality-gates.md), a 70% coverage gate is enforced in CI.
 
 ---
@@ -48,7 +48,7 @@ By choosing the universally-understood "To-Do" domain, all cognitive load is dir
 
 By keeping the Domain Core completely pure and decoupled from external frameworks, this repository proves how a monolithic application can remain clean enough to evolve gracefully into independent microservices without a rewrite. It embodies the concept of a **Progressive Monolith** ([ADR-0006](../../standards/02-adrs/core/0006-future-microservices-transition-dapr.md)).
 
-The 30 approved ADRs are not aspirational ”” they are **implemented, tested, and running** in the demo application. They form the reusable institutional knowledge base that any engineering team can adopt as their own architectural baseline.
+The 30 approved ADRs are not aspirational - they are **implemented, tested, and running** in the demo application. They form the reusable institutional knowledge base that any engineering team can adopt as their own architectural baseline.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

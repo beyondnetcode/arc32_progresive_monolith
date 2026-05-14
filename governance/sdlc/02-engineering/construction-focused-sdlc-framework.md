@@ -1,30 +1,30 @@
-# âš™ï¸ Construction-Focused SDLC Framework
+# Construction-Focused SDLC Framework
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../../sdlc-es/02-engineering/construction-focused-sdlc-framework.md)
+> **Bilingual Navigation:** [Versión en Español](../../sdlc-es/02-engineering/construction-focused-sdlc-framework.md)
 
 This normative standard solidifies the governance controlling Software Development Life Cycle progression, establishing hardened phase exits and specialized gating mechanisms for the construction layer.
 
 ---
 
-## ðŸ“– 1. Core Glossary (Key Terminology)
+## 1. Core Glossary (Key Terminology)
 
-*   **Milestone:** A discrete target event marking the absolute end of a lifecycle phase.
-*   **Artifact:** An immutable physical document, diagram, or system definition resulting from phase activities.
-*   **Definition of Done (DoD):** The non-negotiable checklist that any deliverable MUST satisfy before it can legally transition to the subsequent phase.
-*   **Gate Review:** Formal verification step assessing quality metrics before enabling deployment progression.
+* **Milestone:** A discrete target event marking the absolute end of a lifecycle phase.
+* **Artifact:** An immutable physical document, diagram, or system definition resulting from phase activities.
+* **Definition of Done (DoD):** The non-negotiable checklist that any deliverable MUST satisfy before it can legally transition to the subsequent phase.
+* **Gate Review:** Formal verification step assessing quality metrics before enabling deployment progression.
 
 ---
 
-## ðŸ—ºï¸ 2. High-Level SDLC Lifecycle (Enterprise Matrix)
+## 2. High-Level SDLC Lifecycle (Enterprise Matrix)
 
 ```mermaid
 timeline
-    title Enterprise SDLC Lifecycle Timeline
-    Phase 1: Conception : PRD Framing : Scope Frozen
-    Phase 2: Design : Architecture Blueprint : Design Baseline
-    Phase 3: Construction : Source Code Composition : Build Successful
-    Phase 4: Validation : QA Regression / UAT : RC Signed
-    Phase 5: Delivery : Target Environment Deployment : Production Live
+ title Enterprise SDLC Lifecycle Timeline
+ Phase 1: Conception : PRD Framing : Scope Frozen
+ Phase 2: Design : Architecture Blueprint : Design Baseline
+ Phase 3: Construction : Source Code Composition : Build Successful
+ Phase 4: Validation : QA Regression / UAT : RC Signed
+ Phase 5: Delivery : Target Environment Deployment : Production Live
 ```
 
 | Phase Name | Key Activities | Primary Artifacts | Exit Gate (Milestone) |
@@ -37,32 +37,32 @@ timeline
 
 ---
 
-## ðŸ—ï¸ 3. Deep-Dive: Construction Stage Governance
+## 3. Deep-Dive: Construction Stage Governance
 
 The construction stage is the absolute engineering heartbeat. To avoid structural regression, it mandates compliance with continuous feedback sub-loops.
 
-### ðŸ”„ 3.1 Construction Sub-Phases (Inner Loop)
+### 3.1 Construction Sub-Phases (Inner Loop)
 
 ```mermaid
 graph LR
-    A[1. Env Prep] --> B[2. Domain Code]
-    B --> C[3. Unit Tests]
-    C --> D[4. Integration]
-    D --> E[5. CI Scan]
-    E --> F[6. Peer Review]
-    F --> G((Definition of Done))
-    
-    style G fill:#28a745,color:#fff
+ A[1. Env Prep] --> B[2. Domain Code]
+ B --> C[3. Unit Tests]
+ C --> D[4. Integration]
+ D --> E[5. CI Scan]
+ E --> F[6. Peer Review]
+ F --> G((Definition of Done))
+ 
+ style G fill:#28a745,color:#fff
 ```
 
-1.  **Environment Preparation:** Establishing branch strategies (GitFlow/Trunk), securing local environment secrets, and finalizing Mock API servers.
-2.  **Domain Composition:** Encoding pure business entities and enforcing strict validation before connecting infrastructure.
-3.  **Automated Test Unit Harvesting:** Parallel creation of isolated test assertions ensuring core logic behaves natively as designed.
-4.  **Integration Convergence:** Merging infrastructural persistence adapters, binding to database schemas, and running wired subsystem evaluations.
-5.  **Continuous Integration (CI) Triggering:** Automated push execution validating linting, code style enforcement, and regression sanity checks.
-6.  **Peer Code Review:** Strict human evaluation cross-checking for security leaks, antipattern adoption, and adherence to architecture guidelines.
+1. **Environment Preparation:** Establishing branch strategies (GitFlow/Trunk), securing local environment secrets, and finalizing Mock API servers.
+2. **Domain Composition:** Encoding pure business entities and enforcing strict validation before connecting infrastructure.
+3. **Automated Test Unit Harvesting:** Parallel creation of isolated test assertions ensuring core logic behaves natively as designed.
+4. **Integration Convergence:** Merging infrastructural persistence adapters, binding to database schemas, and running wired subsystem evaluations.
+5. **Continuous Integration (CI) Triggering:** Automated push execution validating linting, code style enforcement, and regression sanity checks.
+6. **Peer Code Review:** Strict human evaluation cross-checking for security leaks, antipattern adoption, and adherence to architecture guidelines.
 
-### ðŸ“Š 3.2 Quality Threshold Metrics
+### 3.2 Quality Threshold Metrics
 
 Code progression enforces mathematical gating to halt unstable shipping cycles:
 
@@ -75,16 +75,16 @@ Code progression enforces mathematical gating to halt unstable shipping cycles:
 
 ---
 
-## âœ… 4. Engineering Definition of Done (DoD) Checklist
+## 4. Engineering Definition of Done (DoD) Checklist
 
 A construction iteration is ONLY considered legitimately finalized when all markers obtain validation:
 
-*   [ ] **Automated Coverage:** Code has been instrumented with tests and passes threshold validation locally and in CI.
-*   [ ] **Stateless Analysis:** Code passed ESLint/Prettier and SonarQube static scanning without critical smell exceptions.
-*   [ ] **Review Sign-off:** Minimum one (1) approval received from a Lead or designated Peer developer.
-*   [ ] **Internal Documentation:** Explicit functions include inline annotation docs, and corresponding external ADR or guides are updated.
-*   [ ] **Observability Native:** New handlers include basic telemetry counters and structured logging outputs.
-*   [ ] **Clean Build:** The binary container compiles successfully without intermittent environment warnings.
+* [] **Automated Coverage:** Code has been instrumented with tests and passes threshold validation locally and in CI.
+* [] **Stateless Analysis:** Code passed ESLint/Prettier and SonarQube static scanning without critical smell exceptions.
+* [] **Review Sign-off:** Minimum one (1) approval received from a Lead or designated Peer developer.
+* [] **Internal Documentation:** Explicit functions include inline annotation docs, and corresponding external ADR or guides are updated.
+* [] **Observability Native:** New handlers include basic telemetry counters and structured logging outputs.
+* [] **Clean Build:** The binary container compiles successfully without intermittent environment warnings.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

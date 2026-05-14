@@ -1,4 +1,4 @@
-# ⚖️ Global Rules (Context-Optimized)
+# Global Rules (Context-Optimized)
 
 Binding directives. Zero fluff.
 

@@ -30,4 +30,4 @@ Subsume feature toggle invocation under classic Hexagonal Port principles:
 - [ADR-0002: Hexagonal Architecture](../adrs/nodejs/0002-clean-architecture-nestjs.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

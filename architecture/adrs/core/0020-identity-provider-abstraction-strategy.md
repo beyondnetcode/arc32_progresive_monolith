@@ -14,9 +14,9 @@ Separate credential verification from the business layer via polymorphic **Strat
 
 1. **Zero Lock-in**: The core core trusts a single validation Port logic. It cares only if credentials resolve to a verified user vector.
 2. **Dynamic Execution**: The resolver activates correct concrete Adapters at runtime (via `Tenant` configuration flags) feeding off of:
-    - Local Store (Bcrypt storage)
-    - Enterprise Identity Providers (Cognito, Azure AD, Okta, Zitadel, Auth0)
-    - General federated endpoints (OIDC/SAML)
+ - Local Store (Bcrypt storage)
+ - Enterprise Identity Providers (Cognito, Azure AD, Okta, Zitadel, Auth0)
+ - General federated endpoints (OIDC/SAML)
 3. **Progressive Security**: Wire current protocols supporting Modern Standards (Passkeys, MFA, WebAuthn) natively into the abstracted provider pool.
 
 ## Consequences
@@ -33,4 +33,4 @@ Separate credential verification from the business layer via polymorphic **Strat
 - [ADR-0002: Clean Hexagonal Architecture](../adrs/nodejs/0002-clean-architecture-nestjs.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

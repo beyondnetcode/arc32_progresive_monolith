@@ -31,4 +31,4 @@ Separate Identity Validation logic entirely from output composition capabilities
 - [ADR-0020: IdP Strategy](../adrs/core/0020-identity-provider-abstraction-strategy.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

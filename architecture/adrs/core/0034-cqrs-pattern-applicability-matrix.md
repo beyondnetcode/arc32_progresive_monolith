@@ -13,19 +13,19 @@ Implementing **Command Query Responsibility Segregation (CQRS)** introduces arch
 Adopt the following **Evaluation Matrix** to determine if a specific Use Case requires Full CQRS enforcement:
 
 ### Tier 1: Standard Path (No CQRS Required)
-*   **Criteria**: Basic CRUD operations, simple state changes, low to medium concurrent access.
-*   **Approach**: Single model logic using Hexagonal Repository implementation reading and writing to the same Domain Entity.
+* **Criteria**: Basic CRUD operations, simple state changes, low to medium concurrent access.
+* **Approach**: Single model logic using Hexagonal Repository implementation reading and writing to the same Domain Entity.
 
 ### Tier 2: Read-Model Aggregation (BFF level CQRS)
-*   **Criteria**: Domain models must be combined, joined, or refiltered for specialized UI Views.
-*   **Approach**: The BFF creates specialized "Read-Only Projections" of data using optimized SQL, while keeping commands directed to the core repository.
+* **Criteria**: Domain models must be combined, joined, or refiltered for specialized UI Views.
+* **Approach**: The BFF creates specialized "Read-Only Projections" of data using optimized SQL, while keeping commands directed to the core repository.
 
 ### Tier 3: Full CQRS Enforcement (Mandatory)
 Mandate complete physical code/logic separation ONLY if at least **TWO** of the following conditions are met:
-1.  **Volume Asymmetry**: The ratio of Read queries to Write updates exceeds **100:1**.
-2.  **High Contention**: Heavy analytical reads disrupt transaction performance and lock rows, requiring a separate "Read-Replica Projection".
-3.  **Complex View Projections**: Multiple distinct views of the same data exist that cannot be mathematically derived from the core Domain Aggregate without heavy compute overhead.
-4.  **State Reconstruction**: Business audit logic requires storing the stream of history (Event Sourcing prerequisite).
+1. **Volume Asymmetry**: The ratio of Read queries to Write updates exceeds **100:1**.
+2. **High Contention**: Heavy analytical reads disrupt transaction performance and lock rows, requiring a separate "Read-Replica Projection".
+3. **Complex View Projections**: Multiple distinct views of the same data exist that cannot be mathematically derived from the core Domain Aggregate without heavy compute overhead.
+4. **State Reconstruction**: Business audit logic requires storing the stream of history (Event Sourcing prerequisite).
 
 ## Consequences
 
@@ -42,4 +42,4 @@ Mandate complete physical code/logic separation ONLY if at least **TWO** of the 
 - [ADR-0002: Clean Hexagonal Architecture](../adrs/nodejs/0002-clean-architecture-nestjs.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

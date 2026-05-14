@@ -1,4 +1,4 @@
-# ðŸ“– Glossary of Terms (Ubiquitous Language)
+# Glossary of Terms (Ubiquitous Language)
 
 | Term | Definition |
 | :--- | :--- |
@@ -10,4 +10,4 @@
 | **Tag** | A reusable, granular label that can be attached to multiple tasks for cross-filtering. |
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

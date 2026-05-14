@@ -9,14 +9,14 @@ It is not the "brain" (that is the model); it is the "nervous system and the exo
 
 ```mermaid
 graph TD
-    A[User / Trigger] --> B[Layer 1: System Prompt & Identity]
-    B --> C[Layer 2: Model Selection]
-    C <--> D[Layer 3: Context Injection / RAG / MCP]
-    C <--> E[Layer 4: Tooling Catalog]
-    E --> F{Layer 5: Permissions & Sandbox}
-    F -- Approved --> G[Deterministic Execution]
-    G --> H[Layer 6: Verification Layers / Hooks]
-    H --> C
+ A[User / Trigger] --> B[Layer 1: System Prompt & Identity]
+ B --> C[Layer 2: Model Selection]
+ C <--> D[Layer 3: Context Injection / RAG / MCP]
+ C <--> E[Layer 4: Tooling Catalog]
+ E --> F{Layer 5: Permissions & Sandbox}
+ F -- Approved --> G[Deterministic Execution]
+ G --> H[Layer 6: Verification Layers / Hooks]
+ H --> C
 ```
 
 ## The Four Pillars of a Robust Harness
@@ -29,9 +29,9 @@ Establish machine-readable boundaries. Instead of begging the agent not to use a
 
 ### 3. Layered Verification
 Blindly trusting LLM output is unacceptable. The harness must implement an automated "Red, Green, Refactor" cycle:
-*   **Post-Tool Hook:** Immediately after an edit, run the linter.
-*   **Pre-commit:** Execute unit tests for the modified area.
-*   **CI:** Full regression testing suite.
+* **Post-Tool Hook:** Immediately after an edit, run the linter.
+* **Pre-commit:** Execute unit tests for the modified area.
+* **CI:** Full regression testing suite.
 
 ### 4. Garbage Collection
 Agents may silently generate technical debt, redundancy, or ghost files. An advanced harness orchestrates periodic "cleaner agents" (Linter Agents) whose sole mission is patrolling code for stylistic inconsistencies and context incongruities introduced by previous AI passes.
@@ -46,39 +46,39 @@ The harness execution engine follows this control pattern:
 messages = [system_prompt, user_input]
 
 while True:
-    # 1. Model inference
-    response = call_model(messages)
-    
-    # 2. Tool call detection
-    tool_requests = extract_tool_calls(response)
-    
-    # If the model does not wish to use more tools, the cycle terminates.
-    if not tool_requests: 
-        return response
-    
-    # 3. Sequential or parallel execution of authorized tools
-    for request in tool_requests:
-        if check_permissions(request.name):
-            result = execute_tool(request.name, request.args)
-            
-            # Immediate (deterministic) validation hook
-            validated_result = run_post_tool_hooks(request.name, result)
-            
-            messages.append({
-                "role": "tool", 
-                "tool_call_id": request.id, 
-                "content": validated_result
-            })
-        else:
-            messages.append({
-                "role": "tool", 
-                "tool_call_id": request.id, 
-                "content": "ERROR: Permission denied to execute this tool."
-            })
+ # 1. Model inference
+ response = call_model(messages)
+ 
+ # 2. Tool call detection
+ tool_requests = extract_tool_calls(response)
+ 
+ # If the model does not wish to use more tools, the cycle terminates.
+ if not tool_requests: 
+ return response
+ 
+ # 3. Sequential or parallel execution of authorized tools
+ for request in tool_requests:
+ if check_permissions(request.name):
+ result = execute_tool(request.name, request.args)
+ 
+ # Immediate (deterministic) validation hook
+ validated_result = run_post_tool_hooks(request.name, result)
+ 
+ messages.append({
+ "role": "tool", 
+ "tool_call_id": request.id, 
+ "content": validated_result
+ })
+ else:
+ messages.append({
+ "role": "tool", 
+ "tool_call_id": request.id, 
+ "content": "ERROR: Permission denied to execute this tool."
+ })
 ```
 
 > [!WARNING]
 > **Warning on Harness Manipulation:** The model has no visibility of a tool's source code unless specifically provided. It only understands the **Description (Metadata)** of the tool. Ambiguous descriptions generate catastrophic usage hallucinations.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

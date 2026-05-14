@@ -25,11 +25,11 @@ In Node environments, the local harness must be configured to trigger the self-c
 ```json
 // .lintstagedrc
 {
-  "*.ts": [
-    "eslint --fix",
-    "prettier --write",
-    "jest --bail --findRelatedTests"
-  ]
+ "*.ts": [
+ "eslint --fix",
+ "prettier --write",
+ "jest --bail --findRelatedTests"
+]
 }
 ```
 
@@ -38,19 +38,19 @@ If you are building a custom agent, the validation pattern looks like this:
 
 ```typescript
 async function onAfterFileEdit(filePath: string) {
-  const { execSync } = require('child_process');
-  try {
-    execSync(`npx eslint ${filePath}`);
-  } catch (error) {
-    // Return the compilation error to the Agent for auto-repair
-    throw new Error(`Linter Validation Failed: ${error.message}`);
-  }
+ const { execSync } = require('child_process');
+ try {
+ execSync(`npx eslint ${filePath}`);
+ } catch (error) {
+ // Return the compilation error to the Agent for auto-repair
+ throw new Error(`Linter Validation Failed: ${error.message}`);
+ }
 }
 ```
 
 ## Deterministic Validation vs LLM-Based
--   **Deterministic Validation (Priority):** Compilers, Linters, Unit Tests. 100% binary results. Must always execute first.
--   **LLM-Based Validation (Secondary):** Using a second smaller model to audit generated code (e.g., detecting complex logic vulnerabilities). Only use when static analysis is incapable of inferring semantic context.
+- **Deterministic Validation (Priority):** Compilers, Linters, Unit Tests. 100% binary results. Must always execute first.
+- **LLM-Based Validation (Secondary):** Using a second smaller model to audit generated code (e.g., detecting complex logic vulnerabilities). Only use when static analysis is incapable of inferring semantic context.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

@@ -32,4 +32,4 @@ Commit to building and deploying the system as the **Centralized Authorization N
 - [ADR-0022: Contextual Auth and Projections](../adrs/nodejs/0022-contextual-auth-and-pluggable-projections.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

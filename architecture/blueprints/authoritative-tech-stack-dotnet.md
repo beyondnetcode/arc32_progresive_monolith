@@ -1,14 +1,14 @@
-# ðŸ“ Authoritative Tech Stack: .NET & C# Ecosystem
+# Authoritative Tech Stack: .NET & C# Ecosystem
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../../standards-es/architecture/authoritative-tech-stack-dotnet.md)
+> **Bilingual Navigation:** [Versión en Español](../../standards-es/architecture/authoritative-tech-stack-dotnet.md)
 
-**Document Type:** Runtime Addendum  
-**Prerequisite:** MUST be read after the **[Agnostic Baseline](./authoritative-tech-stack-agnostic.md)**.  
+**Document Type:** Runtime Addendum 
+**Prerequisite:** MUST be read after the **[Agnostic Baseline](./authoritative-tech-stack-agnostic.md)**. 
 **Target Ecosystem:** Heavy-Compute Workers, Legacy Interoperability, Enterprise Batching.
 
 ---
 
-## ðŸ“‹ 1. Executive Compliance Matrix (Vendor Mandates)
+## 1. Executive Compliance Matrix (Vendor Mandates)
 
 All engineering squads developing within the .NET ecosystem MUST strictly enforce the authorized artifacts below. Any replacement attempts demand an approved ADR BEFORE writing code.
 
@@ -30,16 +30,16 @@ All engineering squads developing within the .NET ecosystem MUST strictly enforc
 
 ---
 
-## ðŸ—ï¸ 2. Architecture Implementation (.NET Mapping)
-## 🏛️ 2. Architecture Implementation (.NET Mapping)
+## 2. Architecture Implementation (.NET Mapping)
+## 2. Architecture Implementation (.NET Mapping)
 
 To comply with the overall Hexagonal architecture mandate, the following .NET project organization rules are enforced:
 
 ### 2.1 Project Segregation (Solution Structure)
-1.  **`{BoundedContext}.Domain`**: Plain Old CLR Objects (POCOs). Absolutely **zero NuGet references** outside fundamental `System` libraries. Contains Domain Entities, Value Objects, and Interfaces (Ports).
-2.  **`{BoundedContext}.Application`**: Implements CQRS commands and use cases via `MediatR`. Coordinates domain logic without knowing about Databases.
-3.  **`{BoundedContext}.Infrastructure`**: Contains **EF Core DbContext**, SQL Server configurations, Redis client adapters, and external API clients.
-4.  **`{BoundedContext}.Presentation` (or Web API)**: Entry point containing ASP.NET Controllers or Minimal API endpoints, mapping DTOs to Application Commands.
+1. **`{BoundedContext}.Domain`**: Plain Old CLR Objects (POCOs). Absolutely **zero NuGet references** outside fundamental `System` libraries. Contains Domain Entities, Value Objects, and Interfaces (Ports).
+2. **`{BoundedContext}.Application`**: Implements CQRS commands and use cases via `MediatR`. Coordinates domain logic without knowing about Databases.
+3. **`{BoundedContext}.Infrastructure`**: Contains **EF Core DbContext**, SQL Server configurations, Redis client adapters, and external API clients.
+4. **`{BoundedContext}.Presentation` (or Web API)**: Entry point containing ASP.NET Controllers or Minimal API endpoints, mapping DTOs to Application Commands.
 
 ### 2.2 Error Management Policy
 Standard Exception Throwing for control flow is **PROHIBITED**. 
@@ -47,26 +47,26 @@ Teams MUST utilize the **Result Pattern** to propagate business logic failures s
 
 ---
 
-## 💾 3. Persistence Details (Entity Framework Core)
+## 3. Persistence Details (Entity Framework Core)
 
 ### 3.1 Multi-Tenancy Isolation (RLS)
 When utilizing the `INFRA_NATIVE` strategy via SQL Server Row-Level Security in .NET:
-*   The Infrastructure layer MUST implement a `TenantResolver` extracting `tenant_id` from `ClaimsPrincipal`.
-*   The `DbContext` MUST utilize `connection.CreateCommand()` inside the context opening events to execute:
-    ```sql
-    EXEC sp_set_session_context 'tenant_id', @tenantId;
-    ```
-*   Native Global Query Filters (`HasQueryFilter`) are only accepted as a secondary safety fallback. RLS enforced on the raw connection is the baseline security gate.
+* The Infrastructure layer MUST implement a `TenantResolver` extracting `tenant_id` from `ClaimsPrincipal`.
+* The `DbContext` MUST utilize `connection.CreateCommand()` inside the context opening events to execute:
+ ```sql
+ EXEC sp_set_session_context 'tenant_id', @tenantId;
+ ```
+* Native Global Query Filters (`HasQueryFilter`) are only accepted as a secondary safety fallback. RLS enforced on the raw connection is the baseline security gate.
 
 ### 3.2 Migrations
 Automatic `context.Database.Migrate()` executed directly by the Web host during application startup is **STRONGLY DISCOURAGED** for production clusters. Utilize Entity Framework **SQL Script bundles** inside Kubernetes Init-Containers to safeguard deployment atomic transactions.
 
 ---
 
-## ðŸš€ 4. Final Integration Warning for Vendors
+## 4. Final Integration Warning for Vendors
 
 Failure to satisfy these static tooling definitions will automatically block integration code acceptance. 
-ðŸ‘‰ Back to **[Global Master Index](../../../MASTER_INDEX.md)**
+-> Back to **[Global Master Index](../../../MASTER_INDEX.md)**
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

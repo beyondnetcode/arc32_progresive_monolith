@@ -1,4 +1,4 @@
-# 📖 Engineering & DevOps Playbooks
+# Engineering & DevOps Playbooks
 
 Actionable runbooks for repeated tasks.
 

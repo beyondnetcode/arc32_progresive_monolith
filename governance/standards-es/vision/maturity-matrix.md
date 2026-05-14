@@ -9,9 +9,9 @@ Aprobado
 2026-05-10
 
 ## Contexto y Propósito
-Como Director Técnico y Arquitecto Empresarial, es crí­tico medir la calidad objetiva y la evolución del Sistema de Referencia utilizando estándares internacionalmente reconocidos.
+Como Director Técnico y Arquitecto Empresarial, es crítico medir la calidad objetiva y la evolución del Sistema de Referencia utilizando estándares internacionalmente reconocidos.
 
-Este documento de evaluación aprovecha un marco hí­brido combinando el **TOGAF Architecture Capability Maturity Model (ACMM)** (para la madurez de procesos empresariales y gobernanza) y el **Cloud Well-Architected Framework (WAF)** (para la madurez técnica y nativa de la nube en pilares como Seguridad, Fiabilidad y Excelencia Operativa).
+Este documento de evaluación aprovecha un marco híbrido combinando el **TOGAF Architecture Capability Maturity Model (ACMM)** (para la madurez de procesos empresariales y gobernanza) y el **Cloud Well-Architected Framework (WAF)** (para la madurez técnica y nativa de la nube en pilares como Seguridad, Fiabilidad y Excelencia Operativa).
 
 ---
 
@@ -19,60 +19,60 @@ Este documento de evaluación aprovecha un marco hí­brido combinando el **TOGA
 
 Evaluamos el Esqueleto de Referencia a través de 5 niveles estándar de madurez:
 
-*   **Nivel 1: Inicial (Ad-Hoc)** - Sin arquitectura formal. Los procesos de TI son caóticos, no documentados y reactivos.
-*   **Nivel 2: Bajo Desarrollo** - El proceso de arquitectura básico está en marcha. Existen algunos estándares pero no se aplican de manera consistente.
-*   **Nivel 3: Definido** - La arquitectura está bien definida, documentada (C4 Model, ADRs) e integrada en el SDLC.
-*   **Nivel 4: Gestionado** - La arquitectura se mide cuantitativamente (CodeQL, Sonar, Cobertura) y se gobierna automáticamente.
-*   **Nivel 5: Optimizado** - Mejora continua de la arquitectura (evolución de Dapr, desacoplamiento progresivo, auto-escalado).
+* **Nivel 1: Inicial (Ad-Hoc)** - Sin arquitectura formal. Los procesos de TI son caóticos, no documentados y reactivos.
+* **Nivel 2: Bajo Desarrollo** - El proceso de arquitectura básico está en marcha. Existen algunos estándares pero no se aplican de manera consistente.
+* **Nivel 3: Definido** - La arquitectura está bien definida, documentada (C4 Model, ADRs) e integrada en el SDLC.
+* **Nivel 4: Gestionado** - La arquitectura se mide cuantitativamente (CodeQL, Sonar, Cobertura) y se gobierna automáticamente.
+* **Nivel 5: Optimizado** - Mejora continua de la arquitectura (evolución de Dapr, desacoplamiento progresivo, auto-escalado).
 
 ---
 
 ## 2. Evaluación de Madurez Actual del Esqueleto de Referencia (Pilares Well-Architected)
 
-Evaluamos la arquitectura del Esqueleto de Referencia frente a los 5 pilares crí­ticos del Well-Architected Framework.
+Evaluamos la arquitectura del Esqueleto de Referencia frente a los 5 pilares críticos del Well-Architected Framework.
 
-### ðŸ›¡ï¸ Pilar 1: Seguridad y Cumplimiento
+### ¡ Pilar 1: Seguridad y Cumplimiento
 **Nivel de Madurez Actual: 4 (Gestionado)**
-*   **Evidencia**: 
-    *   Pipeline de Seguridad Cero-Costo implementado ví­a CodeQL ([ADR-0005](../../../architecture/adrs-es/core/0005-ci-cd-quality-codeql.md)).
-    *   Fijación Estricta de Dependencias previene ataques a la Cadena de Suministro ([ADR-0009](../../../architecture/adrs-es/core/0009-strict-dependency-pinning-vulnerability-management.md)).
-    *   Aislamiento de Datos impuesto a nivel de BD usando Row-Level Security (RLS) para multi-tenancy ([ADR-0010](../../../architecture/adrs-es/core/0010-multi-tenancy-architecture-strategy.md)).
-    *   Pistas de Auditorí­a Inmutables ví­a CDC ([ADR-0016](../../../architecture/adrs-es/core/0016-immutable-business-audit-trail.md)).
-*   **Camino al Nivel 5**: Implementar pruebas de penetración automatizadas en CI y rotación dinámica de secretos a través de HashiCorp Vault.
+* **Evidencia**: 
+ * Pipeline de Seguridad Cero-Costo implementado vía CodeQL ([ADR-0005](../../../architecture/adrs-es/core/0005-ci-cd-quality-codeql.md)).
+ * Fijación Estricta de Dependencias previene ataques a la Cadena de Suministro ([ADR-0009](../../../architecture/adrs-es/core/0009-strict-dependency-pinning-vulnerability-management.md)).
+ * Aislamiento de Datos impuesto a nivel de BD usando Row-Level Security (RLS) para multi-tenancy ([ADR-0010](../../../architecture/adrs-es/core/0010-multi-tenancy-architecture-strategy.md)).
+ * Pistas de Auditoría Inmutables vía CDC ([ADR-0016](../../../architecture/adrs-es/core/0016-immutable-business-audit-trail.md)).
+* **Camino al Nivel 5**: Implementar pruebas de penetración automatizadas en CI y rotación dinámica de secretos a través de HashiCorp Vault.
 
-### âš¡ Pilar 2: Eficiencia de Rendimiento
+### Jump to: Pilar 2: Eficiencia de Rendimiento
 **Nivel de Madurez Actual: 4 (Gestionado)**
-*   **Evidencia**: 
-    *   Compilación de Gráficos de Autorización de Alto Rendimiento bajo <5ms usando Redis ([ADR-0021](../../../architecture/adrs-es/nodejs/0021-high-performance-auth-and-graph-compilation.md)).
-    *   Estrategia de Protocolo Dual (REST para píºblico, gRPC para velocidad interna) ([ADR-0027](../../../architecture/adrs-es/nodejs/0027-dual-protocol-rest-grpc-api-gateway.md)).
-    *   Cargas optimizadas para Frontend a través del Gateway BFF ([ADR-0008](../../../architecture/adrs-es/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md)).
-*   **Camino al Nivel 5**: Implementar auto-escalado serverless y algoritmos de caché predictiva.
+* **Evidencia**: 
+ * Compilación de Gráficos de Autorización de Alto Rendimiento bajo <5ms usando Redis ([ADR-0021](../../../architecture/adrs-es/nodejs/0021-high-performance-auth-and-graph-compilation.md)).
+ * Estrategia de Protocolo Dual (REST para público, gRPC para velocidad interna) ([ADR-0027](../../../architecture/adrs-es/nodejs/0027-dual-protocol-rest-grpc-api-gateway.md)).
+ * Cargas optimizadas para Frontend a través del Gateway BFF ([ADR-0008](../../../architecture/adrs-es/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md)).
+* **Camino al Nivel 5**: Implementar auto-escalado serverless y algoritmos de caché predictiva.
 
-### ðŸ”„ Pilar 3: Fiabilidad y Resiliencia
+### Pilar 3: Fiabilidad y Resiliencia
 **Nivel de Madurez Actual: 3 (Definido) -> Avanzando al 4**
-*   **Evidencia**: 
-    *   Resiliencia Offline en Frontend ví­a React Query ([ADR-0004](../../../architecture/adrs-es/nodejs/0004-frontend-offline-resilience.md)).
-    *   Tolerancia a Fallos ví­a Circuit Breakers (`opossum`) y Reintentos ([ADR-0011](../../../architecture/adrs-es/core/0011-fault-tolerance-resiliency-patterns.md)).
-    *   Lí­mites de DR Multi-Región para Infraestructura Cloud propuestos ([ADR-0013](../../../architecture/adrs-es/core/0013-cloud-infrastructure-topology-dr.md)).
-*   **Camino al Nivel 5**: Ejecutar simulacros regulares de Ingenierí­a del Caos (Chaos Monkey) y despliegue multi-región completamente activo-activo.
+* **Evidencia**: 
+ * Resiliencia Offline en Frontend vía React Query ([ADR-0004](../../../architecture/adrs-es/nodejs/0004-frontend-offline-resilience.md)).
+ * Tolerancia a Fallos vía Circuit Breakers (`opossum`) y Reintentos ([ADR-0011](../../../architecture/adrs-es/core/0011-fault-tolerance-resiliency-patterns.md)).
+ * Límites de DR Multi-Región para Infraestructura Cloud propuestos ([ADR-0013](../../../architecture/adrs-es/core/0013-cloud-infrastructure-topology-dr.md)).
+* **Camino al Nivel 5**: Ejecutar simulacros regulares de Ingeniería del Caos (Chaos Monkey) y despliegue multi-región completamente activo-activo.
 
-### ðŸ› ï¸ Pilar 4: Excelencia Operativa
+### Pilar 4: Excelencia Operativa
 **Nivel de Madurez Actual: 4 (Gestionado)**
-*   **Evidencia**: 
-    *   Orquestación de Monorepo ví­a Nx asegura builds deterministas ([ADR-0001](../../../architecture/adrs-es/core/0001-monorepo-orchestration-nx.md)).
-    *   Telemetrí­a Completa usando LGTM y OpenTelemetry ([ADR-0007](../../../architecture/adrs-es/nodejs/0007-observability-telemetry-loki-opentelemetry.md)).
-    *   Uso de Feature Flags permite desacoplar el despliegue de la liberación ([ADR-0017](../../../architecture/adrs-es/core/0017-feature-flagging-strategy.md)).
-    *   Puertas de Calidad imponen >70% de cobertura de pruebas estrictamente ví­a CI ([ADR-0018](../../../architecture/adrs-es/core/0018-testing-pyramid-quality-gates.md)).
-*   **Camino al Nivel 5**: Lograr despliegues automatizados Blue/Green totalmente autónomos y sin tiempo de inactividad, con detección de anomalí­as impulsada por IA en los logs.
+* **Evidencia**: 
+ * Orquestación de Monorepo vía Nx asegura builds deterministas ([ADR-0001](../../../architecture/adrs-es/core/0001-monorepo-orchestration-nx.md)).
+ * Telemetría Completa usando LGTM y OpenTelemetry ([ADR-0007](../../../architecture/adrs-es/nodejs/0007-observability-telemetry-loki-opentelemetry.md)).
+ * Uso de Feature Flags permite desacoplar el despliegue de la liberación ([ADR-0017](../../../architecture/adrs-es/core/0017-feature-flagging-strategy.md)).
+ * Puertas de Calidad imponen >70% de cobertura de pruebas estrictamente vía CI ([ADR-0018](../../../architecture/adrs-es/core/0018-testing-pyramid-quality-gates.md)).
+* **Camino al Nivel 5**: Lograr despliegues automatizados Blue/Green totalmente autónomos y sin tiempo de inactividad, con detección de anomalías impulsada por IA en los logs.
 
-### ðŸ—ï¸ Pilar 5: Mantenibilidad y Extensibilidad (Arquitectura Limpia)
+### Pilar 5: Mantenibilidad y Extensibilidad (Arquitectura Limpia)
 **Nivel de Madurez Actual: 4 (Gestionado)**
-*   **Evidencia**: 
-    *   Lí­mites Hexagonales estrictos desacoplando el níºcleo de la infraestructura ([ADR-0002](../../../architecture/adrs-es/nodejs/0002-clean-architecture-nestjs.md)).
-    *   Patrones de Diseí±o Táctico (Mónada Result) blindando el futuro del core ([ADR-0019](../../../architecture/adrs-es/core/0019-tactical-design-patterns-future-proofing.md)).
-    *   Arquitectura Dirigida por Eventos desacoplando módulos de dominio ([ADR-0015](../../../architecture/adrs-es/core/0015-event-driven-architecture-intra-domain.md)).
-    *   Estrategias de mitigación de Vendor Lock-In claramente definidas (Feature Flags, IdPs).
-*   **Camino al Nivel 5**: Transición fluida de Monolito Modular a Microservicios Dapr con cero cambios en el código de dominio ([ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md)).
+* **Evidencia**: 
+ * Límites Hexagonales estrictos desacoplando el núcleo de la infraestructura ([ADR-0002](../../../architecture/adrs-es/nodejs/0002-clean-architecture-nestjs.md)).
+ * Patrones de Diseño Táctico (Mónada Result) blindando el futuro del core ([ADR-0019](../../../architecture/adrs-es/core/0019-tactical-design-patterns-future-proofing.md)).
+ * Arquitectura Dirigida por Eventos desacoplando módulos de dominio ([ADR-0015](../../../architecture/adrs-es/core/0015-event-driven-architecture-intra-domain.md)).
+ * Estrategias de mitigación de Vendor Lock-In claramente definidas (Feature Flags, IdPs).
+* **Camino al Nivel 5**: Transición fluida de Monolito Modular a Microservicios Dapr con cero cambios en el código de dominio ([ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md)).
 
 ---
 
@@ -82,9 +82,9 @@ Basado en los criterios TOGAF ACMM aplicados a nuestra arquitectura actual impul
 
 **Puntuación Global de Madurez Arquitectónica del Esqueleto de Referencia: 3.8 / 5.0 (De Definido a Gestionado)**
 
-La arquitectura del Esqueleto de Referencia está actualmente en transición de un sistema perfectamente documentado (Nivel 3) a un sistema totalmente automatizado y gobernado (Nivel 4). La aplicación estricta de ADRs, lí­mites estáticos (`eslint-plugin-boundaries`), y puertas de calidad CI/CD asegura que el sistema no se degrade en deuda técnica.
+La arquitectura del Esqueleto de Referencia está actualmente en transición de un sistema perfectamente documentado (Nivel 3) a un sistema totalmente automatizado y gobernado (Nivel 4). La aplicación estricta de ADRs, límites estáticos (`eslint-plugin-boundaries`), y puertas de calidad CI/CD asegura que el sistema no se degrade en deuda técnica.
 
-Para alcanzar el **Nivel 5 (Optimizado)**, la organización de ingenierí­a debe centrarse en la Ingenierí­a del Caos, despliegues Multi-Región Activo-Activo, y la eventual división en microservicios Dapr a medida que la carga operativa lo demande.
+Para alcanzar el **Nivel 5 (Optimizado)**, la organización de ingeniería debe centrarse en la Ingeniería del Caos, despliegues Multi-Región Activo-Activo, y la eventual división en microservicios Dapr a medida que la carga operativa lo demande.
 
 ---
 
@@ -93,7 +93,7 @@ Para alcanzar el **Nivel 5 (Optimizado)**, la organización de ingenierí­a deb
 Para productos que adoptan la sección AI-Augmented, existe una matriz de madurez
 complementaria con 3 niveles: AI-Assisted, AI-Integrated, AI-Orchestrated.
 
-â†’ [Ver matriz de madurez AI](../ai-augmented/07-maturity-model/ai-maturity-matrix.md)
+-> [Ver matriz de madurez AI](../ai-augmented/07-maturity-model/ai-maturity-matrix.md)
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

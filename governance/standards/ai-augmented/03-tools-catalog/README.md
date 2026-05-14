@@ -5,4 +5,4 @@
 * [tool-design-principles](./tool-design-principles.md)
 
 ---
-[? Back to Upper Level](../README.md)
+[Back to Upper Level](../README.md)

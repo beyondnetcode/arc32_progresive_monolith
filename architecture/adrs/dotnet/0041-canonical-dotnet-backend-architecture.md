@@ -1,9 +1,9 @@
 # [ADR 0041](0041-canonical-dotnet-backend-architecture.md): Canonical .NET (C#) Backend Architecture
 
 ## 1. Status
-**Status**: Approved  
-**Date**: 2026-05-11  
-**Scope**: Technology Stack - .NET Specific  
+**Status**: Approved 
+**Date**: 2026-05-11 
+**Scope**: Technology Stack - .NET Specific 
 
 ---
 
@@ -16,32 +16,32 @@ For high-intensity computation workloads, the organization has authorized **.NET
 The canonical .NET framework consists of:
 
 ### A. Core Configuration
-*   **Runtime**: .NET 8+ (Long Term Support).
-*   **Framework**: ASP.NET Core (Minimal APIs optimized for lightweight containerization).
-*   **Style**: Clean Architecture. Domain project holds zero dependencies on Entity Framework or ASP.NET.
+* **Runtime**: .NET 8+ (Long Term Support).
+* **Framework**: ASP.NET Core (Minimal APIs optimized for lightweight containerization).
+* **Style**: Clean Architecture. Domain project holds zero dependencies on Entity Framework or ASP.NET.
 
 ### B. Design Directives
-*   **Dependency Injection**: Native Microsoft.Extensions.DependencyInjection.
-*   **Database/ORM**: Entity Framework Core for transactional CRUD; **Dapper** authorized for performance-sensitive ETL/Batch high-read workloads.
-*   **Validation**: FluentValidation (mirroring Node's class-validator intent).
-*   **Error Flow**: Return-Type based using libraries like `OneOf` or Custom `Result` objects, matching [ADR-0038](../nodejs/0038-error-handling-result-pattern-strategy.md) functional mindset.
-*   **Async/Workers**: Use of `BackgroundService` (IHostedService) for native high-concurrency batch processing.
+* **Dependency Injection**: Native Microsoft.Extensions.DependencyInjection.
+* **Database/ORM**: Entity Framework Core for transactional CRUD; **Dapper** authorized for performance-sensitive ETL/Batch high-read workloads.
+* **Validation**: FluentValidation (mirroring Node's class-validator intent).
+* **Error Flow**: Return-Type based using libraries like `OneOf` or Custom `Result` objects, matching [ADR-0038](../nodejs/0038-error-handling-result-pattern-strategy.md) functional mindset.
+* **Async/Workers**: Use of `BackgroundService` (IHostedService) for native high-concurrency batch processing.
 
 ### C. Testing Standard
-*   **Unit**: xUnit + FluentAssertions.
-*   **Integration**: WebApplicationFactory + **Testcontainers.NET**.
-*   **Contract**: PactNet (verifying consumer contracts with Node.js BFFs).
+* **Unit**: xUnit + FluentAssertions.
+* **Integration**: WebApplicationFactory + **Testcontainers.NET**.
+* **Contract**: PactNet (verifying consumer contracts with Node.js BFFs).
 
 ---
 
 ## 4. Consequences
 
-### ðŸŸ¢ Positive
-*   **High-Efficiency**: Massive concurrency throughput for worker pools.
-*   **Design Symmetricity**: A developer switching from Node.js to .NET will find the same Domain/Application/Infrastructure separation, reducing friction.
+### Positive
+* **High-Efficiency**: Massive concurrency throughput for worker pools.
+* **Design Symmetricity**: A developer switching from Node.js to .NET will find the same Domain/Application/Infrastructure separation, reducing friction.
 
-### ðŸ”´ Negative
-*   **Operational Footprint**: Slightly larger memory idle state compared to lightweight node scripts, mitigated by trimming and AOT compilation.
+### Negative
+* **Operational Footprint**: Slightly larger memory idle state compared to lightweight node scripts, mitigated by trimming and AOT compilation.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

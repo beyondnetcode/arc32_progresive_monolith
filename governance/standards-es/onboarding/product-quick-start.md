@@ -1,19 +1,19 @@
-# ðŸš€ Guí­a de Inicio Rápido ”” Iniciando un Nuevo Producto desde la Referencia
+# Guía de Inicio Rápido - Iniciando un Nuevo Producto desde la Referencia
 
-**Rol:** Desarrollador / Arquitecto de Soluciones  
+**Rol:** Desarrollador / Arquitecto de Soluciones 
 **Objetivo:** Instanciar un repositorio listo para producción desde el Framework de Referencia Corporativo.
 
 ---
 
 ## 1. Descripción General
-Esta Arquitectura de Referencia está diseí±ada para ser **clonada como una plantilla**, no importada como una librerí­a `npm`. Ofrece un entorno totalmente configurado con seguridad pre-integrada, gobernanza de monorepo y pipelines de despliegue.
+Esta Arquitectura de Referencia está diseñada para ser **clonada como una plantilla**, no importada como una librería `npm`. Ofrece un entorno totalmente configurado con seguridad pre-integrada, gobernanza de monorepo y pipelines de despliegue.
 
 ## 2. Prerrequisitos
-Antes de inicializar, asegíºrate de que tu máquina local tenga:
-*   **Node.js**: v20.x (LTS)
-*   **pnpm**: v8.x (o `npm` v10)
-*   **Docker y Docker Compose**: v25+ (Requerido para servicios locales)
-*   **Nx CLI**: Instalado globalmente ví­a `npm install -g nx`
+Antes de inicializar, asegúrate de que tu máquina local tenga:
+* **Node.js**: v20.x (LTS)
+* **pnpm**: v8.x (o `npm` v10)
+* **Docker y Docker Compose**: v25+ (Requerido para servicios locales)
+* **Nx CLI**: Instalado globalmente vía `npm install -g nx`
 
 ---
 
@@ -36,7 +36,7 @@ git commit -m "chore: bootstrap project from corporate reference v1.0"
 ```
 
 ### Paso B: Instalación de Dependencias
-La referencia utiliza un Monorepo Nx. Ejecuta la instalación en la raí­z:
+La referencia utiliza un Monorepo Nx. Ejecuta la instalación en la raíz:
 ```bash
 # Instalar usando lockfile estrictamente fijado
 npm ci 
@@ -57,24 +57,24 @@ docker compose up -d
 Para verificar que tu instalación funciona correctamente, arranca las aplicaciones de demostración:
 
 ```bash
-# Iniciar el API y el BFF concurrentemente ví­a Nx
+# Iniciar el API y el BFF concurrentemente vía Nx
 nx run-many --target=serve --projects=api,web-bff
 ```
 El Sandbox ejecuta el dominio To-Do demostrando:
-1.  **Níºcleo Hexagonal**: Lógica de dominio en typescript puro.
-2.  **RLS Multi-Tenant**: Aislamiento de base de datos en sesiones activas.
-3.  **Observabilidad**: Trazas inyectadas automáticamente.
+1. **Núcleo Hexagonal**: Lógica de dominio en typescript puro.
+2. **RLS Multi-Tenant**: Aislamiento de base de datos en sesiones activas.
+3. **Observabilidad**: Trazas inyectadas automáticamente.
 
 ---
 
-## 5. Crear el Andamiaje (Scaffold) de una Nueva Caracterí­stica
-No crees archivos manualmente. Utiliza los generadores de Nx para respetar los lí­mites obligatorios de librerí­a:
+## 5. Crear el Andamiaje (Scaffold) de una Nueva Característica
+No crees archivos manualmente. Utiliza los generadores de Nx para respetar los límites obligatorios de librería:
 
 ```bash
-# Generar una nueva librerí­a de Contexto Delimitado
+# Generar una nueva librería de Contexto Delimitado
 nx g @nx/nest:library mi-nuevo-contexto --directory=libs/domain
 
-# Generar un Caso de Uso de caracterí­stica dentro de la librerí­a
+# Generar un Caso de Uso de característica dentro de la librería
 nx g @nx/nest:service use-cases/create-item --project=domain-mi-nuevo-contexto
 ```
 
@@ -93,10 +93,10 @@ npm audit
 
 ---
 
-## ðŸ†˜ Asistencia
+## Asistencia
 Si encuentras problemas durante el arranque, consulta:
-*   ðŸ“œ **[Registros de Decisión de Arquitectura](../../../architecture/adrs-es/index.md)**: Para entender POR QUí‰ las cosas están configuradas de esta manera.
-*   ðŸ“˜ **[Estándares de Ingenierí­a](../engineering/engineering-manifesto.md)**: Para las directrices de revisión de código.
+* **[Registros de Decisión de Arquitectura](../../../architecture/adrs-es/index.md)**: Para entender POR QUí las cosas están configuradas de esta manera.
+* **[Estándares de Ingeniería](../engineering/engineering-manifesto.md)**: Para las directrices de revisión de código.
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

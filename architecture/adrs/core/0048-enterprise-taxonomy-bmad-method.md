@@ -28,4 +28,4 @@ The mandatory key rules are:
 * **Learning Curve:** New developers must be obligatorily trained on the taxonomy policy (located in `governance/standards/repository-taxonomy.md`) before creating new folders.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

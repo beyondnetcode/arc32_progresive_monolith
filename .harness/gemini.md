@@ -1,8 +1,8 @@
-# 🦅 Antigravity & Gemini Harness Index
+# Antigravity & Gemini Harness Index
 
 Master entry point for AI agent context orchestration.
 
-## 📋 Context Loading Architecture
+## Context Loading Architecture
 To minimize token usage, load only the specific documents needed for the active scope:
 
 - **/rules**: Binding core governance rules. Read `global-rules.md` on startup.
@@ -12,7 +12,7 @@ To minimize token usage, load only the specific documents needed for the active 
 - **/templates**: Empty blueprints for user stories, ADRs, and specifications.
 - **/adr**: Harness-specific architectural decision records.
 
-## 🛑 Compliance Enforcement
+## Compliance Enforcement
 Before executing tasks, agents must resolve:
 1. `ai-harness/.antigravityignore` (Exclusion boundaries).
 2. `ai-harness/rules/global-rules.md` (Execution limits).

@@ -15,9 +15,9 @@ Without a Backend For Frontend (BFF) layer, diverse clients (rich web, low-bandw
 Adopt a **Progressive Multi-Module and Distributed Backend For Frontend (BFF) Gateway Architecture**:
 
 1. **Dedicated BFF Gateways**: Tailor dedicated gateways for each client type rather than sharing one generic entry point:
-   - **Web BFF**: Handles cookie-based sessions and aggregates payloads for rich desktop displays.
-   - **Mobile BFF**: Compresses data, combines roundtrips for high-latency networks, and translates to mobile-optimized payloads.
-   - **B2B API Gateway**: Handles rate-limiting and API Key authentication for external partners.
+ - **Web BFF**: Handles cookie-based sessions and aggregates payloads for rich desktop displays.
+ - **Mobile BFF**: Compresses data, combines roundtrips for high-latency networks, and translates to mobile-optimized payloads.
+ - **B2B API Gateway**: Handles rate-limiting and API Key authentication for external partners.
 
 2. **Downstream Isolation**: Public clients NEVER communicate directly with internal services (TMS, WMS). All traffic flows through assigned BFFs acting as security and composition boundaries.
 
@@ -27,17 +27,17 @@ Adopt a **Progressive Multi-Module and Distributed Backend For Frontend (BFF) Ga
 
 ```mermaid
 graph TD
-    Web["React Web App"] -->|HTTP/Cookies| WebBFF["Web BFF Gateway"]
-    Mobile["Mobile Client App"] -->|HTTP/JSON| MobileBFF["Mobile BFF Gateway"]
-    B2B["External B2B Integrations"] -->|HTTPS/API Key| B2BGateway["B2B API Gateway"]
+ Web["React Web App"] -->|HTTP/Cookies| WebBFF["Web BFF Gateway"]
+ Mobile["Mobile Client App"] -->|HTTP/JSON| MobileBFF["Mobile BFF Gateway"]
+ B2B["External B2B Integrations"] -->|HTTPS/API Key| B2BGateway["B2B API Gateway"]
 
-    subgraph InternalNetwork["Internal Trust Zone (gRPC)"]
-        WebBFF --> CoreAPI["Reference Platform API"]
-        WebBFF --> TMS["TMS Service"]
-        MobileBFF --> CoreAPI
-        MobileBFF --> TMS
-        B2BGateway --> WMS["WMS Service"]
-    end
+ subgraph InternalNetwork["Internal Trust Zone (gRPC)"]
+ WebBFF --> CoreAPI["Reference Platform API"]
+ WebBFF --> TMS["TMS Service"]
+ MobileBFF --> CoreAPI
+ MobileBFF --> TMS
+ B2BGateway --> WMS["WMS Service"]
+ end
 ```
 
 ## Consequences
@@ -55,4 +55,4 @@ graph TD
 - [ADR-0030: Kong Gateway vs NestJS BFF](../adrs/core/0030-api-gateway-kong-vs-nestjs.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

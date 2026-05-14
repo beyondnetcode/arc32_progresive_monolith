@@ -1,4 +1,4 @@
-# 🤖 Agent Personas Specification
+# Agent Personas Specification
 
 Concise persona bounds to keep agent behaviors consistent and predictable.
 

@@ -6,4 +6,4 @@
 * [hooks-and-verification](./hooks-and-verification.md)
 
 ---
-[? Volver al Nivel Superior](../README.es.md)
+[Volver al Nivel Superior](../README.es.md)

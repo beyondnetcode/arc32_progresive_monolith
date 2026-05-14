@@ -17,18 +17,18 @@ Diagnostic tool for teams to identify their technological integration level and 
 To certify that your product belongs to a specific level, the team must present the following evidence to the architecture audit:
 
 ### Evidence Required for Level 1:
-- [ ] Existence of the `.husky/pre-commit` file (or equivalent) validating the syntax of generated code.
-- [ ] `AGENTS.md` file updated within the last 30 days.
+- [] Existence of the `.husky/pre-commit` file (or equivalent) validating the syntax of generated code.
+- [] `AGENTS.md` file updated within the last 30 days.
 
 ### Evidence Required for Level 2:
-- [ ] JSON Schema of the tool catalog published in team wiki.
-- [ ] CI Logs demonstrating execution of test suites invoking model mocks.
-- [ ] Signed document confirming backend does not expose untokenized PII to the LLM.
+- [] JSON Schema of the tool catalog published in team wiki.
+- [] CI Logs demonstrating execution of test suites invoking model mocks.
+- [] Signed document confirming backend does not expose untokenized PII to the LLM.
 
 ### Evidence Required for Level 3:
-- [ ] Token cost dashboard broken down by agent / feature.
-- [ ] Physical demonstration of the "Human-in-the-Loop" switch blocking a simulated transaction.
-- [ ] Multi-agent architecture diagram approved by the committee.
+- [] Token cost dashboard broken down by agent / feature.
+- [] Physical demonstration of the "Human-in-the-Loop" switch blocking a simulated transaction.
+- [] Multi-agent architecture diagram approved by the committee.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

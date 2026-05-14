@@ -1,6 +1,6 @@
-# ðŸ“ˆ Estrategia de Auditorí­a Continua y Versionado Automatizado (BMAD-METHOD)
+# Estrategia de Auditoría Continua y Versionado Automatizado (BMAD-METHOD)
 
-Para mantener un registro de auditorí­a estricto y rastreable sincronizado con GitHub, la estrategia Spec-driven AI [BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) no se basa en la redacción manual de documentos. En su lugar, aprovechamos el ecosistema que ya hemos construido (**Conventional Commits**) combinado con el poder nativo de nuestro orquestador: **Nx Release**.
+Para mantener un registro de auditoría estricto y rastreable sincronizado con GitHub, la estrategia Spec-driven AI [BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) no se basa en la redacción manual de documentos. En su lugar, aprovechamos el ecosistema que ya hemos construido (**Conventional Commits**) combinado con el poder nativo de nuestro orquestador: **Nx Release**.
 
 ## 1. El Pilar: Conventional Commits
 Dado que ya hemos implementado `commitlint`, el repositorio sabe exactamente qué tipo de cambio ocurrió.
@@ -9,21 +9,21 @@ Dado que ya hemos implementado `commitlint`, el repositorio sabe exactamente qu�
 - Si un commit incluye `BREAKING CHANGE` -> Genera un lanzamiento mayor automático (ej. de `v1.1.0` a `v2.0.0`).
 
 ## 2. Automatización con `nx release`
-Nx incluye una suite de versionado nativa para monorepos que ejecuta el siguiente ciclo de auditorí­a con un solo comando (`npx nx release`):
+Nx incluye una suite de versionado nativa para monorepos que ejecuta el siguiente ciclo de auditoría con un solo comando (`npx nx release`):
 
-1. **Versionado Automático**: Nx analiza todos los commits desde el íºltimo despliegue y calcula el nuevo SemVer (Versionado Semántico) para el API y las aplicaciones Web.
-2. **Generación de `CHANGELOG.md`**: Nx crea (o actualiza) un archivo `CHANGELOG.md` fí­sico en la raí­z del proyecto. Este archivo sirve como tu **Documento Oficial de Auditorí­a**, detallando:
-   - Nuevas caracterí­sticas aí±adidas.
-   - Correcciones de bugs resueltas.
-   - Enlaces de hipertexto que apuntan directamente a los hashes de los commits en GitHub para una trazabilidad absoluta.
-3. **Etiquetado Git**: Crea una etiqueta en Git (ej. `v1.1.0`) apuntando exactamente al estado de la base de código en ese momento especí­fico.
-4. **Sincronización con GitHub Releases**: Cuando se configura con GitHub Actions, este `CHANGELOG` se publica automáticamente en la pestaí±a "Releases" de tu repositorio en la nube.
+1. **Versionado Automático**: Nx analiza todos los commits desde el último despliegue y calcula el nuevo SemVer (Versionado Semántico) para el API y las aplicaciones Web.
+2. **Generación de `CHANGELOG.md`**: Nx crea (o actualiza) un archivo `CHANGELOG.md` físico en la raíz del proyecto. Este archivo sirve como tu **Documento Oficial de Auditoría**, detallando:
+ - Nuevas características añadidas.
+ - Correcciones de bugs resueltas.
+ - Enlaces de hipertexto que apuntan directamente a los hashes de los commits en GitHub para una trazabilidad absoluta.
+3. **Etiquetado Git**: Crea una etiqueta en Git (ej. `v1.1.0`) apuntando exactamente al estado de la base de código en ese momento específico.
+4. **Sincronización con GitHub Releases**: Cuando se configura con GitHub Actions, este `CHANGELOG` se publica automáticamente en la pestaña "Releases" de tu repositorio en la nube.
 
 ---
 
 ## 3. Beneficios para el Esqueleto de Referencia
 * **Cero Esfuerzo Manual**: Se acabó la redacción manual de notas de lanzamiento.
-* **Auditorí­a Forense**: Si una versión como la `v1.2.0` falla en producción, el `CHANGELOG.md` te dice exactamente qué commits introdujeron el error y quién los hizo.
+* **Auditoría Forense**: Si una versión como la `v1.2.0` falla en producción, el `CHANGELOG.md` te dice exactamente qué commits introdujeron el error y quién los hizo.
 * **Transparencia Total**: Ejecutivos o QA pueden ver un documento amigable y legible por humanos en GitHub Releases que explica qué contiene cada despliegue.
 
 ---
@@ -34,4 +34,4 @@ Para activar esto, solo necesitamos:
 2. Probar la generación de nuestra primera versión `v1.0.0` y nuestro primer `CHANGELOG.md` fundacional.
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

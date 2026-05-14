@@ -31,4 +31,4 @@ Design infrastructure topology targeting Cloud-Native patterns enforcing high re
 - [ADR-0028: Self-Hosted Hybrid Strategy](../adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

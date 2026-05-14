@@ -9,4 +9,4 @@
 * [vendor-risk-assessment](./vendor-risk-assessment.md)
 
 ---
-[? Back to Upper Level](../README.md)
+[Back to Upper Level](../README.md)

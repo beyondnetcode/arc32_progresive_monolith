@@ -42,8 +42,8 @@ We adopt the evolutionary rule proposed by the agentic engineering ecosystem:
 > **"For every repetitive error the agent commits, an explicit new rule must be added to the Agent Rules section of AGENTS.md to prevent its perpetual recurrence."**
 
 ## AGENTS.md vs CLAUDE.md
--   **`AGENTS.md`**: Tool-agnostic. Works for any agent consuming the workspace (e.g., GPT-4o with terminal access, Devin, etc.).
--   **`CLAUDE.md`**: Specific standard natively recognized by `claude-code`. It is recommended that if you use Claude Code, you have a `CLAUDE.md` which can be a symbolic link or a simplified copy strictly focused on the commands Claude consumes best.
+- **`AGENTS.md`**: Tool-agnostic. Works for any agent consuming the workspace (e.g., GPT-4o with terminal access, Devin, etc.).
+- **`CLAUDE.md`**: Specific standard natively recognized by `claude-code`. It is recommended that if you use Claude Code, you have a `CLAUDE.md` which can be a symbolic link or a simplified copy strictly focused on the commands Claude consumes best.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

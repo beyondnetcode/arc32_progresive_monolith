@@ -15,4 +15,4 @@ The simplest and most common pattern. A single model wrapped by an agentic loop 
 5. Agent provides final response to user.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

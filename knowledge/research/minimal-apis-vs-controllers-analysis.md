@@ -1,4 +1,4 @@
-# ðŸ§  Architectural Assessment: Minimal APIs vs MVC Controllers in .NET 8/9
+# Architectural Assessment: Minimal APIs vs MVC Controllers in .NET 8/9
 
 ## 1. Executive Summary
 
@@ -60,4 +60,4 @@ The .NET ecosystem (.NET 8+) has established **Minimal APIs** not as a simplisti
 Do not build "naked" Minimal APIs directly in `Program.cs`. Enforce an abstraction layer (`ICarter`, standard `MapGroup` extensions, or **FastEndpoints**) to guarantee maintainability, automatic Swagger integration, and clean separation of concerns without reverting to the legacy MVC pipeline.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

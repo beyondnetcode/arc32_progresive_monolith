@@ -32,4 +32,4 @@ Introduce an authoritative **Configuration & Feature Management Bounded Context*
 - [ADR-0014: Redis Cache Strategy](../adrs/core/0014-distributed-caching-strategy-redis.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

@@ -1,8 +1,8 @@
-# ðŸ§  Análisis Técnico Senior ”” ARC32 BMAD-METHOD
+# Análisis Técnico Senior - ARC32 BMAD-METHOD
 
-> ðŸŒ **Navegación Bilingí¼e:** [ðŸ‡ºðŸ‡¸ English Version](../../standards/engineering/senior-architectural-assessment.md)
+> **Navegación Bilingüe:** [English Version](../../standards/engineering/senior-architectural-assessment.md)
 
-## Evaluación Arquitectónica: Monolito Progresivo â†’ Microservicios
+## Evaluación Arquitectónica: Monolito Progresivo -> Microservicios
 **Rol:** Arquitecto Senior Principal | Stack: TypeScript/Node.js + C#/.NET
 
 ---
@@ -15,45 +15,45 @@ El repositorio presenta una arquitectura de referencia corporativa con un nivel 
 
 - **44 ADRs formalizados y trazables**, con linkeo bidireccional entre blueprint y decisiones técnicas.
 - **Modelo Arquitectónico** (Hexagonal + DDD opcional + Polyglot) correctamente justificado y no impuesto.
-- **Entregas ví­a estrategia BMAD-METHOD** optimizadas mediante flujos Spec-Driven dirigidos por Agentes de IA.
-- **IEventBusPort injectable** ”” es la decisión correcta; permite la transición In-Memory â†’ RabbitMQ â†’ Kafka sin tocar el dominio.
-- **Dual-Layer RLS** (ORM + PostgreSQL native) como mecanismo de aislamiento multi-tenant ”” arquitectónicamente sólido.
-- **Result<T,E> Pattern** ([ADR-0019](../../../architecture/adrs-es/core/0019-tactical-design-patterns-future-proofing.md)) sobre excepciones ”” decisión excelente para TypeScript, elimina side-effects implí­citos.
-- **Strict Dependency Pinning** sin rangos `^` o `~` ”” crí­tico para reproducibilidad en enterprise CI/CD.
+- **Entregas vía estrategia BMAD-METHOD** optimizadas mediante flujos Spec-Driven dirigidos por Agentes de IA.
+- **IEventBusPort injectable** - es la decisión correcta; permite la transición In-Memory -> RabbitMQ -> Kafka sin tocar el dominio.
+- **Dual-Layer RLS** (ORM + PostgreSQL native) como mecanismo de aislamiento multi-tenant - arquitectónicamente sólido.
+- **Result<T,E> Pattern** ([ADR-0019](../../../architecture/adrs-es/core/0019-tactical-design-patterns-future-proofing.md)) sobre excepciones - decisión excelente para TypeScript, elimina side-effects implícitos.
+- **Strict Dependency Pinning** sin rangos `^` o `~` - crítico para reproducibilidad en enterprise CI/CD.
 - El **Engineering Manifesto** con enforcement automatizado (eslint-plugin-boundaries) es un patrón maduro.
 
 ### Score por Dimensión
 
 | Dimensión | Score | Justificación |
 | :--- | :--- | :--- |
-| Diseí±o Hexagonal | 9/10 | Correctamente implementado; dominio sin dependencias externas |
+| Diseño Hexagonal | 9/10 | Correctamente implementado; dominio sin dependencias externas |
 | Ruta de Migración a Microservicios | 6/10 | Débil en detalles concretos de extracción y punto de trigger |
 | Gobernanza de ADRs | 8/10 | 44 ADRs bien clasificados, pero faltan criterios de revisión/deprecación |
 | Observabilidad | 8/10 | OTel + Loki + Jaeger es stack correcto; falta SLO/SLA definidos |
 | Seguridad | 8/10 | Zero-trust + RBAC/ABAC + MFA bien documentado |
 | Multi-tenancy | 9/10 | Dual-layer es el patrón de máxima confianza para SaaS |
-| Resiliencia | 7/10 | Circuit breaker con `opossum` ok; faltan Bulkhead y Retry policies explí­citas |
-| Testing Strategy | 6/10 | 70% threshold es insuficiente para dominio crí­tico; faltan mutation tests |
+| Resiliencia | 7/10 | Circuit breaker con `opossum` ok; faltan Bulkhead y Retry policies explícitas |
+| Testing Strategy | 6/10 | 70% threshold es insuficiente para dominio crítico; faltan mutation tests |
 | Debt / Risk Management | 5/10 | Solo 3 riesgos y 2 deudas documentadas; subrepresentado |
 | Stack .NET/C# | 4/10 | [ADR-0041](../../../architecture/adrs-es/dotnet/0041-canonical-dotnet-backend-architecture.md) existe pero está infradesarrollado vs Node.js |
 
 ---
 
-## 2. Hallazgos Crí­ticos y Recomendaciones
+## 2. Hallazgos Críticos y Recomendaciones
 
-### ðŸ”´ CRíTICO ”” C1: Ruta de Migración Milestones Sin Criterios de Activación
+### CRíTICO - C1: Ruta de Migración Milestones Sin Criterios de Activación
 
-**Hallazgo:** El [ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md) define 3 milestones (Monolith â†’ Service Extraction â†’ Full Mesh) pero no especifica los **triggers cuantitativos** que activan el paso entre fases.
+**Hallazgo:** El [ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md) define 3 milestones (Monolith -> Service Extraction -> Full Mesh) pero no especifica los **triggers cuantitativos** que activan el paso entre fases.
 
-**Problema:** Sin criterios objetivos, el equipo tomará decisiones de extracción por intuición o presión polí­tica, que es exactamente la causa #1 de migraciones fallidas a microservicios (Sam Newman, *Building Microservices*, 2nd Ed. 2021).
+**Problema:** Sin criterios objetivos, el equipo tomará decisiones de extracción por intuición o presión política, que es exactamente la causa #1 de migraciones fallidas a microservicios (Sam Newman, *Building Microservices*, 2nd Ed. 2021).
 
 **Recomendación Concreta:**
 
 ```markdown
-# Criterios de Activación: Monolith â†’ Extracción de Servicio
+# Criterios de Activación: Monolith -> Extracción de Servicio
 
 Un bounded context DEBE considerarse candidato a extracción cuando cumpla 2 de 4:
-1. Latency P95 > 200ms en ese módulo de forma sostenida (7 dí­as)
+1. Latency P95 > 200ms en ese módulo de forma sostenida (7 días)
 2. Release frequency > 4x/semana independiente de otros módulos
 3. Team ownership claro y aislado (> 80% commits de un squad)
 4. Payload de DB > 20% del total de la base de datos
@@ -63,11 +63,11 @@ Un bounded context DEBE considerarse candidato a extracción cuando cumpla 2 de 
 
 ---
 
-### ðŸ”´ CRíTICO ”” C2: Estrategia de Base de Datos en Transición es Ambigua
+### CRíTICO - C2: Estrategia de Base de Datos en Transición es Ambigua
 
 **Hallazgo:** La arquitectura tiene `schema-per-context` ([ADR-0031](../../../architecture/adrs-es/core/0031-schema-per-context-domain-event-catalog.md)) pero no documenta cómo se gestiona la **transición desde una DB compartida a DBs aisladas por servicio** durante la fase de extracción.
 
-**Problema:** El anti-pattern más peligroso en migraciones es el "shared database with microservices" que genera acoplamiento temporal. La arquitectura menciona PostgreSQL con míºltiples schemas pero no define el mecanismo de sincronización inter-schema durante coexistencia.
+**Problema:** El anti-pattern más peligroso en migraciones es el "shared database with microservices" que genera acoplamiento temporal. La arquitectura menciona PostgreSQL con múltiples schemas pero no define el mecanismo de sincronización inter-schema durante coexistencia.
 
 **Recomendación:**
 
@@ -76,33 +76,33 @@ Agregar a la documentación de `[ADR-0031](../../../architecture/adrs-es/core/00
 ```
 Phase 1 (Monolith): Shared DB, schema-per-context, NO cross-schema JOINs
 Phase 2 (Extraction): Separate DB per extracted service + Transactional Outbox ([ADR-0033](../../../architecture/adrs-es/core/0033-transactional-outbox-pattern.md))
-         â†’ Sync via published events, NEVER via direct DB access from other services
+ -> Sync via published events, NEVER via direct DB access from other services
 Phase 3 (Mesh): Each service owns its DB completely; queries cross-service via API/gRPC only
 ```
 
-**Referencia:** Patrón "Database-per-Service" ”” Chris Richardson, microservices.io; [ADR-0033](../../../architecture/adrs-es/core/0033-transactional-outbox-pattern.md) (Transactional Outbox) ya existe pero no se encadena explí­citamente con el plan.
+**Referencia:** Patrón "Database-per-Service" - Chris Richardson, microservices.io; [ADR-0033](../../../architecture/adrs-es/core/0033-transactional-outbox-pattern.md) (Transactional Outbox) ya existe pero no se encadena explícitamente con el plan.
 
 ---
 
-### ðŸ”´ CRíTICO ”” C3: [ADR-0041](../../../architecture/adrs-es/dotnet/0041-canonical-dotnet-backend-architecture.md) (.NET) es un Ciudadano de Segunda Clase
+### CRíTICO - C3: [ADR-0041](../../../architecture/adrs-es/dotnet/0041-canonical-dotnet-backend-architecture.md) (.NET) es un Ciudadano de Segunda Clase
 
 **Hallazgo:** El stack Node.js tiene 14 ADRs dedicados. El stack .NET/C# tiene exactamente **1 ADR ([ADR-0041](../../../architecture/adrs-es/dotnet/0041-canonical-dotnet-backend-architecture.md))**. La tabla de runtimes del blueprint lo define como "High Compute / Workers / Batch" pero no hay:
 - Patrón de proyecto canónico en C# (estructura de carpetas, configuración de DI)
-- Estrategia de comunicación .NET â†” NestJS (solo se menciona gRPC + Protobuf en general)
+- Estrategia de comunicación .NET NestJS (solo se menciona gRPC + Protobuf en general)
 - Gestión de secretos desde Vault en .NET
-- Observabilidad (OTel) en .NET con configuración especí­fica
+- Observabilidad (OTel) en .NET con configuración específica
 
 **Impacto:** Para un desarrollador C#/TypeScript, esta brecha es significativa. El equipo .NET tendrá que improvisar lo que Node.js tiene documentado como ley.
 
 **Recomendaciones Inmediatas:**
 
 ```csharp
-// [ADR-0041](../../../architecture/adrs-es/dotnet/0041-canonical-dotnet-backend-architecture.md) deberí­a incluir estructura canónica:
+// [ADR-0041](../../../architecture/adrs-es/dotnet/0041-canonical-dotnet-backend-architecture.md) debería incluir estructura canónica:
 /src
-  /Domain           // Entities, VOs, Domain Events (sin dependencias externas)
-  /Application      // Use Cases, Commands, Queries (MediatR)
-  /Infrastructure   // EF Core, gRPC clients, Vault integration
-  /Api              // Minimal API / Controller layer
+ /Domain // Entities, VOs, Domain Events (sin dependencias externas)
+ /Application // Use Cases, Commands, Queries (MediatR)
+ /Infrastructure // EF Core, gRPC clients, Vault integration
+ /Api // Minimal API / Controller layer
 ```
 
 ADRs pendientes para .NET:
@@ -112,34 +112,34 @@ ADRs pendientes para .NET:
 
 ---
 
-### ðŸŸ¡ IMPORTANTE ”” I1: Coverage Target del 70% es Insuficiente para Dominio Crí­tico
+### ¡ IMPORTANTE - I1: Coverage Target del 70% es Insuficiente para Dominio Crítico
 
 **Hallazgo:** El Engineering Manifesto y [ADR-0018](../../../architecture/adrs-es/core/0018-testing-pyramid-quality-gates.md) establecen `>70%` como umbral de cobertura.
 
-**Problema:** El 70% puede alcanzarse cubriendo íºnicamente los happy paths. Para arquitecturas hexagonales con dominio rico, se necesita diferenciación por capa:
+**Problema:** El 70% puede alcanzarse cubriendo únicamente los happy paths. Para arquitecturas hexagonales con dominio rico, se necesita diferenciación por capa:
 
 | Capa | Threshold Recomendado | Justificación |
 | :--- | :--- | :--- |
-| Domain (Entities, VOs) | â‰¥ 95% | Lógica de negocio pura, sin excusas |
-| Application (Use Cases) | â‰¥ 85% | Incluye error paths del Result<T,E> |
-| Infrastructure (Adapters) | â‰¥ 60% | Depende de integración; usar contract tests |
-| BFF / Controllers | â‰¥ 70% | Se cubre con E2E |
+| Domain (Entities, VOs) | 95% | Lógica de negocio pura, sin excusas |
+| Application (Use Cases) | 85% | Incluye error paths del Result<T,E> |
+| Infrastructure (Adapters) | 60% | Depende de integración; usar contract tests |
+| BFF / Controllers | 70% | Se cubre con E2E |
 
 **Recomendación:** Agregar configuración por capa en Jest/Istanbul con `coverageThresholds` por path pattern.
 
 ---
 
-### ðŸŸ¡ IMPORTANTE ”” I2: Dapr como Estrategia de Migración ”” Riesgo de Over-Engineering
+### ¡ IMPORTANTE - I2: Dapr como Estrategia de Migración - Riesgo de Over-Engineering
 
 **Hallazgo:** [ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md) propone Dapr Sidecars como mecanismo de transición a microservicios.
 
-**Evaluación Crí­tica:** Dapr introduce complejidad operativa significativa (sidecar management, state stores, actor model) que puede ser prematura si el equipo no tiene experiencia en service mesh. Para la mayorí­a de organizaciones, Kubernetes + servicios NestJS directos con el `IEventBusPort` ya existente es suficiente.
+**Evaluación Crítica:** Dapr introduce complejidad operativa significativa (sidecar management, state stores, actor model) que puede ser prematura si el equipo no tiene experiencia en service mesh. Para la mayoría de organizaciones, Kubernetes + servicios NestJS directos con el `IEventBusPort` ya existente es suficiente.
 
-**Recomendación:** Documentar en [ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md) un **Decision Gate** explí­cito:
+**Recomendación:** Documentar en [ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md) un **Decision Gate** explícito:
 
 ```markdown
 Dapr se activa SOLO cuando:
-- El níºmero de servicios extraí­dos supera 5
+- El número de servicios extraídos supera 5
 - Se requiere service-to-service invocation con retry automático
 - El equipo tiene capacidad operativa de Kubernetes avanzada
 
@@ -148,9 +148,9 @@ Alternativa pre-Dapr: Kong + gRPC directo entre servicios NestJS
 
 ---
 
-### ðŸŸ¡ IMPORTANTE ”” I3: Saga Pattern Sin Estrategia de Compensación Concreta
+### ¡ IMPORTANTE - I3: Saga Pattern Sin Estrategia de Compensación Concreta
 
-**Hallazgo:** [ADR-0035](../../../architecture/adrs-es/core/0035-distributed-saga-pattern-strategy.md) menciona "Compensating Transaction Strategy" pero el blueprint no incluye ningíºn ejemplo concreto de saga.
+**Hallazgo:** [ADR-0035](../../../architecture/adrs-es/core/0035-distributed-saga-pattern-strategy.md) menciona "Compensating Transaction Strategy" pero el blueprint no incluye ningún ejemplo concreto de saga.
 
 **Problema:** En la práctica, el 80% de los problemas de consistencia distribuida ocurren en las compensaciones, no en el happy path. Sin ejemplos, cada equipo implementará sagas de forma diferente.
 
@@ -159,23 +159,23 @@ Alternativa pre-Dapr: Kong + gRPC directo entre servicios NestJS
 ```typescript
 // Ejemplo: CreateOrder saga
 class CreateOrderSaga implements ISaga {
-  async execute(ctx: SagaContext): Promise<Result<Order, SagaError>> {
-    const steps: SagaStep[] = [
-      { execute: () => this.reserveInventory(ctx),
-        compensate: () => this.releaseInventory(ctx) },
-      { execute: () => this.chargePayment(ctx),
-        compensate: () => this.refundPayment(ctx) },
-      { execute: () => this.confirmOrder(ctx),
-        compensate: () => this.cancelOrder(ctx) }
-    ];
-    return SagaOrchestrator.run(steps);
-  }
+ async execute(ctx: SagaContext): Promise<Result<Order, SagaError>> {
+ const steps: SagaStep[] = [
+ { execute: () => this.reserveInventory(ctx),
+ compensate: () => this.releaseInventory(ctx) },
+ { execute: () => this.chargePayment(ctx),
+ compensate: () => this.refundPayment(ctx) },
+ { execute: () => this.confirmOrder(ctx),
+ compensate: () => this.cancelOrder(ctx) }
+];
+ return SagaOrchestrator.run(steps);
+ }
 }
 ```
 
 ---
 
-### ðŸŸ¡ IMPORTANTE ”” I4: Ausencia de Strangler Fig Pattern Explí­cito
+### ¡ IMPORTANTE - I4: Ausencia de Strangler Fig Pattern Explícito
 
 **Hallazgo:** La ruta de migración no menciona el patrón **Strangler Fig** (Martin Fowler, 2004) que es el estándar de facto para migraciones incrementales de monolito a microservicios.
 
@@ -186,19 +186,19 @@ class CreateOrderSaga implements ISaga {
 ```yaml
 # Kong routing rule durante transición
 routes:
-  - name: orders-new-service
-    paths: ["/api/v2/orders"]      # nuevo servicio
-    service: orders-microservice
-  - name: orders-legacy
-    paths: ["/api/orders"]         # monolito legacy
-    service: core-monolith
+ - name: orders-new-service
+ paths: ["/api/v2/orders"] # nuevo servicio
+ service: orders-microservice
+ - name: orders-legacy
+ paths: ["/api/orders"] # monolito legacy
+ service: core-monolith
 ```
 
 Esto permite rollback instantáneo cambiando solo el routing en Kong, sin despliegues.
 
 ---
 
-### ðŸŸ¢ MEJORA ”” M1: ADR Lifecycle Management
+### MEJORA - M1: ADR Lifecycle Management
 
 **Hallazgo:** No hay documentado un proceso de revisión/deprecación de ADRs.
 
@@ -209,7 +209,7 @@ Esto permite rollback instantáneo cambiando solo el routing en Kong, sin despli
 
 ---
 
-### ðŸŸ¢ MEJORA ”” M2: Mutation Testing para el Dominio
+### MEJORA - M2: Mutation Testing para el Dominio
 
 **Hallazgo:** El stack de testing (Jest + Pact) no incluye mutation testing.
 
@@ -218,16 +218,16 @@ Esto permite rollback instantáneo cambiando solo el routing en Kong, sin despli
 ```json
 // stryker.config.json
 {
-  "mutate": ["src/**/domain/**/*.ts", "src/**/application/**/*.ts"],
-  "thresholds": { "high": 80, "low": 60, "break": 50 }
+ "mutate": ["src/**/domain/**/*.ts", "src/**/application/**/*.ts"],
+ "thresholds": { "high": 80, "low": 60, "break": 50 }
 }
 ```
 
-Mutation testing valida la *calidad* de los tests, no solo la cobertura. Es especialmente valioso para el `Result<T,E>` pattern donde los tests pueden estar cubriendo lí­neas sin validar los error cases.
+Mutation testing valida la *calidad* de los tests, no solo la cobertura. Es especialmente valioso para el `Result<T,E>` pattern donde los tests pueden estar cubriendo líneas sin validar los error cases.
 
 ---
 
-### ðŸŸ¢ MEJORA ”” M3: Chaos Engineering Roadmap
+### MEJORA - M3: Chaos Engineering Roadmap
 
 **Hallazgo:** [ADR-0037](../../../architecture/adrs-es/core/0037-performance-concurrency-chaos-strategy.md) menciona K6 para load testing pero no incluye chaos engineering.
 
@@ -238,7 +238,7 @@ Mutation testing valida la *calidad* de los tests, no solo la cobertura. Es espe
 
 ---
 
-## 3. Hallazgos Especí­ficos para .NET (C#)
+## 3. Hallazgos Específicos para .NET (C#)
 
 ### [ADR-0041](../../../architecture/adrs-es/dotnet/0041-canonical-dotnet-backend-architecture.md) Gaps Concretos
 
@@ -250,9 +250,9 @@ Mutation testing valida la *calidad* de los tests, no solo la cobertura. Es espe
 | No especifica health checks | .NET `IHealthCheck` con `/health/live` y `/health/ready` |
 | No define configuración de OTel | `OpenTelemetry.Extensions.Hosting` + `AspNetCore` |
 
-### Comunicación gRPC .NET â†” NestJS
+### Comunicación gRPC .NET NestJS
 
-El [ADR-0027](../../../architecture/adrs-es/nodejs/0027-dual-protocol-rest-grpc-api-gateway.md) define dual-protocol REST/gRPC pero no hay guí­a de implementación para el lado .NET. Recomendado:
+El [ADR-0027](../../../architecture/adrs-es/nodejs/0027-dual-protocol-rest-grpc-api-gateway.md) define dual-protocol REST/gRPC pero no hay guía de implementación para el lado .NET. Recomendado:
 
 ```csharp
 // Program.cs - .NET Minimal API + gRPC server
@@ -264,15 +264,15 @@ app.MapGrpcService<TodoService>();
 ```typescript
 // NestJS - consumir .NET gRPC service
 @Module({
-  imports: [ClientsModule.register([{
-    name: 'TODO_PACKAGE',
-    transport: Transport.GRPC,
-    options: {
-      url: 'dotnet-service:5001',
-      package: 'todo',
-      protoPath: join(__dirname, 'proto/todo.proto'),
-    }
-  }])]
+ imports: [ClientsModule.register([{
+ name: 'TODO_PACKAGE',
+ transport: Transport.GRPC,
+ options: {
+ url: 'dotnet-service:5001',
+ package: 'todo',
+ protoPath: join(__dirname, 'proto/todo.proto'),
+ }
+ }])]
 })
 ```
 
@@ -282,48 +282,48 @@ app.MapGrpcService<TodoService>();
 
 | Risk ID | Descripción | Severidad | Mitigación |
 | :--- | :--- | :--- | :--- |
-| **R-04** | **Nx Monorepo Scale** ”” >200 libs degradan CI a >30 min sin Nx Cloud | ALTO | Activar Nx Cloud o remote cache desde el inicio |
-| **R-05** | **TypeORM Deprecation Risk** ”” La implementación de referencia usa TypeORM mientras el stack auditado recomienda Drizzle | MEDIO | [ADR-0043](../../../architecture/adrs-es/nodejs/0043-data-access-orm-strategy.md) define la estrategia; asegurar migration path documentado |
-| **R-06** | **Kong DB-less Config Drift** ”” Kong en modo DB-less con YAML puede generar config drift en producción | MEDIO | GitOps para Kong config + deck CLI |
-| **R-07** | **Protobuf Schema Evolution** ”” Sin Buf Schema Registry, cambios en `.proto` pueden romper contratos silenciosamente | ALTO | Adoptar Buf Registry o Confluent Schema Registry |
-| **R-08** | **Redis como SPOF** ”” Redis Cluster sin Sentinel o con configuración incorrecta puede causar data loss en failover | ALTO | Documentar configuración mí­nima de Redis Sentinel en [ADR-0014](../../../architecture/adrs-es/core/0014-distributed-caching-strategy-redis.md) |
+| **R-04** | **Nx Monorepo Scale** - >200 libs degradan CI a >30 min sin Nx Cloud | ALTO | Activar Nx Cloud o remote cache desde el inicio |
+| **R-05** | **TypeORM Deprecation Risk** - La implementación de referencia usa TypeORM mientras el stack auditado recomienda Drizzle | MEDIO | [ADR-0043](../../../architecture/adrs-es/nodejs/0043-data-access-orm-strategy.md) define la estrategia; asegurar migration path documentado |
+| **R-06** | **Kong DB-less Config Drift** - Kong en modo DB-less con YAML puede generar config drift en producción | MEDIO | GitOps para Kong config + deck CLI |
+| **R-07** | **Protobuf Schema Evolution** - Sin Buf Schema Registry, cambios en `.proto` pueden romper contratos silenciosamente | ALTO | Adoptar Buf Registry o Confluent Schema Registry |
+| **R-08** | **Redis como SPOF** - Redis Cluster sin Sentinel o con configuración incorrecta puede causar data loss en failover | ALTO | Documentar configuración mínima de Redis Sentinel en [ADR-0014](../../../architecture/adrs-es/core/0014-distributed-caching-strategy-redis.md) |
 
 ---
 
 ## 5. Roadmap de Mejoras Priorizado
 
 ### Sprint 1 (Inmediato)
-- [ ] Crear [ADR-0045](../../../architecture/adrs-es/core/0045-microservice-extraction-readiness-criteria.md): Microservice Extraction Readiness Criteria
-- [ ] Enriquecer [ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md) con Decision Gate para Dapr
-- [ ] Agregar Database Migration Path a [ADR-0031](../../../architecture/adrs-es/core/0031-schema-per-context-domain-event-catalog.md)
-- [ ] Documentar Strangler Fig Pattern con Kong routing en [ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md)
+- [] Crear [ADR-0045](../../../architecture/adrs-es/core/0045-microservice-extraction-readiness-criteria.md): Microservice Extraction Readiness Criteria
+- [] Enriquecer [ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md) con Decision Gate para Dapr
+- [] Agregar Database Migration Path a [ADR-0031](../../../architecture/adrs-es/core/0031-schema-per-context-domain-event-catalog.md)
+- [] Documentar Strangler Fig Pattern con Kong routing en [ADR-0006](../../../architecture/adrs-es/core/0006-future-microservices-transition-dapr.md)
 
 ### Sprint 2 (Corto plazo)
-- [ ] Crear ADR-0046: .NET ORM Strategy
-- [ ] Crear ADR-0047: .NET gRPC Setup & Protobuf Contract Governance
-- [ ] Crear ADR-0048: .NET OTel Configuration
-- [ ] Actualizar [ADR-0018](../../../architecture/adrs-es/core/0018-testing-pyramid-quality-gates.md) con coverage thresholds por capa
-- [ ] Agregar ejemplo canónico de Saga a [ADR-0035](../../../architecture/adrs-es/core/0035-distributed-saga-pattern-strategy.md)
+- [] Crear ADR-0046: .NET ORM Strategy
+- [] Crear ADR-0047: .NET gRPC Setup & Protobuf Contract Governance
+- [] Crear ADR-0048: .NET OTel Configuration
+- [] Actualizar [ADR-0018](../../../architecture/adrs-es/core/0018-testing-pyramid-quality-gates.md) con coverage thresholds por capa
+- [] Agregar ejemplo canónico de Saga a [ADR-0035](../../../architecture/adrs-es/core/0035-distributed-saga-pattern-strategy.md)
 
 ### Sprint 3 (Medio plazo)
-- [ ] Implementar Stryker Mutator en CI para capa de dominio
-- [ ] Definir ADR de Buf Registry para Protobuf governance
-- [ ] Documentar Redis Sentinel config en [ADR-0014](../../../architecture/adrs-es/core/0014-distributed-caching-strategy-redis.md)
-- [ ] Agregar lifecycle management (estados + revisión periódica) a todos los ADRs
+- [] Implementar Stryker Mutator en CI para capa de dominio
+- [] Definir ADR de Buf Registry para Protobuf governance
+- [] Documentar Redis Sentinel config en [ADR-0014](../../../architecture/adrs-es/core/0014-distributed-caching-strategy-redis.md)
+- [] Agregar lifecycle management (estados + revisión periódica) a todos los ADRs
 
 ---
 
 ## 6. Referencias Bibliográficas
 
-- **Sam Newman** ”” *Building Microservices* (2nd Ed., O'Reilly 2021) ”” Caps. 3, 4, 8 sobre extracción y riesgos
-- **Chris Richardson** ”” microservices.io ”” Database-per-Service, Saga, Strangler Fig
-- **Martin Fowler** ”” [Strangler Fig Application](https://martinfowler.com/bliki/StranglerFigApplication.html) (2004)
-- **Vaughn Vernon** ”” *Implementing Domain-Driven Design* (Addison-Wesley) ”” Bounded Context y Context Maps
-- **Mark Richards & Neal Ford** ”” *Fundamentals of Software Architecture* (O'Reilly 2020)
-- **Michael Nygard** ”” *Release It!* (2nd Ed., Pragmatic 2018)
-- **.NET Aspire** ”” [Microsoft Learn](https://learn.microsoft.com/dotnet/aspire)
-- **Buf Schema Registry** ”” [buf.build](https://buf.build)
-- **Stryker Mutator** ”” [stryker-mutator.io](https://stryker-mutator.io)
+- **Sam Newman** - *Building Microservices* (2nd Ed., O'Reilly 2021) - Caps. 3, 4, 8 sobre extracción y riesgos
+- **Chris Richardson** - microservices.io - Database-per-Service, Saga, Strangler Fig
+- **Martin Fowler** - [Strangler Fig Application](https://martinfowler.com/bliki/StranglerFigApplication.html) (2004)
+- **Vaughn Vernon** - *Implementing Domain-Driven Design* (Addison-Wesley) - Bounded Context y Context Maps
+- **Mark Richards & Neal Ford** - *Fundamentals of Software Architecture* (O'Reilly 2020)
+- **Michael Nygard** - *Release It!* (2nd Ed., Pragmatic 2018)
+- **.NET Aspire** - [Microsoft Learn](https://learn.microsoft.com/dotnet/aspire)
+- **Buf Schema Registry** - [buf.build](https://buf.build)
+- **Stryker Mutator** - [stryker-mutator.io](https://stryker-mutator.io)
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

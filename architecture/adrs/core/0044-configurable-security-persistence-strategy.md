@@ -13,10 +13,10 @@ Relying purely on infrastructure locks us into specific engines (vendor lock-in)
 ## Decision
 Adopt a **Configurable Persistence Strategy** utilizing the Strategy Pattern in the Infrastructure layer. The active approach will be determined at system bootstrap by a structural configuration flag (`SECURITY_STRATEGY_MODE`).
 
-1.  **Domain Policies (Source of Truth)**: All visibility criteria are defined as pure **Specifications** within the Core Domain layer.
-2.  **Strategy Injection**: The persistence factory evaluates the flag to instantiate the appropriate Adapter:
-    *   **Agnostic Adapter (`APP_FILTER`)**: Translates domain specifications into in-memory iteration filters (e.g., using code-level predicates), ensuring correctness on ANY data engine (NoSQL, In-Memory).
-    *   **Native Adapter (`INFRA_NATIVE`)**: Translates the same domain specifications into database-native constructs (e.g., `SET SESSION` context, native RLS policies, or optimized SQL).
+1. **Domain Policies (Source of Truth)**: All visibility criteria are defined as pure **Specifications** within the Core Domain layer.
+2. **Strategy Injection**: The persistence factory evaluates the flag to instantiate the appropriate Adapter:
+ * **Agnostic Adapter (`APP_FILTER`)**: Translates domain specifications into in-memory iteration filters (e.g., using code-level predicates), ensuring correctness on ANY data engine (NoSQL, In-Memory).
+ * **Native Adapter (`INFRA_NATIVE`)**: Translates the same domain specifications into database-native constructs (e.g., `SET SESSION` context, native RLS policies, or optimized SQL).
 
 ## Implementation Map
 
@@ -48,4 +48,4 @@ Adopt a **Configurable Persistence Strategy** utilizing the Strategy Pattern in 
 - [ADR-0010: Multi-Tenancy Architecture Strategy](../adrs/core/0010-multi-tenancy-architecture-strategy.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

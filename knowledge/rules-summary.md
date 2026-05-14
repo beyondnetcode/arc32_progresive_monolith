@@ -15,6 +15,7 @@
 | **R-11** | PO-first Architect-second Execution Order | `po`, `architect`, `sm` | Tasks needing functional and tech analysis | Execute PO agent first, then Architect agent; never parallelize or reverse this order. |
 | **R-12** | Naming and Tagging Convention Enforcement | `po`, `analyst`, `architect`, `dev`, `qa`, `sm` | Artifact creation or update | Strictly apply project naming conventions, category prefixes, and tags to all artifacts. |
 | **R-13** | Functional/Technical Story Split | `po`, `analyst`, `architect`, `dev`, `qa`, `sm` | Creating or updating functional stories, use cases, PRDs, or requirements | Functional intent, actors, flows, rules, and acceptance criteria must be written for PO/BA readability; APIs, payloads, protocols, persistence, cache, security controls, and implementation constraints must live in a dedicated Technical Requirements section. |
+| **R-14** | Professional Documentation Standards | `po`, `architect`, `analyst`, `dev`, `qa`, `sm` | Any document or artifact update | All Markdown files must maintain a professional format, avoiding emojis, UTF-8 icons, or non-standard decorative characters. Prioritize plain text, standard headings, clean tables, and simple lists. |
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

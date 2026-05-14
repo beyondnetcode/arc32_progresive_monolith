@@ -32,4 +32,4 @@ Strictly govern internal tooling selection based on the **100% Open-Source, Self
 - [Stack Definition Reference](../../02-architecture/stack.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

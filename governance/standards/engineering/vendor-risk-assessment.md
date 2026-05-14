@@ -51,4 +51,4 @@ The application core is completely insulated from vendor lock-in thanks to stric
 The current Reference Skeleton architecture has been deliberately designed to minimize lock-in. Any commercial tool (IdP, Feature Flags, Database) is kept entirely outside the domain boundaries using ports and adapters, ensuring that the business can instantly pivot to open-source alternatives if vendor pricing models change.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

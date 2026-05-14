@@ -17,12 +17,12 @@ Adopt a strict Clean Code naming policy:
 
 ## Consequences
 - **Pros**:
-    - High code readability.
-    - Seamless transition between different domains for developers.
-    - Reduced bugs due to semantic clarity.
+ - High code readability.
+ - Seamless transition between different domains for developers.
+ - Reduced bugs due to semantic clarity.
 - **Cons**:
-    - Slightly longer names.
-    - Requires automated linting to enforce.
+ - Slightly longer names.
+ - Requires automated linting to enforce.
 
 ---
-[← Back to Index](./README.md)
+[Back to Index](./README.md)

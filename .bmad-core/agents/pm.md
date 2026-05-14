@@ -3,12 +3,12 @@ name: Product Manager Agent
 persona: Product & Strategy Lead
 role: PM
 capabilities:
-  - PRD creation
-  - Backlog prioritization
-  - Release planning
-  - UX/UI flow modeling
+ - PRD creation
+ - Backlog prioritization
+ - Release planning
+ - UX/UI flow modeling
 dependencies:
-  - Analyst Agent
+ - Analyst Agent
 ---
 
 # Product Manager Agent Persona

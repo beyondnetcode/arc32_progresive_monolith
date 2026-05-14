@@ -1,26 +1,26 @@
-# ðŸ“ Stack Tecnológico Autorizado: Ecosistema .NET & C#
+# Stack Tecnológico Autorizado: Ecosistema .NET & C#
 
-> ðŸŒ **Navegación Bilingí¼e:** [ðŸ‡ºðŸ‡¸ English Version](../../standards/architecture/authoritative-tech-stack-dotnet.md)
+> **Navegación Bilingüe:** [English Version](../../standards/architecture/authoritative-tech-stack-dotnet.md)
 
-**Tipo de Documento:** Apéndice de Runtime  
-**Prerrequisito:** DEBE leerse después de la **[Lí­nea Base Agnóstica](./authoritative-tech-stack-agnostic.md)**.  
+**Tipo de Documento:** Apéndice de Runtime 
+**Prerrequisito:** DEBE leerse después de la **[Línea Base Agnóstica](./authoritative-tech-stack-agnostic.md)**. 
 **Ecosistema Objetivo:** Workers de Cómputo Pesado, Interoperabilidad Legacy, Procesamiento por Lotes Empresarial.
 
 ---
 
-## ðŸ“‹ 1. Matriz de Cumplimiento Ejecutiva (Mandatos para Proveedores)
+## 1. Matriz de Cumplimiento Ejecutiva (Mandatos para Proveedores)
 
-# 📦 Stack Tecnológico Autorizado: Ecosistema .NET & C#
+# Stack Tecnológico Autorizado: Ecosistema .NET & C#
 
-> 🌍 **Navegación Bilingüe:** [🇺🇸 English Version](../../standards/architecture/authoritative-tech-stack-dotnet.md)
+> **Navegación Bilingüe:** [English Version](../../standards/architecture/authoritative-tech-stack-dotnet.md)
 
-**Tipo de Documento:** Apéndice de Runtime  
-**Prerrequisito:** DEBE leerse después de la **[Línea Base Agnóstica](./authoritative-tech-stack-agnostic.md)**.  
+**Tipo de Documento:** Apéndice de Runtime 
+**Prerrequisito:** DEBE leerse después de la **[Línea Base Agnóstica](./authoritative-tech-stack-agnostic.md)**. 
 **Ecosistema Objetivo:** Workers de Cómputo Pesado, Interoperabilidad Legacy, Procesamiento por Lotes Empresarial.
 
 ---
 
-## 📋 1. Matriz de Cumplimiento Ejecutiva (Mandatos para Proveedores)
+## 1. Matriz de Cumplimiento Ejecutiva (Mandatos para Proveedores)
 
 Todas las escuadras de ingeniería que desarrollen dentro del ecosistema .NET DEBEN imponer estrictamente los artefactos autorizados a continuación. Cualquier intento de reemplazo exige un ADR aprobado ANTES de escribir código.
 
@@ -42,15 +42,15 @@ Todas las escuadras de ingeniería que desarrollen dentro del ecosistema .NET DE
 
 ---
 
-## 🏗️ 2. Implementación Arquitectónica (Mapeo .NET)
+## 2. Implementación Arquitectónica (Mapeo .NET)
 
 Para cumplir con el mandato general de arquitectura Hexagonal, se aplican las siguientes reglas de organización de proyectos .NET:
 
 ### 2.1 Segregación de Proyectos (Estructura de la Solución)
-1.  **`{BoundedContext}.Domain`**: Plain Old CLR Objects (POCOs). Absolutamente **cero referencias NuGet** fuera de las librerías fundamentales de `System`. Contiene Entidades de Dominio, Objetos de Valor e Interfaces (Puertos).
-2.  **`{BoundedContext}.Application`**: Implementa los comandos CQRS y casos de uso vía `MediatR`. Coordina la lógica de dominio sin conocimiento de Bases de Datos.
-3.  **`{BoundedContext}.Infrastructure`**: Contiene el **EF Core DbContext**, configuraciones de SQL Server, adaptadores de cliente Redis y clientes de APIs externos.
-4.  **`{BoundedContext}.Presentation` (o Web API)**: Punto de entrada que contiene los Controladores ASP.NET o endpoints de Minimal API, mapeando DTOs a Comandos de Aplicación.
+1. **`{BoundedContext}.Domain`**: Plain Old CLR Objects (POCOs). Absolutamente **cero referencias NuGet** fuera de las librerías fundamentales de `System`. Contiene Entidades de Dominio, Objetos de Valor e Interfaces (Puertos).
+2. **`{BoundedContext}.Application`**: Implementa los comandos CQRS y casos de uso vía `MediatR`. Coordina la lógica de dominio sin conocimiento de Bases de Datos.
+3. **`{BoundedContext}.Infrastructure`**: Contiene el **EF Core DbContext**, configuraciones de SQL Server, adaptadores de cliente Redis y clientes de APIs externos.
+4. **`{BoundedContext}.Presentation` (o Web API)**: Punto de entrada que contiene los Controladores ASP.NET o endpoints de Minimal API, mapeando DTOs a Comandos de Aplicación.
 
 ### 2.2 Política de Gestión de Errores
 Lanzar Excepciones estándar para el control de flujo está **PROHIBIDO**. 
@@ -58,22 +58,22 @@ Los equipos DEBEN utilizar el **Patrón Result** para propagar fallos de lógica
 
 ---
 
-## 💾 3. Detalles de Persistencia (Entity Framework Core)
+## 3. Detalles de Persistencia (Entity Framework Core)
 
 ### 3.1 Aislamiento Multi-Tenancy (RLS)
 Al utilizar la estrategia `INFRA_NATIVE` implementando SQL Server Row-Level Security en .NET:
-*   La capa de Infraestructura DEBE implementar un `TenantResolver` extrayendo el `tenant_id` de las `ClaimsPrincipal`.
-*   El `DbContext` DEBE utilizar `connection.CreateCommand()` dentro de los eventos de apertura del contexto para ejecutar:
-    ```sql
-    EXEC sp_set_session_context 'tenant_id', @tenantId;
-    ```
-*   Los Global Query Filters nativos (`HasQueryFilter`) solo se aceptan como un respaldo secundario de seguridad. El RLS impuesto en la conexión directa es la puerta de seguridad base.
+* La capa de Infraestructura DEBE implementar un `TenantResolver` extrayendo el `tenant_id` de las `ClaimsPrincipal`.
+* El `DbContext` DEBE utilizar `connection.CreateCommand()` dentro de los eventos de apertura del contexto para ejecutar:
+ ```sql
+ EXEC sp_set_session_context 'tenant_id', @tenantId;
+ ```
+* Los Global Query Filters nativos (`HasQueryFilter`) solo se aceptan como un respaldo secundario de seguridad. El RLS impuesto en la conexión directa es la puerta de seguridad base.
 
 ### 3.2 Migraciones
-## ðŸš€ 4. Advertencia Final de Integración para Proveedores
+## 4. Advertencia Final de Integración para Proveedores
 
 No satisfacer estas definiciones de herramientas estáticas bloqueará automáticamente la aceptación del código de integración.
-ðŸ‘‰ Volver al **[índice Maestro Global](../../../MASTER_INDEX.es.md)**
+-> Volver al **[índice Maestro Global](../../../MASTER_INDEX.es.md)**
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

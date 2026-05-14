@@ -1,4 +1,4 @@
-# 🎯 Architectural & Coding Standards
+# Architectural & Coding Standards
 
 Minimum viable tech constraints.
 

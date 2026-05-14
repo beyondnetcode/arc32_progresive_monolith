@@ -1,4 +1,4 @@
-# 📑 Document & Story Templates
+# Document & Story Templates
 
 Standard blueprints to save structure tokens.
 
@@ -10,7 +10,7 @@ Standard blueprints to save structure tokens.
 **So that** [Business Benefit]
 
 ### Acceptance Criteria
-- [ ] Scenario 1: [Given/When/Then]
+- [] Scenario 1: [Given/When/Then]
 ```
 
 ## Template 02: Architectural Decision Record (ADR)

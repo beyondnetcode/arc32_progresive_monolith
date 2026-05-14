@@ -40,9 +40,9 @@ Each bounded context will have its own TypeORM `DataSource` configuration scoped
 ```typescript
 // Example: TaskDataSource (scoped to tasks schema)
 export const TaskDataSource = new DataSource({
-  schema: 'tasks',
-  migrations: ['dist/tasks/infrastructure/migrations/*.js'],
-  entities: ['dist/tasks/infrastructure/entities/*.js'],
+ schema: 'tasks',
+ migrations: ['dist/tasks/infrastructure/migrations/*.js'],
+ entities: ['dist/tasks/infrastructure/entities/*.js'],
 });
 ```
 
@@ -64,70 +64,70 @@ All cross-bounded-context communication must occur exclusively via **Domain Even
 
 #### Event Catalog
 
-##### Auth Context ”” Published Events
+##### Auth Context - Published Events
 
 ```typescript
 /** Published when a new user successfully completes registration */
 class UserRegisteredEvent {
-  readonly eventId: string;        // UUID - for idempotency
-  readonly occurredAt: Date;
-  readonly userId: string;         // UUID
-  readonly tenantId: string;       // UUID
-  readonly email: string;
+ readonly eventId: string; // UUID - for idempotency
+ readonly occurredAt: Date;
+ readonly userId: string; // UUID
+ readonly tenantId: string; // UUID
+ readonly email: string;
 }
 
 /** Published when a user account is permanently deactivated */
 class UserDeactivatedEvent {
-  readonly eventId: string;
-  readonly occurredAt: Date;
-  readonly userId: string;
-  readonly tenantId: string;
+ readonly eventId: string;
+ readonly occurredAt: Date;
+ readonly userId: string;
+ readonly tenantId: string;
 }
 ```
 
-##### Task Management Context ”” Published Events
+##### Task Management Context - Published Events
 
 ```typescript
 /** Published when a new task is successfully created */
 class TaskCreatedEvent {
-  readonly eventId: string;
-  readonly occurredAt: Date;
-  readonly taskId: string;         // UUID
-  readonly userId: string;         // UUID - owner
-  readonly tenantId: string;       // UUID
-  readonly title: string;
-  readonly categoryId: string | null;
+ readonly eventId: string;
+ readonly occurredAt: Date;
+ readonly taskId: string; // UUID
+ readonly userId: string; // UUID - owner
+ readonly tenantId: string; // UUID
+ readonly title: string;
+ readonly categoryId: string | null;
 }
 
 /** Published when a task transitions to COMPLETED status */
 class TaskCompletedEvent {
-  readonly eventId: string;
-  readonly occurredAt: Date;
-  readonly taskId: string;
-  readonly userId: string;
-  readonly tenantId: string;
-  readonly completedAt: Date;
+ readonly eventId: string;
+ readonly occurredAt: Date;
+ readonly taskId: string;
+ readonly userId: string;
+ readonly tenantId: string;
+ readonly completedAt: Date;
 }
 
 /** Published when a task is permanently deleted */
 class TaskDeletedEvent {
-  readonly eventId: string;
-  readonly occurredAt: Date;
-  readonly taskId: string;
-  readonly userId: string;
-  readonly tenantId: string;
+ readonly eventId: string;
+ readonly occurredAt: Date;
+ readonly taskId: string;
+ readonly userId: string;
+ readonly tenantId: string;
 }
 ```
 
-##### Taxonomy Context ”” Published Events
+##### Taxonomy Context - Published Events
 
 ```typescript
 /** Published when a category is removed (tasks referencing it must be notified) */
 class CategoryDeletedEvent {
-  readonly eventId: string;
-  readonly occurredAt: Date;
-  readonly categoryId: string;
-  readonly tenantId: string;
+ readonly eventId: string;
+ readonly occurredAt: Date;
+ readonly categoryId: string;
+ readonly tenantId: string;
 }
 ```
 
@@ -147,7 +147,7 @@ class CategoryDeletedEvent {
 ## Consequences
 
 ### Positive (Pros)
-- **Zero-cost microservices extraction**: Schema boundaries defined upfront eliminate the most expensive part of service extraction ”” data ownership ambiguity.
+- **Zero-cost microservices extraction**: Schema boundaries defined upfront eliminate the most expensive part of service extraction - data ownership ambiguity.
 - **Explicit contracts**: The Event Catalog makes all inter-context dependencies visible and auditable, preventing hidden coupling.
 - **Idempotent event processing**: `eventId` (UUID) on every event enables consumers to safely deduplicate retried deliveries.
 - **Independent migration cycles**: Each schema can be migrated independently, enabling zero-downtime deployments per context.
@@ -164,4 +164,4 @@ class CategoryDeletedEvent {
 - [Bounded Context Map](../02-architecture/bounded-context-map.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

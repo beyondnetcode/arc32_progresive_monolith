@@ -1,9 +1,9 @@
 # [ADR 0048](0048-enterprise-minimal-apis-adoption.md): .NET API Endpoint Strategy
 
 ## 1. Status
-**Status**: Proposed  
-**Date**: 2026-05-13  
-**Scope**: Technology Stack - .NET APIs  
+**Status**: Proposed 
+**Date**: 2026-05-13 
+**Scope**: Technology Stack - .NET APIs 
 
 ---
 
@@ -17,34 +17,34 @@ We adopt a **hybrid strategy** with the following specific selection criteria:
 
 ### A. Selection Criteria
 
-*   **Minimal APIs**:
-    *   New high-performance microservices.
-    *   Serverless and event-driven services.
-    *   Backend-for-Frontend (BFFs).
-    *   Modules built under Vertical Slice Architecture.
-*   **Traditional Controllers**:
-    *   Enterprise APIs with complex MVC filter logic.
-    *   Legacy modules under active maintenance.
-    *   Services requiring advanced model binding logic not natively supported by Minimal APIs.
+* **Minimal APIs**:
+ * New high-performance microservices.
+ * Serverless and event-driven services.
+ * Backend-for-Frontend (BFFs).
+ * Modules built under Vertical Slice Architecture.
+* **Traditional Controllers**:
+ * Enterprise APIs with complex MVC filter logic.
+ * Legacy modules under active maintenance.
+ * Services requiring advanced model binding logic not natively supported by Minimal APIs.
 
 ### B. Standards for Minimal APIs
 To mitigate code disorder, the following non-negotiable rules are enforced:
-*   **Handlers**: Must be defined as dedicated class methods (inline lambdas are strictly prohibited).
-*   **Organization**: Mandatory use of *Extension Methods* for each functional Feature Module.
-*   **Structure**: Use of `MapGroup` per resource with shared security and CORS policies.
-*   **Corporate SDK**: Leverage the corporate base SDK to abstract helpers for registration, versioning, and observability of endpoints.
+* **Handlers**: Must be defined as dedicated class methods (inline lambdas are strictly prohibited).
+* **Organization**: Mandatory use of *Extension Methods* for each functional Feature Module.
+* **Structure**: Use of `MapGroup` per resource with shared security and CORS policies.
+* **Corporate SDK**: Leverage the corporate base SDK to abstract helpers for registration, versioning, and observability of endpoints.
 
 ---
 
 ## 4. Consequences
 
-### ðŸŸ¢ Positive
-*   **Performance**: Immediate throughput gains and full Native AOT compatibility for new services.
-*   **Evolution**: Controlled, incremental adoption without forcing massive legacy rewrites.
+### Positive
+* **Performance**: Immediate throughput gains and full Native AOT compatibility for new services.
+* **Evolution**: Controlled, incremental adoption without forcing massive legacy rewrites.
 
-### ðŸ”´ Negative
-*   **Learning Curve**: Development teams must master both operational patterns simultaneously.
-*   **Onboarding Friction**: As two distinct models coexist, robust documentation is required to prevent confusion.
+### Negative
+* **Learning Curve**: Development teams must master both operational patterns simultaneously.
+* **Onboarding Friction**: As two distinct models coexist, robust documentation is required to prevent confusion.
 
 ---
 
@@ -52,4 +52,4 @@ To mitigate code disorder, the following non-negotiable rules are enforced:
 Evaluate in **Q2 of next year** whether the ecosystem's maturity allows us to formally deprecate Controllers for all new software projects.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

@@ -19,16 +19,16 @@ Formalize a rigid **Two-Tier Distributed Gateway Model** to correctly decouple i
 
 ```mermaid
 graph TD
-    U["Public Clients (Mobile / Web)"] -->|TLS/HTTP| K["[Tier 1] Kong Edge Gateway"]
-    
-    subgraph SecureCluster["Protected Network"]
-        K -->|Forward| W["[Tier 2] NestJS Web BFF"]
-        K -->|Forward| M["[Tier 2] NestJS Mobile BFF"]
-        
-        W --> API["Reference Platform Core"]
-        W --> TMS["Transport Service"]
-        M --> API
-    end
+ U["Public Clients (Mobile / Web)"] -->|TLS/HTTP| K["[Tier 1] Kong Edge Gateway"]
+ 
+ subgraph SecureCluster["Protected Network"]
+ K -->|Forward| W["[Tier 2] NestJS Web BFF"]
+ K -->|Forward| M["[Tier 2] NestJS Mobile BFF"]
+ 
+ W --> API["Reference Platform Core"]
+ W --> TMS["Transport Service"]
+ M --> API
+ end
 ```
 
 ## Consequences
@@ -47,4 +47,4 @@ graph TD
 - [ADR-0027: Dual Protocol Edge](../adrs/nodejs/0027-dual-protocol-rest-grpc-api-gateway.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

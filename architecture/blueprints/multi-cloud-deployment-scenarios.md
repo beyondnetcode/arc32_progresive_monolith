@@ -1,12 +1,12 @@
-# ðŸ—ºï¸ Multi-Cloud Deployment and Compliance Scenarios
+# Multi-Cloud Deployment and Compliance Scenarios
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../../standards-es/architecture/multi-cloud-deployment-scenarios.md)
+> **Bilingual Navigation:** [Versión en Español](../../standards-es/architecture/multi-cloud-deployment-scenarios.md)
 
 This document details the approved deployment architectures for the Corporate Architecture, considering rigorous controls for data sovereignty, security, and the adaptability of the security strategy selector (`SECURITY_STRATEGY_MODE`).
 
 ---
 
-## ðŸŒ 1. Introduction to Operational Compliance
+## 1. Introduction to Operational Compliance
 
 Any physical implementation of the architecture must satisfy the guidelines of the **GDPR** (General Data Protection Regulation) and the **ISO/IEC 27001:2022** standard, specifically in domains A.8 (Asset Security) and A.10 (Cryptography).
 
@@ -18,32 +18,32 @@ Any physical implementation of the architecture must satisfy the guidelines of t
 
 ---
 
-## ðŸ”µ 2. AZURE Scenario: Strict Enterprise Compliance
+## 2. AZURE Scenario: Strict Enterprise Compliance
 
 Geared towards highly regulated sectors (Banking, Healthcare) requiring exhaustive auditing and hardware-backed encryption.
 
 ### 2.1 Network and Security Blueprint
 ```mermaid
 graph TD
-    subgraph VNet["Azure Virtual Network (Hub & Spoke)"]
-        subgraph DMZ["DMZ Subnet"]
-            AFD["Azure Front Door (WAF v2)"]
-            AGW["App Gateway (TLS Term)"]
-        end
-        subgraph AppTier["AKS Cluster Subnet"]
-            AKS["AKS Pods\n(Config: SECURITY_STRATEGY_MODE=INFRA_NATIVE)"]
-            ACFG["App Config + Key Vault"]
-        end
-        subgraph DataTier["Private Link Subnet"]
-            SQL["Azure SQL Hyperscale\n(Always Encrypted + RLS)"]
-        end
-    end
-    
-    Internet((Users)) --> AFD
-    AFD --> AGW
-    AGW --> AKS
-    AKS -.-> ACFG
-    AKS -->|Private Link| SQL
+ subgraph VNet["Azure Virtual Network (Hub & Spoke)"]
+ subgraph DMZ["DMZ Subnet"]
+ AFD["Azure Front Door (WAF v2)"]
+ AGW["App Gateway (TLS Term)"]
+ end
+ subgraph AppTier["AKS Cluster Subnet"]
+ AKS["AKS Pods\n(Config: SECURITY_STRATEGY_MODE=INFRA_NATIVE)"]
+ ACFG["App Config + Key Vault"]
+ end
+ subgraph DataTier["Private Link Subnet"]
+ SQL["Azure SQL Hyperscale\n(Always Encrypted + RLS)"]
+ end
+ end
+ 
+ Internet((Users)) --> AFD
+ AFD --> AGW
+ AGW --> AKS
+ AKS -.-> ACFG
+ AKS -->|Private Link| SQL
 ```
 
 ### 2.2 Security Implementation
@@ -54,42 +54,42 @@ graph TD
 ```bicep
 // Enabling RLS and Advanced Encryption in Azure SQL
 resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
-  name: 'sql-bmad-prod'
-  location: 'westeurope' // EU Region Compliance
-  properties: {
-    administratorLogin: 'sysadmin'
-    // Restrict to Microsoft Entra Auth only
-    minimalTlsVersion: '1.2'
-    publicNetworkAccess: 'Disabled'
-  }
+ name: 'sql-bmad-prod'
+ location: 'westeurope' // EU Region Compliance
+ properties: {
+ administratorLogin: 'sysadmin'
+ // Restrict to Microsoft Entra Auth only
+ minimalTlsVersion: '1.2'
+ publicNetworkAccess: 'Disabled'
+ }
 }
 
 resource sqlDB 'Microsoft.Sql/servers/databases@2023-05-01-preview' = {
-  parent: sqlServer
-  name: 'sqldb-tenants'
-  location: 'westeurope'
-  sku: {
-    name: 'GP_Gen5_4'
-  }
-  properties: {
-    zoneRedundant: true
-  }
+ parent: sqlServer
+ name: 'sqldb-tenants'
+ location: 'westeurope'
+ sku: {
+ name: 'GP_Gen5_4'
+ }
+ properties: {
+ zoneRedundant: true
+ }
 }
 
 // Azure Policy to restrict Regions (Sovereignty)
 resource policyAssignment 'Microsoft.Authorization/policyAssignments@2023-04-01' = {
-  name: 'restrict-to-europe'
-  properties: {
-    policyDefinitionId: '/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c'
-    parameters: {
-      listOfAllowedLocations: {
-        value: [
-          'westeurope'
-          'northeurope'
-        ]
-      }
-    }
-  }
+ name: 'restrict-to-europe'
+ properties: {
+ policyDefinitionId: '/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c'
+ parameters: {
+ listOfAllowedLocations: {
+ value: [
+ 'westeurope'
+ 'northeurope'
+]
+ }
+ }
+ }
 }
 ```
 
@@ -106,30 +106,30 @@ resource policyAssignment 'Microsoft.Authorization/policyAssignments@2023-04-01'
 
 ---
 
-## ðŸŸ  3. AWS Scenario: Global Resilience and Total Privacy
+## 3. AWS Scenario: Global Resilience and Total Privacy
 
 Aimed at global scaling with complete network isolation, where encryption keys belong to and are rotated exclusively by the customer (CMK).
 
 ### 3.1 Network and Security Blueprint
 ```mermaid
 graph TD
-    subgraph VPC["AWS VPC (No direct route to IGW)"]
-        subgraph PublicSubnets["Public / NAT (Optional)"]
-            ALB["AWS ALB (TLS 1.3)"]
-        end
-        subgraph PrivateAppSubnets["App Subnets (Multi-AZ)"]
-            EKS["EKS Node Groups\n(Pods w/ IAM Roles for SA)"]
-        end
-        subgraph PrivateDataSubnets["Data Subnets"]
-            Aurora["Amazon Aurora Postgres\n(Multi-AZ Cluster)"]
-        end
-        VPCE["VPC Endpoints\n(KMS, Secrets Mgr, S3)"]
-    end
-    
-    Users((Traffic)) --> ALB
-    ALB --> EKS
-    EKS --> Aurora
-    EKS -.-> VPCE
+ subgraph VPC["AWS VPC (No direct route to IGW)"]
+ subgraph PublicSubnets["Public / NAT (Optional)"]
+ ALB["AWS ALB (TLS 1.3)"]
+ end
+ subgraph PrivateAppSubnets["App Subnets (Multi-AZ)"]
+ EKS["EKS Node Groups\n(Pods w/ IAM Roles for SA)"]
+ end
+ subgraph PrivateDataSubnets["Data Subnets"]
+ Aurora["Amazon Aurora Postgres\n(Multi-AZ Cluster)"]
+ end
+ VPCE["VPC Endpoints\n(KMS, Secrets Mgr, S3)"]
+ end
+ 
+ Users((Traffic)) --> ALB
+ ALB --> EKS
+ EKS --> Aurora
+ EKS -.-> VPCE
 ```
 
 ### 3.2 Security Implementation
@@ -140,27 +140,27 @@ graph TD
 ```hcl
 # Defining Aurora Cluster with Customer CMK
 resource "aws_kms_key" "db_encryption_key" {
-  description             = "KMS Key for Customer Data Compliance"
-  deletion_window_in_days = 7
-  enable_key_rotation     = true # ISO 27001 A.10.1.2
+ description = "KMS Key for Customer Data Compliance"
+ deletion_window_in_days = 7
+ enable_key_rotation = true # ISO 27001 A.10.1.2
 }
 
 resource "aws_rds_cluster" "aurora_cluster" {
-  cluster_identifier      = "bmad-aurora-cluster"
-  engine                 = "aurora-postgresql"
-  database_name          = "corporate_db"
-  master_username        = "admin"
-  master_password        = var.db_password
-  
-  storage_encrypted      = true
-  kms_key_id            = aws_kms_key.db_encryption_key.arn
-  
-  vpc_security_group_ids = [aws_security_group.data_sg.id]
-  db_subnet_group_name   = aws_db_subnet_group.private_subnets.name
-  
-  # Multi-AZ Resilience
-  availability_zones     = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  backtrack_window       = 259200 # 72 Hours for disaster recovery
+ cluster_identifier = "bmad-aurora-cluster"
+ engine = "aurora-postgresql"
+ database_name = "corporate_db"
+ master_username = "admin"
+ master_password = var.db_password
+ 
+ storage_encrypted = true
+ kms_key_id = aws_kms_key.db_encryption_key.arn
+ 
+ vpc_security_group_ids = [aws_security_group.data_sg.id]
+ db_subnet_group_name = aws_db_subnet_group.private_subnets.name
+ 
+ # Multi-AZ Resilience
+ availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
+ backtrack_window = 259200 # 72 Hours for disaster recovery
 }
 ```
 
@@ -177,30 +177,30 @@ resource "aws_rds_cluster" "aurora_cluster" {
 
 ---
 
-## ðŸŸ¢ 4. ON-PREMISE Scenario: Total Control and Extreme Sovereignty
+## 4. ON-PREMISE Scenario: Total Control and Extreme Sovereignty
 
 Designed for government implementations or isolated (Air-Gapped) local facilities where physical sovereignty is absolute.
 
 ### 4.1 Network and Security Blueprint
 ```mermaid
 graph TD
-    subgraph Datacenter["Physical Corporate Datacenter"]
-        FW["Hardware Firewall (NGFW)"]
-        subgraph K8sCluster["Kubernetes Cluster (RKE2)"]
-            AppPods["App Pods\n(Dynamic Load)"]
-            Vault["HashiCorp Vault (Local Cluster)"]
-        end
-        subgraph BareMetalData["Physical Persistence"]
-            PostgresHAP["PostgreSQL Bare Metal\n(Patroni / Repmgr)"]
-            Backup["Veeam / Immutable Backup"]
-        end
-    end
-    
-    CorporateNetwork --> FW
-    FW --> AppPods
-    AppPods -.-> Vault
-    AppPods --> PostgresHAP
-    PostgresHAP --> Backup
+ subgraph Datacenter["Physical Corporate Datacenter"]
+ FW["Hardware Firewall (NGFW)"]
+ subgraph K8sCluster["Kubernetes Cluster (RKE2)"]
+ AppPods["App Pods\n(Dynamic Load)"]
+ Vault["HashiCorp Vault (Local Cluster)"]
+ end
+ subgraph BareMetalData["Physical Persistence"]
+ PostgresHAP["PostgreSQL Bare Metal\n(Patroni / Repmgr)"]
+ Backup["Veeam / Immutable Backup"]
+ end
+ end
+ 
+ CorporateNetwork --> FW
+ FW --> AppPods
+ AppPods -.-> Vault
+ AppPods --> PostgresHAP
+ PostgresHAP --> Backup
 ```
 
 ### 4.2 Security Implementation
@@ -211,28 +211,28 @@ graph TD
 ```hcl
 # Vault Secret Injection for App Config
 resource "vault_mount" "kvv2" {
-  path        = "secret"
-  type        = "kv"
-  options     = { version = "2" }
-  description = "Secret storage for App Settings"
+ path = "secret"
+ type = "kv"
+ options = { version = "2" }
+ description = "Secret storage for App Settings"
 }
 
 resource "vault_kv_secret_v2" "app_config" {
-  mount = vault_mount.kvv2.path
-  name  = "production/application-settings"
-  
-  data_json = jsonencode({
-    SECURITY_STRATEGY_MODE = "APP_AGNOSTIC"
-    DB_ENCRYPTION_KEY      = var.master_onprem_key
-  })
+ mount = vault_mount.kvv2.path
+ name = "production/application-settings"
+ 
+ data_json = jsonencode({
+ SECURITY_STRATEGY_MODE = "APP_AGNOSTIC"
+ DB_ENCRYPTION_KEY = var.master_onprem_key
+ })
 }
 
 # Pod ServiceAccount Access Rule
 resource "vault_policy" "app_reader" {
-  name   = "app-policy"
-  policy = <<EOT
+ name = "app-policy"
+ policy = <<EOT
 path "secret/data/production/application-settings" {
-  capabilities = ["read"]
+ capabilities = ["read"]
 }
 EOT
 }
@@ -251,39 +251,39 @@ EOT
 
 ---
 
-## ðŸŸ£ 5. HYBRID Scenario: Emergency and Elastic Transition
+## 5. HYBRID Scenario: Emergency and Elastic Transition
 
 Oriented towards absorbing sudden traffic spikes or when regulatory compliance permits cloud computing but demands local data persistence.
 
 ### 5.1 Network and Security Blueprint
 ```mermaid
 graph TD
-    subgraph PublicCloud["Public Cloud (AWS/Azure)"]
-        LB["Cloud Load Balancer"]
-        AppNodes["Compute Nodes (Front-end / BFF)\n(App-Layer Logic)"]
-    end
-    subgraph Conex["Secure Connectivity"]
-        VPN["Site-to-Site VPN / DirectConnect"]
-    end
-    subgraph OnPrem["On-Premise Datacenter"]
-        SecFW["Perimeter Firewall"]
-        CoreDB[("Master Database\n(PII Data)")]
-    end
-    
-    Internet --> LB
-    LB --> AppNodes
-    AppNodes --> VPN
-    VPN --> SecFW
-    SecFW --> CoreDB
+ subgraph PublicCloud["Public Cloud (AWS/Azure)"]
+ LB["Cloud Load Balancer"]
+ AppNodes["Compute Nodes (Front-end / BFF)\n(App-Layer Logic)"]
+ end
+ subgraph Conex["Secure Connectivity"]
+ VPN["Site-to-Site VPN / DirectConnect"]
+ end
+ subgraph OnPrem["On-Premise Datacenter"]
+ SecFW["Perimeter Firewall"]
+ CoreDB[("Master Database\n(PII Data)")]
+ end
+ 
+ Internet --> LB
+ LB --> AppNodes
+ AppNodes --> VPN
+ VPN --> SecFW
+ SecFW --> CoreDB
 ```
 
 ### 5.2 Data Flow and Latency Optimization
 Operating in a hybrid environment introduces network latency that can severely bottleneck SQL data exchange.
 
 **Optimization under `APP_AGNOSTIC`:**
-1.  The cloud application infrastructure adapter **does not** perform general queries followed by memory filtering (which would flood the VPN pipe with unneeded data).
-2.  The selector injects security context (`tenant_id`, `user_roles`) directly into the SQL statement's `WHERE` clause.
-3.  **Latency Benefit:** Only the strictly filtered, authorized dataset traverses the VPN. The audit is run synchronously at the Cloud application level and dumped asynchronously to redundant local logging.
+1. The cloud application infrastructure adapter **does not** perform general queries followed by memory filtering (which would flood the VPN pipe with unneeded data).
+2. The selector injects security context (`tenant_id`, `user_roles`) directly into the SQL statement's `WHERE` clause.
+3. **Latency Benefit:** Only the strictly filtered, authorized dataset traverses the VPN. The audit is run synchronously at the Cloud application level and dumped asynchronously to redundant local logging.
 
 ### 5.3 Operational Matrices
 **Compliance Matrix:**
@@ -297,7 +297,7 @@ Operating in a hybrid environment introduces network latency that can severely b
 
 ---
 
-## ðŸ“œ 6. Executive Summary for Decision Makers
+## 6. Executive Summary for Decision Makers
 
 | Metric | Azure | AWS | On-Premise | Hybrid |
 | :--- | :--- | :--- | :--- | :--- |
@@ -307,4 +307,4 @@ Operating in a hybrid environment introduces network latency that can severely b
 | **Compliance Overhead**| Low (Out-of-the-box) | Medium | High (Manual) | Very High |
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

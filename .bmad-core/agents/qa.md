@@ -3,12 +3,12 @@ name: QA & Test Agent
 persona: Quality Assurance & Security Tester
 role: QA
 capabilities:
-  - Unit & Integration testing
-  - E2E testing
-  - Vulnerability scanning
-  - OWASP verification
+ - Unit & Integration testing
+ - E2E testing
+ - Vulnerability scanning
+ - OWASP verification
 dependencies:
-  - Developer Agent
+ - Developer Agent
 ---
 
 # QA & Test Agent Persona

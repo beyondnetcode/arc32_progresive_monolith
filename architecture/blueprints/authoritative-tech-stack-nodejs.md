@@ -1,13 +1,13 @@
-# ðŸ“ Authoritative Tech Stack: Node.js & TypeScript Ecosystem
+# Authoritative Tech Stack: Node.js & TypeScript Ecosystem
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](./authoritative-tech-stack-nodejs.es.md)
+> **Bilingual Navigation:** [Versión en Español](./authoritative-tech-stack-nodejs.es.md)
 
-**Document Type:** Runtime Addendum  
-**Prerequisite:** MUST be read after the **[Agnostic Baseline](./authoritative-tech-stack-agnostic.md)**.  
+**Document Type:** Runtime Addendum 
+**Prerequisite:** MUST be read after the **[Agnostic Baseline](./authoritative-tech-stack-agnostic.md)**. 
 
 ---
 
-## ðŸ“‹ 1. Executive Compliance Matrix (Vendor Mandates)
+## 1. Executive Compliance Matrix (Vendor Mandates)
 
 | Category | Approved Tool / Framework | Validated Version | ADR Required to Swap? | Explicitly Rejected Alternatives |
 | :--- | :--- | :--- | :--- | :--- |
@@ -27,23 +27,23 @@
 
 ---
 
-## ðŸ—ï¸ 2. Architecture Organization (Nx Workspace)
+## 2. Architecture Organization (Nx Workspace)
 
 Node.js solutions MUST utilize strict library isolation enforced by **Nx tags**:
-1.  **`type:domain`**: Zero external imports. Pure TS objects.
-2.  **`type:application`**: Contains NestJS-agnostic logic, purely dependency-injected command handlers.
-3.  **`type:infrastructure`**: Contains NestJS concrete modules, ORM entities, and adapters.
-4.  **`type:api`**: Entry point NestJS application shell.
+1. **`type:domain`**: Zero external imports. Pure TS objects.
+2. **`type:application`**: Contains NestJS-agnostic logic, purely dependency-injected command handlers.
+3. **`type:infrastructure`**: Contains NestJS concrete modules, ORM entities, and adapters.
+4. **`type:api`**: Entry point NestJS application shell.
 
 ---
 
-## ðŸ’¾ 3. Specific Runtime Tools
+## 3. Specific Runtime Tools
 
-*   **Compiler:** `@swc/core` for 20x faster CI/CD compilation.
-*   **Linting:** ESLint v8 strict mode + Prettier configuration.
-
----
-ðŸ‘‰ Back to **[Global Master Index](../../../MASTER_INDEX.md)**
+* **Compiler:** `@swc/core` for 20x faster CI/CD compilation.
+* **Linting:** ESLint v8 strict mode + Prettier configuration.
 
 ---
-[? Back to Index](./README.md)
+-> Back to **[Global Master Index](../../../MASTER_INDEX.md)**
+
+---
+[Back to Index](./README.md)

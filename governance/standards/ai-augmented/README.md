@@ -1,6 +1,6 @@
-# ðŸ¤– AI-Augmented Architecture
+# AI-Augmented Architecture
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../../standards-es/ai-augmented/README.md)
+> **Bilingual Navigation:** [Versión en Español](../../standards-es/ai-augmented/README.md)
 
 
 ## What is this?
@@ -15,7 +15,7 @@ Designed for product teams and engineers who wish to integrate AI agents in a co
 
 ---
 
-## ðŸ“‚ Navigation Map
+## Navigation Map
 
 | Module | Description |
 |--------|-------------|
@@ -30,7 +30,7 @@ Designed for product teams and engineers who wish to integrate AI agents in a co
 
 ---
 
-## ðŸ“œ Architectural Decisions (AI ADRs)
+## Architectural Decisions (AI ADRs)
 - [ADR-AI-001: Harness Strategy](./06-adrs/adr-ai-001-harness-strategy.md)
 - [ADR-AI-002: MCP Standard](./06-adrs/adr-ai-002-mcp-as-integration-standard.md)
 - [ADR-AI-003: Model Selection Criteria](./06-adrs/adr-ai-003-model-selection-criteria.md)
@@ -38,4 +38,4 @@ Designed for product teams and engineers who wish to integrate AI agents in a co
 - [ADR-AI-005: Human-in-the-Loop Policy](./06-adrs/adr-ai-005-human-in-the-loop-policy.md)
 
 ---
-[? Back to Upper Level](../README.md)
+[Back to Upper Level](../README.md)

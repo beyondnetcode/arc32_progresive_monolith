@@ -14,9 +14,9 @@ Establish a strictly typed, unified Error Propagation framework based on the **R
 
 ### 1. Principle: Errors as Values (The Result Pattern)
 Mandate that ALL Application Use Cases and Domain Entities return errors explicitly instead of throwing them.
-*   **Return Signature**: `Promise<Result<SuccessType, DomainError>>`
-*   **Implementation**: Use a lightweight `Result<T, E>` class wrapper (e.g., inspired by `neverthrow`).
-*   **Benefit**: The Typescript compiler FORCES the caller to explicitly handle the failure branch using `.isOk()` / `.isFail()` checks or `.match()`.
+* **Return Signature**: `Promise<Result<SuccessType, DomainError>>`
+* **Implementation**: Use a lightweight `Result<T, E>` class wrapper (e.g., inspired by `neverthrow`).
+* **Benefit**: The Typescript compiler FORCES the caller to explicitly handle the failure branch using `.isOk()` / `.isFail()` checks or `.match()`.
 
 ### 2. Error Classification Matrix
 | Error Class | Type | Recovery Mechanism | Ultimate HTTP Code |
@@ -26,10 +26,10 @@ Mandate that ALL Application Use Cases and Domain Entities return errors explici
 | **Security Violation** | Guarded | Immediate Termination. Handled by NestJS Guard layer. | 401, 403 |
 
 ### 3. Propagation & Boundary Mapping
-1.  **Domain Layer**: Returns raw `Result.fail(new InsufficientFundsError())`. NO HTTP codes allowed.
-2.  **Application Layer**: Orchestrates logic. If a Step fails, short-circuits and returns the same `Result`.
-3.  **Adapter / Controller Layer**: The **Translation Boundary**. Explicitly maps `DomainError` subclasses into specific HTTP Response Codes using a clean mapper.
-4.  **Global Catch-All**: A dedicated **NestJS Exceptions Filter** captures only truly unhandled infrastructure crashes, strips internal stack traces, assigns a standard `TraceId` from OTel, and delivers an opaque "Internal Server Error" JSON.
+1. **Domain Layer**: Returns raw `Result.fail(new InsufficientFundsError())`. NO HTTP codes allowed.
+2. **Application Layer**: Orchestrates logic. If a Step fails, short-circuits and returns the same `Result`.
+3. **Adapter / Controller Layer**: The **Translation Boundary**. Explicitly maps `DomainError` subclasses into specific HTTP Response Codes using a clean mapper.
+4. **Global Catch-All**: A dedicated **NestJS Exceptions Filter** captures only truly unhandled infrastructure crashes, strips internal stack traces, assigns a standard `TraceId` from OTel, and delivers an opaque "Internal Server Error" JSON.
 
 ## Consequences
 
@@ -48,4 +48,4 @@ Mandate that ALL Application Use Cases and Domain Entities return errors explici
 - [ADR-0011: Fault Tolerance](../adrs/core/0011-fault-tolerance-resiliency-patterns.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

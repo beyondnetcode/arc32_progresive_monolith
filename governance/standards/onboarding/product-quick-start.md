@@ -1,6 +1,6 @@
-# ðŸš€ Getting Started Guide ”” Initiating a New Product from Reference
+# Getting Started Guide - Initiating a New Product from Reference
 
-**Role:** Developer / Solutions Architect  
+**Role:** Developer / Solutions Architect 
 **Objective:** Instantiate a production-ready repository from the Corporate Reference Framework.
 
 ---
@@ -10,10 +10,10 @@ This Reference Architecture is designed to be **cloned as a template**, not impo
 
 ## 2. Prerequisites
 Before initializing, ensure your local machine has:
-*   **Node.js**: v20.x (LTS)
-*   **pnpm**: v8.x (or `npm` v10)
-*   **Docker & Docker Compose**: v25+ (Required for local services)
-*   **Nx CLI**: Installed globally via `npm install -g nx`
+* **Node.js**: v20.x (LTS)
+* **pnpm**: v8.x (or `npm` v10)
+* **Docker & Docker Compose**: v25+ (Required for local services)
+* **Nx CLI**: Installed globally via `npm install -g nx`
 
 ---
 
@@ -61,9 +61,9 @@ To verify your installation works correctly, boot up the demo applications:
 nx run-many --target=serve --projects=api,web-bff
 ```
 The Sandbox runs the To-Do domain demonstrating:
-1.  **Hexagonal Core**: Pure typescript domain logic.
-2.  **Multi-Tenant RLS**: Database isolation in active sessions.
-3.  **Observability**: Traces injected automatically.
+1. **Hexagonal Core**: Pure typescript domain logic.
+2. **Multi-Tenant RLS**: Database isolation in active sessions.
+3. **Observability**: Traces injected automatically.
 
 ---
 
@@ -93,10 +93,10 @@ npm audit
 
 ---
 
-## ðŸ†˜ Assistance
+## Assistance
 If you encounter issues during bootstrap, refer to:
-*   ðŸ“œ **[Architecture Decision Records](../03-adrs/index.md)**: To understand WHY things are configured this way.
-*   ðŸ“˜ **[Engineering Standards](../04-artifacts/engineering-standards.md)**: For code review guidelines.
+* **[Architecture Decision Records](../03-adrs/index.md)**: To understand WHY things are configured this way.
+* **[Engineering Standards](../04-artifacts/engineering-standards.md)**: For code review guidelines.
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

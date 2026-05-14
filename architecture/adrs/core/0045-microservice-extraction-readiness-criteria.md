@@ -22,9 +22,9 @@ A domain module MUST be deemed a valid candidate for the extraction phase (Miles
 | **4. Data Density** | DB engine payload > 20% of total instances. | I/O bottleneck justifying migration to a physically dedicated per-service database. |
 
 ### Extraction Operational Procedure:
-1.  **Validation:** Squad Lead Developer presents verified telemetry metrics to the Architectural Board.
-2.  **Temporal Isolation:** Configuration of API Gateway (Kong) routing to enable the Strangler Fig pattern.
-3.  **DB Decoupling:** Database schema migration into an independent instance following Phase 2 of the Database Migration Path ([ADR-0031](../core/0031-schema-per-context-domain-event-catalog.md)).
+1. **Validation:** Squad Lead Developer presents verified telemetry metrics to the Architectural Board.
+2. **Temporal Isolation:** Configuration of API Gateway (Kong) routing to enable the Strangler Fig pattern.
+3. **DB Decoupling:** Database schema migration into an independent instance following Phase 2 of the Database Migration Path ([ADR-0031](../core/0031-schema-per-context-domain-event-catalog.md)).
 
 ## Consequences
 
@@ -39,7 +39,7 @@ A domain module MUST be deemed a valid candidate for the extraction phase (Miles
 ## References
 - [ADR 0006: Future Microservices Transition](../core/0006-future-microservices-transition-dapr.md)
 - [ADR 0047: Selection Framework: Monolith vs SOA vs Microservices](../core/0047-architectural-patterns-monolith-soa-microservices.md)
-- Sam Newman ”” *Building Microservices* (2nd Ed. 2021)
+- Sam Newman - *Building Microservices* (2nd Ed. 2021)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

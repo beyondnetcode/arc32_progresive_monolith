@@ -34,4 +34,4 @@ Standardize on utilizing the **`@nestjslatam/ddd`** primitives ecosystem within 
 - [@nestjslatam/ddd docs](https://github.com/nestjslatam/ddd)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

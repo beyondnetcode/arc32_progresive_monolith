@@ -78,20 +78,20 @@ The repository is organized around a progressive architecture path:
 
 ```mermaid
 graph TD
-    Root[README: Navigation Hub] --> Master[MASTER_INDEX]
-    Root --> Governance[governance]
-    Root --> Architecture[architecture]
-    Root --> Operations[operations]
-    Root --> Infrastructure[infrastructure]
-    Root --> Knowledge[knowledge]
-    Root --> Source[src]
+ Root[README: Navigation Hub] --> Master[MASTER_INDEX]
+ Root --> Governance[governance]
+ Root --> Architecture[architecture]
+ Root --> Operations[operations]
+ Root --> Infrastructure[infrastructure]
+ Root --> Knowledge[knowledge]
+ Root --> Source[src]
 
-    Governance --> Standards[standards]
-    Governance --> SDLC[sdlc]
-    Architecture --> Blueprints[blueprints]
-    Architecture --> ADRs[adrs]
-    Knowledge --> Demo[demo sandbox]
-    Source --> Todo[To-Do reference app]
+ Governance --> Standards[standards]
+ Governance --> SDLC[sdlc]
+ Architecture --> Blueprints[blueprints]
+ Architecture --> ADRs[adrs]
+ Knowledge --> Demo[demo sandbox]
+ Source --> Todo[To-Do reference app]
 ```
 
 ---
@@ -147,5 +147,5 @@ This project is published as an open technical reference under the repository li
 ---
 
 <div align="center">
-  <sub>© 2026 arc32 Ecosystem | Enabled by BMAD-METHOD | AI-Augmented Engineering</sub>
+ <sub> 2026 arc32 Ecosystem | Enabled by BMAD-METHOD | AI-Augmented Engineering</sub>
 </div>

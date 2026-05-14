@@ -31,4 +31,4 @@ Orchestrate a strict **Dual-Protocol Runtime Edge** paired with Kong Gateway orc
 - [gRPC Official Site](https://grpc.io/)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

@@ -3,10 +3,10 @@ name: Analyst Agent
 persona: Requirements & Specification Specialist
 role: Analyst
 capabilities:
-  - User story collection
-  - Scope definition
-  - Functional requirements extraction
-  - Business rules modeling
+ - User story collection
+ - Scope definition
+ - Functional requirements extraction
+ - Business rules modeling
 dependencies: []
 ---
 

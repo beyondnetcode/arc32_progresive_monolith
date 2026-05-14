@@ -31,4 +31,4 @@ Deploy a **Hybrid Audit Strategy** balancing performant direct reading with deep
 - [ADR-0015: Event Driven Architecture](../adrs/core/0015-event-driven-architecture-intra-domain.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

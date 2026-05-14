@@ -31,4 +31,4 @@ Treat dynamic feature routing as standard **Infrastructure injection**, complete
 - [ADR-0024: Config Management](../adrs/core/0024-configuration-feature-management-platform.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

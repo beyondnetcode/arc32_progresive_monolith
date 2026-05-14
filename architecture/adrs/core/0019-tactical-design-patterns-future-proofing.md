@@ -31,4 +31,4 @@ Mandate specific Functional and Structure patterns protecting core purity:
 - [ADR-0029: Tactical DDD Primitives](../adrs/nodejs/0029-tactical-ddd-primitives-library.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

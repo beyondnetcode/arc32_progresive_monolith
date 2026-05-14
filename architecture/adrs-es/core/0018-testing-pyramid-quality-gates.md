@@ -7,15 +7,15 @@ Aprobado
 2026-05-08
 
 ## Contexto
-Sin requisitos de pruebas rí­gidos, la regresión gradual de la base de código convierte rápidamente monolitos mantenibles en paquetes de legado inestables. Requerimos criterios de prueba estrictos que limiten la confianza de ejecución impuesta automáticamente antes de que el código entre en los flujos de ramas objetivo.
+Sin requisitos de pruebas rígidos, la regresión gradual de la base de código convierte rápidamente monolitos mantenibles en paquetes de legado inestables. Requerimos criterios de prueba estrictos que limiten la confianza de ejecución impuesta automáticamente antes de que el código entre en los flujos de ramas objetivo.
 
 ## Decisión
-Comprometerse con una jerarquí­a de pruebas de software estándar y el bloqueo mecánico de despliegues:
+Comprometerse con una jerarquía de pruebas de software estándar y el bloqueo mecánico de despliegues:
 
-1. **Capa Unitaria (Rápida)**: Dominar el volumen total de pruebas usando ejecuciones estándar de Jest que aí­slen las clases core y de aplicación puras. Las pruebas no deben ejecutar E/S o arranques de contenedores.
-2. **Capa de Integración (Segura)**: Probar los adaptadores de Persistencia y Gateway contra bases de datos activas usando motores de testcontainers (ej. PostgreSQL/Redis activos en contenedores efí­meros).
-3. **Capa e2e (Completa)**: Desplegar rutinas `supertest` aisladas que orquesten rutas HTTP completas (Controlador -> Servicio -> Base de Datos) probando la seguridad de lí­mites externos reales y el transporte.
-4. **Puertas Binarias**: La pipeline CI niega rigurosamente el procesamiento de commits de fusión que hagan colapsar los umbrales generales de cobertura de pruebas por debajo de los mí­nimos corporativos establecidos (**lí­nea base del 70%**).
+1. **Capa Unitaria (Rápida)**: Dominar el volumen total de pruebas usando ejecuciones estándar de Jest que aíslen las clases core y de aplicación puras. Las pruebas no deben ejecutar E/S o arranques de contenedores.
+2. **Capa de Integración (Segura)**: Probar los adaptadores de Persistencia y Gateway contra bases de datos activas usando motores de testcontainers (ej. PostgreSQL/Redis activos en contenedores efímeros).
+3. **Capa e2e (Completa)**: Desplegar rutinas `supertest` aisladas que orquesten rutas HTTP completas (Controlador -> Servicio -> Base de Datos) probando la seguridad de límites externos reales y el transporte.
+4. **Puertas Binarias**: La pipeline CI niega rigurosamente el procesamiento de commits de fusión que hagan colapsar los umbrales generales de cobertura de pruebas por debajo de los mínimos corporativos establecidos (**línea base del 70%**).
 
 ## Consecuencias
 
@@ -31,4 +31,4 @@ Comprometerse con una jerarquí­a de pruebas de software estándar y el bloqueo
 - [ADR-0005: Puertas de Seguridad](../adrs/core/0005-ci-cd-quality-codeql.md)
 
 ---
-[? Volver al Índice](./README.es.md)
+[Volver al Índice](./README.es.md)

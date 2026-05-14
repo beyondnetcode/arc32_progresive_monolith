@@ -17,13 +17,13 @@ Before deploying a Saga, verify if the business process can be contained within 
 
 ### 2. Evolution Step: The Saga Applicability Condition
 Mandate a Saga implementation ONLY when:
-1.  The transaction must spans **two or more separate microservice databases** (Physically partitioned per [ADR-0031](0031-schema-per-context-domain-event-catalog.md)).
-2.  Immediate consistency is not required, but **Guaranteed Eventual Consistency** is mandatory.
-3.  A failure in step N requires an explicit **Rollback/Compensating Action** in step N-1.
+1. The transaction must spans **two or more separate microservice databases** (Physically partitioned per [ADR-0031](0031-schema-per-context-domain-event-catalog.md)).
+2. Immediate consistency is not required, but **Guaranteed Eventual Consistency** is mandatory.
+3. A failure in step N requires an explicit **Rollback/Compensating Action** in step N-1.
 
 ### 3. Implementation Style Governance
-*   **Choreography (Event-Driven Saga)**: Standard recommendation for short chains (2 to 3 steps). Services listen to the Event Bus ([ADR-0015](0015-event-driven-architecture-intra-domain.md)) and react directly to completion/failure events. No central controller.
-*   **Orchestration (Command-Driven Saga)**: Mandatory recommendation for complex workflows (> 3 steps). Requires a dedicated Saga Orchestrator component that manages the centralized workflow execution and issues compensating commands explicitly.
+* **Choreography (Event-Driven Saga)**: Standard recommendation for short chains (2 to 3 steps). Services listen to the Event Bus ([ADR-0015](0015-event-driven-architecture-intra-domain.md)) and react directly to completion/failure events. No central controller.
+* **Orchestration (Command-Driven Saga)**: Mandatory recommendation for complex workflows (> 3 steps). Requires a dedicated Saga Orchestrator component that manages the centralized workflow execution and issues compensating commands explicitly.
 
 ### 4. Compulsory Mechanics
 Any Saga implementation MUST implement:
@@ -46,4 +46,4 @@ Any Saga implementation MUST implement:
 - [ADR-0033: Transactional Outbox Pattern](../adrs/core/0033-transactional-outbox-pattern.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

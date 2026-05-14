@@ -32,4 +32,4 @@ Rollout an **Adaptive Risk-Managed MFA Framework** driving the Core authenticati
 - [WebAuthn Official Guide](https://webauthn.guide/)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

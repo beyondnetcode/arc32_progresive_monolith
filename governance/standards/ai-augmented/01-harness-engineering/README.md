@@ -6,4 +6,4 @@
 * [hooks-and-verification](./hooks-and-verification.md)
 
 ---
-[? Back to Upper Level](../README.md)
+[Back to Upper Level](../README.md)

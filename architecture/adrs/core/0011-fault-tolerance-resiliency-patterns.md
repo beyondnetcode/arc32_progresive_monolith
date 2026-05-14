@@ -33,4 +33,4 @@ Implement explicit Resilience Patterns protecting all outbound system exits:
 - [ADR-0002: Clean Hexagonal Architecture](../adrs/nodejs/0002-clean-architecture-nestjs.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)

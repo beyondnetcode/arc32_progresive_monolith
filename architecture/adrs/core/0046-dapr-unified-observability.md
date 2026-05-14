@@ -16,12 +16,12 @@ Dapr introduces native, automatic telemetry emission following the W3C TraceCont
 ## Decision
 We hereby mandate the absolute unification of infrastructure and application telemetry governed by the following engineering directives:
 
-1.  **Sidecar Adoption**: Standardize on Dapr as the primary mechanism for inter-service communication and infrastructure component integration, in full alignment with [ADR-0006](../core/0006-future-microservices-transition-dapr.md).
-2.  **Correlation Unification (Pivot to W3C)**: The application MUST **deprecate manual correlation identifier generation**. Instead, it will dynamically extract the `trace-id` from the auto-injected Dapr `traceparent` header and set this as the primary pivot value across all application structured log metadata.
-3.  **Span Linking**: Application log records MUST also encompass the active `span-id` metadata field to explicitly bind discrete log entries to distinct segments within the distributed execution timeline.
-4.  **OpenTelemetry-Driven Instrumentation**: Utilize the platform-agnostic OpenTelemetry SDK within the application runtime to naturally inherit and propagate the TraceContext across all internal domain executions, ensuring trace persistence.
-5.  **Ingestion Alignment**: Log transport and ingestion agents (Filebeat, Vector, APM Server) will be reconfigured to map their centralized indexing fields to the standardized `trace_id` field (superseding `x-correlation-id`), securing dashboard backward-compatibility following a minor query refactor.
-6.  **Prohibition of Proprietary SDKs**: Importing explicit Dapr or Elastic client SDKs directly into the core domain model remains strictly prohibited. All communication interactions with the Dapr sidecar will strictly route through local HTTP/gRPC channels leveraging infrastructure-tier ports and adapters to preserve framework detachment.
+1. **Sidecar Adoption**: Standardize on Dapr as the primary mechanism for inter-service communication and infrastructure component integration, in full alignment with [ADR-0006](../core/0006-future-microservices-transition-dapr.md).
+2. **Correlation Unification (Pivot to W3C)**: The application MUST **deprecate manual correlation identifier generation**. Instead, it will dynamically extract the `trace-id` from the auto-injected Dapr `traceparent` header and set this as the primary pivot value across all application structured log metadata.
+3. **Span Linking**: Application log records MUST also encompass the active `span-id` metadata field to explicitly bind discrete log entries to distinct segments within the distributed execution timeline.
+4. **OpenTelemetry-Driven Instrumentation**: Utilize the platform-agnostic OpenTelemetry SDK within the application runtime to naturally inherit and propagate the TraceContext across all internal domain executions, ensuring trace persistence.
+5. **Ingestion Alignment**: Log transport and ingestion agents (Filebeat, Vector, APM Server) will be reconfigured to map their centralized indexing fields to the standardized `trace_id` field (superseding `x-correlation-id`), securing dashboard backward-compatibility following a minor query refactor.
+6. **Prohibition of Proprietary SDKs**: Importing explicit Dapr or Elastic client SDKs directly into the core domain model remains strictly prohibited. All communication interactions with the Dapr sidecar will strictly route through local HTTP/gRPC channels leveraging infrastructure-tier ports and adapters to preserve framework detachment.
 
 ## Consequences
 
@@ -41,4 +41,4 @@ We hereby mandate the absolute unification of infrastructure and application tel
 - [Authoritative Tech Stack - Validated Runtimes](../../architecture/authoritative-tech-stack.md)
 
 ---
-[? Back to Index](./README.md)
+[Back to Index](./README.md)
