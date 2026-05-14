@@ -1,4 +1,4 @@
-# ðŸ“Š Design Maturity & Patterns Evaluation â€” Microservices & Progressive Evolution
+# ðŸ“Š Design Maturity & Patterns Evaluation ”” Microservices & Progressive Evolution
 
 This document presents a rigorous evaluation of international **Microservices Patterns and Anti-patterns** measured against our current progressive monolithic architectural design. It serves as a strategic guide to de-risk the long-term technical evolution.
 

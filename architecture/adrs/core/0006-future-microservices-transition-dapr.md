@@ -1,13 +1,13 @@
 # [ADR 0006](0006-future-microservices-transition-dapr.md): Future Microservices Transition with Dapr Sidecars
 
 ## Status
-Approved â€” Backlog (Phase 3 Milestone)
+Approved ”” Backlog (Phase 3 Milestone)
 
 ## Date
 2026-05-08
 
 ## Context
-The system is currently a Modular Monolith (single process, logically isolated bounded contexts). As business requirements scale â€” higher traffic, independent deployment cycles, or polyglot service integration â€” a clear and safe path to microservices is required. The transition must not require rewriting any domain logic.
+The system is currently a Modular Monolith (single process, logically isolated bounded contexts). As business requirements scale ”” higher traffic, independent deployment cycles, or polyglot service integration ”” a clear and safe path to microservices is required. The transition must not require rewriting any domain logic.
 
 ## Decision
 Adopt **Dapr (Distributed Application Runtime)** as the microservices sidecar runtime when splitting the monolith into independent services.
@@ -16,9 +16,9 @@ Adopt **Dapr (Distributed Application Runtime)** as the microservices sidecar ru
 
 | Milestone | Description |
 | :--- | :--- |
-| **M1 â€” Modular Monolith** | Current state. Single process with isolated bounded context modules. |
-| **M2 â€” Service Extraction** | High-traffic or independently-deployable contexts extracted as Nx micro-projects. Activates via rules in [ADR-0045](../core/0045-microservice-extraction-readiness-criteria.md). |
-| **M3 â€” Full Mesh** | Advanced ecosystem state where infrastructure-level interaction uses Sidecar abstraction. |
+| **M1 ”” Modular Monolith** | Current state. Single process with isolated bounded context modules. |
+| **M2 ”” Service Extraction** | High-traffic or independently-deployable contexts extracted as Nx micro-projects. Activates via rules in [ADR-0045](../core/0045-microservice-extraction-readiness-criteria.md). |
+| **M3 ”” Full Mesh** | Advanced ecosystem state where infrastructure-level interaction uses Sidecar abstraction. |
 
 ### ðŸš¦ Dapr Activation Gate
 To prevent premature over-engineering, Dapr Sidecars are **NOT** active by default at Milestone 2. The organization will operate via pure Kubernetes deployment using explicit gRPC communication between services. Dapr activation is gated by the following conditions:

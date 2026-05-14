@@ -1,6 +1,6 @@
 # ðŸ“„ Product Requirements Document (PRD)
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](./01-prd-demo-sandbox-es.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](./01-prd-demo-sandbox-es.md)
 
 **Product:** ARC32 Reference Sandbox ("To-Do Labs")  
 **Product Owner:** Product Manager [BMAD Role]  

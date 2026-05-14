@@ -1,13 +1,13 @@
 # ðŸš€ Operaciones y Observabilidad
 
-Este directorio contiene la configuraciÃ³n operativa y el stack de observabilidad para el ecosistema **arc32**.
+Este directorio contiene la configuración operativa y el stack de observabilidad para el ecosistema **arc32**.
 
 ## ðŸ“Š Stack de Observabilidad
-- **Grafana:** Dashboards y visualizaciÃ³n.
-- **OpenTelemetry (OTel):** InstrumentaciÃ³n y recolecciÃ³n de trazas.
+- **Grafana:** Dashboards y visualización.
+- **OpenTelemetry (OTel):** Instrumentación y recolección de trazas.
 - **Tempo:** Backend de trazado distribuido.
 
-## ðŸ› ï¸ Infraestructura como CÃ³digo
+## ðŸ› ï¸ Infraestructura como Código
 Consulta el directorio `infrastructure/` para los manifiestos de Docker Compose y Kubernetes.
 
 ---

@@ -25,6 +25,51 @@ services:
       - ums-network
 
   # ---------------------------------------------------------
+  # 1.1 Enterprise SQL Server (Latest)
+  # ---------------------------------------------------------
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ums-sqlserver
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "ums_password123!"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'ums_password123!' -Q 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ums-network
+
+  # ---------------------------------------------------------
+  # 1.2 Document Database (MongoDB)
+  # ---------------------------------------------------------
+  mongodb:
+    image: mongo:latest
+    container_name: ums-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ums_user
+      MONGO_INITDB_ROOT_PASSWORD: ums_password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ums-network
+
+  # ---------------------------------------------------------
   # 2. High-Performance Cache (Redis 7.2)
   # ---------------------------------------------------------
   redis:
@@ -273,6 +318,8 @@ services:
 # ---------------------------------------------------------
 volumes:
   postgres_data:
+  sqlserver_data:
+  mongodb_data:
   redis_data:
   rabbitmq_data:
   minio_data:

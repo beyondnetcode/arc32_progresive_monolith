@@ -1,6 +1,6 @@
 # ðŸš€ Evolutionary Strategy and Architectural Dashboard
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](../../standards-es/vision/evolutionary-strategy-roadmap.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../../standards-es/vision/evolutionary-strategy-roadmap.md)
 
 This document establishes the strategic roadmap driven by Corporate Architecture to transform the ecosystem from its foundational steps into a highly resilient, provider-agnostic global platform.
 
@@ -27,7 +27,7 @@ timeline
     Phase 3 : North Star : Multi-Cloud Agnosticism : Event-Driven Architecture : Zero Trust Network & Auto Compliance
 ```
 
-### ðŸŸ¢ Phase 1: The Lean Foundation (MVP) â€” Short Term
+### ðŸŸ¢ Phase 1: The Lean Foundation (MVP) ”” Short Term
 **Focus:** Time-to-Market with Uncompromised Domain Integrity.
 
 | Dimension | Strategy |
@@ -36,7 +36,7 @@ timeline
 | **Persistence** | Single relational instance. Application-side enforced security (`APP_AGNOSTIC`). |
 | **Critical Focus** | Rigid API-First contract definition and comprehensive validation of core business rules without infrastructure noise. |
 
-### ðŸŸ¡ Phase 2: Scale & Decoupling â€” Medium Term
+### ðŸŸ¡ Phase 2: Scale & Decoupling ”” Medium Term
 **Focus:** Operational Efficiency and Component Segregation.
 
 | Dimension | Strategy |
@@ -45,7 +45,7 @@ timeline
 | **Persistence** | Activation of Hybrid Mode. Deploying native RLS (`INFRA_NATIVE`) to production for database speed, maintaining safe codebase fallbacks for test harness suites. |
 | **Critical Focus** | Comprehensive Observability (distributed tracing + structured logs) and aggressive reduction of I/O persistence latency. |
 
-### ðŸ”´ Phase 3: North Star (Resilience & Sovereignty) â€” Long Term
+### ðŸ”´ Phase 3: North Star (Resilience & Sovereignty) ”” Long Term
 **Focus:** Total Cloud Agnosticism and Hardened Data Sovereignty.
 
 | Dimension | Strategy |

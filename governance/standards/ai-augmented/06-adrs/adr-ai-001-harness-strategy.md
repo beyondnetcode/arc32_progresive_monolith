@@ -25,9 +25,9 @@ We formally decide to adopt the discipline of **Harness Engineering** as the man
 *   âš ï¸ **Trade-off:** We sacrifice fleeting velocity ("Hacks") in favor of long-term stability.
 
 ## References
-*   Mitchell Hashimoto â€” Harness Engineering (Feb 2026)
-*   OpenAI â€” Harness Engineering with Codex (Feb 2026)
-*   Martin Fowler / Thoughtworks â€” Harness Engineering (Feb 2026)
+*   Mitchell Hashimoto ”” Harness Engineering (Feb 2026)
+*   OpenAI ”” Harness Engineering with Codex (Feb 2026)
+*   Martin Fowler / Thoughtworks ”” Harness Engineering (Feb 2026)
 
 ---
 [? Back to Index](./README.md)

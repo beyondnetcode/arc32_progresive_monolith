@@ -1,23 +1,23 @@
-# Principios de DiseÃ±o para Herramientas Inteligentes
+# Principios de Diseí±o para Herramientas Inteligentes
 
 ## Contexto
-Un LLM no ve el cÃ³digo; solo ve la documentaciÃ³n. Una herramienta exquisitamente escrita con metadatos mal descritos resulta en un agente inÃºtil.
+Un LLM no ve el código; solo ve la documentación. Una herramienta exquisitamente escrita con metadatos mal descritos resulta en un agente iníºtil.
 
 Seguir estos 5 principios maximiza la probabilidad de una llamada a herramienta exitosa en un 90%.
 
 ---
 
-## 1. Determinismo SemÃ¡ntico (Nombres Claros)
-El nombre de la herramienta debe ser altamente explÃ­cito y evitar jerga profesional no relacionada con la acciÃ³n.
+## 1. Determinismo Semántico (Nombres Claros)
+El nombre de la herramienta debe ser altamente explí­cito y evitar jerga profesional no relacionada con la acción.
 *   âŒ `do_work`
 *   âŒ `process_data`
 *   âœ… `calculate_shipping_tax`
 *   âœ… `fetch_user_by_email`
 
 ## 2. El Principio de Hiper-Explicidad en las Descripciones
-Una descripciÃ³n no es para un humano, es para un motor de bÃºsqueda de espacio vectorial.
+Una descripción no es para un humano, es para un motor de bíºsqueda de espacio vectorial.
 *   âŒ `"Consulta productos."`
-*   âœ… `"Recupera el catÃ¡logo detallado de productos activos. REQUERIDO cuando el usuario pregunta por disponibilidad, precios, o niveles de stock. NO usar esto para consultas de facturaciÃ³n."`
+*   âœ… `"Recupera el catálogo detallado de productos activos. REQUERIDO cuando el usuario pregunta por disponibilidad, precios, o niveles de stock. NO usar esto para consultas de facturación."`
 
 ## 3. Esquemas Estrictos (Zod / JSON Schema)
 Nunca defina un argumento como un simple `string`. Use `enTODO` y restricciones siempre que sea posible para restringir la "creatividad" del modelo.
@@ -25,12 +25,12 @@ Nunca defina un argumento como un simple `string`. Use `enTODO` y restricciones 
 *   **Argumento Estricto:** `status: "PENDING" | "SHIPPED" | "DELIVERED"`
 
 ## 4. Alta Idempotencia (Seguro de Reintentar)
-Los agentes entran frecuentemente en bucles recursivos de reintento ante fallos. Si una herramienta falla a mitad del camino, ejecutarla de nuevo NO DEBE generar efectos secundarios duplicados (ej., cobrar a una tarjeta de crÃ©dito dos veces). Las herramientas deben aceptar una `idempotency_key` cuando sea relevante.
+Los agentes entran frecuentemente en bucles recursivos de reintento ante fallos. Si una herramienta falla a mitad del camino, ejecutarla de nuevo NO DEBE generar efectos secundarios duplicados (ej., cobrar a una tarjeta de crédito dos veces). Las herramientas deben aceptar una `idempotency_key` cuando sea relevante.
 
-## 5. Manejo de Errores SemÃ¡ntico
-Si la herramienta falla, retorne una explicaciÃ³n textual ayudando al modelo a entender cÃ³mo arreglar la llamada.
+## 5. Manejo de Errores Semántico
+Si la herramienta falla, retorne una explicación textual ayudando al modelo a entender cómo arreglar la llamada.
 *   âŒ `HTTP 500 Internal Server Error` (El agente se rinde).
-*   âœ… `{"error": "Formato InvÃ¡lido", "details": "El cÃ³digo postal debe ser de 5 dÃ­gitos numÃ©ricos. Se encontrÃ³ 'ABC4'. Por favor corrija y reintente."}` (El agente razona, reformula y llama de nuevo con Ã©xito).
+*   âœ… `{"error": "Formato Inválido", "details": "El código postal debe ser de 5 dí­gitos numéricos. Se encontró 'ABC4'. Por favor corrija y reintente."}` (El agente razona, reformula y llama de nuevo con éxito).
 
 ---
 [? Volver al Índice](./README.es.md)

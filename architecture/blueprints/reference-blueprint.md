@@ -18,7 +18,7 @@ This pattern is designed specifically for systems that:
 > [!IMPORTANT]
 > **Canon of Progressive Evolution**: Architecture evolves via incremental complexity. Phase 1 is deliberately simple and does not mandate technologies, patterns, or processes that exceed the core needs of a modular monolith. Every additional requirement is introduced precisely at the phase where system architecture objectively warrants it, never before.
 
-### 1.2 Corporate Multi-Runtime Strategy (PolÃ­glota)
+### 1.2 Corporate Multi-Runtime Strategy (Polí­glota)
 The organization promotes a deliberate polyglot architecture where runtimes are chosen strictly based on workload suitability, validated via ADR:
 
 | Runtime | Canonical Role | Typical Use Case |
@@ -64,7 +64,7 @@ Any system based on this blueprint must adhere to the following non-negotiable p
 
 ## 3. Context and Scope (Operational Model)
 
-### 3.1 General Context Pattern â€” Full Stack with Gateway Tiers and Injectable Event Bus
+### 3.1 General Context Pattern ”” Full Stack with Gateway Tiers and Injectable Event Bus
 
 This diagram captures the complete system context. It reflects:
 - **[ADR-0030](../adrs/core/0030-api-gateway-kong-vs-nestjs.md)**: Two-Tier Gateway (Kong Edge + NestJS BFF)
@@ -75,7 +75,7 @@ This diagram captures the complete system context. It reflects:
 
 ```mermaid
 graph TD
-    subgraph Clients["Channel Layer â€” Client Applications"]
+    subgraph Clients["Channel Layer ”” Client Applications"]
         WebApp["Web App\n[React Query Cache Â· ADR-0004]"]
         MobileApp["Mobile App\n[Offline Persistence Â· ADR-0004]"]
         B2B["B2B Partner (gRPC / REST API Key)"]
@@ -85,11 +85,11 @@ graph TD
         CDN["CDN (Content Delivery Network)\n[Multi-Layer Cache Â· ADR-0014]"]
     end
 
-    subgraph Tier1["Tier 1 â€” Edge API Gateway (ADR-0030)"]
+    subgraph Tier1["Tier 1 ”” Edge API Gateway (ADR-0030)"]
         Kong["Kong OSS\n[Rate Limiting Â· JWT Validation Â· CORS Â· Routing]"]
     end
 
-    subgraph Tier2["Tier 2 â€” BFF Orchestration Layer (ADR-0008)"]
+    subgraph Tier2["Tier 2 ”” BFF Orchestration Layer (ADR-0008)"]
         WebBFF["NestJS Web BFF\n[Aggregation Â· BFF Cache]"]
         MobileBFF["NestJS Mobile BFF\n[Compact Responses Â· BFF Cache]"]
         CoreAPI["NestJS Core API\n[Hexagonal Domain Â· RBAC/ABAC]"]
@@ -139,7 +139,7 @@ graph TD
 
 ## 4. Solution Strategy
 
-### 4.1 Hexagonal Architecture â€” Ports & Adapters ([ADR-0002](../adrs/nodejs/0002-clean-architecture-nestjs.md))
+### 4.1 Hexagonal Architecture ”” Ports & Adapters ([ADR-0002](../adrs/nodejs/0002-clean-architecture-nestjs.md))
 All business logic in the Domain and Application layers has **zero runtime dependencies** on frameworks, ORMs, or cloud services. The infrastructure layer implements pure TypeScript Ports.
 
 ### 4.2 SaaS Multi-Tenancy Strategy ([ADR-0010](../adrs/core/0010-multi-tenancy-architecture-strategy.md))
@@ -148,20 +148,20 @@ Employs **Dual-Layer Isolation Defense**. (Layer 1) Persistence adapters automat
 ### 4.3 Two-Tier Gateway Pattern ([ADR-0030](../adrs/core/0030-api-gateway-kong-vs-nestjs.md))
 | Tier | Technology | Responsibility |
 | :--- | :--- | :--- |
-| **Tier 1 â€” Edge** | Kong OSS (NGINX/OpenResty) | Rate Limiting, JWT validation, SSL termination, Routing |
-| **Tier 2 â€” BFF** | NestJS | Data aggregation, payload shaping, client-specific logic |
+| **Tier 1 ”” Edge** | Kong OSS (NGINX/OpenResty) | Rate Limiting, JWT validation, SSL termination, Routing |
+| **Tier 2 ”” BFF** | NestJS | Data aggregation, payload shaping, client-specific logic |
 
 ### 4.4 Injectable Event Bus ([ADR-0015](../adrs/core/0015-event-driven-architecture-intra-domain.md))
 The domain never imports a concrete message broker. All async communication is routed through `IEventBusPort`. The concrete implementation (In-Memory / RabbitMQ / Kafka) is injected by the NestJS DI container at startup, controlled by an environment variable.
 
 ### 4.5 Progressive Evolution Route ([ADR-0006](../adrs/core/0006-future-microservices-transition-dapr.md))
-1.  **Milestone 1 â€” Modular Monolith**: Single process, logically isolated domain modules.
-2.  **Milestone 2 â€” Service Extraction**: Critical domains extracted as Nx micro-projects with isolated DBs, consumed via gRPC/Dapr.
-3.  **Milestone 3 â€” Full Microservices Mesh**: Dapr Sidecars, Service Mesh, Kong as unified API surface.
+1.  **Milestone 1 ”” Modular Monolith**: Single process, logically isolated domain modules.
+2.  **Milestone 2 ”” Service Extraction**: Critical domains extracted as Nx micro-projects with isolated DBs, consumed via gRPC/Dapr.
+3.  **Milestone 3 ”” Full Microservices Mesh**: Dapr Sidecars, Service Mesh, Kong as unified API surface.
 
 ---
 
-## 5. Technical Building Blocks â€” Full Container View
+## 5. Technical Building Blocks ”” Full Container View
 
 This C4 Level-2 Container diagram reflects **all active ADRs** in their physical runtime positions.
 
@@ -250,7 +250,7 @@ graph TD
 
 ---
 
-## 6. Runtime View â€” Request Flow Patterns
+## 6. Runtime View ”” Request Flow Patterns
 
 ### 6.1 Authenticated Request Flow ([ADR-0030](../adrs/core/0030-api-gateway-kong-vs-nestjs.md), [ADR-0008](../adrs/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md), [ADR-0021](../adrs/nodejs/0021-high-performance-auth-and-graph-compilation.md), [ADR-0014](../adrs/core/0014-distributed-caching-strategy-redis.md))
 
@@ -299,7 +299,7 @@ sequenceDiagram
     end
 ```
 
-### 6.2 Asynchronous Event Flow â€” Injectable Bus ([ADR-0015](../adrs/core/0015-event-driven-architecture-intra-domain.md), [ADR-0016](../adrs/core/0016-immutable-business-audit-trail.md))
+### 6.2 Asynchronous Event Flow ”” Injectable Bus ([ADR-0015](../adrs/core/0015-event-driven-architecture-intra-domain.md), [ADR-0016](../adrs/core/0016-immutable-business-audit-trail.md))
 
 ```mermaid
 sequenceDiagram
@@ -317,7 +317,7 @@ sequenceDiagram
     Note over AuditDB: UPDATE/DELETE blocked by DB trigger
 ```
 
-### 6.3 Resilience Flow â€” Circuit Breaker ([ADR-0011](../adrs/core/0011-fault-tolerance-resiliency-patterns.md))
+### 6.3 Resilience Flow ”” Circuit Breaker ([ADR-0011](../adrs/core/0011-fault-tolerance-resiliency-patterns.md))
 
 ```mermaid
 sequenceDiagram
@@ -339,7 +339,7 @@ sequenceDiagram
 
 ---
 
-## 7. Deployment View â€” Target Cloud Infrastructure ([ADR-0013](../adrs/core/0013-cloud-infrastructure-topology-dr.md), [ADR-0028](../adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md))
+## 7. Deployment View ”” Target Cloud Infrastructure ([ADR-0013](../adrs/core/0013-cloud-infrastructure-topology-dr.md), [ADR-0028](../adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md))
 > [!IMPORTANT]
 > **Progressive Deployment Strategy**: The following diagram reflects the target deployment architecture in its mature state (**Phase 3+**). Following the Progressive Complexity principle, **Phase 1 (Monolith)** supports direct container hosting on minimal compute assets (VMs, Container Apps, or Docker Compose), scaling into fully managed clusters only as modular extraction demands increase.
 
@@ -352,7 +352,7 @@ graph TD
         PgPrimary[("PostgreSQL Primary")]
     end
 
-    subgraph CloudZoneB["Availability Zone B (DR â€” ADR-0013)"]
+    subgraph CloudZoneB["Availability Zone B (DR ”” ADR-0013)"]
         KongB["Kong Node"]
         BFFB["NestJS BFF Pod"]
         APIB["Core API Pod"]
@@ -377,7 +377,7 @@ graph TD
 
 ---
 
-## 8. Transversal Corporate Concepts â€” Full ADR Matrix
+## 8. Transversal Corporate Concepts ”” Full ADR Matrix
 
 | Architectural Concern | Implementing ADR(s) | Pattern / Technology | Diagram Section |
 | :--- | :--- | :--- | :--- |

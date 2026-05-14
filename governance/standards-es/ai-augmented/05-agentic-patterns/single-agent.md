@@ -1,14 +1,14 @@
-# PatrÃ³n: Agente Ãšnico con Herramientas (Single Agent with Tools)
+# Patrón: Agente íšnico con Herramientas (Single Agent with Tools)
 
-El patrÃ³n mÃ¡s sencillo y comÃºn. Un Ãºnico modelo envuelto por un bucle agÃ©ntico que posee acceso directo a un conjunto acotado de herramientas y memoria local del hilo de conversaciÃ³n.
+El patrón más sencillo y comíºn. Un íºnico modelo envuelto por un bucle agéntico que posee acceso directo a un conjunto acotado de herramientas y memoria local del hilo de conversación.
 
-## CuÃ¡ndo Usar
+## Cuándo Usar
 - La tarea no requiere sub-tareas paralelas.
-- El nÃºmero de herramientas es pequeÃ±o (< 10).
-- El dominio de conocimiento estÃ¡ altamente concentrado.
+- El níºmero de herramientas es pequeí±o (< 10).
+- El dominio de conocimiento está altamente concentrado.
 
 ## Flujo de Trabajo
-1. El usuario envÃ­a el prompt.
+1. El usuario enví­a el prompt.
 2. El Agente selecciona la Herramienta A.
 3. El Harness ejecuta la Herramienta A.
 4. El Agente razona sobre el resultado.

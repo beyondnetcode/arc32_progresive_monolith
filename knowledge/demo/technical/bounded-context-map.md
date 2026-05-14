@@ -1,4 +1,4 @@
-# ðŸ—ºï¸ Bounded Context Map â€” To-Do Reference Skeleton
+# ðŸ—ºï¸ Bounded Context Map ”” To-Do Reference Skeleton
 
 This document establishes the formal **Domain-Driven Design (DDD) Bounded Context Map** for the Reference Template. Each context owns its own **PostgreSQL schema** ([ADR-0031](../../standards/02-adrs/core/0031-schema-per-context-domain-event-catalog.md)), enabling zero-migration microservices extraction.
 
@@ -61,7 +61,7 @@ graph TD
 
 ## ðŸ“¦ 2. Context Definitions
 
-### ðŸ” A. Authentication Context â€” `schema: auth`
+### ðŸ” A. Authentication Context ”” `schema: auth`
 **Mission:** Own the identity management primitives and session token issuing.
 
 **Owns:**
@@ -75,7 +75,7 @@ graph TD
 
 ---
 
-### âœ… B. Task Management Context â€” `schema: tasks`
+### âœ… B. Task Management Context ”” `schema: tasks`
 **Mission:** Coordinate all operations related to atomic workflow tasks.
 
 **Owns:**
@@ -85,7 +85,7 @@ graph TD
 - Use Cases: `CreateTask`, `ListTasks`, `CompleteTask`, `DeleteTask`
 
 **Integration Contract:**
-- Reads `userId` from JWT (injected by Auth context via token claim â€” no direct DB cross-schema reads)
+- Reads `userId` from JWT (injected by Auth context via token claim ”” no direct DB cross-schema reads)
 - Subscribes to: `UserRegisteredEvent`, `CategoryDeletedEvent`
 
 **Publishes Events:**
@@ -93,7 +93,7 @@ graph TD
 
 ---
 
-### ðŸ·ï¸ C. Taxonomy Context â€” `schema: taxonomy`
+### ðŸ·ï¸ C. Taxonomy Context ”” `schema: taxonomy`
 **Mission:** Manage the classification vocabulary (Categories and Tags) available to the tenant.
 
 **Owns:**
@@ -106,7 +106,7 @@ graph TD
 
 ---
 
-### ðŸ“‹ D. Audit Context â€” `schema: audit`
+### ðŸ“‹ D. Audit Context ”” `schema: audit`
 **Mission:** Maintain an immutable, append-only record of all significant domain state changes.
 
 **Owns:**
@@ -126,7 +126,7 @@ graph TD
 | Task â†” TypeORM | `ITaskRepository` | ORM decorators must not impact core TS entity rules |
 | Auth â†” Bcrypt | `IPasswordHasher` | Decouples crypto algorithm from application workflow |
 | Any Context â†” Event Bus | `IEventBusPort` | Decouples transport (RabbitMQ/Kafka) from domain logic |
-| Task â†” Auth | Domain Events only | Task never reads `auth.users` directly â€” gets userId from JWT claims |
+| Task â†” Auth | Domain Events only | Task never reads `auth.users` directly ”” gets userId from JWT claims |
 
 ---
 
@@ -137,8 +137,8 @@ When the system evolves to microservices, each context extracts cleanly:
 | Milestone | Action | DB Impact |
 | :--- | :--- | :--- |
 | **M1: Monolith** | All contexts share one DB connection | Single PostgreSQL, 4 schemas |
-| **M2: Extract Task** | `TaskService` gets its own `DATABASE_URL` â†’ `tasks` schema | No migration â€” schema already isolated |
-| **M3: Extract Taxonomy** | `TaxonomyService` gets its own `DATABASE_URL` â†’ `taxonomy` schema | No migration â€” schema already isolated |
+| **M2: Extract Task** | `TaskService` gets its own `DATABASE_URL` â†’ `tasks` schema | No migration ”” schema already isolated |
+| **M3: Extract Taxonomy** | `TaxonomyService` gets its own `DATABASE_URL` â†’ `taxonomy` schema | No migration ”” schema already isolated |
 | **M4: Full Mesh** | Each service on its own PostgreSQL instance | `pg_dump --schema=<name>` per service |
 
 ---

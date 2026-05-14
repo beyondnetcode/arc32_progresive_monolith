@@ -88,9 +88,9 @@ To reach **Level 5 (Optimizing)**, the engineering organization must focus on Ch
 
 ---
 
-## DimensiÃ³n AI-Augmented (Opcional)
+## Dimensión AI-Augmented (Opcional)
 
-Para productos que adoptan la secciÃ³n AI-Augmented, existe una matriz de madurez
+Para productos que adoptan la sección AI-Augmented, existe una matriz de madurez
 complementaria con 3 niveles: AI-Assisted, AI-Integrated, AI-Orchestrated.
 
 â†’ [Ver matriz de madurez AI](../ai-augmented/07-maturity-model/ai-maturity-matrix.md)

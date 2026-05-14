@@ -31,7 +31,7 @@ To guarantee high maintainability and low technical debt, the following practice
 ---
 
 ## 4. ðŸ§© Ports and Adapters: Essential vs. Accidental
-To avoid structural technical debt and guarantee the domain core is never contaminated by framework or infrastructure specifics, hexagonal architecture is never "postponed"â€”it is simply deployed in a streamlined form.
+To avoid structural technical debt and guarantee the domain core is never contaminated by framework or infrastructure specifics, hexagonal architecture is never "postponed"””it is simply deployed in a streamlined form.
 
 | Concept | Essential or Accidental? | Phase 1? | Phase 2+? |
 | :--- | :--- | :--- | :--- |
@@ -73,7 +73,7 @@ Whenever a technical decision is made (e.g., writing a new ADR, choosing a libra
 7.  **Resiliencia** (Resilience)
 8.  **Testabilidad** (Testability)
 9.  **Performance** (Performance)
-10. **Claridad ArquitectÃ³nica** (Architectural Clarity)
+10. **Claridad Arquitectónica** (Architectural Clarity)
 
 ---
 

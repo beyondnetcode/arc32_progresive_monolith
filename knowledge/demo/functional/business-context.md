@@ -5,7 +5,7 @@ Enterprise software delivery often suffers from highly coupled architectures tha
 
 This project solves that problem through a **two-layer approach**:
 - **The Skeleton Layer**: A pure architectural instructional framework with strict Hexagonal boundaries, observable infrastructure, and 30 approved ADRs.
-- **The Demo App Layer**: A fully implemented **Enterprise SaaS Multi-Tenant To-Do Platform** that physically instantiates every pattern in the skeleton, proving it is production-ready â€” not just theoretical.
+- **The Demo App Layer**: A fully implemented **Enterprise SaaS Multi-Tenant To-Do Platform** that physically instantiates every pattern in the skeleton, proving it is production-ready ”” not just theoretical.
 
 By using the universally understood "To-Do" domain, all cognitive overhead is directed 100% toward mastering the enterprise Node.js architecture patterns, not toward learning business rules.
 

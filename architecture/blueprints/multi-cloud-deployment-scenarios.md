@@ -1,6 +1,6 @@
 # ðŸ—ºï¸ Multi-Cloud Deployment and Compliance Scenarios
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](../../standards-es/architecture/multi-cloud-deployment-scenarios.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../../standards-es/architecture/multi-cloud-deployment-scenarios.md)
 
 This document details the approved deployment architectures for the Corporate Architecture, considering rigorous controls for data sovereignty, security, and the adaptability of the security strategy selector (`SECURITY_STRATEGY_MODE`).
 

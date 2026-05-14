@@ -20,7 +20,7 @@ Adopt **Nx** as the monorepo orchestration tool, combined with **npm workspaces*
 ## Consequences
 
 ### Positive
-- Unified CI/CD pipeline â€” one lock file, one lint config, one test runner.
+- Unified CI/CD pipeline ”” one lock file, one lint config, one test runner.
 - Nx Computation Cache keeps CI under 1 minute for unchanged projects.
 - `dependency-cruiser` enforces hexagonal layer rules globally across all packages.
 

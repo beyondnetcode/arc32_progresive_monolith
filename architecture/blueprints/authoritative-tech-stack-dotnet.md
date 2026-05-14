@@ -1,6 +1,6 @@
 # ðŸ“ Authoritative Tech Stack: .NET & C# Ecosystem
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](../../standards-es/architecture/authoritative-tech-stack-dotnet.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../../standards-es/architecture/authoritative-tech-stack-dotnet.md)
 
 **Document Type:** Runtime Addendum  
 **Prerequisite:** MUST be read after the **[Agnostic Baseline](./authoritative-tech-stack-agnostic.md)**.  
@@ -16,7 +16,7 @@ All engineering squads developing within the .NET ecosystem MUST strictly enforc
 | :--- | :--- | :--- | :--- | :--- |
 | **Runtime Base** | **.NET 8 LTS** | 8.0.x | **YES** | .NET Framework 4.8, .NET 7 (STS) |
 | **Web Host** | **ASP.NET Core** | 8.0.x | **YES** | IIS Hosting, Legacy WCF |
-| **Relational ORM** | **EF Core (via Npgsql)** | 8.0.x | **NO** (Dapper allowed for READS) | NHibernate, LINQ-to-SQL |
+| **Relational ORM** | **EF Core (via SQL Server)** | 8.0.x | **YES** | Npgsql, Oracle, MySQL |
 | **Validation** | **FluentValidation** | 11.9+ | **NO** | System.ComponentModel (Data Annotations) inside Domain |
 | **Unit Testing** | **xUnit** | 2.6.x | **YES** | MSTest, NUnit |
 | **Mocking / Stubs** | **Moq 4.x** or **NSubstitute** | Latest | **NO** | WireMock (Allowed for API mocks only) |
@@ -26,13 +26,14 @@ All engineering squads developing within the .NET ecosystem MUST strictly enforc
 ---
 
 ## ðŸ—ï¸ 2. Architecture Implementation (.NET Mapping)
+## 🏛️ 2. Architecture Implementation (.NET Mapping)
 
 To comply with the overall Hexagonal architecture mandate, the following .NET project organization rules are enforced:
 
 ### 2.1 Project Segregation (Solution Structure)
 1.  **`{BoundedContext}.Domain`**: Plain Old CLR Objects (POCOs). Absolutely **zero NuGet references** outside fundamental `System` libraries. Contains Domain Entities, Value Objects, and Interfaces (Ports).
 2.  **`{BoundedContext}.Application`**: Implements CQRS commands and use cases via `MediatR`. Coordinates domain logic without knowing about Databases.
-3.  **`{BoundedContext}.Infrastructure`**: Contains **EF Core DbContext**, Npgsql configurations, Redis client adapters, and external API clients.
+3.  **`{BoundedContext}.Infrastructure`**: Contains **EF Core DbContext**, SQL Server configurations, Redis client adapters, and external API clients.
 4.  **`{BoundedContext}.Presentation` (or Web API)**: Entry point containing ASP.NET Controllers or Minimal API endpoints, mapping DTOs to Application Commands.
 
 ### 2.2 Error Management Policy
@@ -41,14 +42,14 @@ Teams MUST utilize the **Result Pattern** to propagate business logic failures s
 
 ---
 
-## ðŸ’¾ 3. Persistence Details (Entity Framework Core)
+## 💾 3. Persistence Details (Entity Framework Core)
 
 ### 3.1 Multi-Tenancy Isolation (RLS)
-When utilizing the `INFRA_NATIVE` strategy via PostgreSQL Row-Level Security in .NET:
+When utilizing the `INFRA_NATIVE` strategy via SQL Server Row-Level Security in .NET:
 *   The Infrastructure layer MUST implement a `TenantResolver` extracting `tenant_id` from `ClaimsPrincipal`.
 *   The `DbContext` MUST utilize `connection.CreateCommand()` inside the context opening events to execute:
     ```sql
-    SET LOCAL app.current_tenant = @tenantId;
+    EXEC sp_set_session_context 'tenant_id', @tenantId;
     ```
 *   Native Global Query Filters (`HasQueryFilter`) are only accepted as a secondary safety fallback. RLS enforced on the raw connection is the baseline security gate.
 

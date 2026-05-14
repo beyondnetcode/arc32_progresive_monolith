@@ -1,6 +1,6 @@
 # ðŸ“ Universal Authoritative Architecture Standards (Agnostic Baseline)
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](../../standards-es/architecture/authoritative-tech-stack-agnostic.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../../standards-es/architecture/authoritative-tech-stack-agnostic.md)
 
 **Document Type:** Corporate Standard  
 **Applicability:** Mandatory for all Runtimes (.NET, Node.js, Android)  
@@ -36,7 +36,9 @@ Inter-service integration follows the "Contract First" doctrine to guarantee pol
 Approved centralized primitives serving the polyglot mesh. Concrete Runtime Adapters must simply point to these standard protocols.
 
 ### 3.1 Relational Persistence (SQL)
-*   **Homologated Engine:** PostgreSQL v16+
+*   **Engine Strategy:** Runtime-Dependent Selection ([ADR-0051](../adrs/core/0051-enterprise-database-engine-strategy.md)).
+    *   **.NET Services:** Microsoft SQL Server (Latest).
+    *   **Node.js Services:** PostgreSQL v16+.
 *   **Maturity Constraint:** Schema-per-Context isolation REQUIRED. Direct SQL Joins across bounded context schema boundaries are FORBIDDEN.
 *   **Isolation Pattern:** Configurable Security Strategy ([ADR-0044](../adrs/core/0044-configurable-security-persistence-strategy.md)). Native Row-Level Security (RLS) is OPTIONAL/RECOMMENDED for dense multi-tenant scenarios, managed via the structural `SECURITY_STRATEGY_MODE` flag.
 

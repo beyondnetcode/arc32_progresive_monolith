@@ -8,7 +8,7 @@
 ---
 
 ## 2. Context
-To fulfill the **PolÃ­glota Corporate Vision**, our organization authorizes multiple execution runtimes. However, without a clear selection policy, teams may select technology based on subjective preference rather than performance suitability. Furthermore, communication between disparate runtimes requires explicit mechanisms to guarantee interoperability without leaking runtime implementation details.
+To fulfill the **Polí­glota Corporate Vision**, our organization authorizes multiple execution runtimes. However, without a clear selection policy, teams may select technology based on subjective preference rather than performance suitability. Furthermore, communication between disparate runtimes requires explicit mechanisms to guarantee interoperability without leaking runtime implementation details.
 
 ---
 

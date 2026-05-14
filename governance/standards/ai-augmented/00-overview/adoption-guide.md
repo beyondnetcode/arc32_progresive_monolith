@@ -4,19 +4,19 @@ Incorporating agentic capabilities should not be a "Big Bang". We propose an evo
 
 ## Adoption Levels
 
-### ðŸŸ¢ Level 1 â€” AI-Assisted (Development Assisted)
+### ðŸŸ¢ Level 1 ”” AI-Assisted (Development Assisted)
 The team adopts AI strictly as an accelerator in the software construction process. The final product undergoes no logical alterations.
 *   **Architecture Impact:** Zero.
 *   **Characteristics:** Usage of Claude Code, Copilot, or terminal agents. They maintain an `AGENTS.md` file in the repository as a minimum harness.
 *   **Focus:** Increase developer experience (DX).
 
-### ðŸŸ¡ Level 2 â€” AI-Integrated (Functional Integrated)
+### ðŸŸ¡ Level 2 ”” AI-Integrated (Functional Integrated)
 The product incorporates the ability to query language models to enrich specific and predictable functionalities.
 *   **Architecture Impact:** Medium (Invocations to external inference services).
 *   **Characteristics:** Structured calls to LLMs are implemented for ticket classification, structured data extraction, or auto-summarization. Use of MCP to standardize how internal agents consume corporate data.
 *   **Focus:** Automation of low-risk cognitive tasks.
 
-### ðŸ”´ Level 3 â€” AI-Orchestrated (Autonomous Orchestration)
+### ðŸ”´ Level 3 ”” AI-Orchestrated (Autonomous Orchestration)
 The product is led by a dynamic agentic cycle capable of making decisions and executing multi-step plans.
 *   **Architecture Impact:** High (Agentic frameworks and complex state machines).
 *   **Characteristics:** Autonomous agents utilizing a robust tool catalog. Employs Multi-Agent patterns, recursive reasoning, and deterministic orchestrators with integrated Human-in-the-Loop validations.

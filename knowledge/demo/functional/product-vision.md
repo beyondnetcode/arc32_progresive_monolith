@@ -1,4 +1,4 @@
-# ðŸŽ¯ Product Vision â€” Enterprise SaaS Reference Architecture Skeleton
+# ðŸŽ¯ Product Vision ”” Enterprise SaaS Reference Architecture Skeleton
 
 ## 1. Executive Summary
 
@@ -9,7 +9,7 @@ The **ARC32 Reference Skeleton** is a developer-facing **instructional architect
 > | Layer | What it IS | Why it matters |
 > | :--- | :--- | :--- |
 > | **The Skeleton** | An architectural instructional framework | Teaches enterprise patterns (Hexagonal, BFF, SaaS) with zero business domain noise |
-> | **The Demo App** | A fully-featured SaaS multi-tenant To-Do system | Proves the skeleton is not theoretical â€” every pattern is physically implemented and runnable |
+> | **The Demo App** | A fully-featured SaaS multi-tenant To-Do system | Proves the skeleton is not theoretical ”” every pattern is physically implemented and runnable |
 
 By choosing the universally-understood "To-Do" domain, all cognitive load is directed toward **mastering the architecture**, not learning the business rules. A developer who studies this repository will know exactly how to build any enterprise-grade SaaS system on Node.js.
 
@@ -37,9 +37,9 @@ By choosing the universally-understood "To-Do" domain, all cognitive load is dir
 
 ### D. Testing Pyramid Pre-configured
 - The skeleton eliminates setup paralysis. It ships with 100% pre-configured setups for:
-  - **Unit Testing** â€” Pure domain logic (zero infrastructure mocks).
-  - **Integration Testing** â€” Adapter-level wiring with real Postgres/Redis.
-  - **Contract Testing** â€” Pact consumer/provider contracts.
+  - **Unit Testing** ”” Pure domain logic (zero infrastructure mocks).
+  - **Integration Testing** ”” Adapter-level wiring with real Postgres/Redis.
+  - **Contract Testing** ”” Pact consumer/provider contracts.
 - Per [ADR-0018](../../standards/02-adrs/core/0018-testing-pyramid-quality-gates.md), a 70% coverage gate is enforced in CI.
 
 ---
@@ -48,7 +48,7 @@ By choosing the universally-understood "To-Do" domain, all cognitive load is dir
 
 By keeping the Domain Core completely pure and decoupled from external frameworks, this repository proves how a monolithic application can remain clean enough to evolve gracefully into independent microservices without a rewrite. It embodies the concept of a **Progressive Monolith** ([ADR-0006](../../standards/02-adrs/core/0006-future-microservices-transition-dapr.md)).
 
-The 30 approved ADRs are not aspirational â€” they are **implemented, tested, and running** in the demo application. They form the reusable institutional knowledge base that any engineering team can adopt as their own architectural baseline.
+The 30 approved ADRs are not aspirational ”” they are **implemented, tested, and running** in the demo application. They form the reusable institutional knowledge base that any engineering team can adopt as their own architectural baseline.
 
 ---
 [? Back to Index](./README.md)

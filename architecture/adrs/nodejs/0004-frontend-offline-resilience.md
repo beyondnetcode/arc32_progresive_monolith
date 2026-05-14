@@ -21,7 +21,7 @@ Key strategies:
 ## Consequences
 
 ### Positive
-- Users see data immediately on navigation â€” no loading spinners for cached content.
+- Users see data immediately on navigation ”” no loading spinners for cached content.
 - Forms and mutations feel instantaneous via optimistic updates.
 - Graceful offline mode: the app remains usable for read operations even without connectivity.
 

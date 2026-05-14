@@ -1,6 +1,6 @@
 # âš™ï¸ Construction-Focused SDLC Framework
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](../../sdlc-es/02-engineering/construction-focused-sdlc-framework.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../../sdlc-es/02-engineering/construction-focused-sdlc-framework.md)
 
 This normative standard solidifies the governance controlling Software Development Life Cycle progression, establishing hardened phase exits and specialized gating mechanisms for the construction layer.
 

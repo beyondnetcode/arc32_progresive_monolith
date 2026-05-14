@@ -1,6 +1,6 @@
 # ðŸ“ Project Management Hub (Scrum Ecosystem)
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](./README.es.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](./README.es.md)
 
 This directory contains the official planning, prioritization, and governance artifacts for the software development lifecycle following the BMAD-METHOD (Spec-driven AI Strategy).
 

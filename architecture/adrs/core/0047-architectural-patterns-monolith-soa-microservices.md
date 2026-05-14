@@ -59,7 +59,7 @@ The evaluation of each alternative is weighted against 15 critical drivers, prio
 
 ## 4. Evaluated Options
 
-### Option A â€” Monolith (With focus on Modular / Hexagonal Monolith)
+### Option A ”” Monolith (With focus on Modular / Hexagonal Monolith)
 
 Consists of a single deployment artifact hosting all domain business logic. The corporate standard mandates the **Modular Monolith** sub-pattern with **Hexagonal Architecture**, where isolation is absolute at the code level even if the runtime process and database schema are unified (or logically partitioned).
 
@@ -76,7 +76,7 @@ Consists of a single deployment artifact hosting all domain business logic. The 
 *   **When to Use:** Phase 1 of any product; market validation (MVP); teams with <15 engineers; highly transactional domains.
 *   **Costs and Complexity:** Minimal at start. Costs scale non-linearly only if module isolation degrades.
 
-### Option B â€” SOA (Service-Oriented Architecture)
+### Option B ”” SOA (Service-Oriented Architecture)
 
 An integration-centric enterprise paradigm. Systems expose capabilities through interoperable services with strict contracts (usually SOAP or REST), typically governed by an Enterprise Service Bus (ESB). SOA focuses on reusing existing components rather than developing new modular services.
 
@@ -90,7 +90,7 @@ An integration-centric enterprise paradigm. Systems expose capabilities through 
     *   Bureaucratic and highly centralized contract governance.
 *   **When to Use:** Large enterprises that must unify pre-existing packaged platforms (ERPs, CRMs, legacy Core Banking) with modern digital channels.
 
-### Option C â€” Microservices
+### Option C ”” Microservices
 
 Decomposing an application into a set of small, autonomous, independently deployable services aligned strictly with Domain-Driven Design (DDD) Bounded Contexts. Each microservice possesses its own data storage (*Database-per-service*) and communicates over the network using lightweight protocols (REST, gRPC, Pub/Sub).
 

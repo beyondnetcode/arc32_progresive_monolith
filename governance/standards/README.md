@@ -1,6 +1,6 @@
 # ðŸ›ï¸ Corporate Standards Center (EAC)
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](../standards-es/README.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../standards-es/README.md)
 
 Welcome to the central repository of architectural truth. Every document present here is considered **Mandatory Normative** for building software within the organization.
 

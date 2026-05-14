@@ -1,6 +1,6 @@
 # ðŸ“ Authoritative Tech Stack: Node.js & TypeScript Ecosystem
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](./authoritative-tech-stack-nodejs.es.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](./authoritative-tech-stack-nodejs.es.md)
 
 **Document Type:** Runtime Addendum  
 **Prerequisite:** MUST be read after the **[Agnostic Baseline](./authoritative-tech-stack-agnostic.md)**.  
@@ -13,6 +13,8 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **Runtime Base** | **Node.js (LTS)** | 20.x | **YES** | Bun, Deno (until further audit) |
 | **Web Host** | **NestJS (Express Engine)** | 10.x+ | **YES** | Fastify (unless ADR approved), Bare Express |
+| **Relational DB** | **PostgreSQL** | v16+ | **YES** | MySQL, MariaDB |
+| **Non-Relational DB** | **MongoDB** | Latest | **YES** | Cassandra, DynamoDB |
 | **Relational ORM** | **TypeORM** or **Drizzle** | Latest | **NO** | Sequelize, Prisma (requires performance ADR) |
 | **Validation** | **class-validator** | Latest | **NO** | Zod (except for API contracts) |
 | **Testing Engine** | **Jest** | 29.x | **YES** | Mocha, Ava |

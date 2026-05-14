@@ -1,6 +1,6 @@
 # âš™ï¸ Corporate SDLC Governance Center
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](../sdlc-es/README.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](../sdlc-es/README.md)
 
 Welcome to the official Software Development Lifecycle (SDLC) control map. This center consolidates the procedural requirements driving software creation, from ideation to production enforcement.
 

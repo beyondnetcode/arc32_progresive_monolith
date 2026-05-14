@@ -22,7 +22,7 @@ Industry focus has rapidly matured toward more deterministic environments:
 
 | Phase | Period | Primary Focus | Description |
 | :--- | :--- | :--- | :--- |
-| **Prompt Engineering** | 2022â€“2024 | Optimizing Instructions | "Asking well" to get an acceptable response in text format. |
+| **Prompt Engineering** | 2022”“2024 | Optimizing Instructions | "Asking well" to get an acceptable response in text format. |
 | **Context Engineering** | 2025 | Building Context Windows | Use of RAG, dynamic memory, and MCP to give the right data at the right time. |
 | **Harness Engineering** | 2026 | Designing Runtime Environment | Definition of architectural constraints, verification hooks, permissions, and deterministic control loops. |
 

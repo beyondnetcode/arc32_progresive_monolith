@@ -1,4 +1,4 @@
-# ðŸ”¬ Corporate Stack Audit & Technology Dictamen â€” May 2026
+# ðŸ”¬ Corporate Stack Audit & Technology Dictamen ”” May 2026
 
 **Role**: BMAD-METHOD Stack Audit Agent  
 **Mandate**: Authoritative lifecycle validation and verification of authorized production technologies.  
@@ -15,11 +15,11 @@
 
 ---
 
-# ðŸ“¦ BLOCK 1 â€” NODE.JS / TYPESCRIPT
+# ðŸ“¦ BLOCK 1 ”” NODE.JS / TYPESCRIPT
 
 **Executive Summary**: Total health score: 94/100. Stable transition to Node 24 LTS and Nx 22.7 ecosystems secures highest CI efficiency. Strong recommendation to transition from TypeORM to Drizzle for lightweight serverless-ready deployment densities.
 
-### Node.js â€” Runtime Base
+### Node.js ”” Runtime Base
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 24.x Active LTS (Latest 24.5.0) |
@@ -29,7 +29,7 @@
 **Why**: Node 24 provides top-tier V8 performance baseline and is the designated Active LTS through October 2026.  
 **Rejected**: Node 26 (Too young, Current only), Deno/Bun (Niche, ecosystem compatibility gaps).
 
-### NestJS â€” Web Framework
+### NestJS ”” Web Framework
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 11.1.19 (Released April 2026) |
@@ -39,7 +39,7 @@
 **Why**: Mandatory for enterprise BFF and API governance due to rigid DI architecture alignment.  
 **Alternatives**: Fastify (Preferred underlying engine), Express (Avoid entirely due to heavy maintenance weight).
 
-### Drizzle ORM â€” Data Access
+### Drizzle ORM ”” Data Access
 | Field | Detail |
 |-------|---------|
 | Recommended Version | v0.41.2 |
@@ -48,7 +48,7 @@
 **Why**: The optimal balance of total type-safety and zero abstraction overhead compared to heavy engines like TypeORM.  
 **Alternatives**: Prisma (Rejected: heavy rust binary overhead), TypeORM (Maintain only, do not start new projects).
 
-### Vitest â€” Testing Runner
+### Vitest ”” Testing Runner
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 4.1.5 |
@@ -58,11 +58,11 @@
 
 ---
 
-# ðŸ“¦ BLOCK 2 â€” .NET / C#
+# ðŸ“¦ BLOCK 2 ”” .NET / C#
 
 **Executive Summary**: High score: 92/100. Platform has successfully unified on **.NET 10.0** LTS. The primary technical risk lies in the commercialization of secondary ecosystem packages (MassTransit), requiring strategic containment.
 
-### .NET SDK â€” Runtime Base
+### .NET SDK ”” Runtime Base
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 10.0.7 (LTS Active) |
@@ -71,7 +71,7 @@
 **Why**: Best in class compute throughput for heavy concurrency and worker workloads.  
 **Note**: .NET 11 in preview, scheduled Nov 2026. Stick to 10.0.x for production stability.
 
-### MassTransit â€” Messaging Abstraction
+### MassTransit ”” Messaging Abstraction
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 8.3.x (Latest OSS tree) |
@@ -79,7 +79,7 @@
 | Status | âš ï¸ Yellow (Evaluate Risk) |
 **Alert**: MassTransit v9 is Commercial. We MUST pin to v8 LTS or evaluate **Rebus** for pure open-source delivery continuity.
 
-### Entity Framework Core â€” Data Access
+### Entity Framework Core ”” Data Access
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 10.0.x (Aligned with SDK) |
@@ -87,7 +87,7 @@
 | Status | âœ… Green |
 **Decision Tree**: Use EF Core for transactional write patterns; integrate **Dapper** explicitly for batch read-heavy pipelines for performance caching.
 
-### xUnit v3 â€” Testing
+### xUnit v3 ”” Testing
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 3.2.2 |
@@ -97,11 +97,11 @@
 
 ---
 
-# ðŸ“¦ BLOCK 3 â€” ANDROID / KOTLIN
+# ðŸ“¦ BLOCK 3 ”” ANDROID / KOTLIN
 
 **Executive Summary**: Total health score: 100/100. Perfect synergy attained using purely Jetpack ecosystem drivers. Mandatory Compose 1.11 rollout enables high-performance dynamic UI without legacy rendering lag.
 
-### Jetpack Compose â€” UI Framework
+### Jetpack Compose ”” UI Framework
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 1.11.1 (Stable) |
@@ -109,14 +109,14 @@
 | Status | âœ… Green |
 **Why**: Declarative UI is now the absolute enterprise standard. Veto on XML Views for any new operational interface.
 
-### Kotlin â€” Language Base
+### Kotlin ”” Language Base
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 2.3.20 |
 | OSS Level | 1 (JetBrains / Kotlin Foundation) |
 | Status | âœ… Green |
 
-### Hilt (Dagger) â€” DI
+### Hilt (Dagger) ”” DI
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 2.59.2 |
@@ -124,7 +124,7 @@
 | Status | âœ… Green |
 **Rejected**: Koin (Level 2, runtime reflection vs Hilt compile-time safe dependency graph).
 
-### Room Database â€” Offline Persistence
+### Room Database ”” Offline Persistence
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 2.8.4 (LTS) |
@@ -133,11 +133,11 @@
 
 ---
 
-# ðŸ“¦ BLOCK 4 â€” DATABASES
+# ðŸ“¦ BLOCK 4 ”” DATABASES
 
 **Executive Summary**: Total score: 98/100. PostgreSQL remains the supreme invariant. pgBouncer 1.25 ensures optimal container packing and zero-overhead connection state logic.
 
-### PostgreSQL 16 â€” Primary DB
+### PostgreSQL 16 ”” Primary DB
 | Field | Detail |
 |-------|---------|
 | EOL Community | Nov 9, 2028 |
@@ -145,7 +145,7 @@
 | Status | âœ… Green |
 **Decision**: Retain v16 as it possesses mature RLS optimizations and has 2+ years of valid support window remaining.
 
-### Flyway â€” Migrations
+### Flyway ”” Migrations
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 12.6.0 |
@@ -155,11 +155,11 @@
 
 ---
 
-# ðŸ“¦ BLOCK 5 â€” INFRASTRUCTURE (CRITICAL)
+# ðŸ“¦ BLOCK 5 ”” INFRASTRUCTURE (CRITICAL)
 
 **Executive Summary**: Transformational epoch. Strategic decoupling from commercial drift (Redis -> Valkey, Terraform -> OpenTofu, Vault -> OpenBao) successfully validated.
 
-### Valkey 9.0 â€” Distributed Cache & Streams
+### Valkey 9.0 ”” Distributed Cache & Streams
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 9.0.4 (Stable) |
@@ -168,7 +168,7 @@
 | Status | âœ… Green (Mandatory Replacement) |
 **Redis Alert**: Redis SSPL 7.4+ is now strictly Forbidden for commercial infrastructure frameworks. Valkey is the mandated drop-in replacement supported by AWS, Google, Oracle.
 
-### Traefik Proxy 3.7 â€” API Gateway
+### Traefik Proxy 3.7 ”” API Gateway
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 3.7.0 |
@@ -177,7 +177,7 @@
 | Status | âœ… Green (Elevate to Primary) |
 **Reason**: Elevated from secondary to PRIMARY gateway vector due to Kong OSS retirement. Excels at native Kubernetes dynamics.
 
-### OpenTofu 1.11 â€” IaC
+### OpenTofu 1.11 ”” IaC
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 1.11.6 |
@@ -194,9 +194,9 @@
 
 ---
 
-# ðŸ“¦ BLOCK 6 â€” CROSS-CUTTING STANDARDS
+# ðŸ“¦ BLOCK 6 ”” CROSS-CUTTING STANDARDS
 
-### Keycloak 26.6 â€” IAM
+### Keycloak 26.6 ”” IAM
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 26.6.1 |
@@ -205,7 +205,7 @@
 | Status | âœ… Green |
 **Alternatives**: Zitadel (Evaluate for smaller cloud-native footprint, but Keycloak is sovereign enterprise choice).
 
-### OpenBao 2.5 â€” Secrets
+### OpenBao 2.5 ”” Secrets
 | Field | Detail |
 |-------|---------|
 | Recommended Version | 2.5.3 |

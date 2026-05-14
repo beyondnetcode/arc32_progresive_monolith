@@ -1,4 +1,4 @@
-# ðŸš€ Getting Started Guide â€” Initiating a New Product from Reference
+# ðŸš€ Getting Started Guide ”” Initiating a New Product from Reference
 
 **Role:** Developer / Solutions Architect  
 **Objective:** Instantiate a production-ready repository from the Corporate Reference Framework.

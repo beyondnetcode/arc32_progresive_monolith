@@ -1,7 +1,7 @@
-# GuÃ­a del Servidor MCP: ExposiciÃ³n de Capacidades Corporativas
+# Guí­a del Servidor MCP: Exposición de Capacidades Corporativas
 
-## Â¿CuÃ¡ndo construir un Servidor MCP?
-Se debe construir un Servidor MCP corporativo cuando las capacidades de negocio especÃ­ficas de nuestros servicios de backend necesiten ser expuestas a ecosistemas agÃ©nticos (ya sea para acelerar el desarrollo interno o empoderar caracterÃ­sticas de cara al usuario), garantizando que la misma interfaz sirva simultÃ¡neamente a mÃºltiples herramientas de IA.
+## Â¿Cuándo construir un Servidor MCP?
+Se debe construir un Servidor MCP corporativo cuando las capacidades de negocio especí­ficas de nuestros servicios de backend necesiten ser expuestas a ecosistemas agénticos (ya sea para acelerar el desarrollo interno o empoderar caracterí­sticas de cara al usuario), garantizando que la misma interfaz sirva simultáneamente a míºltiples herramientas de IA.
 
 ---
 
@@ -21,22 +21,22 @@ const server = new Server({
   version: "1.0.0",
 }, {
   capabilities: {
-    tools: {}, // Exponiendo capacidades de escritura/acciÃ³n
+    tools: {}, // Exponiendo capacidades de escritura/acción
   },
 });
 
-// 2. Registrar CatÃ¡logo de Herramientas (ListTools)
+// 2. Registrar Catálogo de Herramientas (ListTools)
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
       {
         name: "inventory_query_stock",
-        description: "Consulta el stock disponible de un SKU especÃ­fico en un almacÃ©n especÃ­fico.",
+        description: "Consulta el stock disponible de un SKU especí­fico en un almacén especí­fico.",
         inputSchema: {
           type: "object",
           properties: {
-            sku: { type: "string", description: "Identificador Ãºnico del producto" },
-            warehouseId: { type: "string", description: "ID del AlmacÃ©n" }
+            sku: { type: "string", description: "Identificador íºnico del producto" },
+            warehouseId: { type: "string", description: "ID del Almacén" }
           },
           required: ["sku"],
         },
@@ -45,7 +45,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
-// 3. Resolver ejecuciÃ³n de la herramienta (CallTool)
+// 3. Resolver ejecución de la herramienta (CallTool)
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   if (request.params.name === "inventory_query_stock") {
     const { sku } = request.params.arguments as { sku: string };
@@ -74,14 +74,14 @@ using Microsoft.ModelContextProtocol;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMCPServer("servidor-inventario-corporativo")
-    .AddTool("inventory_query_stock", "Consulta el stock disponible de un SKU especÃ­fico", async (string sku) => 
+    .AddTool("inventory_query_stock", "Consulta el stock disponible de un SKU especí­fico", async (string sku) => 
     {
          var stock = await myInventoryService.GetStockAsync(sku);
          return new ToolResult { Content = stock.ToString() };
     });
 
 var app = builder.Build();
-app.UseMCPServer(); // Exponer vÃ­a SSE (Server-Sent Events) sobre HTTP
+app.UseMCPServer(); // Exponer ví­a SSE (Server-Sent Events) sobre HTTP
 app.Run();
 ```
 
@@ -89,18 +89,18 @@ app.Run();
 
 ## Convenciones de Nomenclatura Corporativa
 
-Adoptamos la notaciÃ³n **`Snake_Case`** separada por dominio jerÃ¡rquico para prevenir colisiones entre diferentes Servidores MCP de la compaÃ±Ã­a:
+Adoptamos la notación **`Snake_Case`** separada por dominio jerárquico para prevenir colisiones entre diferentes Servidores MCP de la compaí±í­a:
 
 *   âœ… **Correcto:** `inventory_query`, `shipment_track`, `auth_revoke_token`.
-*   âŒ **Incorrecto:** `query`, `trackShipment` (No se recomienda CamelCase en prompts genÃ©ricos), `doIt`.
+*   âŒ **Incorrecto:** `query`, `trackShipment` (No se recomienda CamelCase en prompts genéricos), `doIt`.
 
-## Checklist de Servidor MCP Listo para ProducciÃ³n
+## Checklist de Servidor MCP Listo para Producción
 
-Un Servidor MCP NO es apto para producciÃ³n si le falta:
-- [ ] **AutenticaciÃ³n del Host:** ValidaciÃ³n estricta de transporte (vÃ­a Token o Cabecera SSE).
-- [ ] **LimitaciÃ³n de Tasa (Rate Limiting):** ProtecciÃ³n contra un agente en bucle infinito que consuma la base de datos en segundos.
-- [ ] **Log de AuditorÃ­a Centralizado:** Cada llamada a herramienta ejecutada debe reportar el ID de Agente, Herramienta invocada y Argumentos.
-- [ ] **Manejo de Errores Seguro:** Si el backend falla, retornar un mensaje Ãºtil para la IA sin filtrar Stack Traces o secretos del servidor.
+Un Servidor MCP NO es apto para producción si le falta:
+- [ ] **Autenticación del Host:** Validación estricta de transporte (ví­a Token o Cabecera SSE).
+- [ ] **Limitación de Tasa (Rate Limiting):** Protección contra un agente en bucle infinito que consuma la base de datos en segundos.
+- [ ] **Log de Auditorí­a Centralizado:** Cada llamada a herramienta ejecutada debe reportar el ID de Agente, Herramienta invocada y Argumentos.
+- [ ] **Manejo de Errores Seguro:** Si el backend falla, retornar un mensaje íºtil para la IA sin filtrar Stack Traces o secretos del servidor.
 
 ---
 [? Volver al Índice](./README.es.md)

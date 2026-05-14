@@ -1,26 +1,26 @@
 # ðŸ—ºï¸ Escenarios de Despliegue Multi-Nube y Cumplimiento
 
-> ðŸŒ **NavegaciÃ³n BilingÃ¼e:** [ðŸ‡ºðŸ‡¸ English Version](../../standards/architecture/multi-cloud-deployment-scenarios.md)
+> ðŸŒ **Navegación Bilingí¼e:** [ðŸ‡ºðŸ‡¸ English Version](../../standards/architecture/multi-cloud-deployment-scenarios.md)
 
-Este documento detalla las arquitecturas de despliegue aprobadas para la Arquitectura Corporativa, considerando controles rigurosos de soberanÃ­a de datos, seguridad y la adaptabilidad del selector de estrategia de seguridad (`SECURITY_STRATEGY_MODE`).
+Este documento detalla las arquitecturas de despliegue aprobadas para la Arquitectura Corporativa, considerando controles rigurosos de soberaní­a de datos, seguridad y la adaptabilidad del selector de estrategia de seguridad (`SECURITY_STRATEGY_MODE`).
 
 ---
 
-## ðŸŒ 1. IntroducciÃ³n al Cumplimiento Operativo
+## ðŸŒ 1. Introducción al Cumplimiento Operativo
 
-Cualquier implementaciÃ³n fÃ­sica de la arquitectura debe satisfacer las directrices del **RGPD** (Reglamento General de ProtecciÃ³n de Datos) y la norma **ISO/IEC 27001:2022**, especÃ­ficamente en los dominios de A.8 (Seguridad de los Activos) y A.10 (CriptografÃ­a).
+Cualquier implementación fí­sica de la arquitectura debe satisfacer las directrices del **RGPD** (Reglamento General de Protección de Datos) y la norma **ISO/IEC 27001:2022**, especí­ficamente en los dominios de A.8 (Seguridad de los Activos) y A.10 (Criptografí­a).
 
-| Vector de Control | EstÃ¡ndar Corporativo | Enfoque en Arquitectura Hexagonal |
+| Vector de Control | Estándar Corporativo | Enfoque en Arquitectura Hexagonal |
 | :--- | :--- | :--- |
-| **SoberanÃ­a** | RestricciÃ³n geogrÃ¡fica fÃ­sica. | Adaptadores de persistencia especÃ­ficos por regiÃ³n legal. |
-| **Cifrado** | En reposo (AES-256) y trÃ¡nsito (TLS 1.3). | Terminado en TLS de Gateway, encriptaciÃ³n nativa de BD. |
-| **SegregaciÃ³n** | Control de Acceso Basado en Atributos (ABAC). | LÃ³gica delegada al Selector (`INFRA_NATIVE` vs `APP_AGNOSTIC`). |
+| **Soberaní­a** | Restricción geográfica fí­sica. | Adaptadores de persistencia especí­ficos por región legal. |
+| **Cifrado** | En reposo (AES-256) y tránsito (TLS 1.3). | Terminado en TLS de Gateway, encriptación nativa de BD. |
+| **Segregación** | Control de Acceso Basado en Atributos (ABAC). | Lógica delegada al Selector (`INFRA_NATIVE` vs `APP_AGNOSTIC`). |
 
 ---
 
 ## ðŸ”µ 2. Escenario AZURE: Cumplimiento Estricto Empresarial
 
-Orientado a sectores altamente regulados (Banca, Salud) que requieren auditorÃ­a exhaustiva y cifrado "hardware-backed".
+Orientado a sectores altamente regulados (Banca, Salud) que requieren auditorí­a exhaustiva y cifrado "hardware-backed".
 
 ### 2.1 Blueprint de Red y Seguridad
 ```mermaid
@@ -46,16 +46,16 @@ graph TD
     AKS -->|Private Link| SQL
 ```
 
-### 2.2 ImplementaciÃ³n de Seguridad
-- **Modo:** `INFRA_NATIVE` forzoso. La seguridad a nivel de fila se delega a polÃ­ticas de SQL Server nativas, asegurando que incluso los administradores de DB sin la clave maestra no vean datos de inquilinos.
-- **GestiÃ³n de Flag:** Las etiquetas de entorno en **Azure App Configuration** inyectan dinÃ¡micamente el valor al contenedor en tiempo de arranque.
+### 2.2 Implementación de Seguridad
+- **Modo:** `INFRA_NATIVE` forzoso. La seguridad a nivel de fila se delega a polí­ticas de SQL Server nativas, asegurando que incluso los administradores de DB sin la clave maestra no vean datos de inquilinos.
+- **Gestión de Flag:** Las etiquetas de entorno en **Azure App Configuration** inyectan dinámicamente el valor al contenedor en tiempo de arranque.
 
-### 2.3 Infraestructura como CÃ³digo (Bicep Sample)
+### 2.3 Infraestructura como Código (Bicep Sample)
 ```bicep
-// HabilitaciÃ³n de RLS y Cifrado Avanzado en Azure SQL
+// Habilitación de RLS y Cifrado Avanzado en Azure SQL
 resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: 'sql-bmad-prod'
-  location: 'westeurope' // Cumplimiento de RegiÃ³n UE
+  location: 'westeurope' // Cumplimiento de Región UE
   properties: {
     administratorLogin: 'sysadmin'
     // Restringir a Microsoft Entra Auth solo
@@ -76,7 +76,7 @@ resource sqlDB 'Microsoft.Sql/servers/databases@2023-05-01-preview' = {
   }
 }
 
-// Azure Policy para restringir Regiones (SoberanÃ­a)
+// Azure Policy para restringir Regiones (Soberaní­a)
 resource policyAssignment 'Microsoft.Authorization/policyAssignments@2023-04-01' = {
   name: 'restrict-to-europe'
   properties: {
@@ -95,14 +95,14 @@ resource policyAssignment 'Microsoft.Authorization/policyAssignments@2023-04-01'
 
 ### 2.4 Matrices Operativas
 **Matriz de Cumplimiento:**
-| Control ISO 27001 | Requisito | SoluciÃ³n Azure |
+| Control ISO 27001 | Requisito | Solución Azure |
 | :--- | :--- | :--- |
-| **A.10.1.1** | PolÃ­tica CriptogrÃ¡fica | Cifrado DeterminÃ­stico Always Encrypted gestionado en Key Vault. |
+| **A.10.1.1** | Polí­tica Criptográfica | Cifrado Determiní­stico Always Encrypted gestionado en Key Vault. |
 | **A.8.1.3** | Uso Aceptable de Activos | Azure Policy impide aprovisionar recursos fuera de fronteras de la UE. |
 
-**AnÃ¡lisis CAP:**
+**Análisis CAP:**
 - **Resultado:** **CP** (Consistencia y Tolerancia a Particiones).
-- **Impacto:** Azure SQL con redundancia de zona garantiza consistencia fuerte en transacciones concurrentes, a costa de latencia imperceptible en escrituras sÃ­ncronas inter-zona.
+- **Impacto:** Azure SQL con redundancia de zona garantiza consistencia fuerte en transacciones concurrentes, a costa de latencia imperceptible en escrituras sí­ncronas inter-zona.
 
 ---
 
@@ -126,19 +126,19 @@ graph TD
         VPCE["VPC Endpoints\n(KMS, Secrets Mgr, S3)"]
     end
     
-    Users((TrÃ¡fico)) --> ALB
+    Users((Tráfico)) --> ALB
     ALB --> EKS
     EKS --> Aurora
     EKS -.-> VPCE
 ```
 
-### 3.2 ImplementaciÃ³n de Seguridad
-- **Privacidad de Red:** Los pods de la aplicaciÃ³n no tienen acceso directo a Internet. Toda comunicaciÃ³n con servicios AWS (KMS para llaves de cifrado) se realiza mediante **VPC Endpoint Services (PrivateLink)**.
-- **Estrategia HÃ­brida:** Permite rotar a `APP_AGNOSTIC` para bases de datos secundarias NoSQL (como DynamoDB) donde RLS no sea nativo, manteniendo el cifrado transparente vÃ­a CMK.
+### 3.2 Implementación de Seguridad
+- **Privacidad de Red:** Los pods de la aplicación no tienen acceso directo a Internet. Toda comunicación con servicios AWS (KMS para llaves de cifrado) se realiza mediante **VPC Endpoint Services (PrivateLink)**.
+- **Estrategia Hí­brida:** Permite rotar a `APP_AGNOSTIC` para bases de datos secundarias NoSQL (como DynamoDB) donde RLS no sea nativo, manteniendo el cifrado transparente ví­a CMK.
 
-### 3.3 Infraestructura como CÃ³digo (Terraform Sample)
+### 3.3 Infraestructura como Código (Terraform Sample)
 ```hcl
-# DefiniciÃ³n de Cluster Aurora con CMK de Cliente
+# Definición de Cluster Aurora con CMK de Cliente
 resource "aws_kms_key" "db_encryption_key" {
   description             = "KMS Key for Customer Data Compliance"
   deletion_window_in_days = 7
@@ -160,37 +160,37 @@ resource "aws_rds_cluster" "aurora_cluster" {
   
   # Resiliencia Multi-AZ
   availability_zones     = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  backtrack_window       = 259200 # 72 Horas de recuperaciÃ³n de desastres
+  backtrack_window       = 259200 # 72 Horas de recuperación de desastres
 }
 ```
 
 ### 3.4 Matrices Operativas
 **Matriz de Cumplimiento:**
-| Control ISO 27001 | Requisito | SoluciÃ³n AWS |
+| Control ISO 27001 | Requisito | Solución AWS |
 | :--- | :--- | :--- |
-| **A.13.1.1** | Controles de Red | El trÃ¡fico no cruza Internet PÃºblica gracias a PrivateLink Endpoints. |
-| **RGPD Art. 32** | SeudonimizaciÃ³n | SeparaciÃ³n fÃ­sica de llaves KMS y datos PostgreSQL encriptados. |
+| **A.13.1.1** | Controles de Red | El tráfico no cruza Internet Píºblica gracias a PrivateLink Endpoints. |
+| **RGPD Art. 32** | Seudonimización | Separación fí­sica de llaves KMS y datos PostgreSQL encriptados. |
 
-**AnÃ¡lisis CAP:**
+**Análisis CAP:**
 - **Resultado:** **AP** (Disponibilidad y Tolerancia a Particiones).
-- **Impacto:** Configurado con Aurora Reader Endpoints, el sistema prioriza responder lecturas desde cualquier AZ activa, manejando una rÃ©plica eventual sub-10ms.
+- **Impacto:** Configurado con Aurora Reader Endpoints, el sistema prioriza responder lecturas desde cualquier AZ activa, manejando una réplica eventual sub-10ms.
 
 ---
 
-## ðŸŸ¢ 4. Escenario ON-PREMISE: Control Total y SoberanÃ­a Extrema
+## ðŸŸ¢ 4. Escenario ON-PREMISE: Control Total y Soberaní­a Extrema
 
-DiseÃ±ado para implementaciones gubernamentales o instalaciones locales aisladas (Air-Gapped) donde la soberanÃ­a fÃ­sica es absoluta.
+Diseí±ado para implementaciones gubernamentales o instalaciones locales aisladas (Air-Gapped) donde la soberaní­a fí­sica es absoluta.
 
 ### 4.1 Blueprint de Red y Seguridad
 ```mermaid
 graph TD
-    subgraph Datacenter["Datacenter FÃ­sico Corporativo"]
+    subgraph Datacenter["Datacenter Fí­sico Corporativo"]
         FW["Hardware Firewall (NGFW)"]
         subgraph K8sCluster["Kubernetes Cluster (RKE2)"]
-            AppPods["Pods de AplicaciÃ³n\n(Carga DinÃ¡mica)"]
+            AppPods["Pods de Aplicación\n(Carga Dinámica)"]
             Vault["HashiCorp Vault (Cluster Local)"]
         end
-        subgraph BareMetalData["Persistencia FÃ­sica"]
+        subgraph BareMetalData["Persistencia Fí­sica"]
             PostgresHAP["PostgreSQL Bare Metal\n(Patroni / Repmgr)"]
             Backup["Veeam / Backup Inmutable"]
         end
@@ -203,13 +203,13 @@ graph TD
     PostgresHAP --> Backup
 ```
 
-### 4.2 ImplementaciÃ³n de Seguridad
-- **Modo:** Generalmente configurado en `APP_AGNOSTIC` inyectado mediante **HashiCorp Vault**, ya que permite una auditorÃ­a criptogrÃ¡fica de accesos en capas superiores antes de llegar a motores DB que puedan no soportar RLS dinÃ¡mico corporativo avanzado.
-- **Respaldo:** Estrategia de backups inmutables con retenciÃ³n estricta de 5 aÃ±os localmente para cumplir con leyes de auditorÃ­a de datos financieros.
+### 4.2 Implementación de Seguridad
+- **Modo:** Generalmente configurado en `APP_AGNOSTIC` inyectado mediante **HashiCorp Vault**, ya que permite una auditorí­a criptográfica de accesos en capas superiores antes de llegar a motores DB que puedan no soportar RLS dinámico corporativo avanzado.
+- **Respaldo:** Estrategia de backups inmutables con retención estricta de 5 aí±os localmente para cumplir con leyes de auditorí­a de datos financieros.
 
-### 4.3 Infraestructura como CÃ³digo (Terraform for Vault)
+### 4.3 Infraestructura como Código (Terraform for Vault)
 ```hcl
-# ConfiguraciÃ³n de inyecciÃ³n de secretos y Flags mediante Vault
+# Configuración de inyección de secretos y Flags mediante Vault
 resource "vault_mount" "kvv2" {
   path        = "secret"
   type        = "kv"
@@ -240,25 +240,25 @@ EOT
 
 ### 4.4 Matrices Operativas
 **Matriz de Cumplimiento:**
-| Requisito Legal | Control | SoluciÃ³n On-Premise |
+| Requisito Legal | Control | Solución On-Premise |
 | :--- | :--- | :--- |
-| **SoberanÃ­a Absoluta** | LocalizaciÃ³n FÃ­sica | Los datos nunca salen de la propiedad fÃ­sica de la empresa. |
+| **Soberaní­a Absoluta** | Localización Fí­sica | Los datos nunca salen de la propiedad fí­sica de la empresa. |
 | **ISO 27001 A.12.3** | Respaldos | Estrategia de Respaldo en Cinta / Almacenamiento Objeto S3 Local Inmutable. |
 
-**AnÃ¡lisis CAP:**
+**Análisis CAP:**
 - **Resultado:** **CP** (Foco extremo en consistencia local).
-- **Impacto:** Latencias ultrabajas (< 1ms) al estar la computaciÃ³n y los datos en la misma red fÃ­sica cableada. Riesgo de disponibilidad ante desastres naturales a menos que se despliegue un sitio de rÃ©plica DR secundario.
+- **Impacto:** Latencias ultrabajas (< 1ms) al estar la computación y los datos en la misma red fí­sica cableada. Riesgo de disponibilidad ante desastres naturales a menos que se despliegue un sitio de réplica DR secundario.
 
 ---
 
-## ðŸŸ£ 5. Escenario HÃBRIDO: Emergencia y TransiciÃ³n ElÃ¡stica
+## ðŸŸ£ 5. Escenario HíBRIDO: Emergencia y Transición Elástica
 
-Orientado a absorber picos de trÃ¡fico repentinos o cuando la regulaciÃ³n permite computaciÃ³n en nube pero exige persistencia local (Leyes de ProtecciÃ³n de Datos restrictivas).
+Orientado a absorber picos de tráfico repentinos o cuando la regulación permite computación en nube pero exige persistencia local (Leyes de Protección de Datos restrictivas).
 
 ### 5.1 Blueprint de Red y Seguridad
 ```mermaid
 graph TD
-    subgraph PublicCloud["Nube PÃºblica (AWS/Azure)"]
+    subgraph PublicCloud["Nube Píºblica (AWS/Azure)"]
         LB["Cloud Load Balancer"]
         AppNodes["Compute Nodes (Front-end / BFF)\n(App-Layer Logic)"]
     end
@@ -277,33 +277,33 @@ graph TD
     SecFW --> CoreDB
 ```
 
-### 5.2 Flujo de Datos y OptimizaciÃ³n de Latencia
-Al operar en un entorno hÃ­brido, la latencia de red introduce cuellos de botella significativos en el intercambio de datos SQL.
+### 5.2 Flujo de Datos y Optimización de Latencia
+Al operar en un entorno hí­brido, la latencia de red introduce cuellos de botella significativos en el intercambio de datos SQL.
 
-**OptimizaciÃ³n bajo `APP_AGNOSTIC`:**
-1.  El adaptador de infraestructura de la aplicaciÃ³n en la nube **no** realiza consultas genÃ©ricas seguidas de filtrado en memoria (lo cual inundarÃ­a la VPN con datos innecesarios).
-2.  El selector inyecta el contexto de seguridad (`tenant_id`, `user_roles`) directamente en la clÃ¡usula `WHERE` de la sentencia SQL enviada.
-3.  **Beneficio de Latencia:** Solo viaja por la VPN el set de datos estrictamente filtrado y autorizado. La auditorÃ­a se realiza en la capa de aplicaciÃ³n Cloud y se escribe asÃ­ncronamente a un log local redundante.
+**Optimización bajo `APP_AGNOSTIC`:**
+1.  El adaptador de infraestructura de la aplicación en la nube **no** realiza consultas genéricas seguidas de filtrado en memoria (lo cual inundarí­a la VPN con datos innecesarios).
+2.  El selector inyecta el contexto de seguridad (`tenant_id`, `user_roles`) directamente en la cláusula `WHERE` de la sentencia SQL enviada.
+3.  **Beneficio de Latencia:** Solo viaja por la VPN el set de datos estrictamente filtrado y autorizado. La auditorí­a se realiza en la capa de aplicación Cloud y se escribe así­ncronamente a un log local redundante.
 
 ### 5.3 Matrices Operativas
 **Matriz de Cumplimiento:**
-| Control ISO 27001 | Requisito | SoluciÃ³n HÃ­brida |
+| Control ISO 27001 | Requisito | Solución Hí­brida |
 | :--- | :--- | :--- |
-| **RGPD Art. 44** | Transferencias Internacionales | Los datos residen en territorio nacional (On-Prem), solo se procesan volatilmente en la nube mediante tÃºneles IPSec. |
+| **RGPD Art. 44** | Transferencias Internacionales | Los datos residen en territorio nacional (On-Prem), solo se procesan volatilmente en la nube mediante tíºneles IPSec. |
 
-**AnÃ¡lisis CAP:**
-- **Impacto de Red:** El sistema estÃ¡ altamente expuesto a la **P** (ParticiÃ³n de red). Una caÃ­da de la conexiÃ³n DirectConnect/VPN deja inoperativa la nube.
-- **Estrategia de MitigaciÃ³n:** Se requiere un patrÃ³n de Circuit Breaker local en la nube con cachÃ© distribuida de solo-lectura (ej. Valkey/Redis) para mantener la disponibilidad degradada ante caÃ­das de enlace.
+**Análisis CAP:**
+- **Impacto de Red:** El sistema está altamente expuesto a la **P** (Partición de red). Una caí­da de la conexión DirectConnect/VPN deja inoperativa la nube.
+- **Estrategia de Mitigación:** Se requiere un patrón de Circuit Breaker local en la nube con caché distribuida de solo-lectura (ej. Valkey/Redis) para mantener la disponibilidad degradada ante caí­das de enlace.
 
 ---
 
 ## ðŸ“œ 6. Resumen Directivo para la Toma de Decisiones
 
-| Variable | Azure | AWS | On-Premise | HÃ­brido |
+| Variable | Azure | AWS | On-Premise | Hí­brido |
 | :--- | :--- | :--- | :--- | :--- |
-| **Complejidad Ops** | Media | Media-Alta | Alta | MÃ¡xima |
+| **Complejidad Ops** | Media | Media-Alta | Alta | Máxima |
 | **Flexibilidad de Flag** | Recomendado `INFRA` | Mixto | Recomendado `APP` | Recomendado `APP` |
-| **Agilidad de Escala** | MÃ¡xima | MÃ¡xima | Limitada | Alta (Compute) |
+| **Agilidad de Escala** | Máxima | Máxima | Limitada | Alta (Compute) |
 | **Compliance Overhead** | Bajo (Out-of-the-box) | Medio | Alto (Manual) | Muy Alto |
 
 ---

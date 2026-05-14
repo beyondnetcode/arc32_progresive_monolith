@@ -7,7 +7,7 @@ Approved
 2026-05-08
 
 ## Updated
-2026-05-11 â€” Added reference to [ADR-0031](0031-schema-per-context-domain-event-catalog.md) Domain Event Catalog. Event definitions and the cross-context subscription map are now formally specified in that record.
+2026-05-11 ”” Added reference to [ADR-0031](0031-schema-per-context-domain-event-catalog.md) Domain Event Catalog. Event definitions and the cross-context subscription map are now formally specified in that record.
 
 ## Context
 As the Modular Monolith grows, allowing bounded contexts to call each other synchronously creates tight coupling. If one context is slow or fails, it should not cascade failures into other contexts. Additionally, inter-context communication must be defined as explicit typed contracts to enable safe future microservices extraction ([ADR-0006](0006-future-microservices-transition-dapr.md)).
@@ -48,7 +48,7 @@ Every event that crosses a bounded context boundary must be a typed class with a
 
 ### 4. Future Microservices Readiness ([ADR-0006](0006-future-microservices-transition-dapr.md))
 When a bounded context is extracted into an independent microservice:
-- Replace the `in-memory` bus implementation with `rabbitmq` or `kafka` â€” **zero domain code changes required**.
+- Replace the `in-memory` bus implementation with `rabbitmq` or `kafka` ”” **zero domain code changes required**.
 - The `IEventBusPort` abstraction guarantees the domain remains agnostic to the transport layer.
 
 ## Consequences

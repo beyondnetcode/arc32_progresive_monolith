@@ -64,7 +64,7 @@ All cross-bounded-context communication must occur exclusively via **Domain Even
 
 #### Event Catalog
 
-##### Auth Context â€” Published Events
+##### Auth Context ”” Published Events
 
 ```typescript
 /** Published when a new user successfully completes registration */
@@ -85,7 +85,7 @@ class UserDeactivatedEvent {
 }
 ```
 
-##### Task Management Context â€” Published Events
+##### Task Management Context ”” Published Events
 
 ```typescript
 /** Published when a new task is successfully created */
@@ -119,7 +119,7 @@ class TaskDeletedEvent {
 }
 ```
 
-##### Taxonomy Context â€” Published Events
+##### Taxonomy Context ”” Published Events
 
 ```typescript
 /** Published when a category is removed (tasks referencing it must be notified) */
@@ -147,7 +147,7 @@ class CategoryDeletedEvent {
 ## Consequences
 
 ### Positive (Pros)
-- **Zero-cost microservices extraction**: Schema boundaries defined upfront eliminate the most expensive part of service extraction â€” data ownership ambiguity.
+- **Zero-cost microservices extraction**: Schema boundaries defined upfront eliminate the most expensive part of service extraction ”” data ownership ambiguity.
 - **Explicit contracts**: The Event Catalog makes all inter-context dependencies visible and auditable, preventing hidden coupling.
 - **Idempotent event processing**: `eventId` (UUID) on every event enables consumers to safely deduplicate retried deliveries.
 - **Independent migration cycles**: Each schema can be migrated independently, enabling zero-downtime deployments per context.

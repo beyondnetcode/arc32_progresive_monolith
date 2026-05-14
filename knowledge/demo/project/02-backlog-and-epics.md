@@ -1,6 +1,6 @@
 # ðŸ“‹ Epics & Backlog Registry (Scrum Artifacts)
 
-> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ VersiÃ³n en EspaÃ±ol](./02-backlog-and-epics-es.md)
+> ðŸŒ **Bilingual Navigation:** [ðŸ‡ªðŸ‡¸ Versión en Espaí±ol](./02-backlog-and-epics-es.md)
 
 **Date:** 2026-05-12  
 **Author:** Product Owner [BMAD Role]  

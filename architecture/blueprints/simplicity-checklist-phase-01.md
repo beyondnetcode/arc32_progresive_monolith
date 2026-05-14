@@ -1,4 +1,4 @@
-# âœ… Simplicity Self-Assessment Checklist â€” Phase 1 Architecture
+# âœ… Simplicity Self-Assessment Checklist ”” Phase 1 Architecture
 
 This document serves as a safeguard against premature over-engineering. Before approving a Phase 1 architectural baseline, the architect and development team should affirm the following checklist points to ensure that unnecessary development or operational load is not being introduced.
 
