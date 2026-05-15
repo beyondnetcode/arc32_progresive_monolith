@@ -1,5 +1,9 @@
 # Referencia de Arquitectura de Monolito Progresivo
 
+![Principios de Diseño de Arquitectura de Microservicios](./assets/arch-evolution.jpg)
+*Infografía por Rag Dhiman: El viaje desde el Monolito hasta los Microservicios.*
+
+
 [![Status](https://img.shields.io/badge/Status-Activo-brightgreen?style=for-the-badge)]()
 [![Method](https://img.shields.io/badge/Metodo-Spec--driven_AI--DD-blueviolet?style=for-the-badge)]()
 [![License](https://img.shields.io/badge/License-MIT-informational?style=for-the-badge)]()
