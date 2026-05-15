@@ -10,7 +10,7 @@
 * [multi-cloud-deployment-scenarios](./multi-cloud-deployment-scenarios.md)
 * [reference-blueprint](./reference-blueprint.md)
 * [simplicity-checklist-phase-01](./simplicity-checklist-phase-01.md)
-* [tech-stack-summary](./tech-stack-summary.md)
+* [tech-stack-summary](./tech-stack-summary.md) — referencia rápida Node.js/demo, no política universal de stack
 
 ---
 [Back to Upper Level](../../README.md)

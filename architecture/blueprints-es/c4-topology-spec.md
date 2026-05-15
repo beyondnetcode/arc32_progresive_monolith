@@ -2,6 +2,8 @@
 
 Este documento detalla el riguroso diseño arquitectónico de grado empresarial para la plataforma de referencia, conforme al estándar del blueprint **arc42** (ARC32). El diseño implementa un ecosistema **SaaS Multi-Tenant** avanzado utilizando **Gateways BFF** para gestionar la entrega a clientes.
 
+> Alcance: esta es una **topología de referencia**. Los equipos de producto pueden mapear las mismas responsabilidades arquitectónicas a distintos runtimes o herramientas aprobadas mediante perfiles de runtime y proceso ADR. Etiquetas concretas como framework, base de datos, gateway o broker son ejemplos salvo que un ADR referenciado las marque explícitamente como obligatorias.
+
 ---
 
 ## 1. Estructura Estática del Sistema (Modelo C4)

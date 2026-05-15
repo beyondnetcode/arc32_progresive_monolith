@@ -1,6 +1,10 @@
-# Jump to: Progressive Node.js Technology Stack Cheat Sheet (Quick Reference)
+# Node.js Reference Stack Cheat Sheet (Runtime-Specific / Demo-Oriented)
 
-This cheat sheet serves as the authoritative, high-density tool reference by architectural layer for developers and autonomous agents working on the Progressive Node.js Reference Architecture.
+> Scope: this document is **not** the universal architecture policy.
+>
+> It is a runtime-specific quick reference for the Node.js / TypeScript reference implementation and the repository demo sandbox. Cross-runtime rules live in [Universal Agnostic Baseline](./authoritative-tech-stack-agnostic.md). Runtime alternatives live in [.NET](./authoritative-tech-stack-dotnet.md), [Node.js](./authoritative-tech-stack-nodejs.md), and [Android](./authoritative-tech-stack-android.md) profiles.
+
+This cheat sheet serves as a high-density tool reference by architectural layer for developers and autonomous agents working on the Node.js reference implementation.
 
 ---
 

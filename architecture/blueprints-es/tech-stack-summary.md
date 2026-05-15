@@ -1,6 +1,10 @@
-# Jump to: Cheat Sheet del Stack Tecnológico de Node.js Progresivo (Referencia Rápida)
+# Cheat Sheet del Stack Node.js de Referencia (Específico por Runtime / Orientado a Demo)
 
-Esta hoja de trucos sirve como referencia autoritativa y de alta densidad de herramientas por capa arquitectónica para desarrolladores y agentes autónomos que trabajan en la Arquitectura de Referencia Progresiva de Node.js.
+> Alcance: este documento **no** es la política universal de arquitectura.
+>
+> Es una referencia rápida específica para el runtime Node.js / TypeScript y para el sandbox demo del repositorio. Las reglas transversales viven en la [Línea Base Agnóstica Universal](./authoritative-tech-stack-agnostic.md). Las alternativas por runtime viven en los perfiles [.NET](./authoritative-tech-stack-dotnet.md), [Node.js](./authoritative-tech-stack-nodejs.md) y [Android](./authoritative-tech-stack-android.md).
+
+Esta hoja sirve como referencia de herramientas por capa arquitectónica para desarrolladores y agentes autónomos que trabajan en la implementación de referencia Node.js.
 
 ---
 

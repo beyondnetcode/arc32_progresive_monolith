@@ -1,7 +1,10 @@
 # Corporate Reference Architecture (Multi-Runtime / arc42)
 
 > [!IMPORTANT]
-> **Unified Corporate Reference Blueprint**: This document defines the global standard for software architecture across the organization. While the canonical physical implementation uses Node.js, the architectural constraints and design principles are agnostic and applicable to approved runtimes (.NET / Android) for diverse workloads.
+> **Unified Corporate Reference Blueprint**: This document defines the global architectural model across the organization. Architectural constraints and design principles are runtime-agnostic. Concrete technology labels, diagrams, and examples represent a reference implementation profile and must not be interpreted as universal product mandates.
+
+> [!NOTE]
+> **Abstraction rule**: use this document to understand boundaries, responsibilities, evolution stages, quality attributes, and decision logic. Use runtime stack profiles to select concrete tools. Use demo documentation when you need a specific executable example.
 
 ---
 
@@ -23,8 +26,8 @@ The organization promotes a deliberate polyglot architecture where runtimes are 
 
 | Runtime | Canonical Role | Typical Use Case |
 | :--- | :--- | :--- |
-| **Node.js / TypeScript** | Principal Runtime | REST/gRPC APIs, BFF Orchestration, Transacional Web Services, Frontend SSR. |
-| **.NET (C#)** | High Processing | Batch compute, ETL pipelines, Heavy computational tasks, Legacy interoperability. |
+| **Node.js / TypeScript** | Web/API runtime profile | REST/gRPC APIs, BFF orchestration, transactional web services, frontend SSR. |
+| **.NET (C#)** | Enterprise backend/runtime profile | APIs, batch compute, ETL pipelines, heavy computational tasks, legacy interoperability. |
 | **Android (Kotlin/Java)** | Native Mobile Client | Industrial operative apps, offline capture, hardware scan/GPS integration. |
 
 > **Rule of Contracts**: Communication between distinct runtimes MUST strictly utilize explicit, versioned contract definitions (OpenAPI for HTTP, Protobuf for gRPC, AsyncAPI for Messaging) guaranteeing absolute implementation opacity.

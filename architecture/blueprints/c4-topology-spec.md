@@ -2,6 +2,8 @@
 
 This document details the rigorous enterprise-grade architectural design for the reference platform, conforming to the **arc42** blueprint standard (ARC32). The design implements an advanced **SaaS Multi-Tenant** ecosystem utilizing **BFF Gateways** to manage client delivery.
 
+> Scope: this is a **reference topology**. Product teams may map the same architectural responsibilities to different approved runtimes or tools through the runtime profiles and ADR process. Concrete labels such as framework, database, gateway, or broker names are examples unless a referenced ADR explicitly marks them as mandatory.
+
 ---
 
 ## 1. System Static Structure (C4 Model)

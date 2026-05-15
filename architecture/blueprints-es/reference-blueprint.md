@@ -1,7 +1,10 @@
 # Arquitectura de Referencia Corporativa (Multi-Runtime / arc42)
 
 > [!IMPORTANT]
-> **Blueprint de Referencia Corporativo Unificado**: Este documento define el estándar global para la arquitectura de software en toda la organización. Si bien la implementación física canónica utiliza Node.js, las restricciones arquitectónicas y los principios de diseño son agnósticos y aplicables a los entornos de ejecución aprobados (.NET / Android) para diversas cargas de trabajo.
+> **Blueprint de Referencia Corporativo Unificado**: Este documento define el modelo arquitectónico global de la organización. Las restricciones y principios de diseño son agnósticos al runtime. Las etiquetas tecnológicas, diagramas y ejemplos concretos representan un perfil de implementación de referencia y no deben interpretarse como mandatos universales para todos los productos.
+
+> [!NOTE]
+> **Regla de abstracción**: usa este documento para entender límites, responsabilidades, etapas evolutivas, atributos de calidad y lógica de decisión. Usa los perfiles de stack por runtime para seleccionar herramientas concretas. Usa la documentación de demo cuando necesites un ejemplo ejecutable específico.
 
 ---
 
@@ -23,8 +26,8 @@ La organización promueve una arquitectura políglota deliberada donde los entor
 
 | Runtime | Rol Canónico | Caso de Uso Típico |
 | :--- | :--- | :--- |
-| **Node.js / TypeScript** | Runtime Principal | APIs REST/gRPC, Orquestación BFF, Servicios Web Transaccionales, Frontend SSR. |
-| **.NET (C#)** | Alto Procesamiento | Computación por lotes, pipelines ETL, Tareas computacionales pesadas, interoperabilidad Legada. |
+| **Node.js / TypeScript** | Perfil runtime Web/API | APIs REST/gRPC, orquestación BFF, servicios web transaccionales, frontend SSR. |
+| **.NET (C#)** | Perfil backend/runtime enterprise | APIs, computación por lotes, pipelines ETL, tareas computacionales pesadas, interoperabilidad legada. |
 | **Android (Kotlin/Java)** | Cliente Móvil Nativo | Apps operativas industriales, captura offline, integración de hardware de escaneo/GPS. |
 
 > **Regla de Contratos**: La comunicación entre distintos runtimes DEBE utilizar estrictamente definiciones de contrato explícitas y versionadas (OpenAPI para HTTP, Protobuf para gRPC, AsyncAPI para Mensajería) garantizando absoluta opacidad de la implementación.

@@ -13,7 +13,7 @@ Este es el índice completo de navegación para **arc32**. Úsalo cuando ya sepa
 |---|---|---|
 | Entender la visión arquitectónica | [Directivas Arquitectónicas](./governance/standards-es/vision/architectural-directives.md) | [Roadmap Evolutivo](./governance/standards-es/vision/evolutionary-strategy-roadmap.md) |
 | Entender el modelo de arquitectura progresiva | [Blueprint de Referencia](./architecture/blueprints-es/reference-blueprint.md) | [Criterios de Extracción a Microservicios](./architecture/adrs-es/core/0045-microservice-extraction-readiness-criteria.md) |
-| Revisar decisiones tecnológicas | [Resumen Tech Stack](./architecture/blueprints-es/tech-stack-summary.md) | [Tech Stack Autoritativo](./architecture/blueprints-es/authoritative-tech-stack.md) |
+| Revisar decisiones tecnológicas | [Stack Tecnológico Autorizado](./architecture/blueprints-es/authoritative-tech-stack.md) | [Línea Base Agnóstica](./architecture/blueprints-es/authoritative-tech-stack-agnostic.md) |
 | Revisar decisiones arquitectónicas | [Registro ADR](./architecture/adrs-es/README.md) | [ADRs Core](./architecture/adrs-es/core/README.es.md) |
 | Aprender estándares de ingeniería | [Manifiesto de Ingeniería](./governance/standards-es/engineering/engineering-manifesto.md) | [Guía de Contract Testing](./governance/standards-es/engineering/contract-testing-guideline.md) |
 | Entender expectativas SDLC | [Framework SDLC](./governance/sdlc-es/README.md) | [SDLC enfocado en Construcción](./governance/sdlc-es/02-engineering/construction-focused-sdlc-framework.md) |
@@ -29,7 +29,7 @@ Este es el índice completo de navegación para **arc32**. Úsalo cuando ya sepa
 | **Ejecutivo / Sponsor** | [Directivas Arquitectónicas](./governance/standards-es/vision/architectural-directives.md) -> [Roadmap Evolutivo](./governance/standards-es/vision/evolutionary-strategy-roadmap.md) -> [Matriz de Madurez](./governance/standards-es/vision/maturity-matrix.md) |
 | **Product Owner / PM** | [PRD Demo](./knowledge/demo/project/01-prd-demo-sandbox-es.md) -> [Glosario de Negocio](./knowledge/demo/functional/business-glossary.md) -> [Backlog y Epics](./knowledge/demo/project/02-backlog-and-epics-es.md) |
 | **Arquitecto de Software** | [Blueprint de Referencia](./architecture/blueprints-es/reference-blueprint.md) -> [Registro ADR](./architecture/adrs-es/README.md) -> [Criterios de Extracción](./architecture/adrs-es/core/0045-microservice-extraction-readiness-criteria.md) |
-| **Principal / Staff Engineer** | [Resumen Tech Stack](./architecture/blueprints-es/tech-stack-summary.md) -> [Patrones Tácticos](./architecture/adrs-es/core/0019-tactical-design-patterns-future-proofing.md) -> [Checklist de Simplicidad](./architecture/blueprints-es/simplicity-checklist-phase-01.md) |
+| **Principal / Staff Engineer** | [Línea Base Agnóstica](./architecture/blueprints-es/authoritative-tech-stack-agnostic.md) -> [Patrones Tácticos](./architecture/adrs-es/core/0019-tactical-design-patterns-future-proofing.md) -> [Checklist de Simplicidad](./architecture/blueprints-es/simplicity-checklist-phase-01.md) |
 | **Backend Developer** | [Manifiesto de Ingeniería](./governance/standards-es/engineering/engineering-manifesto.md) -> [ADR Clean Architecture](./architecture/adrs-es/nodejs/0002-clean-architecture-nestjs.md) -> [Verificación Sandbox](./knowledge/demo/technical/sandbox-verification.md) |
 | **Frontend Developer** | [ADR Resiliencia Frontend](./architecture/adrs-es/nodejs/0004-frontend-offline-resilience.md) -> [ADR Gateway/BFF](./architecture/adrs-es/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md) -> [To-Do Web App](./src/apps/todo-web/README.md) |
 | **DevOps / SRE** | [Hub de Infraestructura](./infrastructure/README.es.md) -> [Hub de Operaciones](./operations/README.es.md) -> [ADR Observabilidad](./architecture/adrs-es/nodejs/0007-observability-telemetry-loki-opentelemetry.md) |
@@ -54,7 +54,7 @@ Este es el índice completo de navegación para **arc32**. Úsalo cuando ya sepa
 Referencias clave:
 
 - [Blueprint de Referencia](./architecture/blueprints-es/reference-blueprint.md)
-- [Resumen Tech Stack](./architecture/blueprints-es/tech-stack-summary.md)
+- [Índice del Stack Tecnológico Autorizado](./architecture/blueprints-es/authoritative-tech-stack.md)
 - [Especificación C4](./architecture/blueprints-es/c4-topology-spec.md)
 - [Análisis CAP](./architecture/blueprints-es/cap-strategic-analysis.md)
 - [Escenarios Multi-Cloud](./architecture/blueprints-es/multi-cloud-deployment-scenarios.md)

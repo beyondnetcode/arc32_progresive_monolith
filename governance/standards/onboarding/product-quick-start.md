@@ -5,11 +5,13 @@
 
 ---
 
+> Scope: this onboarding guide is optimized for the repository's executable Node.js demo and local development experience. It is not a universal runtime mandate. Teams starting a .NET, Android, or mixed-runtime product must combine the universal architecture baseline with the appropriate runtime stack profile.
+
 ## 1. Overview
 This Reference Architecture is designed to be **cloned as a template**, not imported as an `npm` library. It delivers a fully configured environment with pre-baked security, monorepo governance, and deployment pipelines.
 
 ## 2. Prerequisites
-Before initializing, ensure your local machine has:
+For the demo/reference sandbox, ensure your local machine has:
 * **Node.js**: v20.x (LTS)
 * **pnpm**: v8.x (or `npm` v10)
 * **Docker & Docker Compose**: v25+ (Required for local services)
@@ -96,7 +98,7 @@ npm audit
 ## Assistance
 If you encounter issues during bootstrap, refer to:
 * **[Architecture Decision Records](../../../architecture/adrs/README.md)**: To understand WHY things are configured this way.
-* **[Engineering Standards](../04-artifacts/engineering-standards.md)**: For code review guidelines.
+* **[Engineering Standards](../engineering/engineering-manifesto.md)**: For code review guidelines.
 
 ---
 [Back to Index](./README.md)

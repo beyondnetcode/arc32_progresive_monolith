@@ -1,12 +1,24 @@
-# Universal Authoritative Architecture Standards (Agnostic Baseline)
+# Universal Architecture Standards (Agnostic Baseline)
 
-> **Bilingual Navigation:** [Versión en Español](../../standards-es/architecture/authoritative-tech-stack-agnostic.md)
+> **Bilingual Navigation:** [Versión en Español](../blueprints-es/authoritative-tech-stack-agnostic.md)
 
 **Document Type:** Corporate Standard 
 **Applicability:** Mandatory for all Runtimes (.NET, Node.js, Android) 
 **Sovereignty:** 100% Cloud-Agnostic / On-Premise Capable
 
 ---
+
+## Scope Boundary
+
+This document defines **runtime-agnostic architectural rules**. It must not be read as a Node.js, .NET, database, gateway, or cloud-provider mandate.
+
+Concrete tooling belongs in runtime profiles:
+
+- [.NET / C# stack profile](./authoritative-tech-stack-dotnet.md)
+- [Node.js / TypeScript stack profile](./authoritative-tech-stack-nodejs.md)
+- [Android / Kotlin stack profile](./authoritative-tech-stack-android.md)
+
+Demo-specific tooling belongs only in the demo documentation or source code under `knowledge/demo/` and `src/`.
 
 ## 1. Executive Constraints & Non-Negotiables
 
@@ -36,16 +48,16 @@ Inter-service integration follows the "Contract First" doctrine to guarantee pol
 Approved centralized primitives serving the polyglot mesh. Concrete Runtime Adapters must simply point to these standard protocols.
 
 ### 3.1 Relational Persistence (SQL)
-* **Engine Strategy:** Runtime-Dependent Selection ([ADR-0051](../adrs/core/0051-enterprise-database-engine-strategy.md)).
- * **.NET Services:** Microsoft SQL Server (Latest).
- * **Node.js Services:** PostgreSQL v16+.
+* **Engine Strategy:** Runtime-dependent selection governed by [ADR-0051](../adrs/core/0051-enterprise-database-engine-strategy.md). The universal rule is relational consistency, schema ownership, transaction safety, and domain isolation; the concrete engine is selected by the runtime profile or product ADR.
+ * **Reference .NET profile:** Microsoft SQL Server.
+ * **Reference Node.js profile:** PostgreSQL.
 * **Maturity Constraint:** Schema-per-Context isolation REQUIRED. Direct SQL Joins across bounded context schema boundaries are FORBIDDEN.
 * **Design Standards:** All data modeling MUST adhere to the standards defined in [ADR-0054](../adrs/core/0054-database-design-normalization-standards.md) (3NF baseline for SQL).
 * **Isolation Pattern:** Configurable Security Strategy ([ADR-0044](../adrs/core/0044-configurable-security-persistence-strategy.md)). Native Row-Level Security (RLS) is OPTIONAL/RECOMMENDED for dense multi-tenant scenarios, managed via the structural `SECURITY_STRATEGY_MODE` flag.
 
 ### 3.2 Distributed Caching
-* **Homologated Engine:** Redis v7.2+ (Self-hosted Cluster or Sentinel)
-* **Role:** Sub-3ms ephemeral graph acceleration, sliding-window rate limiting state.
+* **Contract:** Distributed cache accessed via a cache port. Redis-compatible implementations are the reference option, not a domain-layer dependency.
+* **Role:** Ephemeral graph acceleration, session-adjacent read optimization, and rate-limiting state.
 
 ### 3.3 Object Storage
 * **Homologated Contract:** **S3-Compatible Protocol** (Industry de-facto open standard) via self-hosted MinIO.
@@ -54,7 +66,7 @@ Approved centralized primitives serving the polyglot mesh. Concrete Runtime Adap
 
 ---
 
-## ¡ 4. Hardened Security & Perimeter
+## 4. Hardened Security & Perimeter
 
 ### 4.1 Identity & Authorization
 * **Protocol:** OpenID Connect (OIDC) / OAuth 2.0 / SAML 2.0 Federation.
@@ -72,8 +84,8 @@ Approved centralized primitives serving the polyglot mesh. Concrete Runtime Adap
 Runtime-agnostic telemetry is mandatory. Teams are forbidden from locking their logic into specific SaaS vendor agents.
 
 * **Tracing/Logs Instrumentation:** **OpenTelemetry (W3C Trace Context)** standard.
-* **Collector Hierarchy:** Metrics pulling via OpenTelemetry Collector forwarding into Prometheus/Jaeger mesh.
-* **Log Format:** JSON Structured Logging mandated for efficient Grafana Loki indexing.
+* **Collector Hierarchy:** OpenTelemetry Collector as the vendor-neutral handoff point. Prometheus, Jaeger, Tempo, Loki, or other OSS/SaaS backends are deployment choices.
+* **Log Format:** Structured JSON logging is mandated for reliable indexing and correlation.
 
 ---
 
@@ -91,9 +103,9 @@ Standardization of packaging and execution to guarantee cloud and on-premise par
 
 Mandatory to guarantee that polyglot software respects contracts before rollout.
 
-* **Integration Testing:** Driven by **Testcontainers** (spinning up live Postgres/Redis instances per suite). Simulating the SQL engine via in-memory fakes is forbidden.
-* **Contract Safety:** Implementation of **Pact** (Contract Testing) to guarantee gRPC binary compatibility and OpenAPI schema synchronization between teams.
-* **Performance & Load:** **k6 (Grafana)** scripts integrated into the CI pipeline verifying latencies, race conditions, and memory saturation under stress.
+* **Integration Testing:** Must validate against real infrastructure-compatible dependencies. Testcontainers is the reference strategy, but the rule is fidelity: do not replace critical SQL/cache/message-bus behavior with unrealistic in-memory fakes.
+* **Contract Safety:** Contract testing is required for externally consumed APIs and remote service boundaries. Pact is the reference implementation where applicable.
+* **Performance & Load:** Load testing must be automated for latency-sensitive flows. k6 is the reference implementation, not the only valid tool.
 
 ---
 
@@ -112,12 +124,12 @@ For air-gapped environments, external SaaS integrations MUST be optional and abs
 
 All base infrastructure choices are audited through the lens of technological sovereignty.
 
-| Component | Chosen Solution | Risk Level | Exit / Mitigation Strategy |
+| Component | Reference Solution | Risk Level | Exit / Mitigation Strategy |
 | :--- | :--- | :--- | :--- |
-| **Database** | PostgreSQL v16 | **Low** | ANSI SQL standard compliance. Domain layer decoupled via Ports. |
-| **Object Storage** | MinIO (S3 API) | **Low** | MinIO replicas 100% of the AWS S3 API. Simple config reversal. |
+| **Database** | Runtime-specific SQL engine | **Low** | ANSI SQL discipline. Domain layer decoupled via Ports. Engine changes require a product ADR. |
+| **Object Storage** | S3-compatible API | **Low** | S3-compatible port contract. Concrete providers can be swapped by configuration/adapter. |
 | **Secrets**| HashiCorp Vault | **Low** | Resolution abstracted by dynamic injection via native K8s sidecars. |
-| **Gateway** | Kong Gateway | **Low** | Configuration is managed via standard orchestrator Ingress resources. |
+| **Gateway** | Standards-based API gateway / ingress | **Low** | Gateway behavior must be declarative and replaceable through ingress/API-management configuration. |
 
 ---
 

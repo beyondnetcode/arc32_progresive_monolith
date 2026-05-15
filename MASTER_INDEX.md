@@ -13,7 +13,7 @@ This is the complete navigation index for **arc32**. Use it when you already kno
 |---|---|---|
 | Understand the architecture vision | [Architectural Directives](./governance/standards/vision/architectural-directives.md) | [Evolutionary Strategy Roadmap](./governance/standards/vision/evolutionary-strategy-roadmap.md) |
 | Understand the progressive architecture model | [Reference Blueprint](./architecture/blueprints/reference-blueprint.md) | [Microservice Extraction Readiness Criteria](./architecture/adrs/core/0045-microservice-extraction-readiness-criteria.md) |
-| Review technology choices | [Tech Stack Summary](./architecture/blueprints/tech-stack-summary.md) | [Authoritative Tech Stack](./architecture/blueprints/authoritative-tech-stack.md) |
+| Review technology choices | [Authoritative Tech Stack](./architecture/blueprints/authoritative-tech-stack.md) | [Agnostic Baseline](./architecture/blueprints/authoritative-tech-stack-agnostic.md) |
 | Review architectural decisions | [ADR Registry](./architecture/adrs/README.md) | [Core ADRs](./architecture/adrs/core/README.md) |
 | Learn engineering standards | [Engineering Manifesto](./governance/standards/engineering/engineering-manifesto.md) | [Contract Testing Guideline](./governance/standards/engineering/contract-testing-guideline.md) |
 | Understand SDLC expectations | [SDLC Framework](./governance/sdlc/README.md) | [Construction-Focused SDLC](./governance/sdlc/02-engineering/construction-focused-sdlc-framework.md) |
@@ -29,7 +29,7 @@ This is the complete navigation index for **arc32**. Use it when you already kno
 | **Executive / Sponsor** | [Architectural Directives](./governance/standards/vision/architectural-directives.md) -> [Evolutionary Roadmap](./governance/standards/vision/evolutionary-strategy-roadmap.md) -> [Maturity Matrix](./governance/standards/vision/maturity-matrix.md) |
 | **Product Owner / PM** | [Demo PRD](./knowledge/demo/project/01-prd-demo-sandbox.md) -> [Business Glossary](./knowledge/demo/functional/business-glossary.md) -> [Backlog and Epics](./knowledge/demo/project/02-backlog-and-epics.md) |
 | **Software Architect** | [Reference Blueprint](./architecture/blueprints/reference-blueprint.md) -> [ADR Registry](./architecture/adrs/README.md) -> [Microservice Extraction Criteria](./architecture/adrs/core/0045-microservice-extraction-readiness-criteria.md) |
-| **Principal / Staff Engineer** | [Tech Stack Summary](./architecture/blueprints/tech-stack-summary.md) -> [Tactical Design Patterns](./architecture/adrs/core/0019-tactical-design-patterns-future-proofing.md) -> [Simplicity Checklist](./architecture/blueprints/simplicity-checklist-phase-01.md) |
+| **Principal / Staff Engineer** | [Agnostic Baseline](./architecture/blueprints/authoritative-tech-stack-agnostic.md) -> [Tactical Design Patterns](./architecture/adrs/core/0019-tactical-design-patterns-future-proofing.md) -> [Simplicity Checklist](./architecture/blueprints/simplicity-checklist-phase-01.md) |
 | **Backend Developer** | [Engineering Manifesto](./governance/standards/engineering/engineering-manifesto.md) -> [Clean Architecture ADR](./architecture/adrs/nodejs/0002-clean-architecture-nestjs.md) -> [Sandbox Verification](./knowledge/demo/technical/sandbox-verification.md) |
 | **Frontend Developer** | [Frontend Offline Resilience ADR](./architecture/adrs/nodejs/0004-frontend-offline-resilience.md) -> [Gateway/BFF ADR](./architecture/adrs/nodejs/0008-progressive-multimodule-evolution-gateway-bff.md) -> [To-Do Web App](./src/apps/todo-web/README.md) |
 | **DevOps / SRE** | [Infrastructure Hub](./infrastructure/README.md) -> [Operations Hub](./operations/README.md) -> [Observability ADR](./architecture/adrs/nodejs/0007-observability-telemetry-loki-opentelemetry.md) |
@@ -54,7 +54,7 @@ This is the complete navigation index for **arc32**. Use it when you already kno
 Key architecture references:
 
 - [Reference Blueprint](./architecture/blueprints/reference-blueprint.md)
-- [Tech Stack Summary](./architecture/blueprints/tech-stack-summary.md)
+- [Authoritative Tech Stack Index](./architecture/blueprints/authoritative-tech-stack.md)
 - [C4 Topology Spec](./architecture/blueprints/c4-topology-spec.md)
 - [CAP Strategic Analysis](./architecture/blueprints/cap-strategic-analysis.md)
 - [Multi-Cloud Deployment Scenarios](./architecture/blueprints/multi-cloud-deployment-scenarios.md)

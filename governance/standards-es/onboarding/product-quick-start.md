@@ -5,11 +5,13 @@
 
 ---
 
+> Alcance: esta guía de onboarding está optimizada para la demo ejecutable Node.js y la experiencia local del repositorio. No es un mandato universal de runtime. Los equipos que inicien un producto .NET, Android o mixto deben combinar la línea base arquitectónica universal con el perfil de stack correspondiente.
+
 ## 1. Descripción General
 Esta Arquitectura de Referencia está diseñada para ser **clonada como una plantilla**, no importada como una librería `npm`. Ofrece un entorno totalmente configurado con seguridad pre-integrada, gobernanza de monorepo y pipelines de despliegue.
 
 ## 2. Prerrequisitos
-Antes de inicializar, asegúrate de que tu máquina local tenga:
+Para el sandbox demo/de referencia, asegúrate de que tu máquina local tenga:
 * **Node.js**: v20.x (LTS)
 * **pnpm**: v8.x (o `npm` v10)
 * **Docker y Docker Compose**: v25+ (Requerido para servicios locales)

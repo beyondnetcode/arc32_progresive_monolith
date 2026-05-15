@@ -1,12 +1,24 @@
-# Estándares Universales de Arquitectura Autorizada (Línea Base Agnóstica)
+# Estándares Universales de Arquitectura (Línea Base Agnóstica)
 
-> **Navegación Bilingüe:** [English Version](../../standards/architecture/authoritative-tech-stack-agnostic.md)
+> **Navegación Bilingüe:** [English Version](../blueprints/authoritative-tech-stack-agnostic.md)
 
 **Tipo de Documento:** Estándar Corporativo 
 **Aplicabilidad:** Obligatorio para todos los Entornos de Ejecución (.NET, Node.js, Android) 
 **Soberanía:** 100% Agnóstico a la Nube / Capacidad On-Premise
 
 ---
+
+## Límite de Alcance
+
+Este documento define **reglas arquitectónicas agnósticas al runtime**. No debe leerse como mandato de Node.js, .NET, base de datos, gateway o proveedor cloud específico.
+
+Las herramientas concretas pertenecen a los perfiles por runtime:
+
+- [Perfil .NET / C#](./authoritative-tech-stack-dotnet.md)
+- [Perfil Node.js / TypeScript](./authoritative-tech-stack-nodejs.md)
+- [Perfil Android / Kotlin](./authoritative-tech-stack-android.md)
+
+Las herramientas específicas de la demo deben vivir únicamente en la documentación de demo o en el código bajo `knowledge/demo/` y `src/`.
 
 ## 1. Restricciones Ejecutivas y No Negociables
 
@@ -29,28 +41,21 @@ La integración entre servicios sigue la doctrina "Primero el Contrato" (*Contra
 | **Estándar API Web Pública** | **RESTful (OpenAPI v3)** | Interoperabilidad canónica para integradores de terceros y SDKs Frontend. |
 | **Arquitectura de Bus de Eventos** | **AMQP / CloudEvents** | Estructura de eventos autodescriptiva que sigue patrones de Transactional Outbox para una propagación segura. |
 
----
-| **Comunicación Síncrona Interna** | **gRPC (Protocol Buffers)** | Obligatorio desde Fase 2 para invocaciones entre servicios remotos ([ADR-0047](../adrs-es/core/0047-architectural-patterns-monolith-soa-microservices.md)). En Fase 1, la invocación es nativa intra-proceso. |
-| **Estándar API Web Pública** | **RESTful (OpenAPI v3)** | Interoperabilidad canónica para integradores de terceros y SDKs Frontend. |
-| **Arquitectura de Bus de Eventos** | **AMQP / CloudEvents** | Estructura de eventos autodescriptiva que sigue patrones de Transactional Outbox para una propagación segura. |
-
----
-
 ## 3. Infraestructura Fundacional Transversal
 
 Primitivas centralizadas aprobadas que sirven a la red políglota. Los adaptadores concretos del entorno de ejecución simplemente deben apuntar a estos protocolos estándar.
 
 ### 3.1 Persistencia Relacional (SQL)
-* **Estrategia de Motores:** Selección Dependiente del Runtime ([ADR-0051](../adrs-es/core/0051-estrategia-motor-base-datos-empresarial.md)).
- * **Servicios .NET:** Microsoft SQL Server (Última versión).
- * **Servicios Node.js:** PostgreSQL v16+.
+* **Estrategia de Motores:** Selección dependiente del runtime gobernada por [ADR-0051](../adrs-es/core/0051-estrategia-motor-base-datos-empresarial.md). La regla universal es consistencia relacional, ownership por esquema/contexto, seguridad transaccional y aislamiento del dominio; el motor concreto se selecciona por perfil de runtime o ADR de producto.
+ * **Perfil .NET de referencia:** Microsoft SQL Server.
+ * **Perfil Node.js de referencia:** PostgreSQL.
 * **Restricción de Madurez:** REQUERIDO aislamiento de Esquema por Contexto. ESTÁN PROHIBIDOS los SQL Joins directos a través de las fronteras de esquemas de contextos delimitados.
 * **Estándares de Diseño:** Todo el modelado de datos DEBE cumplir con los estándares definidos en el [ADR-0054](../adrs-es/core/0054-estandares-diseño-normalizacion-base-datos.md) (línea base 3NF para SQL).
 * **Patrón de Aislamiento:** Estrategia de Seguridad Configurable ([ADR-0044](../adrs-es/core/0044-configurable-security-persistence-strategy.md)). La Seguridad a Nivel de Fila (RLS) nativa es OPCIONAL/RECOMENDADA para densidades multi-tenant, gobernada por el flag `SECURITY_STRATEGY_MODE`.
 
 ### 3.2 Caché Distribuida
-* **Motor Homologado:** Redis v7.2+ (Cluster o Sentinel Autohospedado)
-* **Rol:** Aceleración de grafos efímeros sub-3ms, estado de limitación de tasa de ventana deslizante.
+* **Contrato:** Caché distribuida accedida mediante un puerto de caché. Las implementaciones compatibles con Redis son la opción de referencia, no una dependencia de la capa de dominio.
+* **Rol:** Aceleración de grafos efímeros, optimización de lecturas cercanas a sesión y estado de rate limiting.
 
 ### 3.3 Almacenamiento de Objetos
 * **Contrato Homologado:** **Protocolo Compatible con S3** (Estándar de facto de la industria) vía MinIO autohospedado.
@@ -59,7 +64,7 @@ Primitivas centralizadas aprobadas que sirven a la red políglota. Los adaptador
 
 ---
 
-## ¡ 4. Seguridad Reforzada y Perímetro
+## 4. Seguridad Reforzada y Perímetro
 
 ### 4.1 Identidad y Autorización
 * **Protocolo:** Federación OpenID Connect (OIDC) / OAuth 2.0 / SAML 2.0.
@@ -68,7 +73,7 @@ Primitivas centralizadas aprobadas que sirven a la red políglota. Los adaptador
 
 ### 4.2 Higiene de Secretos
 * **Motor:** HashiCorp Vault (Empresarial o Comunitario Autohospedado).
-* **Regla:** Prohibidos los secretos en texto plano en charts de Helm, repositorios Git o ConfigMaps de K8s. La inyección vía Sidecar es el íNICO patrón de consumo aprobado.
+* **Regla:** Prohibidos los secretos en texto plano en charts de Helm, repositorios Git o ConfigMaps de K8s. La inyección vía sidecar es el único patrón de consumo aprobado.
 
 ---
 
@@ -77,8 +82,8 @@ Primitivas centralizadas aprobadas que sirven a la red políglota. Los adaptador
 La telemetría agnóstica al entorno de ejecución es obligatoria. Se prohíbe a los equipos bloquear su lógica en agentes de proveedores SaaS específicos.
 
 * **Instrumentación de Trazas/Logs:** Estándar **OpenTelemetry (W3C Trace Context)**.
-* **Jerarquía de Recolección:** Extracción de métricas vía OpenTelemetry Collector reenviando a la malla Prometheus/Jaeger.
-* **Formato de Logs:** Registro estructurado JSON mandated para una indexación eficiente en Grafana Loki.
+* **Jerarquía de Recolección:** OpenTelemetry Collector como punto de entrega vendor-neutral. Prometheus, Jaeger, Tempo, Loki u otros backends OSS/SaaS son decisiones de despliegue.
+* **Formato de Logs:** Registro estructurado JSON obligatorio para indexación y correlación confiable.
 
 ---
 
@@ -96,9 +101,9 @@ Estandarización del empaquetado y ejecución para garantizar paridad entre nube
 
 Obligatorio para garantizar que el software políglota respeta los contratos antes de desplegar.
 
-* **Pruebas de Integración:** Impulsadas por **Testcontainers** (levantando instancias vivas de Postgres/Redis por suite), prohibido simular el motor SQL.
-* **Seguridad de Contratos:** Implementación de **Pact** (Contract Testing) para asegurar la compatibilidad binaria gRPC y los esquemas OpenAPI entre equipos.
-* **Rendimiento y Carga:** Scripts de **k6 (Grafana)** integrados en la pipeline para verificar latencias, condiciones de carrera y saturación de memoria bajo estrés.
+* **Pruebas de Integración:** Deben validar contra dependencias compatibles con infraestructura real. Testcontainers es la estrategia de referencia, pero la regla es fidelidad: no reemplazar comportamiento crítico SQL/caché/bus con fakes en memoria irreales.
+* **Seguridad de Contratos:** Contract testing requerido para APIs consumidas externamente y límites remotos de servicio. Pact es la implementación de referencia donde aplique.
+* **Rendimiento y Carga:** Las pruebas de carga deben automatizarse para flujos sensibles a latencia. k6 es la implementación de referencia, no la única herramienta válida.
 
 ---
 
@@ -117,12 +122,12 @@ Para entornos desconectados (air-gapped), las integraciones externas DEBEN ser o
 
 Todas las decisiones de infraestructura base son auditadas bajo el prisma de soberanía tecnológica.
 
-| Componente | Solución Elegida | Nivel de Riesgo | Estrategia de Salida/Mitigación |
+| Componente | Solución de Referencia | Nivel de Riesgo | Estrategia de Salida/Mitigación |
 | :--- | :--- | :--- | :--- |
-| **Base de Datos** | PostgreSQL v16 | **Bajo** | Cumplimiento estándar ANSI SQL. Capa de dominio desacoplada mediante Puertos. |
-| **Almacén de Objetos** | MinIO (S3 API) | **Bajo** | MinIO replica el 100% de la API de AWS S3. Cambio reversible vía configuración. |
+| **Base de Datos** | Motor SQL específico por runtime | **Bajo** | Disciplina ANSI SQL. Capa de dominio desacoplada mediante puertos. Cambios de motor requieren ADR de producto. |
+| **Almacén de Objetos** | API compatible con S3 | **Bajo** | Contrato de puerto S3-compatible. Proveedores concretos intercambiables por configuración/adaptador. |
 | **Secretos**| HashiCorp Vault | **Bajo** | Resolución abstraída por inyección dinámica de sidecars nativos de K8s. |
-| **Gateway** | Kong Gateway | **Bajo** | La configuración se gestiona a través de recursos Ingress estándar del orquestador. |
+| **Gateway** | API gateway / ingress basado en estándares | **Bajo** | El comportamiento del gateway debe ser declarativo y reemplazable por configuración de ingress/API-management. |
 
 ---
 
