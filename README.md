@@ -1,10 +1,7 @@
 # Progressive Monolith Architecture Reference
 
-![Microservices Architecture Design Principles](./assets/arch-evolution.jpg)
-*Infographic by Rag Dhiman: The Journey from Monolith to Microservices.*
-
-
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)]()
+
 [![Method](https://img.shields.io/badge/Method-Spec--driven_AI--DD-blueviolet?style=for-the-badge)]()
 [![License](https://img.shields.io/badge/License-MIT-informational?style=for-the-badge)]()
 
