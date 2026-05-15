@@ -44,6 +44,8 @@ The organization promotes a deliberate polyglot architecture where runtimes are 
 | **Observability** | [ADR-0007](../adrs/nodejs/0007-observability-telemetry-loki-opentelemetry.md), [ADR-0046](../adrs/core/0046-dapr-unified-observability.md) | OTel + Loki + distributed tracing |
 | **Immutable Auditing** | [ADR-0016](../adrs/core/0016-immutable-business-audit-trail.md) | Append-only audit ledger |
 | **Tech Sovereignty** | [ADR-0002](../adrs/nodejs/0002-clean-architecture-nestjs.md), [ADR-0028](../adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md) | 100% Swappable Infra/AOP without logic impact |
+| **UI Modularization** | [ADR-0055](../adrs/core/0055-microfrontends-architecture-strategy.md) | Microfrontends (Module Federation) for Phase 3+ |
+
 
 #### Supplemental Strategic Frameworks
 To deeply understand the mathematical and risk posture of this architecture, consult:
@@ -162,7 +164,8 @@ The domain never imports a concrete message broker. All async communication is r
 ### 4.5 Progressive Evolution Route ([ADR-0006](../adrs/core/0006-future-microservices-transition-dapr.md))
 1. **Milestone 1 - Modular Monolith**: Single process, logically isolated domain modules.
 2. **Milestone 2 - Service Extraction**: Critical domains extracted as Nx micro-projects with isolated DBs, consumed via gRPC/Dapr.
-3. **Milestone 3 - Full Microservices Mesh**: Dapr Sidecars, Service Mesh, Kong as unified API surface.
+3. **Milestone 3 - Full Microservices Mesh**: Dapr Sidecars, Service Mesh, Kong as unified API surface, and **Microfrontend extraction** ([ADR-0055](../adrs/core/0055-microfrontends-architecture-strategy.md)).
+
 
 ---
 
@@ -354,7 +357,8 @@ sequenceDiagram
 
 ## 7. Deployment View - Target Cloud Infrastructure ([ADR-0013](../adrs/core/0013-cloud-infrastructure-topology-dr.md), [ADR-0028](../adrs/core/0028-self-hosted-hybrid-infrastructure-on-premise.md))
 > [!IMPORTANT]
-> **Progressive Deployment Strategy**: The following diagram reflects the target deployment architecture in its mature state (**Phase 3+**). Following the Progressive Complexity principle, **Phase 1 (Monolith)** supports direct container hosting on minimal compute assets (VMs, Container Apps, or Docker Compose), scaling into fully managed clusters only as modular extraction demands increase.
+> **Progressive Deployment Strategy**: The following diagram reflects the target deployment architecture in its mature state (**Phase 3+**). Following the Progressive Complexity principle, **Phase 1 (Monolith)** supports direct container hosting on minimal compute assets (VMs, Container Apps, or Docker Compose), scaling into fully managed clusters only as modular extraction demands increase. In this phase, **Microfrontends** ([ADR-0055](../adrs/core/0055-microfrontends-architecture-strategy.md)) are deployed independently to their respective clusters or CDN origins.
+
 
 ```mermaid
 graph TD
@@ -440,6 +444,8 @@ graph TD
 | **Polyglot Selection** | [ADR-0040](../adrs/core/0040-multi-runtime-selection-contracts.md) | Workload Matrix and Type-Safe Contracts | 1.2 |
 | **.NET Arch Canonical** | [ADR-0041](../adrs/dotnet/0041-canonical-dotnet-backend-architecture.md) | Clean Arch C# / Minimal APIs | 1.2 |
 | **Android Arch Canonical** | [ADR-0042](../adrs/android/0042-canonical-android-mobile-architecture.md) | Native Kotlin / Compose / Offline | 1.2 |
+| **Microfrontends** | [ADR-0055](../adrs/core/0055-microfrontends-architecture-strategy.md) | Runtime UI Module Federation | 4.5, 7 |
+
 
 ---
 

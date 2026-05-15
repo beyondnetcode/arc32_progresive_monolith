@@ -44,6 +44,8 @@ La organización promueve una arquitectura políglota deliberada donde los entor
 | **Observabilidad** | [ADR-0007](../adrs-es/nodejs/0007-observability-telemetry-loki-opentelemetry.md), [ADR-0046](../adrs-es/core/0046-dapr-observabilidad-unificada.md) | OTel + Loki + trazado distribuido |
 | **Auditoría Inmutable** | [ADR-0016](../adrs-es/core/0016-immutable-business-audit-trail.md) | Registro de auditoría de solo adición |
 | **Soberanía Tecnológica** | [ADR-0002](../adrs-es/nodejs/0002-clean-architecture-nestjs.md), [ADR-0028](../adrs-es/core/0028-self-hosted-hybrid-infrastructure-on-premise.md) | Infra/AOP 100% intercambiable sin impacto en la lógica |
+| **Modularización de UI** | [ADR-0055](../adrs-es/core/0055-estrategia-arquitectura-microfrontends.md) | Microfrontends (Module Federation) para Fase 3+ |
+
 
 #### Marcos Estratégicos Complementarios
 Para comprender profundamente la postura matemática y de riesgo de esta arquitectura, consulte:
@@ -162,7 +164,8 @@ El dominio nunca importa un bróker de mensajes concreto. Toda la comunicación 
 ### 4.5 Ruta de Evolución Progresiva ([ADR-0006](../adrs-es/core/0006-future-microservices-transition-dapr.md))
 1. **Hito 1 - Monolito Modular**: Proceso único, módulos de dominio lógicamente aislados.
 2. **Hito 2 - Extracción de Servicios**: Dominios críticos extraídos como microproyectos Nx con BDs aisladas, consumidos vía gRPC/Dapr.
-3. **Hito 3 - Malla Completa de Microservicios**: Dapr Sidecars, Malla de Servicios, Kong como superficie de API unificada.
+3. **Hito 3 - Malla Completa de Microservicios**: Dapr Sidecars, Malla de Servicios, Kong como superficie de API unificada y **extracción de Microfrontends** ([ADR-0055](../adrs-es/core/0055-estrategia-arquitectura-microfrontends.md)).
+
 
 ---
 
@@ -354,7 +357,8 @@ sequenceDiagram
 
 ## 7. Vista de Despliegue - Infraestructura Cloud Objetivo ([ADR-0013](../adrs-es/core/0013-cloud-infrastructure-topology-dr.md), [ADR-0028](../adrs-es/core/0028-self-hosted-hybrid-infrastructure-on-premise.md))
 > [!IMPORTANT]
-> **Estrategia de Despliegue Progresivo**: El diagrama siguiente representa la arquitectura de despliegue objetivo en estado maduro (**Fase 3+**). De acuerdo con el principio de Complejidad Progresiva, en la **Fase 1 (Monolito)** se permite la ejecución directa de los contenedores en hosts de cómputo mínimo (VMs, Container Apps o Docker Compose), escalando hacia clústeres gestionados únicamente cuando la descomposición modular lo requiera.
+> **Estrategia de Despliegue Progresivo**: El diagrama siguiente representa la arquitectura de despliegue objetivo en estado maduro (**Fase 3+**). De acuerdo con el principio de Complejidad Progresiva, en la **Fase 1 (Monolito)** se permite la ejecución directa de los contenedores en hosts de cómputo mínimo (VMs, Container Apps o Docker Compose), escalando hacia clústeres gestionados únicamente cuando la descomposición modular lo requiera. En esta fase, los **Microfrontends** ([ADR-0055](../adrs-es/core/0055-estrategia-arquitectura-microfrontends.md)) se despliegan de forma independiente en sus respectivos clústeres u orígenes de CDN.
+
 
 ```mermaid
 graph TD
@@ -440,6 +444,8 @@ graph TD
 | **Selección Políglota** | [ADR-0040](../adrs-es/core/0040-multi-runtime-selection-contracts.md) | Matriz de Carga de Trabajo y Contratos Type-Safe | 1.2 |
 | **Arquitectura Canónica .NET** | [ADR-0041](../adrs-es/dotnet/0041-canonical-dotnet-backend-architecture.md) | Clean Arch C# / Minimal APIs | 1.2 |
 | **Arquitectura Canónica Android** | [ADR-0042](../adrs-es/android/0042-canonical-android-mobile-architecture.md) | Kotlin Nativo / Compose / Offline | 1.2 |
+| **Microfrontends** | [ADR-0055](../adrs-es/core/0055-estrategia-arquitectura-microfrontends.md) | Module Federation de UI en tiempo de ejecución | 4.5, 7 |
+
 
 ---
 

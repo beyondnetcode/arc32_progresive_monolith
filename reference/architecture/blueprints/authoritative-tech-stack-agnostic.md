@@ -43,7 +43,20 @@ Inter-service integration follows the "Contract First" doctrine to guarantee pol
 
 ---
 
-## 3. Cross-Cutting Foundation Infrastructure
+## 3. Frontend & User Interface Strategy
+
+Mandatory for all client-facing applications to ensure consistent evolution and scalability.
+
+| Standard | Required Implementation | Rationale |
+| :--- | :--- | :--- |
+| **Progressive UI Delivery** | **Single Bundle -> Microfrontends** | Move to **Module Federation** ([ADR-0055](../adrs/core/0055-microfrontends-architecture-strategy.md)) only upon reaching Phase 3+ or when team scale demands independent deployability. |
+| **State Management** | **Asynchronous Cache-first** | Use `stale-while-revalidate` patterns (e.g., React Query) for resilience against backend latency ([ADR-0004](../adrs/nodejs/0004-frontend-offline-resilience.md)). |
+| **Design Consistency** | **Atomic Design System** | All UI modules MUST share corporate CSS tokens and atomic components to prevent visual drift. |
+
+---
+
+## 4. Cross-Cutting Foundation Infrastructure
+
 
 Approved centralized primitives serving the polyglot mesh. Concrete Runtime Adapters must simply point to these standard protocols.
 

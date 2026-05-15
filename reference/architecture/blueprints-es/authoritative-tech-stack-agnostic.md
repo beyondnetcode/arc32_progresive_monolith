@@ -41,7 +41,22 @@ La integración entre servicios sigue la doctrina "Primero el Contrato" (*Contra
 | **Estándar API Web Pública** | **RESTful (OpenAPI v3)** | Interoperabilidad canónica para integradores de terceros y SDKs Frontend. |
 | **Arquitectura de Bus de Eventos** | **AMQP / CloudEvents** | Estructura de eventos autodescriptiva que sigue patrones de Transactional Outbox para una propagación segura. |
 
-## 3. Infraestructura Fundacional Transversal
+---
+
+## 3. Estrategia de Frontend e Interfaz de Usuario
+
+Obligatorio para todas las aplicaciones cliente para garantizar una evolución y escalabilidad consistentes.
+
+| Estándar | Implementación Requerida | Justificación |
+| :--- | :--- | :--- |
+| **Entrega Progresiva de UI** | **Bundle Único -> Microfrontends** | Transición a **Module Federation** ([ADR-0055](../adrs-es/core/0055-estrategia-arquitectura-microfrontends.md)) solo al alcanzar la Fase 3+ o cuando la escala del equipo exija desplegabilidad independiente. |
+| **Gestión de Estado** | **Caché Asíncrona (Cache-first)** | Uso de patrones `stale-while-revalidate` (ej. React Query) para resiliencia ante latencia del backend ([ADR-0004](../adrs-es/nodejs/0004-frontend-offline-resilience.md)). |
+| **Consistencia de Diseño** | **Sistema de Diseño Atómico** | Todos los módulos de UI DEBEN compartir los tokens CSS corporativos y componentes atómicos para evitar derivas visuales. |
+
+---
+
+## 4. Infraestructura Fundacional Transversal
+
 
 Primitivas centralizadas aprobadas que sirven a la red políglota. Los adaptadores concretos del entorno de ejecución simplemente deben apuntar a estos protocolos estándar.
 
