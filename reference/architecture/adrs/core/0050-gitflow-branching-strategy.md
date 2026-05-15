@@ -7,7 +7,7 @@ Accepted
 As the ecosystem grows with multiple satellite systems and contributors, the lack of a unified branching strategy has led to inconsistent release cycles, difficulty in tracking production-ready code, and occasional regressions. We need a robust, standardized workflow to manage features, releases, and hotfixes.
 
 ## Decision
-We will adopt **Gitflow** as the mandatory branching strategy for all satellite systems within the arc32 ecosystem.
+We will adopt **Gitflow** as the mandatory branching strategy for all satellite systems within the progressive architecture reference.
 
 ### Branching Model:
 1. **`main`**: Stores the official release history. All code in `main` must be production-ready.

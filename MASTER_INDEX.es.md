@@ -3,7 +3,7 @@
 > Navegación bilingüe: [English](./MASTER_INDEX.md) 
 > Portal principal: [README](./README.es.md)
 
-Este es el índice completo de navegación para **arc32**. Úsalo cuando ya sepas qué tipo de artefacto necesitas o cuando quieras moverte entre áreas del repositorio sin explorar directorios manualmente.
+Este es el índice completo de navegación para esta referencia de arquitectura progresiva. Úsalo cuando ya sepas qué tipo de artefacto necesitas o cuando quieras moverte entre áreas del repositorio sin explorar directorios manualmente.
 
 ---
 

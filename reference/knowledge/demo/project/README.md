@@ -2,11 +2,11 @@
 
 > **Bilingual Navigation:** [Versión en Español](./README.es.md)
 
-This directory contains the official planning, prioritization, and governance artifacts for the software development lifecycle following the BMAD-METHOD (Spec-driven AI Strategy).
+This directory contains the official planning, prioritization, and governance artifacts for the software development lifecycle using BMAD-METHOD as a spec-driven AI-DD method.
 
 ---
 
-## Recommended Deliverables Taxonomy (BMAD-METHOD)
+## Recommended Deliverables Taxonomy
 
 To guarantee seamless traceability between business and engineering, ARC ecosystem project documentation should be organized under the following hierarchical structure:
 

@@ -1,6 +1,6 @@
 # Estrategia de Telemetría y Observabilidad Distribuida End-to-End
 
-Este documento detalla la arquitectura de telemetría, propagación de trazas, estándares de registro y el stack de monitorización rentable para la Plantilla SCM/Referencia bajo la **estrategia BMAD-METHOD**.
+Este documento detalla la arquitectura de telemetría, propagación de trazas, estándares de registro y el stack de monitorización rentable para la Plantilla SCM/Referencia usando **BMAD-METHOD** como flujo spec-driven AI-DD.
 
 ---
 

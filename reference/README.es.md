@@ -1,6 +1,6 @@
 # Hub de Referencia
 
-Este directorio contiene el corpus de referencia arquitectónica de **arc32**.
+Este directorio contiene el corpus de referencia arquitectónica del modelo de arquitectura progresiva.
 
 | Área | Propósito |
 |---|---|
@@ -11,4 +11,3 @@ Este directorio contiene el corpus de referencia arquitectónica de **arc32**.
 | [knowledge/](./knowledge/demo/README.md) | Documentación demo, investigación, ejemplos y material de aprendizaje |
 
 Para volver a la entrada pública, usa el [README principal](../README.es.md).
-

@@ -1,10 +1,12 @@
-# arc32: Enterprise Progressive Architecture
+# Progressive Monolith Architecture Reference
 
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)]()
-[![Method](https://img.shields.io/badge/Method-BMAD--METHOD-blueviolet?style=for-the-badge)]()
+[![Method](https://img.shields.io/badge/Method-Spec--driven_AI--DD-blueviolet?style=for-the-badge)]()
 [![License](https://img.shields.io/badge/License-MIT-informational?style=for-the-badge)]()
 
-**arc32** is an open technical reference for building products that can start as simple monoliths, grow into modular monoliths, and evolve toward distributed services only when the product, team, and operation justify it.
+This repository is an open technical reference for building products that can start as simple monoliths, grow into modular monoliths, and evolve toward distributed services only when the product, team, and operation justify it.
+
+**arc32** identifies the supporting toolset and repository implementation. It is not the product vision itself. The vision is the progressive architecture reference documented here.
 
 > Separate conceptually before separating physically.
 
@@ -26,7 +28,7 @@
 
 ## The Architecture Journey
 
-arc32 is intentionally progressive. It does not treat microservices as the default starting point.
+The architecture reference is intentionally progressive. It does not treat microservices as the default starting point.
 
 ```text
 Simple Monolith
@@ -98,5 +100,5 @@ This project is published as an open technical reference under the repository li
 ---
 
 <div align="center">
- <sub>2026 arc32 Ecosystem | BMAD-METHOD | AI-Augmented Engineering</sub>
+ <sub>2026 Progressive Architecture Reference | arc32 toolset | Spec-driven AI-DD</sub>
 </div>

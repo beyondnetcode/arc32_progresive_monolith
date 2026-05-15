@@ -7,7 +7,7 @@ Approved
 2026-05-12
 
 ## Context
-The ARC32 platform requires a unified, maintainable, and performant data access strategy across its progressive monolith modules. We operate in a heterogeneous database environment (primarily PostgreSQL for transactional logic, potentially MongoDB for document caching/projections). We need to select the baseline Object-Relational Mapping (ORM) and Object-Document Mapping (ODM) ecosystem that balances developer productivity (DX), enterprise features (migrations, multi-tenancy), and alignment with our Hexagonal Architecture constraints (decoupling domain from infrastructure).
+The reference platform requires a unified, maintainable, and performant data access strategy across its progressive monolith modules. We operate in a heterogeneous database environment (primarily PostgreSQL for transactional logic, potentially MongoDB for document caching/projections). We need to select the baseline Object-Relational Mapping (ORM) and Object-Document Mapping (ODM) ecosystem that balances developer productivity (DX), enterprise features (migrations, multi-tenancy), and alignment with our Hexagonal Architecture constraints (decoupling domain from infrastructure).
 
 ## Architectural Drivers
 - **Decoupling**: Strict separation between Domain Entities and Persistence Models (supporting [ADR 0002](0002-clean-architecture-nestjs.md)).

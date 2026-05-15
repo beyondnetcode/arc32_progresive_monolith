@@ -6,7 +6,7 @@ Aceptado
 ## Contexto
 A medida que el ecosistema evoluciona hacia un Monolito Progresivo, la proliferación de carpetas anidadas y la falta de convenciones estrictas de nombres han generado una alta carga cognitiva para los equipos de ingeniería. Se requería una política inmutable que unificara la estructura de directorios, redujera el ruido visual de la raíz, separara el código fuente del corpus de referencia y garantizara el principio de **Docs-as-Code**.
 
-Esta estandarización también optimiza la interacción con agentes de Inteligencia Artificial mediante el soporte de la metodología **BMAD-METHOD**, pero el driver principal es la mantenibilidad y la arquitectura enterprise.
+Esta estandarización también optimiza la interacción con agentes de Inteligencia Artificial mediante el soporte del método spec-driven AI-DD **BMAD-METHOD**, pero el driver principal es la mantenibilidad y la arquitectura enterprise.
 
 ## Decisión
 Se ha decidido adoptar la **Taxonomía Enterprise v4.0 (Minimal Root, Reference Corpus & Source)** como el estándar arquitectónico oficial. Esta política impone la segregación entre el portal público de raíz, el corpus documental (`reference/`) y la implementación técnica (`src/`).

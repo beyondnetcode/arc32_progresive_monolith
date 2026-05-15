@@ -7,7 +7,7 @@ Aprobado
 2026-05-12
 
 ## Contexto
-La plataforma ARC32 requiere una estrategia de acceso a datos unificada, mantenible y de alto rendimiento a través de sus módulos de monolito progresivo. Operamos en un entorno de base de datos heterogéneo (principalmente PostgreSQL para lógica transaccional, potencialmente MongoDB para almacenamiento de documentos/proyecciones). Necesitamos seleccionar el ecosistema base de Mapeo Objeto-Relacional (ORM) y Mapeo Objeto-Documento (ODM) que equilibre la productividad del desarrollador (DX), características empresariales (migraciones, multi-inquilino) y la alineación con nuestras restricciones de Arquitectura Hexagonal (desacoplamiento del dominio de la infraestructura).
+La plataforma de referencia requiere una estrategia de acceso a datos unificada, mantenible y de alto rendimiento a través de sus módulos de monolito progresivo. Operamos en un entorno de base de datos heterogéneo (principalmente PostgreSQL para lógica transaccional, potencialmente MongoDB para almacenamiento de documentos/proyecciones). Necesitamos seleccionar el ecosistema base de Mapeo Objeto-Relacional (ORM) y Mapeo Objeto-Documento (ODM) que equilibre la productividad del desarrollador (DX), características empresariales (migraciones, multi-inquilino) y la alineación con nuestras restricciones de Arquitectura Hexagonal (desacoplamiento del dominio de la infraestructura).
 
 ## Drivers Arquitectónicos
 - **Desacoplamiento**: Separación estricta entre Entidades de Dominio y Modelos de Persistencia (en apoyo al [ADR 0002](0002-clean-architecture-nestjs.md)).

@@ -2,7 +2,7 @@
 
 > Navegacion bilingue: [Version en ingles](../../sdlc/03-documentation/functional-story-writing-standard.md)
 
-Este estandar es obligatorio para repositorios satelite que creen Historias Funcionales, Casos de Uso, flujos de PRD o requisitos bajo el modelo de gobernanza ARC32 / BMAD-METHOD.
+Este estandar es obligatorio para repositorios satelite que creen Historias Funcionales, Casos de Uso, flujos de PRD o requisitos bajo el modelo de gobernanza progressive architecture reference and spec-driven AI-DD.
 
 El objetivo es simple: Product Owners y Analistas de Negocio deben poder entender el comportamiento de negocio sin leer detalle de implementacion, mientras que Desarrollo recibe restricciones tecnicas precisas dentro del mismo artefacto.
 

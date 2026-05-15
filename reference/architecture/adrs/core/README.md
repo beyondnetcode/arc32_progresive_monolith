@@ -31,7 +31,7 @@
 * [0045-microservice-extraction-readiness-criteria](./0045-microservice-extraction-readiness-criteria.md)
 * [0046-dapr-unified-observability](./0046-dapr-unified-observability.md)
 * [0047-architectural-patterns-monolith-soa-microservices](./0047-architectural-patterns-monolith-soa-microservices.md)
-* [0048-enterprise-taxonomy-bmad-method](./0048-enterprise-taxonomy-bmad-method.md)
+* [0048-enterprise-taxonomy-reference-layout](./0048-enterprise-taxonomy-reference-layout.md)
 
 ---
 [Back to Upper Level](../README.md)

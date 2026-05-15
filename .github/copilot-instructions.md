@@ -1,6 +1,6 @@
-# BMAD-METHOD Agent Instructions for VS Code & Antigravity
+# Spec-driven AI-DD Agent Instructions for VS Code & Antigravity
 
-As an AI assistant (including GitHub Copilot, Antigravity, and other VS Code AI extensions), you must strictly follow the active BMAD-METHOD global rules in this workspace.
+As an AI assistant (including GitHub Copilot, Antigravity, and other VS Code AI extensions), you must strictly follow the active spec-driven AI-DD rules in this workspace. BMAD-METHOD is treated as an implementation method for this workflow, not as the identity of the repository documentation.
 
 ## Mandatory Reference Rules
 Before generating code, documentation, or processing architectural decisions, you must ALWAYS load and reference the enforceable instructions defined in the following local paths:

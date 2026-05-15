@@ -1,6 +1,6 @@
 # Enterprise Taxonomy & Repository Structuring Policy
 
-> **Status:** Accepted | **Version:** 4.0.0 | **Framework:** BMAD-METHOD & Docs-as-Code
+> **Status:** Accepted | **Version:** 4.0.0 | **Framework:** Docs-as-Code & Spec-driven AI-DD
 
 This document establishes the **official and immutable policy** for the structuring, taxonomy, and governance of this enterprise repository.
 
@@ -12,7 +12,7 @@ This document establishes the **official and immutable policy** for the structur
 / (Repository Root)
  README.md # Executive Portal (Vision and initial navigation)
  MASTER_INDEX.md # Role-Based Routing
- .bmad-core/ # Jump to: ENGINE: BMAD-Method implementation (Agents, Tooling)
+ .bmad-core/ # Jump to: ENGINE: spec-driven AI-DD method implementation (Agents, Tooling)
  .github/ # CI/CD: Workflows, Actions, Issue/PR Templates
  .harness/ # AI CONTEXT: Base rules, Playbooks, Prompts
  reference/ # REFERENCE CORPUS: Architecture, governance, knowledge, operations, and infrastructure

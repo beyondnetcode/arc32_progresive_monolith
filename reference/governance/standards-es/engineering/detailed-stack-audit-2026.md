@@ -1,7 +1,7 @@
 # Auditoría Corporativa del Stack y Dictamen Tecnológico - Mayo 2026
 
-**Rol**: Agente de Auditoría de Stack BMAD-METHOD 
-**Mandato**: Validación autoritativa del ciclo de vida y verificación de tecnologías autorizadas para producción. 
+**Rol**: Agente de Auditoría de Stack Spec-driven AI-DD
+**Mandato**: Validación autoritativa del ciclo de vida y verificación de tecnologías autorizadas para producción.
 **Periodo de Línea Base**: Entorno Simulado 11 de Mayo de 2026.
 
 ---
@@ -26,7 +26,7 @@
 | Licencia | MIT |
 | Nivel OSS | 1 (Fundación OpenJS) |
 | Estado | Verde |
-**Por qué**: Node 24 proporciona la línea base de rendimiento V8 de primer nivel y es la Active LTS designada hasta Octubre de 2026. 
+**Por qué**: Node 24 proporciona la línea base de rendimiento V8 de primer nivel y es la Active LTS designada hasta Octubre de 2026.
 **Rechazados**: Node 26 (Demasiado joven, solo Current), Deno/Bun (Nicho, brechas de compatibilidad del ecosistema).
 
 ### NestJS - Framework Web
@@ -36,7 +36,7 @@
 | Licencia | MIT |
 | Nivel OSS | 1 (Patrocinio Empresarial) |
 | Estado | Verde |
-**Por qué**: Obligatorio para la gobernanza de BFFs y APIs empresariales debido a su alineación rígida con la arquitectura de Inyección de Dependencias (DI). 
+**Por qué**: Obligatorio para la gobernanza de BFFs y APIs empresariales debido a su alineación rígida con la arquitectura de Inyección de Dependencias (DI).
 **Alternativas**: Fastify (Motor subyacente preferido), Express (Evitar por completo debido a la pesada carga de mantenimiento).
 
 ### Drizzle ORM - Acceso a Datos
@@ -45,7 +45,7 @@
 | Versión Recomendada | v0.41.2 |
 | Nivel OSS | 2 (Comunidad Activa) |
 | Estado | Verde (Adoptar) |
-**Por qué**: El equilibrio óptimo entre seguridad de tipos total y cero sobrecarga de abstracción en comparación con motores pesados como TypeORM. 
+**Por qué**: El equilibrio óptimo entre seguridad de tipos total y cero sobrecarga de abstracción en comparación con motores pesados como TypeORM.
 **Alternativas**: Prisma (Rechazado: pesada sobrecarga de binario rust), TypeORM (Mantener solo, no iniciar nuevos proyectos).
 
 ### Vitest - Corredor de Pruebas
@@ -68,7 +68,7 @@
 | Versión Recomendada | 10.0.7 (LTS Active) |
 | Nivel OSS | 1 (Microsoft .NET Foundation) |
 | Estado | Verde |
-**Por qué**: La mejor computación de su clase para alta concurrencia y cargas de trabajo de workers. 
+**Por qué**: La mejor computación de su clase para alta concurrencia y cargas de trabajo de workers.
 **Nota**: .NET 11 en preview, programado para Nov 2026. Mantenerse en 10.0.x para estabilidad en producción.
 
 ### MassTransit - Abstracción de Mensajería

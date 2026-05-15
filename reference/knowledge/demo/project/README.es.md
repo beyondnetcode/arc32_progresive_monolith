@@ -2,11 +2,11 @@
 
 > **Navegación Bilingüe:** [English Version](./README.md)
 
-Este directorio contiene los artefactos oficiales de planificación, priorización y gobernanza del ciclo de vida del software bajo la estrategia Spec-driven AI BMAD-METHOD.
+Este directorio contiene los artefactos oficiales de planificación, priorización y gobernanza del ciclo de vida del software usando BMAD-METHOD como método spec-driven AI-DD.
 
 ---
 
-## Taxonomía de Entregables Recomendada (BMAD-METHOD)
+## Taxonomía de Entregables Recomendada
 
 Para garantizar trazabilidad y visibilidad entre el negocio y la ingeniería, la documentación de proyecto en el ecosistema ARC se organiza bajo la siguiente estructura jerárquica:
 

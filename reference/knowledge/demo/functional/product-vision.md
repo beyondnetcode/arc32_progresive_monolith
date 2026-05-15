@@ -2,7 +2,7 @@
 
 ## 1. Executive Summary
 
-The **ARC32 Reference Skeleton** is a developer-facing **instructional architecture blueprint** whose demonstration vehicle is a production-grade **Enterprise SaaS Multi-Tenant To-Do Platform**.
+The **reference skeleton** is a developer-facing **instructional architecture blueprint** whose demonstration vehicle is a production-grade **Enterprise SaaS Multi-Tenant To-Do Platform**.
 
 > **Two layers. One repository.**
 >

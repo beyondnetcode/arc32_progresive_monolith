@@ -2,8 +2,8 @@
 
 > **Bilingual Navigation:** [Versión en Español](./01-prd-demo-sandbox-es.md)
 
-**Product:** ARC32 Reference Sandbox ("To-Do Labs") 
-**Product Owner:** Product Manager [BMAD Role] 
+**Product:** Reference Sandbox ("To-Do Labs")
+**Product Owner:** Product Manager [spec-driven AI-DD role]
 **Current Phase:** MVP (Phase 1)
 
 ---

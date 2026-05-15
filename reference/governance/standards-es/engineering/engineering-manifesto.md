@@ -1,4 +1,6 @@
-# Estándares Globales de Ingeniería y Guías para Desarrolladores (Manifiesto [bMAD](https://github.com/bmad-code-org/BMAD-METHOD))
+# Estándares Globales de Ingeniería y Guías para Desarrolladores
+
+> BMAD-METHOD se referencia aquí solo como método de entrega spec-driven AI-DD. No es el nombre, acrónimo ni manifiesto de este conjunto documental.
 
 ## 1. Principios Core de Ingeniería (Obligatorios)
 Todo código, wrappers y diseños arquitectónicos dentro de este monorepo **DEBEN** adherirse estrictamente a los siguientes principios. Las revisiones de código rechazarán cualquier Pull Request que viole estos fundamentos:
@@ -45,7 +47,7 @@ Para evitar deuda estructural técnica y garantizar que el núcleo de dominio nu
 ---
 
 ## 5. Gobernanza Técnica y Mecanismos de Aplicación
-La revisión humana es imperfecta. Confiamos en la **Aplicación Automatizada** para asegurar que estos principios sean sostenibles a lo largo del tiempo dentro de la estrategia BMAD-METHOD:
+La revisión humana es imperfecta. Confiamos en la **Aplicación Automatizada** para asegurar que estos principios sean sostenibles a lo largo del tiempo. BMAD-METHOD puede usarse como flujo spec-driven AI-DD para producir y validar artefactos, pero los estándares de ingeniería son independientes de ese método:
 
 1. **Linters y Reglas Arquitectónicas**:
  * `eslint-plugin-boundaries` fallará automáticamente la construcción si un desarrollador importa una capa exterior (infraestructura) en una capa interior (core).

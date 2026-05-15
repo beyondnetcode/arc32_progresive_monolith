@@ -1,4 +1,4 @@
-# BMAD-METHOD Rules Summary
+# Spec-driven AI-DD Rules Summary
 
 | ID | Title | Agents Scope | Trigger | Description |
 | :--- | :--- | :--- | :--- | :--- |

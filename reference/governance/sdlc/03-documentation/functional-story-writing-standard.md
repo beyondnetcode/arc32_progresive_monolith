@@ -2,7 +2,7 @@
 
 > Bilingual navigation: [Spanish version](../../sdlc-es/03-documentation/functional-story-writing-standard.md)
 
-This standard is mandatory for satellite repositories that create Functional Stories, Use Cases, PRD feature flows, or requirements under the ARC32 / BMAD-METHOD governance model.
+This standard is mandatory for satellite repositories that create Functional Stories, Use Cases, PRD feature flows, or requirements under the progressive architecture reference and spec-driven AI-DD governance model.
 
 The goal is simple: Product Owners and Business Analysts must be able to understand the business behavior without reading implementation detail, while Developers still receive precise technical constraints in the same artifact.
 

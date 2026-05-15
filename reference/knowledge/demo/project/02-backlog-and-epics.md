@@ -2,8 +2,8 @@
 
 > **Bilingual Navigation:** [Versión en Español](./02-backlog-and-epics-es.md)
 
-**Date:** 2026-05-12 
-**Author:** Product Owner [BMAD Role] 
+**Date:** 2026-05-12
+**Author:** Product Owner [spec-driven AI-DD role]
 **Quality Auditor (INVEST):** Scrum Master
 
 ---

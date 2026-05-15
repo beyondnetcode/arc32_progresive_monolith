@@ -1,6 +1,6 @@
 # Reference Hub
 
-This directory contains the architectural reference corpus for **arc32**.
+This directory contains the architectural reference corpus for the progressive architecture model.
 
 | Area | Purpose |
 |---|---|
@@ -11,4 +11,3 @@ This directory contains the architectural reference corpus for **arc32**.
 | [knowledge/](./knowledge/demo/README.md) | Demo documentation, research, examples, and learning material |
 
 For the public entry point, go back to the [main README](../README.md).
-

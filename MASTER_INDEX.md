@@ -3,7 +3,7 @@
 > Bilingual navigation: [Español](./MASTER_INDEX.es.md) 
 > Main portal: [README](./README.md)
 
-This is the complete navigation index for **arc32**. Use it when you already know what type of artifact you need, or when you want to move across repository areas without browsing directories manually.
+This is the complete navigation index for this progressive architecture reference. Use it when you already know what type of artifact you need, or when you want to move across repository areas without browsing directories manually.
 
 ---
 

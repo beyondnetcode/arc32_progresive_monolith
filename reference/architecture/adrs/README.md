@@ -41,7 +41,7 @@ Decisions applicable to any product built on top of the framework, regardless of
 * [ADR 0045: Microservice Extraction Readiness Criteria](./core/0045-microservice-extraction-readiness-criteria.md)
 * [ADR 0046: Dapr Adoption & Unified Observability](./core/0046-dapr-unified-observability.md)
 * [ADR 0047: Selection Framework: Monolith vs SOA vs Microservices](./core/0047-architectural-patterns-monolith-soa-microservices.md)
-* [ADR 0048: Enterprise Taxonomy & BMAD-METHOD](./core/0048-enterprise-taxonomy-bmad-method.md)
+* [ADR 0048: Enterprise Taxonomy and Reference Layout](./core/0048-enterprise-taxonomy-reference-layout.md)
 * [ADR 0049: Naming Semantics & Clean Code Policy](./core/0049-naming-semantics-clean-code-policy.md)
 * [ADR 0050: Gitflow Branching Strategy Standardization](./core/0050-gitflow-branching-strategy.md)
 

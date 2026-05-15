@@ -1,10 +1,12 @@
-# arc32: Arquitectura Progresiva Enterprise
+# Referencia de Arquitectura de Monolito Progresivo
 
 [![Status](https://img.shields.io/badge/Status-Activo-brightgreen?style=for-the-badge)]()
-[![Method](https://img.shields.io/badge/Metodo-BMAD--METHOD-blueviolet?style=for-the-badge)]()
+[![Method](https://img.shields.io/badge/Metodo-Spec--driven_AI--DD-blueviolet?style=for-the-badge)]()
 [![License](https://img.shields.io/badge/License-MIT-informational?style=for-the-badge)]()
 
-**arc32** es una referencia técnica abierta para construir productos que puedan empezar como monolitos simples, crecer hacia monolitos modulares y evolucionar hacia servicios distribuidos solo cuando el producto, el equipo y la operación lo justifiquen.
+Este repositorio es una referencia técnica abierta para construir productos que puedan empezar como monolitos simples, crecer hacia monolitos modulares y evolucionar hacia servicios distribuidos solo cuando el producto, el equipo y la operación lo justifiquen.
+
+**arc32** identifica el toolset y la implementación del repositorio. No es la visión del producto. La visión es la referencia de arquitectura progresiva documentada aquí.
 
 > Separar conceptualmente antes de separar físicamente.
 
@@ -26,7 +28,7 @@
 
 ## El Viaje Arquitectónico
 
-arc32 es intencionalmente progresivo. No trata los microservicios como punto de partida por defecto.
+La referencia arquitectónica es intencionalmente progresiva. No trata los microservicios como punto de partida por defecto.
 
 ```text
 Monolito Simple
@@ -98,5 +100,5 @@ Este proyecto se publica como referencia técnica abierta bajo la licencia del r
 ---
 
 <div align="center">
- <sub>2026 Ecosistema arc32 | BMAD-METHOD | Ingeniería Aumentada por IA</sub>
+ <sub>2026 Referencia de Arquitectura Progresiva | toolset arc32 | Spec-driven AI-DD</sub>
 </div>

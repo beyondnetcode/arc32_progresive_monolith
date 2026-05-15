@@ -1,4 +1,6 @@
-# Global Engineering Standards & Developer Guidelines ([bMAD](https://github.com/bmad-code-org/BMAD-METHOD) Manifesto)
+# Global Engineering Standards & Developer Guidelines
+
+> BMAD-METHOD is referenced here only as a spec-driven AI-DD delivery method. It is not the name, acronym, or manifesto of this documentation set.
 
 ## 1. Core Engineering Principles (Mandatory)
 All code, wrappers, and architectural designs within this monorepo **MUST** strictly adhere to the following principles. Code reviews will reject any Pull Request violating these foundations:
@@ -45,7 +47,7 @@ To avoid structural technical debt and guarantee the domain core is never contam
 ---
 
 ## 5. Technical Governance & Enforcement Mechanisms
-Human review is flawed. We rely on **Automated Enforcement** to ensure these principles are sustainable over time within the BMAD-METHOD strategy:
+Human review is flawed. We rely on **Automated Enforcement** to ensure these principles are sustainable over time. BMAD-METHOD may be used as a spec-driven AI-DD workflow to help produce and validate artifacts, but the engineering standards remain independent of that method:
 
 1. **Linters & Architectural Rules**: 
  * `eslint-plugin-boundaries` will automatically fail the build if a developer imports an outer layer (infrastructure) into an inner layer (core).

@@ -1,7 +1,7 @@
 # Corporate Stack Audit & Technology Dictamen - May 2026
 
-**Role**: BMAD-METHOD Stack Audit Agent 
-**Mandate**: Authoritative lifecycle validation and verification of authorized production technologies. 
+**Role**: Spec-driven AI-DD Stack Audit Agent
+**Mandate**: Authoritative lifecycle validation and verification of authorized production technologies.
 **Baseline Period**: Simulated Environment May 11, 2026.
 
 ---
@@ -26,7 +26,7 @@
 | License | MIT |
 | OSS Level | 1 (OpenJS Foundation) |
 | Status | Green |
-**Why**: Node 24 provides top-tier V8 performance baseline and is the designated Active LTS through October 2026. 
+**Why**: Node 24 provides top-tier V8 performance baseline and is the designated Active LTS through October 2026.
 **Rejected**: Node 26 (Too young, Current only), Deno/Bun (Niche, ecosystem compatibility gaps).
 
 ### NestJS - Web Framework
@@ -36,7 +36,7 @@
 | License | MIT |
 | OSS Level | 1 (Enterprise Sponsored) |
 | Status | Green |
-**Why**: Mandatory for enterprise BFF and API governance due to rigid DI architecture alignment. 
+**Why**: Mandatory for enterprise BFF and API governance due to rigid DI architecture alignment.
 **Alternatives**: Fastify (Preferred underlying engine), Express (Avoid entirely due to heavy maintenance weight).
 
 ### Drizzle ORM - Data Access
@@ -45,7 +45,7 @@
 | Recommended Version | v0.41.2 |
 | OSS Level | 2 (Active Community) |
 | Status | Green (Adopt) |
-**Why**: The optimal balance of total type-safety and zero abstraction overhead compared to heavy engines like TypeORM. 
+**Why**: The optimal balance of total type-safety and zero abstraction overhead compared to heavy engines like TypeORM.
 **Alternatives**: Prisma (Rejected: heavy rust binary overhead), TypeORM (Maintain only, do not start new projects).
 
 ### Vitest - Testing Runner
@@ -68,7 +68,7 @@
 | Recommended Version | 10.0.7 (LTS Active) |
 | OSS Level | 1 (Microsoft .NET Foundation) |
 | Status | Green |
-**Why**: Best in class compute throughput for heavy concurrency and worker workloads. 
+**Why**: Best in class compute throughput for heavy concurrency and worker workloads.
 **Note**: .NET 11 in preview, scheduled Nov 2026. Stick to 10.0.x for production stability.
 
 ### MassTransit - Messaging Abstraction

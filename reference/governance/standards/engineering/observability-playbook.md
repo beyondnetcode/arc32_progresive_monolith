@@ -1,6 +1,6 @@
 # End-to-End Distributed Observability and Telemetry Strategy
 
-This document details the telemetry architecture, trace propagation, logging standards, and cost-effective monitoring stack for the SCM/Reference Template under the **BMAD-METHOD (Spec-driven AI Strategy)**.
+This document details the telemetry architecture, trace propagation, logging standards, and cost-effective monitoring stack for the SCM/Reference Template using the **BMAD-METHOD** as a spec-driven AI-DD workflow.
 
 ---
 

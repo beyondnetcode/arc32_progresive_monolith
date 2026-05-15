@@ -1,6 +1,6 @@
 # Operaciones y Observabilidad
 
-Este directorio contiene la configuración operativa y el stack de observabilidad para el ecosistema **arc32**.
+Este directorio contiene la configuración operativa y el stack de observabilidad para el modelo de referencia de arquitectura progresiva.
 
 ## Stack de Observabilidad
 - **Grafana:** Dashboards y visualización.

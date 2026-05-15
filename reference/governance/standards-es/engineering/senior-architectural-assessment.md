@@ -1,4 +1,4 @@
-# Análisis Técnico Senior - ARC32 BMAD-METHOD
+# Análisis Técnico Senior - Progressive Architecture Reference
 
 > **Navegación Bilingüe:** [English Version](../../standards/engineering/senior-architectural-assessment.md)
 
@@ -15,7 +15,7 @@ El repositorio presenta una arquitectura de referencia corporativa con un nivel 
 
 - **44 ADRs formalizados y trazables**, con linkeo bidireccional entre blueprint y decisiones técnicas.
 - **Modelo Arquitectónico** (Hexagonal + DDD opcional + Polyglot) correctamente justificado y no impuesto.
-- **Entregas vía estrategia BMAD-METHOD** optimizadas mediante flujos Spec-Driven dirigidos por Agentes de IA.
+- **Entregas mediante método spec-driven AI-DD** optimizadas mediante flujos Spec-Driven dirigidos por Agentes de IA.
 - **IEventBusPort injectable** - es la decisión correcta; permite la transición In-Memory -> RabbitMQ -> Kafka sin tocar el dominio.
 - **Dual-Layer RLS** (ORM + PostgreSQL native) como mecanismo de aislamiento multi-tenant - arquitectónicamente sólido.
 - **Result<T,E> Pattern** ([ADR-0019](../../../architecture/adrs-es/core/0019-tactical-design-patterns-future-proofing.md)) sobre excepciones - decisión excelente para TypeScript, elimina side-effects implícitos.

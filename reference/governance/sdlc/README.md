@@ -6,7 +6,7 @@ Welcome to the official Software Development Lifecycle (SDLC) control map. This 
 
 ---
 
-## SDLC Maturity Lifecycle (BMAD-METHOD Taxonomy)
+## SDLC Maturity Lifecycle
 
 ### Phase 01: Ideation & Planning
 Procedures dictating how feature requests enter the ecosystem.

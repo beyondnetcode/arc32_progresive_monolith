@@ -1,10 +1,10 @@
-# ADR-0048: Enterprise Taxonomy Standardization and Layout (BMAD-METHOD)
+# ADR-0048: Enterprise Taxonomy Standardization and Reference Layout
 
 ## Status
 Accepted
 
 ## Context
-As the ecosystem evolves into a Progressive Monolith, the proliferation of nested folders and the lack of strict naming conventions have generated cognitive load for developers and difficulties for the routing of Artificial Intelligence agents (BMAD-Method).
+As the ecosystem evolves into a Progressive Monolith, the proliferation of nested folders and the lack of strict naming conventions have generated cognitive load for developers and difficulties for the routing of Artificial Intelligence agents (spec-driven AI-DD method).
 An immutable policy was required to unify the directory structure, reduce root-level visual noise, separate source code from reference artifacts, and preserve the principle of Single Source of Truth (SSoT) in documentation (Docs-as-Code).
 
 ## Decision

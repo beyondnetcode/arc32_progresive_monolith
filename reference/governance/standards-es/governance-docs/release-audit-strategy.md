@@ -1,6 +1,6 @@
-# Estrategia de Auditoría Continua y Versionado Automatizado (BMAD-METHOD)
+# Estrategia de Auditoría Continua y Versionado Automatizado
 
-Para mantener un registro de auditoría estricto y rastreable sincronizado con GitHub, la estrategia Spec-driven AI [BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) no se basa en la redacción manual de documentos. En su lugar, aprovechamos el ecosistema que ya hemos construido (**Conventional Commits**) combinado con el poder nativo de nuestro orquestador: **Nx Release**.
+Para mantener un registro de auditoría estricto y rastreable sincronizado con GitHub, este repositorio puede usar el método spec-driven AI-DD [BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) sin convertirlo en la identidad de la documentación. El proceso de release no se basa en la redacción manual de documentos. En su lugar, aprovechamos el flujo de ingeniería ya establecido (**Conventional Commits**) combinado con el poder nativo de nuestro orquestador: **Nx Release**.
 
 ## 1. El Pilar: Conventional Commits
 Dado que ya hemos implementado `commitlint`, el repositorio sabe exactamente qué tipo de cambio ocurrió.
